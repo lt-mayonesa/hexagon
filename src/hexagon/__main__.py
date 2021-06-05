@@ -1,17 +1,18 @@
+import os
 import sys
 
 import yaml
 from rich import print
 
-from src.cli.args import fill_args
-from src.cli.tracer import tracer
-from src.cli.wax import key_or_alias, select_env, select_tool
-from src.tools.bastion import bastion
-from src.tools.docker_registry import docker_registry
-from src.tools.open_link import open_link
-from src.tools.save_new_alias import save_new_alias
+from src.hexagon.cli.args import fill_args
+from src.hexagon.cli.tracer import tracer
+from src.hexagon.cli.wax import key_or_alias, select_env, select_tool
+from src.hexagon.tools.bastion import bastion
+from src.hexagon.tools.docker_registry import docker_registry
+from src.hexagon.tools.open_link import open_link
+from src.hexagon.tools.save_new_alias import save_new_alias
 
-with open('app.yaml', 'r') as f:
+with open(os.getenv('HEXAGON_CONFIG_FILE', 'app.yaml'), 'r') as f:
     __config = yaml.load(f, Loader=yaml.CLoader)
 
 TOOLS = __config['tools']
@@ -67,7 +68,7 @@ def main():
         print(f'[cyan]     {__config["cli"]["command"]} {tracer.command()}[/cyan]')
         print('[cyan dim]  o:[/cyan dim]')
         print(f'[cyan]     {__config["cli"]["command"]} {tracer.command_as_aliases(TOOLS, ENVS)}[/cyan]')
-        dump = open("last_command", "w")
+        dump = open('last_command', 'w')
         dump.write(f'{__config["cli"]["command"]} {tracer.command()}')
         dump.close()
 

@@ -5,8 +5,8 @@ import requests
 from InquirerPy import inquirer
 from rich import print
 
-from src.cli.args import fill_args
-from src.cli.tracer import tracer
+from src.hexagon.cli.args import fill_args
+from src.hexagon.cli.tracer import tracer
 
 
 def bastion(bastion_env_name):
