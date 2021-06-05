@@ -1,5 +1,2 @@
-import sys
-
-
-def fill_args(size):
-    return (list(sys.argv) + [None] * size)[:size]
+def fill_args(args, size):
+    return (list(args) + [None] * size)[:size] if size > 0 else list(args)

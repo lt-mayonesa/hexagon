@@ -1,3 +1,5 @@
+import sys
+
 import clipboard
 import requests
 from InquirerPy import inquirer
@@ -8,7 +10,7 @@ from src.cli.tracer import tracer
 
 
 def bastion(bastion_env_name):
-    _, _tool, _env, _query = fill_args(4)
+    _, _tool, _env, _query = fill_args(sys.argv, 4)
 
     def choice(e):
         name = e[1].replace(".marathon.l4lb.thisdcos.directory", "")

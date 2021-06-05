@@ -1,5 +1,7 @@
-import os
 import json
+import os
+import sys
+
 import clipboard
 import requests
 from InquirerPy import inquirer
@@ -10,7 +12,7 @@ from src.cli.tracer import tracer
 
 
 def docker_registry(registry_host):
-    _, _tool, _env, _image, _filter = fill_args(5)
+    _, _tool, _env, _image, _filter = fill_args(sys.argv, 5)
 
     with open(os.path.expanduser('~/.docker/config.json')) as config:
         auth = json.load(config)['auths'][registry_host]['auth']

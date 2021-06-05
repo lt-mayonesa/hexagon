@@ -1,13 +1,15 @@
+import sys
+
 import yaml
 from rich import print
 
 from src.cli.args import fill_args
 from src.cli.tracer import tracer
 from src.cli.wax import key_or_alias, select_env, select_tool
-from src.tools.save_new_alias import save_new_alias
 from src.tools.bastion import bastion
 from src.tools.docker_registry import docker_registry
 from src.tools.open_link import open_link
+from src.tools.save_new_alias import save_new_alias
 
 with open('app.yaml', 'r') as f:
     __config = yaml.load(f, Loader=yaml.CLoader)
@@ -33,13 +35,13 @@ ACTIONS = {
 
 
 def main():
-    _, _tool, _env = fill_args(3)
+    _, _tool, _env = fill_args(sys.argv, 3)
 
     if _tool == '-h' or _tool == '--help':
         return print_help()
 
     print(f'╭╼ [bold]{__config["cli"]["name"]}')
-    print(f'│')
+    print('│')
 
     _tool = key_or_alias(TOOLS, _tool)
     _env = key_or_alias(ENVS, _env)
@@ -71,7 +73,7 @@ def main():
 
 
 def print_help():
-    print(f'│   [bold]Todo Pago CLI')
+    print('│   [bold]Todo Pago CLI')
     print('│')
     for k, v in TOOLS.items():
         print(f'│   {k + " (" + v["alias"] + ")":<60}[dim]{v["long_name"]}')
