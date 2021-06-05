@@ -3,3 +3,6 @@
 /app.yaml
 /last_command
 /.pytest_cache/
+/build/
+/dist/
+/UNKNOWN.egg-info/
