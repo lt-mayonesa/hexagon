@@ -16,9 +16,12 @@ class Tracer:
         return " ".join(self.trace)
 
     def command_as_aliases(self, tools_dict: dict, envs_dict: dict):
+        if len(self.trace) <= 2:
+            return ""
+
         tool_alias_ = tools_dict[self.trace[:1][0]]["alias"]
         env_alias_ = [envs_dict[self.trace[1:2][0]]["alias"]] if len(self.trace) > 1 else []
-        return " ".join([tool_alias_] + env_alias_ + (self.trace[2:] if len(self.trace) > 2 else []))
+        return " ".join([tool_alias_] + env_alias_ + (self.trace[2:]))
 
     def has_traced(self):
         return len(self.trace) > len(self.initial_trace)
