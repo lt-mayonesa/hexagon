@@ -48,6 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
 
+    steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -56,5 +57,4 @@ jobs:
         uses: relekang/python-semantic-release@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
 #          pypi_token: ${{ secrets.PYPI_TOKEN }}
