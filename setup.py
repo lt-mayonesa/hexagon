@@ -1,7 +1,7 @@
 import setuptools
 
 # esto se actualiza solo con https://python-semantic-release.readthedocs.io/en/latest/index.html
-__version__ = "0.0.5"
+__version__ = "0.0.6"
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
