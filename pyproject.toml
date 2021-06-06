@@ -14,8 +14,10 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [tool.semantic_release]
+# ver https://python-semantic-release.readthedocs.io/en/latest/configuration.html
 branch = "main"
 version_variable = [
     'setup.py:__version__'
 ]
 upload_to_pypi = false
+commit_subject = "chore(release): {version}"

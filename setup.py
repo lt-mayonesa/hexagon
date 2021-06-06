@@ -10,7 +10,7 @@ setuptools.setup(
     name="hexagon",
     version=__version__,
     author="Joaco Campero",
-    author_email="joaquin@redbee.ioo",
+    author_email="joaquin@redbee.io",
     description="Una CLI para generar CLIs",
     long_description=long_description,
     long_description_content_type="text/markdown",
