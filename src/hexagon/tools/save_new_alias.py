@@ -5,7 +5,7 @@ from InquirerPy.validator import EmptyInputValidator
 from rich import print
 
 
-def save_new_alias(_):
+def save_new_alias(_, name: str = None, command: str = None):
     shell_ = os.environ['SHELL']
 
     shell_aliases = {
@@ -13,13 +13,16 @@ def save_new_alias(_):
         '/usr/bin/bash': f'{os.environ["HOME"]}/.bash_aliases'
     }
 
-    with open('last_command', 'r') as f:
-        last_command = f.read()
+    if command:
+        last_command = command
+    else:
+        with open('last_command', 'r') as f:
+            last_command = f.read()
 
     alias_name = inquirer.text(
         message=f"Ultimo comando: {last_command} ¿Qué alias querés crear?",
         validate=EmptyInputValidator("Es necesario ingresar un alias")
-    ).execute()
+    ).execute() if not name else name
 
     with open(shell_aliases[shell_], 'r+') as aliases_file:
         print(aliases_file.read())

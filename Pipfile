@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 inquirerpy = "*"
 rich = "*"
+pyyaml = "*"
+clipboard = "*"
+requests = "*"
 
 [dev-packages]
 

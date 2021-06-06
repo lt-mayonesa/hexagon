@@ -2,34 +2,48 @@ import os
 import sys
 
 import yaml
+from hexagon.cli.args import fill_args
+from hexagon.cli.tracer import tracer
+from hexagon.cli.wax import key_or_alias, select_env, select_tool
+from hexagon.tools.bastion import bastion
+from hexagon.tools.docker_registry import docker_registry
+from hexagon.tools.install_hexagon import install_hexagon
+from hexagon.tools.open_link import open_link
+from hexagon.tools.save_new_alias import save_new_alias
 from rich import print
-
-from src.hexagon.cli.args import fill_args
-from src.hexagon.cli.tracer import tracer
-from src.hexagon.cli.wax import key_or_alias, select_env, select_tool
-from src.hexagon.tools.bastion import bastion
-from src.hexagon.tools.docker_registry import docker_registry
-from src.hexagon.tools.open_link import open_link
-from src.hexagon.tools.save_new_alias import save_new_alias
 
 with open(os.getenv('HEXAGON_CONFIG_FILE', 'app.yaml'), 'r') as f:
     __config = yaml.load(f, Loader=yaml.CLoader)
 
-TOOLS = __config['tools']
-TOOLS['save-alias'] = {
-    'alias': 'sa',
-    'long_name': 'Save OS Alias',
-    'envs': {
-        '*': None
-    },
-    'action': 'save_new_alias'
+TOOLS = {
+    **__config['tools'],
+    **{
+        'save-alias': {
+            'alias': 'sa',
+            'long_name': 'Save OS Alias',
+            'type': 'hexagon',
+            'envs': {
+                '*': None
+            },
+            'action': 'save_new_alias'
+        },
+        'install': {
+            'long_name': 'Install Hexagon',
+            'type': 'hexagon',
+            'envs': {
+                '*': None
+            },
+            'action': 'install_hexagon'
+        }
+    }
 }
 
 ENVS = __config['envs']
 
 ACTIONS = {
-    'open_link': open_link,
     'save_new_alias': save_new_alias,
+    'install_hexagon': install_hexagon,
+    'open_link': open_link,
     'bastion': bastion,
     'docker_registry': docker_registry
 }
