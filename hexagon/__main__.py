@@ -92,7 +92,7 @@ def print_help():
     print('│   [bold]Todo Pago CLI')
     print('│')
     for k, v in TOOLS.items():
-        print(f'│   {k + " (" + v["alias"] + ")":<60}[dim]{v["long_name"]}')
+        print(f'│   {k + (" (" + v["alias"] + ")" if "alias" in v else ""):<60}[dim]{v["long_name"]}')
         if "description" in v:
             print(f'│   {"": <60}[dim]{v["description"]}')
             print('│')
