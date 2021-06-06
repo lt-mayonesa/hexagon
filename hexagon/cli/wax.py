@@ -51,6 +51,9 @@ def select_env(available_envs: dict, tool_envs: dict, selected):
     if selected:
         return selected, tool_envs[selected]
 
+    if not tool_envs:
+        return None, None
+
     if '*' in tool_envs:
         return None, tool_envs['*']
 

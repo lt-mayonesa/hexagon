@@ -20,20 +20,13 @@ TOOLS = {
     **__config['tools'],
     **{
         'save-alias': {
-            'alias': 'sa',
             'long_name': 'Save OS Alias',
             'type': 'hexagon',
-            'envs': {
-                '*': None
-            },
             'action': 'save_new_alias'
         },
         'install': {
             'long_name': 'Install Hexagon',
             'type': 'hexagon',
-            'envs': {
-                '*': None
-            },
             'action': 'install_hexagon'
         }
     }
@@ -65,7 +58,7 @@ def main():
     name, tool = select_tool(TOOLS, _tool)
     tracer.tracing(name)
 
-    env, params = select_env(ENVS, tool['envs'], _env)
+    env, params = select_env(ENVS, tool['envs'] if 'envs' in tool else None, _env)
     tracer.tracing(env)
 
     action = ACTIONS[tool['action']](params)
