@@ -1,13 +1,13 @@
-import os
-
 import setuptools
+
+__version__ = "0.0.5"
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="hexagon",
-    version=os.getenv("RELEASE_VERSION", "0.0.1"),
+    version=__version__,
     author="Joaco Campero",
     author_email="joaquin@redbee.ioo",
     description="Una CLI para generar CLIs",
@@ -22,8 +22,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    package_dir={"": "src"},
-    packages=setuptools.find_packages(where="src"),
+    packages=setuptools.find_packages(exclude=["tests", "tests.*"]),
     install_requires=[
         "inquirerpy",
         "rich",

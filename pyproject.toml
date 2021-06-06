@@ -12,3 +12,10 @@ requires = [
     "wheel"
 ]
 build-backend = "setuptools.build_meta"
+
+[tool.semantic_release]
+branch = "main"
+version_variable = [
+    'setup.py:__version__'
+]
+upload_to_pypi = false

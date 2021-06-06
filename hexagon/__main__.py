@@ -2,6 +2,8 @@ import os
 import sys
 
 import yaml
+from rich import print
+
 from hexagon.cli.args import fill_args
 from hexagon.cli.tracer import tracer
 from hexagon.cli.wax import key_or_alias, select_env, select_tool
@@ -10,7 +12,6 @@ from hexagon.tools.docker_registry import docker_registry
 from hexagon.tools.install_hexagon import install_hexagon
 from hexagon.tools.open_link import open_link
 from hexagon.tools.save_new_alias import save_new_alias
-from rich import print
 
 with open(os.getenv('HEXAGON_CONFIG_FILE', 'app.yaml'), 'r') as f:
     __config = yaml.load(f, Loader=yaml.CLoader)

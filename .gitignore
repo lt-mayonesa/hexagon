@@ -5,5 +5,4 @@
 /.pytest_cache/
 /build/
 /dist/
-/UNKNOWN.egg-info/
-/src/hexagon.egg-info/
+/hexagon.egg-info/
