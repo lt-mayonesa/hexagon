@@ -9,13 +9,13 @@ from hexagon.cli.tracer import tracer
 from hexagon.cli.wax import key_or_alias, select_env, select_tool
 from hexagon.tools.bastion import bastion
 from hexagon.tools.docker_registry import docker_registry
-from hexagon.tools.install_hexagon import install_hexagon
+from hexagon.tools.install_cli import install_cli
 from hexagon.tools.open_link import open_link
 from hexagon.tools.save_new_alias import save_new_alias
 
 ACTIONS = {
     'save_new_alias': save_new_alias,
-    'install_hexagon': install_hexagon,
+    'install_hexagon': install_cli,
     'open_link': open_link,
     'bastion': bastion,
     'docker_registry': docker_registry
