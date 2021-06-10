@@ -6,10 +6,10 @@ def tool_questions(choices):
         {
             'type': 'fuzzy',
             'name': 'tool',
-            'message': 'Hola, ¿qué herramienta querés usar hoy?',
+            'message': 'Hi, which tool would you like to use today?',
             'choices': choices,
             'validate': lambda x: x,
-            'invalid_message': 'seleccionar una herramienta valida'
+            'invalid_message': 'Please select a valid tool'
         }
     ]
 
@@ -19,10 +19,10 @@ def env_questions(choices):
         {
             'type': 'fuzzy',
             'name': 'env',
-            'message': '¿Para qué ambiente?',
+            'message': 'On which environment?',
             'choices': choices,
             'validate': lambda x: x,
-            'invalid_message': 'seleccionar un ambiente valido'
+            'invalid_message': 'Please select a valid environment'
         }
     ]
 
