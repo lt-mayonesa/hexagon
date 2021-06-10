@@ -38,33 +38,36 @@ def main():
         print('│ You should probably run "Install Hexagon".')
         print('│')
 
-    _tool = key_or_alias(tools, _tool)
-    _env = key_or_alias(envs, _env)
+    try:
+        _tool = key_or_alias(tools, _tool)
+        _env = key_or_alias(envs, _env)
 
-    name, tool = select_tool(tools, _tool)
-    tracer.tracing(name)
+        name, tool = select_tool(tools, _tool)
+        tracer.tracing(name)
 
-    env, params = select_env(envs, tool['envs'] if 'envs' in tool else None, _env)
-    tracer.tracing(env)
+        env, params = select_env(envs, tool['envs'] if 'envs' in tool else None, _env)
+        tracer.tracing(env)
 
-    action = ACTIONS[tool['action']](params)
+        action = ACTIONS[tool['action']](params)
 
-    print('│')
+        print('│')
 
-    if action:
-        for result in action:
-            print(result)
+        if action:
+            for result in action:
+                print(result)
 
-    print('╰╼')
+        print('╰╼')
 
-    if tracer.has_traced() and 'command' in cli_config:
-        print('[cyan dim]Para repetir este comando:[/cyan dim]')
-        print(f'[cyan]     {cli_config["command"]} {tracer.command()}[/cyan]')
-        print('[cyan dim]  o:[/cyan dim]')
-        print(f'[cyan]     {cli_config["command"]} {tracer.command_as_aliases(tools, envs)}[/cyan]')
-        dump = open('last_command', 'w')
-        dump.write(f'{cli_config["command"]} {tracer.command()}')
-        dump.close()
+        if tracer.has_traced() and 'command' in cli_config:
+            print('[cyan dim]Para repetir este comando:[/cyan dim]')
+            print(f'[cyan]     {cli_config["command"]} {tracer.command()}[/cyan]')
+            print('[cyan dim]  o:[/cyan dim]')
+            print(f'[cyan]     {cli_config["command"]} {tracer.command_as_aliases(tools, envs)}[/cyan]')
+            dump = open('last_command', 'w')
+            dump.write(f'{cli_config["command"]} {tracer.command()}')
+            dump.close()
+    except KeyboardInterrupt:
+        sys.exit(1)
 
 
 if __name__ == '__main__':
