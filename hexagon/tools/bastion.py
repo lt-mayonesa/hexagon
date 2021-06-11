@@ -9,7 +9,7 @@ from hexagon.cli.args import fill_args
 from hexagon.cli.tracer import tracer
 
 
-def bastion(bastion_env_name):
+def main(bastion_env_name):
     _, _tool, _env, _query = fill_args(sys.argv, 4)
 
     def choice(e):

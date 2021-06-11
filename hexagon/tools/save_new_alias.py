@@ -13,7 +13,7 @@ def __pretty_print_created_alias(aliases_file, file, lines_to_show=-10):
     print('\n┆')
 
 
-def save_new_alias(_, name: str = None, command: str = None):
+def main(_, name: str = None, command: str = None):
     shell_ = os.environ['SHELL']
 
     shell_aliases = {

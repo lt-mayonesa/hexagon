@@ -11,7 +11,7 @@ from hexagon.cli.args import fill_args
 from hexagon.cli.tracer import tracer
 
 
-def docker_registry(registry_host):
+def main(registry_host):
     _, _tool, _env, _image, _filter = fill_args(sys.argv, 5)
 
     with open(os.path.expanduser('~/.docker/config.json')) as config:

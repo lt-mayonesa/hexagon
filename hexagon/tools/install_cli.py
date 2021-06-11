@@ -20,7 +20,7 @@ class YamlFileValidator(PathValidator):
             )
 
 
-def install_cli(_):
+def main(_):
     src_path = inquirer.filepath(
         message="Where is your project's hexagon config file?",
         default=str(Path.cwd()),
