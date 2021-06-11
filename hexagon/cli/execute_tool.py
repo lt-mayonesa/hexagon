@@ -1,3 +1,4 @@
+import os
 import sys
 
 from rich import print
@@ -15,7 +16,8 @@ def __load_module(module):
 
 def register_external_tools(src: dict):
     if 'custom_tools_dir' in src:
-        sys.path.append(src['custom_tools_dir'])
+        config_dir = os.environ['HEXAGON_CONFIG_FILE'].replace('app.yaml', '').replace('app.yml', '')
+        sys.path.append(config_dir + src['custom_tools_dir'])
 
 
 def execute_action(action: str, args):
