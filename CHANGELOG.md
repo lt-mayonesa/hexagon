@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.3.0 (2021-06-11)
+### Feature
+* **prompt:** Sort tools by type ([`ef71eae`](https://github.com/redbeestudios/hexagon/commit/ef71eae1e2b5bb0b7b996efa5a1c694b52f31235))
+* **custom-tool:** Allow projects to register custom tools ([`1cac9ca`](https://github.com/redbeestudios/hexagon/commit/1cac9ca80e369f9c05c1dcc3363386d4af0d6828))
+
+### Documentation
+* **release:** Correct regex for README version ([`f9b973a`](https://github.com/redbeestudios/hexagon/commit/f9b973a514efc0370a32d5b95a515ed461a508c2))
+
 ## v0.2.0 (2021-06-10)
 ### Feature
 * Handle keyboard interrupt gracefully ([`a65daa2`](https://github.com/redbeestudios/hexagon/commit/a65daa26c3de305a2bacafe7f7a64f9295914c94))
