@@ -16,7 +16,7 @@ def init_config(path=None):
                 'long_name': 'Install CLI',
                 'description': 'Install a custom project CLI from a YAML file.',
                 'type': 'hexagon',
-                'action': 'install_hexagon'
+                'action': 'install_cli'
             }
         },
         'envs': {}

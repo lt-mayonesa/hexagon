@@ -29,4 +29,4 @@ def main(_):
 
     cli_config, tools, envs = init_config(src_path)
 
-    save_new_alias(None, name=cli_config['command'], command=f'HEXAGON_CONFIG_FILE={src_path} hexagon')
+    save_new_alias(cli_config['command'], f'HEXAGON_CONFIG_FILE={src_path} hexagon')
