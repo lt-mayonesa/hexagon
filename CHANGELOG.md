@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.0 (2021-06-11)
+### Feature
+* **config:** Custom tools dir relative to YAML ([`fe3e26b`](https://github.com/redbeestudios/hexagon/commit/fe3e26bd3598ece02e9fd06ae4397b14edce6947))
+
 ## v0.3.0 (2021-06-11)
 ### Feature
 * **prompt:** Sort tools by type ([`ef71eae`](https://github.com/redbeestudios/hexagon/commit/ef71eae1e2b5bb0b7b996efa5a1c694b52f31235))
