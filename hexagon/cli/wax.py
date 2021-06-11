@@ -34,7 +34,9 @@ def key_and_alias(dic):
 def choices_with_long_name(dic):
     return [{
         'value': k,
-        'name': f"{v['long_name']: <60}{v['description'] if 'description' in v else ''}" if 'long_name' in v else k
+        'name': f"{v['long_name']: <60}{v['description'] if 'description' in v else ''}" if 'long_name' in v else k,
+        'type': v['type'] if 'type' in v else 'misc'
+        # FIXME: this is a quick solution for sorting when tool.type is missing
     } for k, v in dic.items()]
 
 
@@ -63,5 +65,7 @@ def select_env(available_envs: dict, tool_envs: dict, selected):
 
 
 def select_tool(tools_dict: dict, selected):
-    name = selected or prompt(tool_questions(choices_with_long_name(tools_dict)))['tool']
+    choices = choices_with_long_name(tools_dict)
+    choices.sort(key=lambda x: x["type"], reverse=True)
+    name = selected or prompt(tool_questions(choices))['tool']
     return name, tools_dict[name]
