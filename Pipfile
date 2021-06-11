@@ -4,11 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-inquirerpy = "*"
-rich = "*"
-pyyaml = "*"
-clipboard = "*"
-requests = "*"
+hexagon = {editable = true, path = "."}
 
 [dev-packages]
 flake8 = "*"
