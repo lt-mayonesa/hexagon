@@ -5,7 +5,7 @@ Make your CLI
 
 ## Install
 ```bash
-python3 -m pip install https://github.com/redbeestudios/hexagon/releases/download/v{version}/hexagon-{version}.tar.gz
+python3 -m pip install https://github.com/redbeestudios/hexagon/releases/download/v__VERSION__/hexagon-__VERSION__.tar.gz
 ```
 
 ## Pre-requisites (dev):
@@ -13,7 +13,7 @@ python3 -m pip install https://github.com/redbeestudios/hexagon/releases/downloa
 ```bash
 # En caso de no tener instalado pipenv localmente
 pip install pipenv
-# Para crear un virtual environment (shell isolado, no interferimos con instalaciones locales de paquetes de Python).
+# Para crear un virtual environment (shell aislado, no interferimos con instalaciones locales de paquetes de Python).
 pipenv shell
 # Para instalar las dependencias
 pipenv install
