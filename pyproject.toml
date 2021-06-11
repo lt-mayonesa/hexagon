@@ -20,7 +20,7 @@ version_variable = [
     'setup.py:__version__'
 ]
 version_pattern = [
-    'README.md:(__VERSION__)'
+    'README.md:{version}'
 ]
 upload_to_pypi = false
 commit_subject = "chore(release): {version}"

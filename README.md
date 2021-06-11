@@ -1,11 +1,13 @@
 # hexagon
 Make your CLI
 
+[![build](https://github.com/redbeestudios/hexagon/actions/workflows/python-package.yml/badge.svg)](https://github.com/redbeestudios/hexagon/actions/workflows/python-package.yml)
+
 ---
 
 ## Install
 ```bash
-python3 -m pip install https://github.com/redbeestudios/hexagon/releases/download/v__VERSION__/hexagon-__VERSION__.tar.gz
+python3 -m pip install https://github.com/redbeestudios/hexagon/releases/download/v0.2.0/hexagon-0.2.0.tar.gz
 ```
 
 ## Pre-requisites (dev):
