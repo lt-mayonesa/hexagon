@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.1 (2021-06-11)
+### Fix
+* **install:** Wrong action definition for tool install ([`425dfd3`](https://github.com/redbeestudios/hexagon/commit/425dfd349da6c60361ef69839752126632c67bd7))
+
 ## v0.4.0 (2021-06-11)
 ### Feature
 * **config:** Custom tools dir relative to YAML ([`fe3e26b`](https://github.com/redbeestudios/hexagon/commit/fe3e26bd3598ece02e9fd06ae4397b14edce6947))
