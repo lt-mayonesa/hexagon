@@ -25,7 +25,7 @@ def main():
 
     if cli_config['name'] == 'Hexagon':
         print('│ This looks like your first time running Hexagon.')
-        print('│ You should probably run "Install Hexagon".')
+        print('│ You should probably run "Install CLI".')
         print('│')
 
     try:
