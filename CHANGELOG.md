@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.5.0 (2021-06-12)
+### Feature
+* **config:** Only show install cli when no config ([`9413f99`](https://github.com/redbeestudios/hexagon/commit/9413f99ffa23f562f68acddfe99c73e817e74e3e))
+
+### Fix
+* Allow for tools with no alias ([`eb25e89`](https://github.com/redbeestudios/hexagon/commit/eb25e8976581bc9f39852b93444c91b6a074210f))
+
 ## v0.4.1 (2021-06-11)
 ### Fix
 * **install:** Wrong action definition for tool install ([`425dfd3`](https://github.com/redbeestudios/hexagon/commit/425dfd349da6c60361ef69839752126632c67bd7))
