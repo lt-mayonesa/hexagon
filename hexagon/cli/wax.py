@@ -1,71 +1,69 @@
-from InquirerPy import prompt
+from InquirerPy import inquirer
 
 
-def tool_questions(choices):
-    return [
-        {
-            'type': 'fuzzy',
-            'name': 'tool',
-            'message': 'Hi, which tool would you like to use today?',
-            'choices': choices,
-            'validate': lambda x: x,
-            'invalid_message': 'Please select a valid tool'
+def __choices_with_long_name(dic):
+    def classifier(value):
+        symbols = {
+            'web': u'⦾',
+            'shell': u'ƒ',
+            'misc': ' ',
+            'hexagon': u'⬡'
         }
-    ]
+        r = symbols.get(value.get('type', 'misc'), '')
+        return f'{r:2}' if r else ''
 
+    def build_display(v, k):
+        if '__separator' in k:
+            return '--------------------------------------------------------------------------------'
+        else:
+            return f"{classifier(v) + v['long_name']: <60}{v.get('description', '')}" if 'long_name' in v else k
 
-def env_questions(choices):
-    return [
-        {
-            'type': 'fuzzy',
-            'name': 'env',
-            'message': 'On which environment?',
-            'choices': choices,
-            'validate': lambda x: x,
-            'invalid_message': 'Please select a valid environment'
-        }
-    ]
-
-
-def key_and_alias(dic):
-    return [[k, v['alias']] for k, v in dic.items()]
-
-
-def choices_with_long_name(dic):
     return [{
         'value': k,
-        'name': f"{v['long_name']: <60}{v['description'] if 'description' in v else ''}" if 'long_name' in v else k,
-        'type': v['type'] if 'type' in v else 'misc'
-        # FIXME: this is a quick solution for sorting when tool.type is missing
+        'name': build_display(v, k)
     } for k, v in dic.items()]
 
 
-def key_or_alias(dic, arg):
+def search_by_key_or_alias(dic, arg):
     if arg:
         for k, v in dic.items():
-            if k == arg or v['alias'] == arg:
+            if k == arg or v.get('alias') == arg:
                 return k
 
     return None
 
 
-def select_env(available_envs: dict, tool_envs: dict, selected):
-    if selected:
-        return selected, tool_envs[selected]
-
+def select_env(available_envs: dict, tool_envs: dict = None, selected=None):
     if not tool_envs:
         return None, None
 
     if '*' in tool_envs:
         return None, tool_envs['*']
 
+    if selected:
+        return selected, tool_envs[selected]
+
     qs = {k: available_envs[k] for k in tool_envs.keys()}
-    env = prompt(env_questions(choices_with_long_name(qs)))['env']
+
+    env = inquirer.fuzzy(
+        message='On which environment?',
+        choices=__choices_with_long_name(qs),
+        validate=lambda x: x and '__separator' not in x,
+        invalid_message='Please select a valid environment'
+    ).execute()
+
     return env, tool_envs[env]
 
 
-def select_tool(tools_dict: dict, selected):
-    choices = choices_with_long_name(tools_dict)
-    choices.sort(key=lambda x: x["type"], reverse=True)
-    name = selected or prompt(tool_questions(choices))['tool']
+def select_tool(tools_dict: dict, selected=None):
+    if selected:
+        return selected, tools_dict[selected]
+
+    name = inquirer.fuzzy(
+        message='Hi, which tool would you like to use today?',
+        choices=__choices_with_long_name(tools_dict),
+        validate=lambda x: x and '__separator' not in x,
+        invalid_message='Please select a valid tool'
+    ).execute()
+
     return name, tools_dict[name]

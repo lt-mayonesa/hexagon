@@ -7,7 +7,7 @@ from hexagon.cli.config import init_config
 from hexagon.cli.execute_tool import register_external_tools, execute_action
 from hexagon.cli.help import print_help
 from hexagon.cli.tracer import tracer
-from hexagon.cli.wax import key_or_alias, select_env, select_tool
+from hexagon.cli.wax import search_by_key_or_alias, select_env, select_tool
 
 
 def main():
@@ -29,8 +29,8 @@ def main():
         print('│')
 
     try:
-        _tool = key_or_alias(tools, _tool)
-        _env = key_or_alias(envs, _env)
+        _tool = search_by_key_or_alias(tools, _tool)
+        _env = search_by_key_or_alias(envs, _env)
 
         name, tool = select_tool(tools, _tool)
         tracer.tracing(name)
