@@ -5,7 +5,7 @@ from InquirerPy.validator import PathValidator
 from prompt_toolkit.validation import ValidationError
 
 from hexagon.cli.config import init_config
-from hexagon.tools.save_new_alias import save_new_alias
+from hexagon.tools.internal.save_new_alias import save_new_alias
 
 
 class YamlFileValidator(PathValidator):
