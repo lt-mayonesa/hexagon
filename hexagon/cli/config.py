@@ -1,6 +1,6 @@
 import os
 
-import yaml
+from ruamel.yaml import YAML
 
 
 def init_config(path=None):
@@ -10,7 +10,12 @@ def init_config(path=None):
             'save-alias': {
                 'long_name': 'Save Last Command as Linux Alias',
                 'type': 'hexagon',
-                'action': 'save_new_alias'
+                'action': 'hexagon.tools.internal.save_new_alias'
+            },
+            'create-tool': {
+                'long_name': 'Create A New Tool',
+                'type': 'hexagon',
+                'action': 'hexagon.tools.internal.create_new_tool'
             }
         },
         'envs': {}
@@ -18,7 +23,7 @@ def init_config(path=None):
     try:
         src = path if path else os.getenv('HEXAGON_CONFIG_FILE', 'app.yaml')
         with open(src, 'r') as f:
-            __config = yaml.load(f, Loader=yaml.CLoader)
+            __config = YAML().load(f)
     except FileNotFoundError:
         return __initial_setup_config()
 

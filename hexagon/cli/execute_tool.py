@@ -17,15 +17,16 @@ def execute_action(action_id: str, args):
 
     if not tool_action_module:
         print(f'[red]Hexagon did not find the action [bold]{action_id}')
-        print(f'[red][dim]We checked:')
-        print(f'[red][dim]     - Your CLI\'s custom_tools_dir')
-        print(f'[red][dim]     - Hexagon repository of externals tools (hexagon.tools.external)')
+        print('[red][dim]We checked:')
+        print('[red][dim]     - Your CLI\'s custom_tools_dir')
+        print('[red][dim]     - Hexagon repository of externals tools (hexagon.tools.external)')
         sys.exit(1)
 
     try:
         tool_action_module.main(args)
-    except AttributeError:
-        print(f'[red]Tool {action_id} does not have the required `main(args...)` function.')
+    except AttributeError as e:
+        print(f'[red]Execution of tool [bold]{action_id}[/bold] thru: {e}')
+        print('[red]Does it have the required `main(args...)` method?')
         sys.exit(1)
 
 

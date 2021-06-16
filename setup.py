@@ -27,9 +27,9 @@ setuptools.setup(
     install_requires=[
         "inquirerpy",
         "rich",
-        "pyyaml",
         "clipboard",
         "requests",
+        "ruamel.yaml",
     ],
     python_requires=">=3.6",
     entry_points='''
