@@ -2,6 +2,17 @@
 
 <!--next-version-placeholder-->
 
+## v0.6.0 (2021-06-16)
+### Feature
+* **internal-tools:** Create a new tool ([`dfc13aa`](https://github.com/redbeestudios/hexagon/commit/dfc13aacf77ec17ba735a519dd4bfbce29047731))
+
+### Fix
+* **wax:** Make classifier optional ([`4e8ff5b`](https://github.com/redbeestudios/hexagon/commit/4e8ff5bce035883b49a21f062c4a543529983f69))
+* **create-tool:** Change ordering of YAML key insert ([`1ce6024`](https://github.com/redbeestudios/hexagon/commit/1ce6024b06f6b6cfbf0b0af8db6d6703a79efd35))
+* **help:** Support tools with no long_name ([`46c0f89`](https://github.com/redbeestudios/hexagon/commit/46c0f896dfb63288b3662b8d08499c6c66998b47))
+* **wax:** Show classifier when no long_name ([`bc8a485`](https://github.com/redbeestudios/hexagon/commit/bc8a485ced377d6ddd78ae7617a6fc1f6d2ad889))
+* **execute:** Fail with custom message when action not found ([`5ea46f2`](https://github.com/redbeestudios/hexagon/commit/5ea46f21aa69dfd5de615d67ac823034b6854ac4))
+
 ## v0.5.0 (2021-06-12)
 ### Feature
 * **config:** Only show install cli when no config ([`9413f99`](https://github.com/redbeestudios/hexagon/commit/9413f99ffa23f562f68acddfe99c73e817e74e3e))
