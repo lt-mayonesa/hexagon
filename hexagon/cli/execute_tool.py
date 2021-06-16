@@ -1,3 +1,4 @@
+import importlib
 import os
 import sys
 
@@ -36,9 +37,7 @@ def _load_action_module(action_id):
 
 
 def __load_module(module):
-    module_path = module
+    if module in sys.modules:
+        return sys.modules[module]
 
-    if module_path in sys.modules:
-        return sys.modules[module_path]
-
-    return __import__(module_path, fromlist=[module])
+    return importlib.import_module(module)
