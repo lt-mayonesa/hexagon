@@ -72,9 +72,9 @@ def test_tool_is_selected_by_prompt(monkeypatch, tool_mock):
     assert select_tool(tools_dict) == ('docker', {'alias': 'd'})
     assert tool_mock.args[0] == 'Hi, which tool would you like to use today?'
     assert tool_mock.args[1] == [
-        {'value': 'docker', 'name': 'docker'},
-        {'value': 'bastion', 'name': 'bastion'},
-        {'value': 'no_alias', 'name': 'no_alias'},
+        {'value': 'docker', 'name': '  docker'},
+        {'value': 'bastion', 'name': '  bastion'},
+        {'value': 'no_alias', 'name': '  no_alias'},
     ]
     assert tool_mock.args[3] == 'Please select a valid tool'
 

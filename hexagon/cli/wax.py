@@ -1,22 +1,24 @@
 from InquirerPy import inquirer
 
 
-def __choices_with_long_name(dic):
-    def classifier(value):
-        symbols = {
-            'web': u'⦾',
-            'shell': u'ƒ',
-            'misc': ' ',
-            'hexagon': u'⬡'
-        }
-        r = symbols.get(value.get('type', 'misc'), '')
-        return f'{r:2}' if r else ''
+def __classifier(value):
+    symbols = {
+        'web': u'⦾',
+        'shell': u'ƒ',
+        'misc': ' ',
+        'hexagon': u'⬡'
+    }
+    r = symbols.get(value.get('type', 'misc'), '')
+    return f'{r:2}' if r else ''
 
+
+def __choices_with_long_name(dic, classifier=lambda x: ''):
     def build_display(v, k):
         if '__separator' in k:
             return '--------------------------------------------------------------------------------'
         else:
-            return f"{classifier(v) + v.get('long_name', k): <60}{v.get('description', '')}"
+            gap = 60 if 'description' in v else 0
+            return f"{classifier(v) + v.get('long_name', k): <{gap}}{v.get('description', '')}"
 
     return [{
         'value': k,
@@ -61,7 +63,7 @@ def select_tool(tools_dict: dict, selected=None):
 
     name = inquirer.fuzzy(
         message='Hi, which tool would you like to use today?',
-        choices=__choices_with_long_name(tools_dict),
+        choices=__choices_with_long_name(tools_dict, classifier=__classifier),
         validate=lambda x: x and '__separator' not in x,
         invalid_message='Please select a valid tool'
     ).execute()
