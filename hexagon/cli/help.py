@@ -41,7 +41,7 @@ def print_help(cli_config: dict, tools: dict, envs: dict):
         print(f'│ [bold]{gk}:')
 
         for k, v in g:
-            print(f'│   {k + (" (" + v["alias"] + ")" if "alias" in v else ""):<60}[dim]{v["long_name"]}')
+            print(f'│   {k + (" (" + v["alias"] + ")" if "alias" in v else ""):<60}[dim]{v.get("long_name", "")}')
             if "description" in v:
                 print(f'│   {"": <60}[dim]{v["description"]}')
                 print('│')
