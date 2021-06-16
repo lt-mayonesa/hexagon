@@ -16,7 +16,7 @@ def __choices_with_long_name(dic):
         if '__separator' in k:
             return '--------------------------------------------------------------------------------'
         else:
-            return f"{classifier(v) + v['long_name']: <60}{v.get('description', '')}" if 'long_name' in v else k
+            return f"{classifier(v) + v.get('long_name', k): <60}{v.get('description', '')}"
 
     return [{
         'value': k,
