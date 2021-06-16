@@ -65,7 +65,7 @@ def main(_):
                     default='.',
                     validate=PathValidator(is_dir=True, message="Please select a valid directory")
                 ).execute()
-                config_file['cli']['custom_tools_dir'] = src_path
+                config_file['cli'].insert(0, 'custom_tools_dir', src_path, 'relative to this file')
             else:
                 src_path = config_file['cli']['custom_tools_dir']
 
@@ -80,7 +80,7 @@ def main(_):
 
 def _add_tool(command, config_file, output):
     config_file['tools'].insert(
-        len(config_file['tools']) + 1, command, {k: v for k, v in output.items() if v != ''})
+        len(config_file['tools']), command, {k: v for k, v in output.items() if v != ''})
     config_file['tools'].yaml_set_comment_before_after_key(command, before='\n')
 
 
