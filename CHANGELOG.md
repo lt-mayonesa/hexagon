@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.0 (2021-06-17)
+### Feature
+* **execute:** Execute action with extension ([`fe622a8`](https://github.com/redbeestudios/hexagon/commit/fe622a8942d91eb3c2f5c9cbe88d1aac22f1ea0f))
+
 ## v0.6.0 (2021-06-16)
 ### Feature
 * **internal-tools:** Create a new tool ([`dfc13aa`](https://github.com/redbeestudios/hexagon/commit/dfc13aacf77ec17ba735a519dd4bfbce29047731))

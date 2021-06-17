@@ -7,7 +7,7 @@ Make your CLI
 
 ## Install
 ```bash
-python3 -m pip install https://github.com/redbeestudios/hexagon/releases/download/v0.6.0/hexagon-0.6.0.tar.gz
+python3 -m pip install https://github.com/redbeestudios/hexagon/releases/download/v0.7.0/hexagon-0.7.0.tar.gz
 ```
 
 ## Pre-requisites (dev):
