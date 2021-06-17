@@ -21,12 +21,15 @@ def execute_action(action_id: str, args):
 
     if action:
         action(action_id, args)
-    elif __has_no_extension(action_id):
+    elif _is_internal_action(action_id) or __has_no_extension(action_id):
         _execute_python_module(action_id, args)
     else:
         print(f'[red]Executor for extension [bold]{ext}[/bold] not known [dim](supported: .js, .sh).')
         sys.exit(1)
 
+
+def _is_internal_action(action_id):
+  return 'hexagon.tools.internal.' in action_id
 
 def __has_no_extension(action_id):
     return action_id.count('.') == 0

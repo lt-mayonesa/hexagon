@@ -2,6 +2,7 @@ import os
 
 from ruamel.yaml import YAML
 
+CONFIG_FILE_ENV_VARIABLE_NAME = 'HEXAGON_CONFIG_FILE'
 
 class Configuration:
 
@@ -10,7 +11,9 @@ class Configuration:
         self.__config = None
 
     def init_config(self, path):
-        self.project_path = os.environ['HEXAGON_CONFIG_FILE'].replace('app.yaml', '').replace('app.yml', '')
+        if CONFIG_FILE_ENV_VARIABLE_NAME in os.environ:
+          self.project_path = os.environ[CONFIG_FILE_ENV_VARIABLE_NAME].replace('app.yaml', '').replace('app.yml', '')
+
         __defaults = {
             'cli': {'name': 'Hexagon'},
             'tools': {
@@ -59,7 +62,7 @@ class Configuration:
                     'long_name': 'Install CLI',
                     'description': 'Install a custom project CLI from a YAML file.',
                     'type': 'hexagon',
-                    'action': 'install_cli'
+                    'action': 'hexagon.tools.internal.install_cli'
                 }
             },
             {}

@@ -3,8 +3,8 @@ from pathlib import Path
 from InquirerPy import inquirer
 from InquirerPy.validator import PathValidator
 from prompt_toolkit.validation import ValidationError
+from ruamel.yaml import YAML
 
-from hexagon.cli.config import init_config
 from hexagon.tools.internal.save_new_alias import save_new_alias
 
 
@@ -27,6 +27,7 @@ def main(_):
         validate=YamlFileValidator(is_file=True, message="Please select a valid YAML file")
     ).execute()
 
-    cli_config, tools, envs = init_config(src_path)
+    with open(src_path, 'r') as f:
+      command = YAML().load(f)['cli']['command']    
 
-    save_new_alias(cli_config['command'], f'HEXAGON_CONFIG_FILE={src_path} hexagon')
+    save_new_alias(command, f'HEXAGON_CONFIG_FILE={src_path} hexagon')
