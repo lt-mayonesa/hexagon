@@ -25,8 +25,7 @@ def save_new_alias(alias_name, command):
         '/usr/bin/bash': f'{os.environ["HOME"]}/.bash_aliases'
     }
 
-    with open(shell_aliases[shell_], 'r+') as aliases_file:
-        aliases_file.read()
+    with open(shell_aliases[shell_], 'a+') as aliases_file:
         aliases_file.write(
             '\n'
             '# added by hexagon\n'
