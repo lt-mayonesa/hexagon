@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.2 (2021-06-19)
+### Fix
+* **save-alias:** Create aliases file if does not exist ([`9055055`](https://github.com/redbeestudios/hexagon/commit/9055055c8def45fc1b84c5b13388be50e259f86a))
+
+### Documentation
+* Yaml example in readme ([`86c28d1`](https://github.com/redbeestudios/hexagon/commit/86c28d126535e3fb6cd229b623666666aa0e1bd3))
+
 ## v0.7.1 (2021-06-17)
 ### Fix
 * **execute:** Run install_cli and other internal tools ([#2](https://github.com/redbeestudios/hexagon/issues/2)) ([`71cc90b`](https://github.com/redbeestudios/hexagon/commit/71cc90b9493332825f78163854422db5d2ec493d))
