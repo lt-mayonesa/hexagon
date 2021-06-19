@@ -35,3 +35,38 @@ pytest -svv tests/
 ```
 
 ---
+
+## Example CLI YAML
+
+```yaml
+cli:
+  custom_tools_dir: .  # relative to this file
+  name: Test CLI
+  command: tc
+
+envs:
+  dev:
+    alias: d
+  qa:
+    alias: q
+
+tools:
+
+  google:
+    alias: g
+    long_name: Google
+    description: Abrir google
+    type: web
+    envs:
+      dev: google.dev
+      qa: google.qa
+    action: open_link
+
+  docker-registry:
+    alias: dr
+    long_name: Docker Registry
+    type: shell
+    envs:
+      dev: registry.dev.redbee.io
+    action: docker_registry
+```
