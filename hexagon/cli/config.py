@@ -4,15 +4,18 @@ from ruamel.yaml import YAML
 
 CONFIG_FILE_ENV_VARIABLE_NAME = 'HEXAGON_CONFIG_FILE'
 
+
 class Configuration:
 
     def __init__(self, path: str = None):
         self.project_path = path
+        self.project_yaml = None
         self.__config = None
 
     def init_config(self, path):
         if CONFIG_FILE_ENV_VARIABLE_NAME in os.environ:
-          self.project_path = os.environ[CONFIG_FILE_ENV_VARIABLE_NAME].replace('app.yaml', '').replace('app.yml', '')
+            self.project_yaml = os.environ[CONFIG_FILE_ENV_VARIABLE_NAME]
+            self.project_path = self.project_yaml.replace('app.yaml', '').replace('app.yml', '')
 
         __defaults = {
             'cli': {'name': 'Hexagon'},
@@ -38,20 +41,33 @@ class Configuration:
 
         return (
             {
-                **__defaults["cli"],
-                **self.__config["cli"]
+                **__defaults['cli'],
+                **self.__config['cli']
             },
-            {**self.__add_hexagon_tools(__defaults)},
             {
-                **__defaults["envs"],
+                **self.__config['tools'],
+                **__defaults['tools']
+            },
+            {
+                **__defaults['envs'],
                 **self.__config['envs']
             }
         )
 
-    def __add_hexagon_tools(self, __defaults):
-        tools = self.__config['tools']
-        tools.update(__defaults['tools'])
-        return tools
+    def refresh(self):
+        return self.init_config(self.project_yaml)
+
+    def save(self):
+        with open(self.project_yaml, 'w') as f:
+            YAML().dump(self.__config, f)
+        return self.__config['cli'], self.__config['tools'], self.__config['envs']
+
+    def add_tool(self, command, config):
+        self.__config['tools'].insert(len(self.__config['tools']), command, config)
+        self.__config['tools'].yaml_set_comment_before_after_key(command, before='\n')
+
+    def set(self, key, value, comment=None, position=0):
+        self.__config['cli'].insert(position, key, value, comment)
 
     @staticmethod
     def __initial_setup_config():
