@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.3 (2021-06-22)
+### Fix
+* **tracer:** Do not print alias for internal tools ([`5d798fe`](https://github.com/redbeestudios/hexagon/commit/5d798fe1d49b12b36bcf74decc1765468c888422))
+
 ## v0.7.2 (2021-06-19)
 ### Fix
 * **save-alias:** Create aliases file if does not exist ([`9055055`](https://github.com/redbeestudios/hexagon/commit/9055055c8def45fc1b84c5b13388be50e259f86a))
