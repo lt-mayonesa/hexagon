@@ -49,8 +49,10 @@ def main():
         if tracer.has_traced() and 'command' in cli:
             print('[cyan dim]Para repetir este comando:[/cyan dim]')
             print(f'[cyan]     {cli["command"]} {tracer.command()}[/cyan]')
-            print('[cyan dim]  o:[/cyan dim]')
-            print(f'[cyan]     {cli["command"]} {tracer.command_as_aliases(tools, envs)}[/cyan]')
+            command_as_aliases = tracer.command_as_aliases(tools, envs)
+            if command_as_aliases:
+                print('[cyan dim]  o:[/cyan dim]')
+                print(f'[cyan]     {cli["command"]} {command_as_aliases}[/cyan]')
             dump = open('last_command', 'w')
             dump.write(f'{cli["command"]} {tracer.command()}')
             dump.close()

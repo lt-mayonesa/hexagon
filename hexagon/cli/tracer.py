@@ -19,9 +19,12 @@ class Tracer:
         if len(self.trace) < 1:
             return ""
 
-        _tool_alias = tools_dict[self.trace[:1][0]]["alias"]
+        _tool_alias = tools_dict[self.trace[:1][0]].get('alias')
+        if not _tool_alias:
+            return None
+
         try:
-            al = envs_dict.get(self.trace[1:2][0], {}).get("alias")
+            al = envs_dict.get(self.trace[1:2][0], {}).get('alias')
             _env_alias = [al] if al else []
         except IndexError:
             _env_alias = []
