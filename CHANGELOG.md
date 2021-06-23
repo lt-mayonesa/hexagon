@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.4 (2021-06-23)
+### Fix
+* **create-tool:** Templates directory not published ([`0f1e85c`](https://github.com/redbeestudios/hexagon/commit/0f1e85c45969d1f1f5cd7ab9dbb0b4018f9a8243))
+
 ## v0.7.3 (2021-06-22)
 ### Fix
 * **tracer:** Do not print alias for internal tools ([`5d798fe`](https://github.com/redbeestudios/hexagon/commit/5d798fe1d49b12b36bcf74decc1765468c888422))
