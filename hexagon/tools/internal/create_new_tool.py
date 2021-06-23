@@ -64,8 +64,10 @@ def main(_):
         else:
             src_path = cli['custom_tools_dir']
 
-        copytree(f'{os.path.dirname(__file__)}/../../cli/__templates/custom_tool', f"{src_path}/{command}")
-        _replace_variables(f"{src_path}/{command}/README.md", '{{tool}}', output.get('long_name', command))
+        copytree(os.path.join(os.path.dirname(__file__), '..', '..', 'cli', '__templates', 'custom_tool'),
+                 os.path.join(src_path, output['action']))
+        _replace_variables(os.path.join(src_path, output['action'], 'README.md'), '{{tool}}',
+                           output.get('long_name', command))
 
     configuration.add_tool(command, {k: v for k, v in output.items() if v != ''})
 
