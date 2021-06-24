@@ -1,0 +1,12 @@
+cli: 
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+tools:
+  google:
+    long_name: Google
+    type: web
+    action: 'open_link'
+    envs:
+      '*': https://www.google.com/
+envs: {}

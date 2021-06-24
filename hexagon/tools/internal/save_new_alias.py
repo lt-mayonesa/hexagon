@@ -18,11 +18,12 @@ def main(_):
 
 
 def save_new_alias(alias_name, command):
-    shell_ = os.environ['SHELL']
+    shell_ = os.environ['HEXAGON_TEST_SHELL'] if 'HEXAGON_TEST_SHELL' in os.environ else os.environ['SHELL']
 
     shell_aliases = {
         '/usr/bin/zsh': f'{os.environ["HOME"]}/.oh-my-zsh/custom/aliases.zsh',
-        '/usr/bin/bash': f'{os.environ["HOME"]}/.bash_aliases'
+        '/usr/bin/bash': f'{os.environ["HOME"]}/.bash_aliases',
+        'HEXAGON_TEST_SHELL': 'home-aliases.txt'
     }
 
     with open(shell_aliases[shell_], 'a+') as aliases_file:
