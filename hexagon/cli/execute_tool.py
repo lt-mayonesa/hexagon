@@ -29,15 +29,16 @@ def execute_action(action_id: str, args):
 
 
 def _is_internal_action(action_id):
-  return 'hexagon.tools.internal.' in action_id
+    return 'hexagon.tools.internal.' in action_id
+
 
 def __has_no_extension(action_id):
     return action_id.count('.') == 0
 
 
 def _execute_python_module(action_id, args):
-    tool_action_module = _load_action_module(action_id) or \
-                         _load_action_module(f'hexagon.tools.external.{action_id}')
+    tool_action_module = _load_action_module(action_id) or _load_action_module(f'hexagon.tools.external.{action_id}')
+
     if not tool_action_module:
         print(f'[red]Hexagon did not find the action [bold]{action_id}')
         print('[red][dim]We checked:')
