@@ -35,7 +35,7 @@ def test_install_cli():
     ])
     write_to_process(process, '\n')
     assert_process_output(process, [
-        'Hi, which tool would you like to use today?[0;38;5;75m ⬡ Install CLI',
+        ['Hi, which tool would you like to use today?', 'Install CLI'],
         '',
         '',
         'Where is your project\'s hexagon config file?',
