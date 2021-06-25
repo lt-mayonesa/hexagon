@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.6 (2021-06-25)
+### Fix
+* **create-tool:** __templates dir and custom tools path ([#9](https://github.com/redbeestudios/hexagon/issues/9)) ([`5ebde69`](https://github.com/redbeestudios/hexagon/commit/5ebde697b840e5da0ea62341ef22831ecc53a50d))
+
 ## v0.7.5 (2021-06-25)
 ### Fix
 * **save-alias:** Bash on fresh install ([#8](https://github.com/redbeestudios/hexagon/issues/8)) ([`1754d2c`](https://github.com/redbeestudios/hexagon/commit/1754d2c02fde3231a142bc2fa51c344eef390e37))
