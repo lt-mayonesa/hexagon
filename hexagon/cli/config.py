@@ -1,4 +1,5 @@
 import os
+import sys
 
 from ruamel.yaml import YAML
 
@@ -10,12 +11,12 @@ class Configuration:
     def __init__(self, path: str = None):
         self.project_path = path
         self.project_yaml = None
+        self.custom_tools_path = None
         self.__config = None
 
-    def init_config(self, path):
-        if CONFIG_FILE_ENV_VARIABLE_NAME in os.environ:
-            self.project_yaml = os.environ[CONFIG_FILE_ENV_VARIABLE_NAME]
-            self.project_path = self.project_yaml.replace('app.yaml', '').replace('app.yml', '')
+    def init_config(self, path: str):
+        self.project_yaml = path
+        self.project_path = os.path.dirname(self.project_yaml)
 
         __defaults = {
             'cli': {'name': 'Hexagon'},
@@ -36,6 +37,8 @@ class Configuration:
         try:
             with open(path, 'r') as f:
                 self.__config = YAML().load(f)
+                if 'custom_tools_dir' in self.__config['cli']:
+                    self.__register_custom_tools_path()
         except FileNotFoundError:
             return self.__initial_setup_config()
 
@@ -66,8 +69,14 @@ class Configuration:
         self.__config['tools'].insert(len(self.__config['tools']), command, config)
         self.__config['tools'].yaml_set_comment_before_after_key(command, before='\n')
 
-    def set(self, key, value, comment=None, position=0):
-        self.__config['cli'].insert(position, key, value, comment)
+    def update_custom_tools_path(self, value, comment=None, position=0):
+        self.__config['cli'].insert(position, 'custom_tools_dir', value, comment)
+        self.__register_custom_tools_path()
+
+    def __register_custom_tools_path(self):
+        self.custom_tools_path = os.path.abspath(
+            os.path.join(self.project_path, self.__config['cli']['custom_tools_dir']))
+        sys.path.append(self.custom_tools_path)
 
     @staticmethod
     def __initial_setup_config():
@@ -86,4 +95,4 @@ class Configuration:
 
 
 configuration = Configuration()
-cli, tools, envs = configuration.init_config(os.getenv('HEXAGON_CONFIG_FILE', 'app.yaml'))
+cli, tools, envs = configuration.init_config(os.getenv(CONFIG_FILE_ENV_VARIABLE_NAME, 'app.yaml'))

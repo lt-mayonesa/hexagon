@@ -4,12 +4,7 @@ import sys
 
 from rich import print
 
-from hexagon.cli.config import cli, configuration
-
-
-def register_external_tools():
-    if 'custom_tools_dir' in cli:
-        sys.path.append(configuration.project_path + cli['custom_tools_dir'])
+from hexagon.cli.config import configuration
 
 
 def execute_action(action_id: str, args):
@@ -42,7 +37,7 @@ def _execute_python_module(action_id, args):
     if not tool_action_module:
         print(f'[red]Hexagon did not find the action [bold]{action_id}')
         print('[red][dim]We checked:')
-        print('[red][dim]     - Your CLI\'s custom_tools_dir')
+        print(f'[red][dim]     - Your CLI\'s custom_tools_dir: [bold]{configuration.custom_tools_path}')
         print('[red][dim]     - Hexagon repository of externals tools (hexagon.tools.external)')
         sys.exit(1)
     try:

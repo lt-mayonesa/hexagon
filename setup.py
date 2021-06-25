@@ -23,7 +23,8 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    packages=setuptools.find_packages(exclude=["tests", "tests.*"]),
+    packages=setuptools.find_packages(exclude=["tests", "tests.*", "e2e", "e2e.*"]),
+    package_data={"": ["*.md"]},
     install_requires=[
         "inquirerpy",
         "rich",

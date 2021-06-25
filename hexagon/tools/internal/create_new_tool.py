@@ -3,6 +3,7 @@ from shutil import copytree
 
 from InquirerPy import inquirer
 from InquirerPy.validator import PathValidator
+from rich import print
 
 from hexagon.cli.config import configuration
 from hexagon.tools import external
@@ -53,20 +54,22 @@ def main(_):
     cli, tools, _ = configuration.refresh()
 
     if create_action:
-        if 'custom_tools_dir' not in cli:
-            src_path = inquirer.filepath(
-                message="Your CLI does not have a custom tools dir."
-                        "Where would you like it to be? (can be absolute path or relative to YAML)",
-                default='.',
-                validate=PathValidator(is_dir=True, message="Please select a valid directory")
-            ).execute()
-            configuration.set('custom_tools_dir', src_path, comment='relative to this file')
-        else:
-            src_path = cli['custom_tools_dir']
+        if not configuration.custom_tools_path:
+            print('│ [magenta]Your CLI does not have a custom tools dir.')
+            configuration.update_custom_tools_path(
+                inquirer.filepath(
+                    message='Where would you like it to be? '
+                            '(can be absolute path or relative to YAML. ie: ./tools or .)',
+                    default='.',
+                    validate=PathValidator(is_dir=True, message='Please select a valid directory')
+                ).execute(),
+                comment='relative to this file')
 
-        copytree(os.path.join(os.path.dirname(__file__), '..', '..', 'cli', '__templates', 'custom_tool'),
-                 os.path.join(src_path, output['action']))
-        _replace_variables(os.path.join(src_path, output['action'], 'README.md'), '{{tool}}',
+        copytree(
+            os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'cli', '__templates', 'custom_tool')),
+            os.path.join(configuration.custom_tools_path, output['action']))
+
+        _replace_variables(os.path.join(configuration.custom_tools_path, output['action'], 'README.md'), '{{tool}}',
                            output.get('long_name', command))
 
     configuration.add_tool(command, {k: v for k, v in output.items() if v != ''})

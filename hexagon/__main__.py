@@ -4,7 +4,7 @@ from rich import print
 
 from hexagon.cli.args import fill_args
 from hexagon.cli.config import cli, tools, envs
-from hexagon.cli.execute_tool import register_external_tools, execute_action
+from hexagon.cli.execute_tool import execute_action
 from hexagon.cli.help import print_help
 from hexagon.cli.tracer import tracer
 from hexagon.cli.wax import search_by_key_or_alias, select_env, select_tool
@@ -12,8 +12,6 @@ from hexagon.cli.wax import search_by_key_or_alias, select_env, select_tool
 
 def main():
     _, _tool, _env = fill_args(sys.argv, 3)
-
-    register_external_tools()
 
     if _tool == '-h' or _tool == '--help':
         return print_help(cli, tools, envs)

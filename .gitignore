@@ -1,6 +1,6 @@
 /.idea/
 /hexagon.iml
-/app.yaml
+.tmp/
 /last_command
 /.pytest_cache/
 /build/
