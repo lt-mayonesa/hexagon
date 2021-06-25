@@ -11,12 +11,7 @@ def test_install_cli():
     with open(aliases_file_path, 'w') as file:
         file.write('previous line\n')
 
-    process = run_hexagon_e2e_test(
-        __file__,
-        env={
-            'HEXAGON_TEST_SHELL': 'HEXAGON_TEST_SHELL'
-        }
-    )
+    process = run_hexagon_e2e_test(__file__)
     assert_process_output(process, [
         '╭╼ Hexagon',
         '│',

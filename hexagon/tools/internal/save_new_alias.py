@@ -22,7 +22,9 @@ def save_new_alias(alias_name, command):
 
     shell_aliases = {
         '/usr/bin/zsh': f'{os.environ["HOME"]}/.oh-my-zsh/custom/aliases.zsh',
+        '/bin/zsh': f'{os.environ["HOME"]}/.oh-my-zsh/custom/aliases.zsh',
         '/usr/bin/bash': f'{os.environ["HOME"]}/.bash_aliases',
+        '/bin/bash': f'{os.environ["HOME"]}/.bash_aliases',
         'HEXAGON_TEST_SHELL': 'home-aliases.txt'
     }
 
