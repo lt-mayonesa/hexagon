@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.5 (2021-06-25)
+### Fix
+* **save-alias:** Bash on fresh install ([#8](https://github.com/redbeestudios/hexagon/issues/8)) ([`1754d2c`](https://github.com/redbeestudios/hexagon/commit/1754d2c02fde3231a142bc2fa51c344eef390e37))
+
 ## v0.7.4 (2021-06-23)
 ### Fix
 * **create-tool:** Templates directory not published ([`0f1e85c`](https://github.com/redbeestudios/hexagon/commit/0f1e85c45969d1f1f5cd7ab9dbb0b4018f9a8243))
