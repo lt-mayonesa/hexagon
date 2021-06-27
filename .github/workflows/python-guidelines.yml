@@ -12,6 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: psf/black@stable
-      - uses: Lt-Mayonesa/actions-flake8@v2.1-alpha
+      - uses: TrueBrain/actions-flake8@v2.1
         with:
-          use_bugbear: true
+          plugins: flake8-bugbear
