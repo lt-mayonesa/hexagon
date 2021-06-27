@@ -13,16 +13,16 @@ from hexagon.cli.wax import search_by_key_or_alias, select_env, select_tool
 def main():
     _, _tool, _env = fill_args(sys.argv, 3)
 
-    if _tool == '-h' or _tool == '--help':
+    if _tool == "-h" or _tool == "--help":
         return print_help(cli, tools, envs)
 
     print(f'╭╼ [bold]{cli["name"]}')
-    print('│')
+    print("│")
 
-    if cli['name'] == 'Hexagon':
-        print('│ This looks like your first time running Hexagon.')
+    if cli["name"] == "Hexagon":
+        print("│ This looks like your first time running Hexagon.")
         print('│ You should probably run "Install CLI".')
-        print('│')
+        print("│")
 
     try:
         _tool = search_by_key_or_alias(tools, _tool)
@@ -31,32 +31,32 @@ def main():
         name, tool = select_tool(tools, _tool)
         tracer.tracing(name)
 
-        env, params = select_env(envs, tool['envs'] if 'envs' in tool else None, _env)
+        env, params = select_env(envs, tool["envs"] if "envs" in tool else None, _env)
         tracer.tracing(env)
 
         action = execute_action(tool["action"], params)
 
-        print('│')
+        print("│")
 
         if action:
             for result in action:
                 print(result)
 
-        print('╰╼')
+        print("╰╼")
 
-        if tracer.has_traced() and 'command' in cli:
-            print('[cyan dim]Para repetir este comando:[/cyan dim]')
+        if tracer.has_traced() and "command" in cli:
+            print("[cyan dim]Para repetir este comando:[/cyan dim]")
             print(f'[cyan]     {cli["command"]} {tracer.command()}[/cyan]')
             command_as_aliases = tracer.command_as_aliases(tools, envs)
             if command_as_aliases:
-                print('[cyan dim]  o:[/cyan dim]')
+                print("[cyan dim]  o:[/cyan dim]")
                 print(f'[cyan]     {cli["command"]} {command_as_aliases}[/cyan]')
-            dump = open('last_command', 'w')
+            dump = open("last_command", "w")
             dump.write(f'{cli["command"]} {tracer.command()}')
             dump.close()
     except KeyboardInterrupt:
         sys.exit(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

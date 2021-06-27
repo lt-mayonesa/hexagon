@@ -1,0 +1,17 @@
+name: guidelines
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: psf/black@stable
+      - uses: Lt-Mayonesa/actions-flake8@main
+        with:
+          use_bugbear: true

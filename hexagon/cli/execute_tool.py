@@ -8,54 +8,59 @@ from hexagon.cli.config import configuration
 
 
 def execute_action(action_id: str, args):
-    ext = action_id.split('.')[-1]
-    action = {
-        'js': _execute_js,
-        'sh': _execute_sh
-    }.get(ext)
+    ext = action_id.split(".")[-1]
+    action = {"js": _execute_js, "sh": _execute_sh}.get(ext)
 
     if action:
         action(action_id, args)
     elif _is_internal_action(action_id) or __has_no_extension(action_id):
         _execute_python_module(action_id, args)
     else:
-        print(f'[red]Executor for extension [bold]{ext}[/bold] not known [dim](supported: .js, .sh).')
+        print(
+            f"[red]Executor for extension [bold]{ext}[/bold] not known [dim](supported: .js, .sh)."
+        )
         sys.exit(1)
 
 
 def _is_internal_action(action_id):
-    return 'hexagon.tools.internal.' in action_id
+    return "hexagon.tools.internal." in action_id
 
 
 def __has_no_extension(action_id):
-    return action_id.count('.') == 0
+    return action_id.count(".") == 0
 
 
 def _execute_python_module(action_id, args):
-    tool_action_module = _load_action_module(action_id) or _load_action_module(f'hexagon.tools.external.{action_id}')
+    tool_action_module = _load_action_module(action_id) or _load_action_module(
+        f"hexagon.tools.external.{action_id}"
+    )
 
     if not tool_action_module:
-        print(f'[red]Hexagon did not find the action [bold]{action_id}')
-        print('[red][dim]We checked:')
-        print(f'[red][dim]     - Your CLI\'s custom_tools_dir: [bold]{configuration.custom_tools_path}')
-        print('[red][dim]     - Hexagon repository of externals tools (hexagon.tools.external)')
+        print(f"[red]Hexagon did not find the action [bold]{action_id}")
+        print("[red][dim]We checked:")
+        print(
+            f"[red][dim]     - Your CLI's custom_tools_dir: [bold]{configuration.custom_tools_path}"
+        )
+        print(
+            "[red][dim]     - Hexagon repository of externals tools (hexagon.tools.external)"
+        )
         sys.exit(1)
     try:
         tool_action_module.main(args)
     except AttributeError as e:
-        print(f'[red]Execution of tool [bold]{action_id}[/bold] thru: {e}')
-        print('[red]Does it have the required `main(args...)` method?')
+        print(f"[red]Execution of tool [bold]{action_id}[/bold] thru: {e}")
+        print("[red]Does it have the required `main(args...)` method?")
         sys.exit(1)
 
 
 def _execute_js(action_id, args):
     a = __sanitize_args_for_command(args)
-    subprocess.call(['node', action_id] + a)
+    subprocess.call(["node", action_id] + a)
 
 
 def _execute_sh(action_id, args):
     a = __sanitize_args_for_command(args)
-    subprocess.call(['bash', action_id] + a)
+    subprocess.call(["bash", action_id] + a)
 
 
 def __sanitize_args_for_command(args):
@@ -63,7 +68,7 @@ def __sanitize_args_for_command(args):
         a = [args]
     else:
         try:
-            a = [f'{k}={v}' for k, v in args.items()]
+            a = [f"{k}={v}" for k, v in args.items()]
         except AttributeError:
             a = list(args)
     return a

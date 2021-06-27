@@ -3,19 +3,24 @@ import subprocess
 import os
 from typing import Callable, List
 
-last_output_file_path = os.path.realpath(os.path.join(
-    __file__, os.path.pardir, os.path.pardir, os.path.pardir, 'last-output.txt'))
+last_output_file_path = os.path.realpath(
+    os.path.join(
+        __file__, os.path.pardir, os.path.pardir, os.path.pardir, "last-output.txt"
+    )
+)
 
 
 def _save_last_output(lines: List[str]):
-    with open(last_output_file_path, 'w', encoding='utf-8') as file:
-        file.write(''.join(lines))
+    with open(last_output_file_path, "w", encoding="utf-8") as file:
+        file.write("".join(lines))
 
 
-def _save_last_output_and_raise(process: subprocess.Popen, lines_read: List[str], assertion_error: AssertionError):
+def _save_last_output_and_raise(
+    process: subprocess.Popen, lines_read: List[str], assertion_error: AssertionError
+):
     process.kill()
     lines: List[str] = [*lines_read, *process.stdout.readlines()]
-    print('Last command output:')
+    print("Last command output:")
     for line in lines:
         print(line.rstrip())
     _save_last_output(lines)
@@ -23,7 +28,9 @@ def _save_last_output_and_raise(process: subprocess.Popen, lines_read: List[str]
 
 
 Expected_Process_Output_Item = str or Callable[[str], bool]
-Expected_Process_Output = Expected_Process_Output_Item or List[Expected_Process_Output_Item]
+Expected_Process_Output = (
+    Expected_Process_Output_Item or List[Expected_Process_Output_Item]
+)
 
 
 def _assert_process_output_line(
@@ -31,13 +38,14 @@ def _assert_process_output_line(
     line: str,
     expected: Expected_Process_Output,
     lines_read: List[str],
-    to_discard_count: int
+    to_discard_count: int,
 ):
     def assert_line(expected: Expected_Process_Output_Item):
         if isinstance(expected, str):
             assert expected.rstrip() in line.rstrip()
         if isinstance(expected, collections.Callable):
             assert expected(line)
+
     try:
         if isinstance(expected, list):
             for assertion in expected:
@@ -47,7 +55,7 @@ def _assert_process_output_line(
     except AssertionError as assertion_error:
         # Check if the command failed and show the failure message
         if process.returncode and process.returncode > 0:
-            raise Exception('\n'.join(process.stderr.readlines()))
+            raise Exception("\n".join(process.stderr.readlines()))
         else:
             if to_discard_count > 0:
                 return False
@@ -59,7 +67,7 @@ def _assert_process_output_line(
 def assert_process_output(
     process: subprocess.Popen,
     expected_output: List[Expected_Process_Output],
-    discard_until_initial=False
+    discard_until_initial=False,
 ):
     """
     Assert the output of a CLI process
@@ -88,11 +96,7 @@ def assert_process_output(
         expected = expected_output[line_index]
 
         if not _assert_process_output_line(
-            process,
-            line,
-            expected,
-            lines_read,
-            to_discard_count
+            process, line, expected, lines_read, to_discard_count
         ):
             to_discard_count -= 1
 

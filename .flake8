@@ -4,4 +4,8 @@ exclude =
     __pycache__,
     .pytest_cache,
 max-complexity = 10
-max-line-length = 120
+max-line-length = 88
+
+# see https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html#line-length
+select = C, E, F, W, B, B950
+extend-ignore = E203, E501

@@ -33,9 +33,9 @@ setuptools.setup(
         "ruamel.yaml",
     ],
     python_requires=">=3.6",
-    entry_points='''
+    entry_points="""
         [console_scripts]
         hexagon=hexagon.__main__:main
-    ''',
-    platform="debian"
+    """,
+    platform="debian",
 )

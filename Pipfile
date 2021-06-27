@@ -9,6 +9,11 @@ hexagon = {editable = true, path = "."}
 [dev-packages]
 flake8 = "*"
 pytest = "*"
+black = "*"
+flake8-bugbear = "*"
 
 [requires]
 python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true
