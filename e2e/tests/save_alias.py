@@ -1,5 +1,5 @@
 from e2e.tests.utils.cli import ARROW_DOWN_CHARACTER
-from e2e.tests.utils.assertions import assert_process_output
+from e2e.tests.utils.assertions import assert_process_ended, assert_process_output
 from e2e.tests.utils.run import discard_output, run_hexagon_e2e_test, write_to_process
 import os
 
@@ -66,6 +66,8 @@ def test_save_alias():
             "    hexagon-test save-alias",
         ],
     )
+
+    assert_process_ended(process)
 
     with open(aliases_file_path, "r") as file:
         assert (

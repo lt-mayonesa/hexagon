@@ -9,3 +9,4 @@
 __pycache__
 e2e/*/home-aliases.txt
 e2e/last-output.txt
+e2e/*/last_command

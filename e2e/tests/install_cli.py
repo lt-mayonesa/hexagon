@@ -1,5 +1,5 @@
 from e2e.tests.utils.path import e2e_test_folder_path
-from e2e.tests.utils.assertions import assert_process_output
+from e2e.tests.utils.assertions import assert_process_ended, assert_process_output
 from e2e.tests.utils.run import discard_output, run_hexagon_e2e_test, write_to_process
 import os
 
@@ -14,7 +14,7 @@ def test_install_cli():
     with open(aliases_file_path, "w") as file:
         file.write("previous line\n")
 
-    process = run_hexagon_e2e_test(__file__)
+    process = run_hexagon_e2e_test(__file__, env={})
     assert_process_output(
         process,
         [
@@ -65,6 +65,8 @@ def test_install_cli():
         ],
         discard_until_initial=True,
     )
+
+    assert_process_ended(process)
 
     with open(aliases_file_path, "r") as file:
         assert (
