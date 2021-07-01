@@ -1,5 +1,5 @@
 # hexagon
-Make your CLI
+Make your team's knowledge truly accessible, truly shared, and truly empowering by creating your own CLI.
 
 [![build](https://github.com/redbeestudios/hexagon/actions/workflows/python-package.yml/badge.svg)](https://github.com/redbeestudios/hexagon/actions/workflows/python-package.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
@@ -7,39 +7,16 @@ Make your CLI
 
 ---
 
-## Install
+## Getting Started
+
+### Install hexagon
 ```bash
 python3 -m pip install https://github.com/redbeestudios/hexagon/releases/download/v0.7.6/hexagon-0.7.6.tar.gz
 ```
 
-## Pre-requisites (dev):
+### Create your teams CLI
 
-```bash
-# En caso de no tener instalado pipenv localmente
-pip install pipenv
-# Para crear un virtual environment (shell aislado, no interferimos con instalaciones locales de paquetes de Python).
-pipenv shell
-# Para instalar las dependencias
-pipenv install
-```
-
-## Run (dev):
-
-```bash
-# desde la shell de pipenv
-python -m hexagon
-```
-
-## Unit Tests:
-
-```bash
-pytest -svv tests/
-```
-
----
-
-## Example CLI YAML
-
+Either use our [template repo](https://github.com/redbeestudios/hexagon-tools) or create a YAML like the following
 ```yaml
 cli:
   custom_tools_dir: .  # relative to this file
@@ -57,7 +34,7 @@ tools:
   google:
     alias: g
     long_name: Google
-    description: Abrir google
+    description: Open google
     type: web
     envs:
       dev: google.dev
@@ -69,6 +46,41 @@ tools:
     long_name: Docker Registry
     type: shell
     envs:
-      dev: registry.dev.redbee.io
+      dev: my.custom.registry
     action: docker_registry
+```
+
+### Install the CLI
+
+Run `hexagon` and select the CLI installation tool
+
+## Development
+
+### Pre-requisites
+
+```bash
+pip install pipenv
+```
+
+### Run:
+
+```bash
+# start a shell
+pipenv shell
+# install hexagon dependencies
+pipenv install
+# run it
+python -m hexagon
+```
+
+### Unit Tests:
+
+```bash
+pytest -svv tests/
+```
+
+### E2E Tests:
+
+```bash
+pytest -svv e2e/
 ```
