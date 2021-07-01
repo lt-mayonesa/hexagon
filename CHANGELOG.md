@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.8.0 (2021-07-01)
+### Feature
+* **styles:** Basic support for hexagon themes ([#14](https://github.com/redbeestudios/hexagon/issues/14)) ([`b5dd966`](https://github.com/redbeestudios/hexagon/commit/b5dd966a221cab477e33adec27fb54fdfc6efefb))
+
+### Documentation
+* English, slogan, and reference to template repo ([`9a9fc96`](https://github.com/redbeestudios/hexagon/commit/9a9fc96f42d4ea81a57bda822de7c098d31015a6))
+
 ## v0.7.6 (2021-06-25)
 ### Fix
 * **create-tool:** __templates dir and custom tools path ([#9](https://github.com/redbeestudios/hexagon/issues/9)) ([`5ebde69`](https://github.com/redbeestudios/hexagon/commit/5ebde697b840e5da0ea62341ef22831ecc53a50d))
