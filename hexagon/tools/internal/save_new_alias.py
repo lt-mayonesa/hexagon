@@ -2,7 +2,8 @@ import os
 
 from InquirerPy import inquirer
 from InquirerPy.validator import EmptyInputValidator
-from rich import print
+
+from hexagon.cli.printer import log
 
 
 def main(_):
@@ -44,8 +45,6 @@ def save_new_alias(alias_name, command):
 
 
 def __pretty_print_created_alias(aliases_file, file, lines_to_show=-10):
-    print("│")
-    print(f"│ Added alias to {file}")
-    print("┆\n")
-    print("\n".join(aliases_file.read().splitlines()[lines_to_show:]))
-    print("\n┆")
+    log.gap()
+    log.info(f"Added alias to {file}")
+    log.example("\n".join(aliases_file.read().splitlines()[lines_to_show:]))

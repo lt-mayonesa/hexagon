@@ -54,6 +54,24 @@ tools:
 
 Run `hexagon` and select the CLI installation tool
 
+## Options
+
+### Theming
+
+Hexagon supports 3 themes for now:
+
+ - default (some nice colors and decorations)
+ - disabled (no colors and no decorations)
+ - result_only (with colors but only shows the result logs)
+
+This can be specified by the envvar `HEXAGON_THEME`, i.e.,
+
+```bash
+# assuming you installed a CLI with command tc
+HEXAGON_THEME=result_only tc
+```
+
+
 ## Development
 
 ### Pre-requisites

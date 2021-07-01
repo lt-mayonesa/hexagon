@@ -3,10 +3,10 @@ from shutil import copytree
 
 from InquirerPy import inquirer
 from InquirerPy.validator import PathValidator
-from rich import print
 
 from hexagon.cli.config import configuration
 from hexagon.tools import external
+from hexagon.cli.printer import log
 
 
 def main(_):
@@ -55,7 +55,7 @@ def main(_):
 
     if create_action:
         if not configuration.custom_tools_path:
-            print("│ [magenta]Your CLI does not have a custom tools dir.")
+            log.info("[magenta]Your CLI does not have a custom tools dir.")
             configuration.update_custom_tools_path(
                 inquirer.filepath(
                     message="Where would you like it to be? "

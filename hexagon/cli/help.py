@@ -1,6 +1,6 @@
 from itertools import groupby
 
-from rich import print
+from hexagon.cli.printer import log
 
 
 def print_help(cli_config: dict, tools: dict, envs: dict):
@@ -13,22 +13,18 @@ def print_help(cli_config: dict, tools: dict, envs: dict):
     :return:
     """
     if cli_config["name"] == "Hexagon":
-        print("│ [bold]Hexagon")
-        print("│")
-        print("│ You are executing Hexagon without an install.")
-        print('│ To get started run hexagon\'s "Install Hexagon" tool')
+        log.info("[bold]Hexagon", gap_end=1)
+        log.info("You are executing Hexagon without an install.")
+        log.info('To get started run hexagon\'s "Install Hexagon" tool')
         return
 
-    print(f'│ [bold]{cli_config["name"]}')
+    log.info(f'[bold]{cli_config["name"]}', gap_end=1)
 
-    print("│")
-    print("│ [bold][u]Envs:")
+    log.info("[bold][u]Envs:")
     for k, v in envs.items():
-        print(f'│   {k + (" (" + v["alias"] + ")" if "alias" in v else "")}')
+        log.info(f'  {k + (" (" + v["alias"] + ")" if "alias" in v else "")}')
 
-    print("│")
-    print("│")
-    print("│ [bold][u]Tools:")
+    log.info("[bold][u]Tools:", gap_start=2)
 
     def key_func(z):
         x, y = z
@@ -37,13 +33,11 @@ def print_help(cli_config: dict, tools: dict, envs: dict):
     data = sorted(tools.items(), key=key_func, reverse=True)
 
     for gk, g in groupby(data, key_func):
-        print("│")
-        print(f"│ [bold]{gk}:")
+        log.info(f"[bold]{gk}:", gap_start=1)
 
         for k, v in g:
-            print(
-                f'│   {k + (" (" + v["alias"] + ")" if "alias" in v else ""):<60}[dim]{v.get("long_name", "")}'
+            log.info(
+                f'  {k + (" (" + v["alias"] + ")" if "alias" in v else ""):<60}[dim]{v.get("long_name", "")}'
             )
             if "description" in v:
-                print(f'│   {"": <60}[dim]{v["description"]}')
-                print("│")
+                log.info(f'  {"": <60}[dim]{v["description"]}', gap_end=1)

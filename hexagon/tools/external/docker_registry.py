@@ -5,10 +5,10 @@ import sys
 import clipboard
 import requests
 from InquirerPy import inquirer
-from rich import print
 
 from hexagon.cli.args import fill_args
 from hexagon.cli.tracer import tracer
+from hexagon.cli.printer import log
 
 
 def main(registry_host):
@@ -42,7 +42,7 @@ def main(registry_host):
     )
 
     clipboard.copy(f"{registry_host}/{image}:{tag}")
-    print(f"├ [dim][u]{registry_host}/{image}:{tag}[/u] se copió al portapapeles")
+    log.result(f"[dim][u]{registry_host}/{image}:{tag}[/u] se copió al portapapeles")
 
     manifest = inquirer.confirm(
         message="¿Te gustaría ver el manifest?", default=False

@@ -2,10 +2,10 @@ import sys
 
 from InquirerPy import inquirer
 from InquirerPy.validator import EmptyInputValidator
-from rich import print
 
 from hexagon.cli.args import fill_args
 from hexagon.cli.tracer import tracer
+from hexagon.cli.printer import log
 
 
 # Toda tool de hexagon tiene que tener un main que se va a invocar
@@ -32,5 +32,5 @@ def main(env_values):
         ).execute()
     )
 
-    print("Valor en tool.envs:", env_values)
-    print("tu apellido es:", name)
+    log.info("Valor en tool.envs:", env_values)
+    log.info("tu apellido es:", name)
