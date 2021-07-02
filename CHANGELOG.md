@@ -2,26 +2,6 @@
 
 <!--next-version-placeholder-->
 
-## v1.1.0 (2021-07-02)
-
-
-## v1.0.0 (2021-07-02)
-### Feature
-* Execute_tool, python modules and node/bash scripts ([#13](https://github.com/redbeestudios/hexagon/issues/13)) ([`7416d21`](https://github.com/redbeestudios/hexagon/commit/7416d2182bccf05e5c3e1b095e4d66a99f7885d8))
-
-### Fix
-* **e2e:** Refactored tests, improved output assert message ([#18](https://github.com/redbeestudios/hexagon/issues/18)) ([`ef8bb59`](https://github.com/redbeestudios/hexagon/commit/ef8bb592679eecf1b036800a913e80db3e68cca1))
-
-### Breaking
-* python tools now receive 4 arguments in their main method  ([`7416d21`](https://github.com/redbeestudios/hexagon/commit/7416d2182bccf05e5c3e1b095e4d66a99f7885d8))
-
-## v1.0.0 (2021-07-02)
-### Feature
-* Execute_tool, python modules and node/bash scripts ([#13](https://github.com/redbeestudios/hexagon/issues/13)) ([`7416d21`](https://github.com/redbeestudios/hexagon/commit/7416d2182bccf05e5c3e1b095e4d66a99f7885d8))
-
-### Breaking
-* python tools now receive 4 arguments in their main method  ([`7416d21`](https://github.com/redbeestudios/hexagon/commit/7416d2182bccf05e5c3e1b095e4d66a99f7885d8))
-
 ## v0.8.0 (2021-07-01)
 ### Feature
 * **styles:** Basic support for hexagon themes ([#14](https://github.com/redbeestudios/hexagon/issues/14)) ([`b5dd966`](https://github.com/redbeestudios/hexagon/commit/b5dd966a221cab477e33adec27fb54fdfc6efefb))
