@@ -1,9 +1,8 @@
-from e2e.tests.utils.hexagon_spec import as_a_user
-from e2e.tests.utils.config import write_hexagon_config
-from e2e.tests.utils.path import e2e_test_folder_path
-
 import os
 import shutil
+
+from e2e.tests.utils.hexagon_spec import as_a_user
+from e2e.tests.utils.path import e2e_test_folder_path
 
 LONG_NAME = "Custom Action Test"
 DESCRIPTION = "Hexagon Custom Action Test Description"
