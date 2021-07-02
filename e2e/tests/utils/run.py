@@ -38,6 +38,9 @@ def run_hexagon_e2e_test(
         else "HEXAGON_TEST_SHELL"
     )
 
+    if "HEXAGON_THEME" not in env:
+        env["HEXAGON_THEME"] = "result_only"
+
     app_config_path = os.path.join(test_folder_path, "app.yml")
     if os.path.isfile(app_config_path):
         env["HEXAGON_CONFIG_FILE"] = app_config_path

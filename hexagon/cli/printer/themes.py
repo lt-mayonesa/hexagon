@@ -54,7 +54,7 @@ def load_theme():
             finish="╰╼ ",
         ),
         "disabled": LoggingTheme(show_colors=False),
-        "result_only": LoggingTheme(result_only=True),
+        "result_only": LoggingTheme(result_only=True, show_colors=False),
     }
 
     t = __themes[os.getenv("HEXAGON_THEME", "default")]

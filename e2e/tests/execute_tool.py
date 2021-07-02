@@ -1,8 +1,6 @@
 from e2e.tests.utils.hexagon_spec import as_a_user
 
 shared_prompt_output = [
-    "╭╼ Test",
-    "│",
     "Hi, which tool would you like to use today?",
     "┌──────────────────────────────────────────────────────────────────────────────",
     "",
@@ -38,10 +36,6 @@ def test_execute_python_module_by_gui():
             [
                 ["Hi, which tool would you like to use today?", "ƒ Python Module Test"],
                 "executed python-module",
-                "│",
-                "╰╼",
-                "Para repetir este comando:",
-                "    hexagon-test python-module",
             ]
         )
         .exit()
@@ -74,10 +68,6 @@ def test_execute_python_module_with_env_by_gui():
                 "executed python-module",
                 "Env args:",
                 "[789, 'ghi']",
-                "│",
-                "╰╼",
-                "Para repetir este comando:",
-                "    hexagon-test python-module",
             ]
         )
         .exit()
@@ -103,10 +93,6 @@ def test_execute_python_module_with_env_asterisk_by_gui():
                 "executed python-module",
                 "Env args:",
                 "all_envs",
-                "│",
-                "╰╼",
-                "Para repetir este comando:",
-                "    hexagon-test python-module",
             ]
         )
         .exit()
@@ -119,11 +105,7 @@ def test_execute_python_module_by_argument():
         .run_hexagon(["python-module"])
         .then_output_should_be(
             [
-                "╭╼ Test",
-                "│",
                 "executed python-module",
-                "│",
-                "╰╼",
             ]
         )
         .exit()
@@ -136,11 +118,7 @@ def test_execute_python_module_by_alias():
         .run_hexagon(["pm"])
         .then_output_should_be(
             [
-                "╭╼ Test",
-                "│",
                 "executed python-module",
-                "│",
-                "╰╼",
             ]
         )
         .exit()
@@ -153,8 +131,6 @@ def test_execute_python_module_with_env_and_arguments():
         .run_hexagon(["python-module-env", "dev", "123", "abc"])
         .then_output_should_be(
             [
-                "╭╼ Test",
-                "│",
                 "executed python-module",
                 "Env:",
                 "ordereddict([('alias', 'd'), ('name', 'dev')])",
@@ -163,8 +139,6 @@ def test_execute_python_module_with_env_and_arguments():
                 "Cli args:",
                 "123",
                 "abc",
-                "│",
-                "╰╼",
             ]
         )
         .exit()
@@ -177,15 +151,11 @@ def test_execute_python_module_with_other_env():
         .run_hexagon(["python-module-env", "qa"])
         .then_output_should_be(
             [
-                "╭╼ Test",
-                "│",
                 "executed python-module",
                 "Env:",
                 "ordereddict([('alias', 'q'), ('name', 'qa')])",
                 "Env args:",
                 "ordereddict([('foo', 'foo'), ('bar', 'bar')])",
-                "│",
-                "╰╼",
             ]
         )
         .exit()
@@ -206,10 +176,6 @@ def test_execute_script_module_by_gui():
             [
                 ["Hi, which tool would you like to use today?", "ƒ Node Module Test"],
                 "executed node module",
-                "│",
-                "╰╼",
-                "Para repetir este comando:",
-                "    hexagon-test node-module",
             ]
         )
         .exit()
@@ -222,11 +188,7 @@ def test_execute_script_module_by_argument():
         .run_hexagon(["node-module"])
         .then_output_should_be(
             [
-                "╭╼ Test",
-                "│",
                 "executed node module",
-                "│",
-                "╰╼",
             ]
         )
         .exit()
@@ -239,8 +201,6 @@ def test_execute_script_module_with_env_and_arguments():
         .run_hexagon(["node-module-env", "dev", "arg1", "arg2"])
         .then_output_should_be(
             [
-                "╭╼ Test",
-                "│",
                 "executed node module",
                 "CLI arguments:",
                 "name=dev",
@@ -248,8 +208,6 @@ def test_execute_script_module_with_env_and_arguments():
                 "ghi",
                 "arg1",
                 "arg2",
-                "│",
-                "╰╼",
             ]
         )
         .exit()
@@ -262,15 +220,11 @@ def test_execute_script_module_with_other_env():
         .run_hexagon(["node-module-env", "qa"])
         .then_output_should_be(
             [
-                "╭╼ Test",
-                "│",
                 "executed node module",
                 "CLI arguments:",
                 "foo=foo",
                 "bar=bar",
                 "name=qa",
-                "│",
-                "╰╼",
             ]
         )
         .exit()

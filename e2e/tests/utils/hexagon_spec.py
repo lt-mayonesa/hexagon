@@ -1,4 +1,4 @@
-from typing import List
+from typing import Callable, Dict, List, Optional
 
 from e2e.tests.utils.assertions import (
     Expected_Process_Output,
@@ -15,18 +15,29 @@ class HexagonSpec:
         self.process = None
         self.command = None
 
-    def run_hexagon(self, command=None):
+    def bind(self, func: Callable):
+        __tracebackhide__ = True
+        func(self)
+        return self
+
+    def run_hexagon(self, command=None, env: Optional[Dict[str, str]] = None):
         __tracebackhide__ = True
         if command:
             self.command = command
-            self.process = run_hexagon_e2e_test(self.__file, self.command)
+            self.process = run_hexagon_e2e_test(self.__file, self.command, env=env)
         else:
-            self.process = run_hexagon_e2e_test(self.__file)
+            self.process = run_hexagon_e2e_test(self.__file, env=env)
         return self
 
-    def then_output_should_be(self, expected_output: List[Expected_Process_Output]):
+    def then_output_should_be(
+        self,
+        expected_output: List[Expected_Process_Output],
+        discard_until_initial=False,
+    ):
         __tracebackhide__ = True
-        assert_process_output(self.process, expected_output)
+        assert_process_output(
+            self.process, expected_output, discard_until_initial=discard_until_initial
+        )
         return self
 
     def arrow_down(self):

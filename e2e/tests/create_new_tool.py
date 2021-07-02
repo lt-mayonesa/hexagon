@@ -1,8 +1,6 @@
+from e2e.tests.utils.hexagon_spec import HexagonSpec, as_a_user
 from e2e.tests.utils.hexagon_config import read_config_file
 from e2e.tests.utils.path import e2e_test_folder_path
-from e2e.tests.utils.run import run_hexagon_e2e_test, write_to_process
-from e2e.tests.utils.assertions import assert_process_output, assert_process_ended
-from e2e.tests.utils.cli import ARROW_DOWN_CHARACTER
 from e2e.tests.utils.config import write_hexagon_config
 import os
 import shutil
@@ -17,105 +15,85 @@ base_app_file = {
 }
 
 
-def _shared_assertions(process):
-    assert_process_output(
-        process,
-        [
-            "╭╼ Test",
-            "│",
-            "Hi, which tool would you like to use today?",
-            "┌──────────────────────────────────────────────────────────────────────────────",
-            "",
-            "",
-            "",
-            "⦾ Google",
-            "",
-            "⬡ Save Last Command as Linux Alias",
-            "",
-            "⬡ Create A New Tool",
-            "",
-            "└──────────────────────────────────────────────────────────────────────────────",
-            "",
-        ],
-    )
-
-    write_to_process(process, f"{ARROW_DOWN_CHARACTER}{ARROW_DOWN_CHARACTER}\n")
-
-    assert_process_output(
-        process,
-        [["Hi, which tool would you like to use today?", "⬡ Create A New Tool"]],
-    )
-
-    assert_process_output(
-        process,
-        [
-            "Choose the action of your tool:",
-            "┌──────────────────────────────────────────────────────────────────────────────",
-            "",
-            "",
-            "",
-            "docker_registry",
-            "",
-            "open_link",
-            "",
-            "new_action",
-            "",
-            "└──────────────────────────────────────────────────────────────────────────────",
-            "",
-        ],
+def _shared_assertions(spec: HexagonSpec):
+    (
+        spec.then_output_should_be(
+            [
+                "Hi, which tool would you like to use today?",
+                "┌──────────────────────────────────────────────────────────────────────────────",
+                "",
+                "",
+                "",
+                "⦾ Google",
+                "",
+                "⬡ Save Last Command as Linux Alias",
+                "",
+                "⬡ Create A New Tool",
+                "",
+                "└──────────────────────────────────────────────────────────────────────────────",
+                "",
+            ],
+        )
+        .arrow_down()
+        .arrow_down()
+        .enter()
+        .then_output_should_be(
+            [["Hi, which tool would you like to use today?", "⬡ Create A New Tool"]]
+        )
+        .then_output_should_be(
+            [
+                "Choose the action of your tool:",
+                "┌──────────────────────────────────────────────────────────────────────────────",
+                "",
+                "",
+                "",
+                "docker_registry",
+                "",
+                "open_link",
+                "",
+                "new_action",
+                "",
+                "└──────────────────────────────────────────────────────────────────────────────",
+                "",
+            ]
+        )
     )
 
 
 def test_create_new_open_link_tool():
     write_hexagon_config(__file__, base_app_file)
-    process = run_hexagon_e2e_test(__file__)
-    _shared_assertions(process)
 
-    write_to_process(process, f"{ARROW_DOWN_CHARACTER}\n")
-
-    assert_process_output(process, [["Choose the action of your tool:", "open_link"]])
-
-    assert_process_output(process, ["What type of tool is it?", "web", "shell"])
-
-    write_to_process(process, "\r")
-    assert_process_output(process, [["What type of tool is it?", "web"]])
-
-    write_to_process(process, "-test\n")
-    assert_process_output(
-        process, [["What command would you like to give your tool?", "open-link-test"]]
+    (
+        as_a_user(__file__)
+        .run_hexagon()
+        .bind(_shared_assertions)
+        .arrow_down()
+        .enter()
+        .then_output_should_be([["Choose the action of your tool:", "open_link"]])
+        .then_output_should_be(["What type of tool is it?", "web", "shell"])
+        .write("\r")
+        .then_output_should_be([["What type of tool is it?", "web"]])
+        .write("-test\n")
+        .then_output_should_be(
+            [["What command would you like to give your tool?", "open-link-test"]]
+        )
+        .enter()
+        .then_output_should_be(
+            [["Would you like to add an alias/shortcut? (empty for none)", "olt"]]
+        )
+        .write(f"{LONG_NAME}\n")
+        .then_output_should_be(
+            [
+                "Would you like to add a long name? (this will be displayed instead of command"
+            ]
+        )
+        .write(f"{DESCRIPTION}\n")
+        .then_output_should_be(
+            ["Would you like to add a description? (this will be displayed along side"],
+            True,
+        )
+        .exit()
     )
-
-    write_to_process(process, "\n")
-    assert_process_output(
-        process, [["Would you like to add an alias/shortcut? (empty for none)", "olt"]]
-    )
-
-    write_to_process(process, f"{LONG_NAME}\n")
-    assert_process_output(
-        process,
-        [
-            "Would you like to add a long name? (this will be displayed instead of command"
-        ],
-    )
-
-    write_to_process(process, f"{DESCRIPTION}\n")
-    assert_process_output(
-        process,
-        ["Would you like to add a description? (this will be displayed along side"],
-        True,
-    )
-
-    assert_process_output(
-        process,
-        [
-            "╰╼",
-            "Para repetir este comando:",
-            "    hexagon-test create-tool",
-        ],
-        True,
-    )
-
-    assert_process_ended(process)
 
     app_file = read_config_file(__file__)
     created_tool = app_file["tools"]["open-link-test"]
@@ -126,58 +104,42 @@ def test_create_new_open_link_tool():
 
 def test_create_new_python_module_tool():
     write_hexagon_config(__file__, base_app_file)
-    process = run_hexagon_e2e_test(__file__)
-    _shared_assertions(process)
-
-    write_to_process(process, f"{ARROW_DOWN_CHARACTER}{ARROW_DOWN_CHARACTER}\n")
-
-    assert_process_output(process, [["Choose the action of your tool:", "new_action"]])
-
-    write_to_process(process, "a-new-action\n")
-
-    assert_process_output(
-        process, [["What name would you like to give your new action?", "a-new-action"]]
+    (
+        as_a_user(__file__)
+        .run_hexagon()
+        .bind(_shared_assertions)
+        .arrow_down()
+        .arrow_down()
+        .enter()
+        .then_output_should_be([["Choose the action of your tool:", "new_action"]])
+        .write("a-new-action\n")
+        .then_output_should_be(
+            [["What name would you like to give your new action?", "a-new-action"]]
+        )
+        .then_output_should_be(["What type of tool is it?", "web", "shell"])
+        .write("\r")
+        .write("-command\n")
+        .enter()
+        .write(f"{LONG_NAME}\n")
+        .write(f"{DESCRIPTION}\n")
+        .then_output_should_be([["What type of tool is it?", "shell"]])
+        .then_output_should_be(
+            [["What command would you like to give your tool?", "a-new-action-command"]]
+        )
+        .then_output_should_be(
+            [["Would you like to add an alias/shortcut? (empty for none)", "anac"]]
+        )
+        .then_output_should_be(
+            [
+                "Would you like to add a long name? (this will be displayed instead of command"
+            ]
+        )
+        .then_output_should_be(
+            ["Would you like to add a description? (this will be displayed along side"],
+            True,
+        )
+        .exit()
     )
-
-    assert_process_output(process, ["What type of tool is it?", "web", "shell"])
-
-    write_to_process(process, "\r")
-    write_to_process(process, "-command\n")
-    write_to_process(process, "\n")
-    write_to_process(process, f"{LONG_NAME}\n")
-    write_to_process(process, f"{DESCRIPTION}\n")
-
-    assert_process_output(process, [["What type of tool is it?", "shell"]])
-
-    assert_process_output(
-        process,
-        [["What command would you like to give your tool?", "a-new-action-command"]],
-    )
-    assert_process_output(
-        process, [["Would you like to add an alias/shortcut? (empty for none)", "anac"]]
-    )
-    assert_process_output(
-        process,
-        [
-            "Would you like to add a long name? (this will be displayed instead of command"
-        ],
-    )
-    assert_process_output(
-        process,
-        ["Would you like to add a description? (this will be displayed along side"],
-        True,
-    )
-    assert_process_output(
-        process,
-        [
-            "╰╼",
-            "Para repetir este comando:",
-            "    hexagon-test create-tool",
-        ],
-        True,
-    )
-
-    assert_process_ended(process)
 
     app_file = read_config_file(__file__)
     created_tool = app_file["tools"]["a-new-action-command"]
@@ -208,32 +170,29 @@ def test_create_tool_creates_custom_tools_dir():
     os.mkdir(custom_tools_dir_path)
 
     write_hexagon_config(__file__, app_file)
-    process = run_hexagon_e2e_test(__file__)
-    _shared_assertions(process)
-
-    write_to_process(process, f"{ARROW_DOWN_CHARACTER}{ARROW_DOWN_CHARACTER}\n")
-    write_to_process(process, "a-new-action\n")
-    write_to_process(process, "\r")
-    write_to_process(process, "-command\n")
-    write_to_process(process, "\n")
-    write_to_process(process, f"{LONG_NAME}\n")
-    write_to_process(process, f"{DESCRIPTION}\n")
-
-    assert_process_output(
-        process, ["│ Your CLI does not have a custom tools dir."], True
+    (
+        as_a_user(__file__)
+        .run_hexagon()
+        .bind(_shared_assertions)
+        .arrow_down()
+        .arrow_down()
+        .enter()
+        .write("a-new-action\n")
+        .write("\r")
+        .write("-command\n")
+        .enter()
+        .write(f"{LONG_NAME}\n")
+        .write(f"{DESCRIPTION}\n")
+        .then_output_should_be(
+            [
+                "Where would you like it to be? (can be absolute path or relative to YAML",
+                "",
+            ],
+            True,
+        )
+        .write(f"/{custom_tools_dir_name}\n")
+        .exit()
     )
-
-    assert_process_output(
-        process,
-        [
-            "Where would you like it to be? (can be absolute path or relative to YAML",
-            "",
-        ],
-    )
-
-    write_to_process(process, f"/{custom_tools_dir_name}\n")
-
-    assert_process_ended(process)
 
     config_file = read_config_file(__file__)
 

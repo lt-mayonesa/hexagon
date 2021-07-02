@@ -1,7 +1,7 @@
-import collections
 import subprocess
 import os
 import signal
+import re
 from typing import Callable, List
 
 last_output_file_path = os.path.realpath(
@@ -44,6 +44,33 @@ Expected_Process_Output = (
 )
 
 
+ansi_escape_regex = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
+
+
+def ansi_escape(text: str):
+    return ansi_escape_regex.sub("", text)
+
+
+def single_assert_line(line: str, expected: Expected_Process_Output_Item):
+    __tracebackhide__ = True
+    if isinstance(expected, str):
+        try:
+            assert expected.rstrip() in line.rstrip()
+        except AssertionError:
+            raise Exception(
+                "\n".join(
+                    [
+                        "Failed to match hexagon output:"
+                        f"\nExpected: \033[92m{ansi_escape(expected.rstrip())}",
+                        f"Got: \033[93m{ansi_escape(line.rstrip())}",
+                    ]
+                )
+            ) from None
+
+    if isinstance(expected, Callable):
+        assert expected(line)
+
+
 def _assert_process_output_line(
     process: subprocess.Popen,
     line: str,
@@ -52,28 +79,19 @@ def _assert_process_output_line(
     discard_until_initial: bool,
 ):
     __tracebackhide__ = True
-
-    def assert_line(expected: Expected_Process_Output_Item):
-        __tracebackhide__ = True
-
-        if isinstance(expected, str):
-            assert expected.rstrip() in line.rstrip()
-        if isinstance(expected, collections.Callable):
-            assert expected(line)
-
     try:
         if isinstance(expected, list):
             for assertion in expected:
-                assert_line(assertion)
+                single_assert_line(line, assertion)
         else:
-            assert_line(expected)
-    except AssertionError as assertion_error:
+            single_assert_line(line, expected)
+    except Exception as error:
         _check_process_return_code(process)
 
         if discard_until_initial:
             return False
 
-        _save_last_output_and_raise(process, lines_read, assertion_error)
+        _save_last_output_and_raise(process, lines_read, error)
 
     return True
 

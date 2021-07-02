@@ -19,7 +19,8 @@
             "subProcess": true,
             "env": {
                 "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/execute_tool/app.yml",
-                "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL"
+                "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
+                "HEXAGON_THEME": "result_only"
             }
         },
         {
