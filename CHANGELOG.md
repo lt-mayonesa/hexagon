@@ -2,6 +2,9 @@
 
 <!--next-version-placeholder-->
 
+## v0.8.1 (2021-07-02)
+
+
 ## v0.8.0 (2021-07-01)
 ### Feature
 * **styles:** Basic support for hexagon themes ([#14](https://github.com/redbeestudios/hexagon/issues/14)) ([`b5dd966`](https://github.com/redbeestudios/hexagon/commit/b5dd966a221cab477e33adec27fb54fdfc6efefb))
