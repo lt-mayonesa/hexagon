@@ -1,19 +1,13 @@
-from typing import Any, Dict, List
+import sys
 
 from InquirerPy import inquirer
 from InquirerPy.validator import EmptyInputValidator
 
+from hexagon.cli.args import fill_args
 from hexagon.cli.tracer import tracer
 from hexagon.cli.printer import log
-from hexagon.cli.args import cli_arg
 
-
-# Toda tool de hexagon tiene que tener un main que se va a invocar
-# Los argumentos que se reciben son, en orden:
-#   tool: La tool por la cual se ejecuto este modulo
-#   env: El entorno indicado por el usuario
-#   env_args: Los argumentos deifnidos para el entorno
-#   cli_args: Otros argumentos que indico el usuario por CLI
+from typing import Any, Dict, List
 
 
 def main(
@@ -22,16 +16,26 @@ def main(
     env_args: Any = None,
     cli_args: List[Any] = None,
 ):
-    _name = cli_arg(cli_args, 0)
+    """
+    All hexagon tools must define a main function
 
-    # Es importante usar tracer.tracing para registrar los argumentos/sub_comandos que
-    # se van ejecutando. de está manera hexagon puede recomendar al usuario
-    # la manera de repetir el comando nuevamente sin prompts.
+    :param cli_args:
+    :param env:
+    :param tool:
+    :param env_args: the values expected to receive from tool.envs
+    :return:
+    """
+
+    # for now this is the way of obtaining other execution arguments (tool name, env name, etc)
+    _, _tool_name, _env_name, _my_name = fill_args(sys.argv, 4)
+
+    # tracer.tracing is the way of letting hexagon know you asked the user for a parameter for your tool.
+    # this let's hexagon build the "To repeat this command" message correctly
     name = tracer.tracing(
-        _name
+        _my_name
         or inquirer.text(
-            message="¿Cómo es tu apellido?",
-            validate=EmptyInputValidator("Poneme un apellido válido, por favor."),
+            message="What's your last name?",
+            validate=EmptyInputValidator("Please enter your last name."),
         ).execute()
     )
 
