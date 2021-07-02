@@ -1,0 +1,66 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+
+envs:
+  dev:
+    alias: d
+    name: dev
+  qa:
+    alias: q
+    name: qa
+
+tools:
+  google:
+    long_name: Google
+    type: web
+    action: open_link
+    envs:
+      "*": https://www.google.com/
+
+  python-module:
+    action: python-module
+    type: shell
+    alias: pm
+    long_name: Python Module Test
+
+  python-module-env:
+    action: python-module
+    type: shell
+    alias: pme
+    long_name: Python Module Env Test
+    envs:
+      dev:
+        - 789
+        - ghi
+      qa:
+        foo: foo
+        bar: bar
+
+  python-module-env-all:
+    action: python-module
+    type: shell
+    alias: python-module-env-all
+    long_name: Python Module Asterisk Env Test
+    envs:
+      "*": all_envs
+
+  node-module:
+    action: node-module.js
+    type: shell
+    alias: nm
+    long_name: Node Module Test
+
+  node-module-env:
+    action: node-module.js
+    type: shell
+    alias: nme
+    long_name: Node Module Env Test
+    envs:
+      dev:
+        - 789
+        - ghi
+      qa:
+        foo: foo
+        bar: bar

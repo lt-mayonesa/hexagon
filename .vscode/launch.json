@@ -1,0 +1,38 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug test",
+            "type": "python",
+            "request": "test",
+            "console": "internalConsole",
+            "subProcess": true,
+            "stopOnEntry": false,
+            "justMyCode": false
+        },
+        {
+            "name": "Execute tool",
+            "type": "python",
+            "request": "launch",
+            "module": "hexagon",
+            "console": "integratedTerminal",
+            "subProcess": true,
+            "env": {
+                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/execute_tool/app.yml",
+                "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL"
+            }
+        },
+        {
+            "name": "Create New Tool",
+            "type": "python",
+            "request": "launch",
+            "module": "hexagon",
+            "console": "integratedTerminal",
+            "subProcess": true,
+            "env": {
+                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/create_new_tool/app.yml",
+                "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL"
+            }
+        }
+    ]
+}

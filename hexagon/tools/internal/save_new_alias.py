@@ -6,7 +6,7 @@ from InquirerPy.validator import EmptyInputValidator
 from hexagon.cli.printer import log
 
 
-def main(_):
+def main(*_):
     with open("last_command", "r") as f:
         last_command = f.read()
 

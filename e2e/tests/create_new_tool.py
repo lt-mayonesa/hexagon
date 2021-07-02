@@ -3,24 +3,18 @@ from e2e.tests.utils.path import e2e_test_folder_path
 from e2e.tests.utils.run import run_hexagon_e2e_test, write_to_process
 from e2e.tests.utils.assertions import assert_process_output, assert_process_ended
 from e2e.tests.utils.cli import ARROW_DOWN_CHARACTER
+from e2e.tests.utils.config import write_hexagon_config
 import os
-from ruamel.yaml import YAML
 import shutil
 
 LONG_NAME = "Custom Action Test"
 DESCRIPTION = "Hexagon Custom Action Test Description"
 
-app_file_path = os.path.join(e2e_test_folder_path(__file__), "app.yml")
 base_app_file = {
     "cli": {"name": "Test", "command": "hexagon-test", "custom_tools_dir": "."},
     "tools": {"google": {"long_name": "Google", "type": "web", "action": "open_link"}},
     "envs": {},
 }
-
-
-def _write_app_file(app_file):
-    with open(app_file_path, "w") as file:
-        YAML().dump(app_file, file)
 
 
 def _shared_assertions(process):
@@ -73,7 +67,7 @@ def _shared_assertions(process):
 
 
 def test_create_new_open_link_tool():
-    _write_app_file(base_app_file)
+    write_hexagon_config(__file__, base_app_file)
     process = run_hexagon_e2e_test(__file__)
     _shared_assertions(process)
 
@@ -131,7 +125,7 @@ def test_create_new_open_link_tool():
 
 
 def test_create_new_python_module_tool():
-    _write_app_file(base_app_file)
+    write_hexagon_config(__file__, base_app_file)
     process = run_hexagon_e2e_test(__file__)
     _shared_assertions(process)
 
@@ -213,7 +207,7 @@ def test_create_tool_creates_custom_tools_dir():
         shutil.rmtree(custom_tools_dir_path)
     os.mkdir(custom_tools_dir_path)
 
-    _write_app_file(app_file)
+    write_hexagon_config(__file__, app_file)
     process = run_hexagon_e2e_test(__file__)
     _shared_assertions(process)
 

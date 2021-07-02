@@ -19,6 +19,7 @@ def _save_last_output(lines: List[str]):
 def _save_last_output_and_raise(
     process: subprocess.Popen, lines_read: List[str], error: Exception, timeouted=False
 ):
+    __tracebackhide__ = True
     process.kill()
     lines: List[str] = [*lines_read]
     if not timeouted:
@@ -31,8 +32,9 @@ def _save_last_output_and_raise(
     raise error
 
 
-def _check_process_return_code(process: subprocess.Popen):
-    if process.returncode and process.returncode > 0:
+def _check_process_return_code(process: subprocess.Popen, exit_status: int = 0):
+    __tracebackhide__ = True
+    if process.returncode and process.returncode > exit_status:
         raise Exception("\n".join(process.stderr.readlines()))
 
 
@@ -49,7 +51,11 @@ def _assert_process_output_line(
     lines_read: List[str],
     discard_until_initial: bool,
 ):
+    __tracebackhide__ = True
+
     def assert_line(expected: Expected_Process_Output_Item):
+        __tracebackhide__ = True
+
         if isinstance(expected, str):
             assert expected.rstrip() in line.rstrip()
         if isinstance(expected, collections.Callable):
@@ -91,6 +97,7 @@ def assert_process_output(
             - List of strings and/or predicates
         * `discard_until_initial`: Discard lines until the first expected line is found
     """
+    __tracebackhide__ = True
     line_index = 0
     lines_read = []
     attempts = 0
@@ -129,10 +136,11 @@ def assert_process_output(
             attempts += 1
 
 
-def assert_process_ended(process: subprocess.Popen):
+def assert_process_ended(process: subprocess.Popen, exit_status: int = 0):
+    __tracebackhide__ = True
     try:
         process.wait(5)
     except Exception as error:
         _save_last_output_and_raise(process, [], error)
 
-    _check_process_return_code(process)
+    _check_process_return_code(process, exit_status)

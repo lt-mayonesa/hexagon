@@ -5,7 +5,15 @@ import subprocess
 from typing import Dict, List, Optional
 from e2e.tests.utils.path import e2e_test_folder_path
 
-hexagon_path = os.path.join(os.path.pardir, os.path.pardir, "hexagon")
+hexagon_path = os.path.realpath(
+    os.path.join(
+        os.path.dirname(__file__),
+        os.path.pardir,
+        os.path.pardir,
+        os.path.pardir,
+        "hexagon",
+    )
+)
 
 HEXAGON_COMMAND: List[str]
 

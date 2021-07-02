@@ -1,18 +1,19 @@
 import json
 import os
-import sys
 
 import clipboard
 import requests
 from InquirerPy import inquirer
 
-from hexagon.cli.args import fill_args
+from hexagon.cli.args import cli_arg
 from hexagon.cli.tracer import tracer
 from hexagon.cli.printer import log
 
 
-def main(registry_host):
-    _, _tool, _env, _image, _filter = fill_args(sys.argv, 5)
+def main(tool, env, env_args, cli_args):
+    registry_host = env_args
+    _image = cli_arg(cli_args, 0)
+    _filter = cli_arg(cli_args, 1)
 
     with open(os.path.expanduser("~/.docker/config.json")) as config:
         auth = json.load(config)["auths"][registry_host]["auth"]
