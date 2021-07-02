@@ -107,13 +107,15 @@ def assert_process_output(
     """
     Assert the output of a CLI process
 
-    Params:
-        * `process`: The process, usualy instantiaded using `e2e.test.utils.run.run_hexagon_e2e_test`
-        * `expected_output`: Expected lines to be compared with the actual output lines. Possible types:
-            - String to be searched in the output line
-            - Predicate that receives the line
-            - List of strings and/or predicates
-        * `discard_until_initial`: Discard lines until the first expected line is found
+    Possible types for expected_output:
+        - String to be searched in the output line
+        - Predicate that receives the line
+        - List of strings and/or predicates
+
+    :param process: The process, usualy instantiaded using `e2e.test.utils.run.run_hexagon_e2e_test`
+    :param expected_output: Expected lines to be compared with the actual output lines.
+    :param discard_until_initial: Discard lines until the first expected line is found
+    :return:
     """
     __tracebackhide__ = True
     line_index = 0

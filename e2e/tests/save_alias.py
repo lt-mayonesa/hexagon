@@ -21,7 +21,7 @@ def test_save_alias():
         .run_hexagon()
         .arrow_down()
         .enter()
-        .write("hexagon-save-alias-test\n")
+        .input("hexagon-save-alias-test")
         .then_output_should_be(
             [
                 "Ultimo comando: echo works ¿Qué alias querés crear?",

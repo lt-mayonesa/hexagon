@@ -25,36 +25,38 @@ except Exception:
 
 
 def run_hexagon_e2e_test(
-    test_file: str, args: List[str] = tuple(), env: Optional[Dict[str, str]] = None
+    test_file: str,
+    args: List[str] = tuple(),
+    os_env_vars: Optional[Dict[str, str]] = None,
 ):
-    if env is None:
-        env = {}
+    if os_env_vars is None:
+        os_env_vars = {}
 
     test_folder_path = e2e_test_folder_path(test_file)
 
-    env["HEXAGON_TEST_SHELL"] = (
-        env["HEXAGON_TEST_SHELL"]
-        if "HEXAGON_TEST_SHELL" in env
+    os_env_vars["HEXAGON_TEST_SHELL"] = (
+        os_env_vars["HEXAGON_TEST_SHELL"]
+        if "HEXAGON_TEST_SHELL" in os_env_vars
         else "HEXAGON_TEST_SHELL"
     )
 
-    if "HEXAGON_THEME" not in env:
-        env["HEXAGON_THEME"] = "result_only"
+    if "HEXAGON_THEME" not in os_env_vars:
+        os_env_vars["HEXAGON_THEME"] = "result_only"
 
     app_config_path = os.path.join(test_folder_path, "app.yml")
     if os.path.isfile(app_config_path):
-        env["HEXAGON_CONFIG_FILE"] = app_config_path
+        os_env_vars["HEXAGON_CONFIG_FILE"] = app_config_path
 
-    return run_hexagon(test_folder_path, args, env)
+    return run_hexagon(test_folder_path, args, os_env_vars)
 
 
 def run_hexagon(
-    cwd: str, args: List[str] = tuple(), env: Optional[Dict[str, str]] = None
+    cwd: str, args: List[str] = tuple(), os_env_vars: Optional[Dict[str, str]] = None
 ):
     environment = None
-    if env:
+    if os_env_vars:
         environment = os.environ.copy()
-        environment.update(env)
+        environment.update(os_env_vars)
 
     return subprocess.Popen(
         [*HEXAGON_COMMAND, *args],

@@ -23,20 +23,19 @@ def _clear_custom_tool():
 
 def test_creates_a_python_tool_and_executes_it():
     _clear_custom_tool()
-    write_hexagon_config(__file__, config_file)
-
     (
         as_a_user(__file__)
+        .given_a_cli_yaml(config_file)
         .run_hexagon(["create-tool"])
         .arrow_down()
         .arrow_down()
         .enter()
-        .write("a-new-action\n")
-        .write("\r")
-        .write("-command\n")
+        .input("a-new-action")
+        .carriage_return()
+        .input("-command")
         .enter()
-        .write(f"{LONG_NAME}\n")
-        .write(f"{DESCRIPTION}\n")
+        .input(LONG_NAME)
+        .input(DESCRIPTION)
         .exit()
     )
 

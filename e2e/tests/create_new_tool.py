@@ -1,5 +1,5 @@
 from e2e.tests.utils.hexagon_spec import HexagonSpec, as_a_user
-from e2e.tests.utils.hexagon_config import read_config_file
+from e2e.tests.utils.config import read_hexagon_config
 from e2e.tests.utils.path import e2e_test_folder_path
 from e2e.tests.utils.config import write_hexagon_config
 import os
@@ -61,19 +61,18 @@ def _shared_assertions(spec: HexagonSpec):
 
 
 def test_create_new_open_link_tool():
-    write_hexagon_config(__file__, base_app_file)
-
     (
         as_a_user(__file__)
+        .given_a_cli_yaml(base_app_file)
         .run_hexagon()
-        .bind(_shared_assertions)
+        .with_shared_behavior(_shared_assertions)
         .arrow_down()
         .enter()
         .then_output_should_be([["Choose the action of your tool:", "open_link"]])
         .then_output_should_be(["What type of tool is it?", "web", "shell"])
-        .write("\r")
+        .carriage_return()
         .then_output_should_be([["What type of tool is it?", "web"]])
-        .write("-test\n")
+        .input("-test")
         .then_output_should_be(
             [["What command would you like to give your tool?", "open-link-test"]]
         )
@@ -81,13 +80,13 @@ def test_create_new_open_link_tool():
         .then_output_should_be(
             [["Would you like to add an alias/shortcut? (empty for none)", "olt"]]
         )
-        .write(f"{LONG_NAME}\n")
+        .input(LONG_NAME)
         .then_output_should_be(
             [
                 "Would you like to add a long name? (this will be displayed instead of command"
             ]
         )
-        .write(f"{DESCRIPTION}\n")
+        .input(DESCRIPTION)
         .then_output_should_be(
             ["Would you like to add a description? (this will be displayed along side"],
             True,
@@ -95,7 +94,7 @@ def test_create_new_open_link_tool():
         .exit()
     )
 
-    app_file = read_config_file(__file__)
+    app_file = read_hexagon_config(__file__)
     created_tool = app_file["tools"]["open-link-test"]
     assert created_tool["action"] == "open_link"
     assert created_tool["type"] == "web"
@@ -103,32 +102,32 @@ def test_create_new_open_link_tool():
 
 
 def test_create_new_python_module_tool():
-    write_hexagon_config(__file__, base_app_file)
     (
         as_a_user(__file__)
+        .given_a_cli_yaml(base_app_file)
         .run_hexagon()
-        .bind(_shared_assertions)
+        .with_shared_behavior(_shared_assertions)
         .arrow_down()
         .arrow_down()
         .enter()
         .then_output_should_be([["Choose the action of your tool:", "new_action"]])
-        .write("a-new-action\n")
+        .input("a-new-action")
         .then_output_should_be(
             [["What name would you like to give your new action?", "a-new-action"]]
         )
         .then_output_should_be(["What type of tool is it?", "web", "shell"])
-        .write("\r")
-        .write("-command\n")
-        .enter()
-        .write(f"{LONG_NAME}\n")
-        .write(f"{DESCRIPTION}\n")
+        .carriage_return()
         .then_output_should_be([["What type of tool is it?", "shell"]])
+        .input("-command")
         .then_output_should_be(
             [["What command would you like to give your tool?", "a-new-action-command"]]
         )
+        .enter()
         .then_output_should_be(
             [["Would you like to add an alias/shortcut? (empty for none)", "anac"]]
         )
+        .input(LONG_NAME)
+        .input(DESCRIPTION)
         .then_output_should_be(
             [
                 "Would you like to add a long name? (this will be displayed instead of command"
@@ -141,7 +140,7 @@ def test_create_new_python_module_tool():
         .exit()
     )
 
-    app_file = read_config_file(__file__)
+    app_file = read_hexagon_config(__file__)
     created_tool = app_file["tools"]["a-new-action-command"]
     assert created_tool["action"] == "a-new-action"
     assert created_tool["type"] == "shell"
@@ -169,20 +168,20 @@ def test_create_tool_creates_custom_tools_dir():
         shutil.rmtree(custom_tools_dir_path)
     os.mkdir(custom_tools_dir_path)
 
-    write_hexagon_config(__file__, app_file)
     (
         as_a_user(__file__)
+        .given_a_cli_yaml(app_file)
         .run_hexagon()
-        .bind(_shared_assertions)
+        .with_shared_behavior(_shared_assertions)
         .arrow_down()
         .arrow_down()
         .enter()
-        .write("a-new-action\n")
-        .write("\r")
-        .write("-command\n")
+        .input("a-new-action")
+        .carriage_return()
+        .input("-command")
         .enter()
-        .write(f"{LONG_NAME}\n")
-        .write(f"{DESCRIPTION}\n")
+        .input(LONG_NAME)
+        .input(DESCRIPTION)
         .then_output_should_be(
             [
                 "Where would you like it to be? (can be absolute path or relative to YAML",
@@ -190,11 +189,11 @@ def test_create_tool_creates_custom_tools_dir():
             ],
             True,
         )
-        .write(f"/{custom_tools_dir_name}\n")
+        .input(f"/{custom_tools_dir_name}")
         .exit()
     )
 
-    config_file = read_config_file(__file__)
+    config_file = read_hexagon_config(__file__)
 
     assert config_file["cli"]["custom_tools_dir"] == f"./{custom_tools_dir_name}"
 

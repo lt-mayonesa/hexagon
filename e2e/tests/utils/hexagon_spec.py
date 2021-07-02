@@ -6,6 +6,7 @@ from e2e.tests.utils.assertions import (
     assert_process_ended,
 )
 from e2e.tests.utils.cli import ARROW_DOWN_CHARACTER
+from e2e.tests.utils.config import write_hexagon_config
 from e2e.tests.utils.run import run_hexagon_e2e_test, write_to_process
 
 
@@ -15,18 +16,24 @@ class HexagonSpec:
         self.process = None
         self.command = None
 
-    def bind(self, func: Callable):
-        __tracebackhide__ = True
-        func(self)
+    def given_a_cli_yaml(self, config: dict):
+        write_hexagon_config(self.__file, config)
         return self
 
-    def run_hexagon(self, command=None, env: Optional[Dict[str, str]] = None):
+    def run_hexagon(self, command=None, os_env_vars: Optional[Dict[str, str]] = None):
         __tracebackhide__ = True
         if command:
             self.command = command
-            self.process = run_hexagon_e2e_test(self.__file, self.command, env=env)
+            self.process = run_hexagon_e2e_test(
+                self.__file, self.command, os_env_vars=os_env_vars
+            )
         else:
-            self.process = run_hexagon_e2e_test(self.__file, env=env)
+            self.process = run_hexagon_e2e_test(self.__file, os_env_vars=os_env_vars)
+        return self
+
+    def with_shared_behavior(self, func: Callable):
+        __tracebackhide__ = True
+        func(self)
         return self
 
     def then_output_should_be(
@@ -47,8 +54,15 @@ class HexagonSpec:
 
     def enter(self):
         __tracebackhide__ = True
-        write_to_process(self.process, "\n")
-        return self
+        return self.write("\n")
+
+    def carriage_return(self):
+        __tracebackhide__ = True
+        return self.write("\r")
+
+    def input(self, text: str):
+        __tracebackhide__ = True
+        return self.write(f"{text}\n")
 
     def write(self, text: str):
         __tracebackhide__ = True

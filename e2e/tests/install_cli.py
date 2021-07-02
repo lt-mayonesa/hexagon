@@ -15,7 +15,7 @@ def test_install_cli():
 
     (
         as_a_user(__file__)
-        .run_hexagon(env={})
+        .run_hexagon(os_env_vars={})
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
@@ -30,9 +30,13 @@ def test_install_cli():
             ]
         )
         .enter()
-        .write("/config.yml\n")
+        .input("/config.yml")
         .then_output_should_be(
-            ["# added by hexagon", 'alias hexagon-test="HEXAGON_CONFIG_FILE='],
+            [
+                "# added by hexagon",
+                'alias hexagon-test="HEXAGON_CONFIG_FILE=',
+                "/config.yml",
+            ],
             True,
         )
         .exit()
