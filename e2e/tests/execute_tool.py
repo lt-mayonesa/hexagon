@@ -66,6 +66,8 @@ def test_execute_python_module_with_env_by_gui():
             [
                 ["On which environment?", "dev"],
                 "executed python-module",
+                "Env:",
+                "ordereddict([('alias', 'd'), ('name', 'dev')])",
                 "Env args:",
                 "[789, 'ghi']",
             ]
