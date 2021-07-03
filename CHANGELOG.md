@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.8.2 (2021-07-03)
+### Fix
+* **execute:** Pass env object correctly ([`86bbc68`](https://github.com/redbeestudios/hexagon/commit/86bbc689001339f0bfc128b25520244ed7f966ec))
+
 ## v0.8.1 (2021-07-02)
 
 
