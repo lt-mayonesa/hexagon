@@ -1,7 +1,7 @@
 import pytest
 
-from hexagon.cli.printer import Logger
-from hexagon.cli.printer.themes import LoggingTheme
+from hexagon.support.printer import Logger
+from hexagon.support.printer.themes import LoggingTheme
 
 
 class Console:

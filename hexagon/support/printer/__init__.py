@@ -1,7 +1,7 @@
 from rich.console import Console
 
-from hexagon.cli.printer.logger import Logger
-from hexagon.cli.printer.themes import load_theme
+from hexagon.support.printer.logger import Logger
+from hexagon.support.printer.themes import load_theme
 
 theme = load_theme()
 

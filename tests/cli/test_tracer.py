@@ -1,6 +1,6 @@
 import pytest
 
-from hexagon.cli.tracer import Tracer
+from hexagon.support.tracer import Tracer
 
 tools_dict = {"docker": {"alias": "d"}, "bastion": {"alias": "b"}}
 

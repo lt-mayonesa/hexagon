@@ -3,8 +3,6 @@ import sys
 
 from ruamel.yaml import YAML
 
-CONFIG_FILE_ENV_VARIABLE_NAME = "HEXAGON_CONFIG_FILE"
-
 
 class Configuration:
     def __init__(self, path: str = None):
@@ -83,9 +81,3 @@ class Configuration:
             },
             {},
         )
-
-
-configuration = Configuration()
-cli, tools, envs = configuration.init_config(
-    os.getenv(CONFIG_FILE_ENV_VARIABLE_NAME, "app.yaml")
-)

@@ -1,12 +1,12 @@
 import sys
 
-from hexagon.cli.args import fill_args
-from hexagon.cli.config import cli, tools, envs
-from hexagon.cli.execute_tool import execute_action
-from hexagon.cli.help import print_help
-from hexagon.cli.tracer import tracer
-from hexagon.cli.wax import search_by_key_or_alias, select_env, select_tool
-from hexagon.cli.printer import log
+from hexagon.support.args import fill_args
+from hexagon.cli import cli, tools, envs
+from hexagon.support.execute_tool import execute_action
+from hexagon.support.help import print_help
+from hexagon.support.tracer import tracer
+from hexagon.support.wax import search_by_key_or_alias, select_env, select_tool
+from hexagon.support.printer import log
 
 
 def main():

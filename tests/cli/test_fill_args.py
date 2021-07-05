@@ -1,6 +1,6 @@
 import pytest
 
-from hexagon.cli.args import fill_args
+from hexagon.support.args import fill_args
 
 
 def test_empty_args():

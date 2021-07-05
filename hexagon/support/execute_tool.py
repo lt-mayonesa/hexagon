@@ -4,8 +4,8 @@ import sys
 import os
 from typing import List, Union, Dict
 
-from hexagon.cli.config import configuration
-from hexagon.cli.printer import log
+from hexagon.cli import configuration
+from hexagon.support.printer import log
 
 _command_by_file_extension = {"js": "node", "sh": "bash"}
 

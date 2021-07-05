@@ -1,7 +1,7 @@
 import pytest
 from InquirerPy import inquirer
 
-from hexagon.cli.wax import search_by_key_or_alias, select_tool, select_env
+from hexagon.support.wax import search_by_key_or_alias, select_tool, select_env
 
 
 def inquirer_mock(ret):

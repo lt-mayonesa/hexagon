@@ -3,9 +3,9 @@ import sys
 from InquirerPy import inquirer
 from InquirerPy.validator import EmptyInputValidator
 
-from hexagon.cli.args import fill_args
-from hexagon.cli.tracer import tracer
-from hexagon.cli.printer import log
+from hexagon.support.args import fill_args
+from hexagon.support.tracer import tracer
+from hexagon.support.printer import log
 
 from typing import Any, Dict, List
 

@@ -3,7 +3,7 @@ import os
 from InquirerPy import inquirer
 from InquirerPy.validator import EmptyInputValidator
 
-from hexagon.cli.printer import log
+from hexagon.support.printer import log
 
 
 def main(*_):

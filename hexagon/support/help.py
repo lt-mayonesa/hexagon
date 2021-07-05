@@ -1,6 +1,6 @@
 from itertools import groupby
 
-from hexagon.cli.printer import log
+from hexagon.support.printer import log
 
 
 def print_help(cli_config: dict, tools: dict, envs: dict):

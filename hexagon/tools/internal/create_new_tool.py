@@ -4,9 +4,9 @@ from shutil import copytree
 from InquirerPy import inquirer
 from InquirerPy.validator import PathValidator
 
-from hexagon.cli.config import configuration
+from hexagon.cli import configuration
 from hexagon.tools import external
-from hexagon.cli.printer import log
+from hexagon.support.printer import log
 
 
 def main(*_):
@@ -74,7 +74,7 @@ def main(*_):
                     os.path.dirname(__file__),
                     "..",
                     "..",
-                    "cli",
+                    "support",
                     "__templates",
                     "custom_tool",
                 )

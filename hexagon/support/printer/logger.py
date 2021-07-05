@@ -2,7 +2,7 @@ from typing import Optional
 
 from rich.console import Console
 
-from hexagon.cli.printer.themes import LoggingTheme
+from hexagon.support.printer.themes import LoggingTheme
 
 
 class Logger:
