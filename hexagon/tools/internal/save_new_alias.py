@@ -4,11 +4,14 @@ from InquirerPy import inquirer
 from InquirerPy.validator import EmptyInputValidator
 
 from hexagon.support.printer import log
+from hexagon.support.storage import (
+    HexagonStorageKeys,
+    load_user_data,
+)
 
 
 def main(*_):
-    with open("last_command", "r") as f:
-        last_command = f.read()
+    last_command = load_user_data(HexagonStorageKeys.last_command.value)
 
     alias_name = inquirer.text(
         message=f"Ultimo comando: {last_command} ¿Qué alias querés crear?",

@@ -13,8 +13,7 @@ def test_save_alias():
     with open(aliases_file_path, "w") as file:
         file.write("previous line\n")
 
-    with open(last_command_file_path, "w") as file:
-        file.write("echo works")
+    (as_a_user(__file__).run_hexagon().enter().exit())
 
     (
         as_a_user(__file__)
@@ -24,7 +23,7 @@ def test_save_alias():
         .input("hexagon-save-alias-test")
         .then_output_should_be(
             [
-                "Ultimo comando: echo works ¿Qué alias querés crear?",
+                "Ultimo comando: hexagon-test python-module ¿Qué alias querés crear?",
             ],
             True,
         )
@@ -34,8 +33,5 @@ def test_save_alias():
     with open(aliases_file_path, "r") as file:
         assert (
             file.read()
-            == 'previous line\n\n# added by hexagon\nalias hexagon-save-alias-test="echo works"'
-        )  # noqa: E501
-
-    with open(last_command_file_path, "r") as file:
-        assert file.read() == "hexagon-test save-alias"
+            == 'previous line\n\n# added by hexagon\nalias hexagon-save-alias-test="hexagon-test python-module"'
+        )

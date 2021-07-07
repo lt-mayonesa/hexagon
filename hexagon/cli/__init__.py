@@ -1,6 +1,6 @@
 import os
 
-from cli.configuration import Configuration
+from hexagon.cli.configuration import Configuration
 
 CONFIG_FILE_ENV_VARIABLE_NAME = "HEXAGON_CONFIG_FILE"
 

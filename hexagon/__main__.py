@@ -7,6 +7,10 @@ from hexagon.support.help import print_help
 from hexagon.support.tracer import tracer
 from hexagon.support.wax import search_by_key_or_alias, select_env, select_tool
 from hexagon.support.printer import log
+from hexagon.support.storage import (
+    HexagonStorageKeys,
+    store_user_data,
+)
 
 
 def main():
@@ -56,9 +60,10 @@ def main():
                     "[cyan dim]  o:[/cyan dim]",
                     f'[cyan]     {cli["command"]} {command_as_aliases}[/cyan]',
                 )
-            dump = open("last_command", "w")
-            dump.write(f'{cli["command"]} {tracer.command()}')
-            dump.close()
+            store_user_data(
+                HexagonStorageKeys.last_command.value,
+                f'{cli["command"]} {tracer.command()}',
+            )
     except KeyboardInterrupt:
         sys.exit(1)
 

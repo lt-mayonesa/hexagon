@@ -10,6 +10,7 @@ class Configuration:
         self.project_yaml = None
         self.custom_tools_path = None
         self.__config = None
+        self.has_config = False
 
     def init_config(self, path: str):
         self.project_yaml = path
@@ -34,6 +35,7 @@ class Configuration:
         try:
             with open(path, "r") as f:
                 self.__config = YAML().load(f)
+                self.has_config = True
                 if "custom_tools_dir" in self.__config["cli"]:
                     self.__register_custom_tools_path()
         except FileNotFoundError:
