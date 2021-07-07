@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.9.0 (2021-07-07)
+### Feature
+* **support:** Storage api, closes #17 ([#21](https://github.com/redbeestudios/hexagon/issues/21)) ([`f8cc5b3`](https://github.com/redbeestudios/hexagon/commit/f8cc5b374df56c084c2b1cc48ba0a35c44c6a46e))
+
 ## v0.8.2 (2021-07-03)
 ### Fix
 * **execute:** Pass env object correctly ([`86bbc68`](https://github.com/redbeestudios/hexagon/commit/86bbc689001339f0bfc128b25520244ed7f966ec))
