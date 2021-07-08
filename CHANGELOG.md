@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.10.0 (2021-07-08)
+### Feature
+* **execute:** Command actions, closes #22 ([#23](https://github.com/redbeestudios/hexagon/issues/23)) ([`26a9e05`](https://github.com/redbeestudios/hexagon/commit/26a9e051b497354c55177398f95ef98b0b4149bb))
+
 ## v0.9.0 (2021-07-07)
 ### Feature
 * **support:** Storage api, closes #17 ([#21](https://github.com/redbeestudios/hexagon/issues/21)) ([`f8cc5b3`](https://github.com/redbeestudios/hexagon/commit/f8cc5b374df56c084c2b1cc48ba0a35c44c6a46e))
