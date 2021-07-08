@@ -64,3 +64,15 @@ tools:
       qa:
         foo: foo
         bar: bar
+
+  generic-command:
+    action: 'echo "executed generic-command"'
+    type: shell
+    alias: gc
+    long_name: A generic command
+
+  failing-command:
+    action: i-dont-exist
+    type: shell
+    alias: fc
+    long_name: A failing command

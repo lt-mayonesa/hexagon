@@ -18,7 +18,7 @@ shared_prompt_output = [
     "",
     "ƒ Node Module Env Test",
     "",
-    "⬡ Save Last Command",
+    "ƒ A generic command",
     "",
     "└──────────────────────────────────────────────────────────────────────────────",
     "",
@@ -230,4 +230,28 @@ def test_execute_script_module_with_other_env():
             ]
         )
         .exit()
+    )
+
+
+def test_execute_command():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["generic-command"])
+        .then_output_should_be(["executed generic-command"])
+        .exit()
+    )
+
+
+def test_execute_failing_command():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["failing-command"], {"HEXAGON_THEME": "default"})
+        .then_output_should_be(
+            [
+                "i-dont-exist failed with: [Errno 2] No such file or directory: 'i-dont-exist'",
+                "We tried looking for:",
+            ],
+            True,
+        )
+        .exit(1)
     )
