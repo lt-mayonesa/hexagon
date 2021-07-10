@@ -4,14 +4,16 @@ import sys
 import os
 from typing import List, Union, Dict
 
-from hexagon.cli import configuration
+from hexagon.domain.tool import Tool
+from hexagon.domain.env import Env
+from hexagon.domain import configuration
 from hexagon.support.printer import log
 
 _command_by_file_extension = {"js": "node", "sh": "bash"}
 
 
-def execute_action(action, env_args, env, args):
-    action_to_execute: str = action["action"]
+def execute_action(tool: Tool, env_args, env: Env, args):
+    action_to_execute: str = tool.action
     ext = action_to_execute.split(".")[-1]
     script_action_command = (
         _command_by_file_extension[ext] if ext in _command_by_file_extension else None
@@ -23,17 +25,17 @@ def execute_action(action, env_args, env, args):
         )
     else:
         python_module_found = _execute_python_module(
-            action_to_execute, action, env, env_args, args
+            action_to_execute, tool, env, env_args, args
         )
         if python_module_found:
             return
 
-        splitted_action = action_to_execute.split(" ")
+        split_action = action_to_execute.split(" ")
         return_code, executed_command = _execute_command(
-            splitted_action[0],
+            split_action[0],
             env_args,
             args,
-            action_args=splitted_action[1:],
+            action_args=split_action[1:],
             handle_error=True,
         )
 
@@ -56,16 +58,15 @@ def execute_action(action, env_args, env, args):
             sys.exit(1)
 
 
-def _execute_python_module(action_id, action, env, env_args, args):
+def _execute_python_module(action_id: str, tool: Tool, env: Env, env_args, args):
     tool_action_module = _load_action_module(action_id) or _load_action_module(
         f"hexagon.tools.external.{action_id}"
     )
 
     if not tool_action_module:
-
         return False
     try:
-        tool_action_module.main(action, env, env_args, args)
+        tool_action_module.main(tool, env, env_args, args)
         return True
     except AttributeError as e:
         log.error(f"Execution of tool [bold]{action_id}[/bold] thru: {e}")
@@ -77,7 +78,7 @@ def _execute_command(
     command: str,
     env_args,
     cli_args,
-    env=None,
+    env: Env = None,
     action_args: List[str] = None,
     handle_error=False,
 ):
@@ -98,15 +99,15 @@ def _execute_command(
     return run()
 
 
-def _execute_script(command: str, script: str, env_args, env, args):
+def _execute_script(command: str, script: str, env_args, env: Env, args):
     # Script should be relative to the project path
     script_path = os.path.join(configuration.project_path, script)
-    if env and "alias" in env:
-        del env["alias"]
+    if env and env.alias:
+        del env.alias
     _execute_command(command, env_args, args, env, [script_path])
 
 
-def __sanitize_args_for_command(*args: Union[List[any], Dict]):
+def __sanitize_args_for_command(*args: Union[List[any], Dict, Env]):
     positional = []
     named = []
     for arg in args:
@@ -126,14 +127,14 @@ def __sanitize_args_for_command(*args: Union[List[any], Dict]):
     return named + positional
 
 
-def _load_action_module(action_id):
+def _load_action_module(action_id: str):
     try:
         return __load_module(action_id)
     except ModuleNotFoundError:
         return None
 
 
-def __load_module(module):
+def __load_module(module: str):
     if module in sys.modules:
         return sys.modules[module]
 

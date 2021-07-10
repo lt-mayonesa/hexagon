@@ -31,8 +31,9 @@ setuptools.setup(
         "clipboard",
         "requests",
         "ruamel.yaml",
+        "pydantic",
     ],
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     entry_points="""
         [console_scripts]
         hexagon=hexagon.__main__:main

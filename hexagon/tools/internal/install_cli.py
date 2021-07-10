@@ -4,7 +4,7 @@ from InquirerPy import inquirer
 from InquirerPy.validator import PathValidator
 from prompt_toolkit.validation import ValidationError
 
-from hexagon.cli import configuration
+from hexagon.domain import configuration
 from hexagon.tools.internal.save_new_alias import save_new_alias
 
 
@@ -30,4 +30,4 @@ def main(*_):
 
     cli, tools, envs = configuration.init_config(src_path)
 
-    save_new_alias(cli["command"], f"HEXAGON_CONFIG_FILE={src_path} hexagon")
+    save_new_alias(cli.command, f"HEXAGON_CONFIG_FILE={src_path} hexagon")

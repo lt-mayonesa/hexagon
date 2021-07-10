@@ -1,33 +1,40 @@
+from typing import Dict, Union
+
 from InquirerPy import inquirer
 
+from hexagon.domain.env import Env
+from hexagon.domain.tool import Tool
 
-def __classifier(value):
+
+def __classifier(value: Tool):
     symbols = {"web": "⦾", "shell": "ƒ", "misc": " ", "hexagon": "⬡"}
-    r = symbols.get(value.get("type", "misc"), "")
+    r = symbols.get(value.type, "")
     return f"{r:2}" if r else ""
 
 
-def __choices_with_long_name(dic, classifier=lambda x: ""):
-    def build_display(v, k):
+def __choices_with_long_name(dic: Dict[str, Union[Tool, Env]], classifier=lambda x: ""):
+    def build_display(v: Union[Tool, Env], k: str):
         if "__separator" in k:
             return "--------------------------------------------------------------------------------"
         else:
-            gap = 60 if "description" in v else 0
-            return f"{classifier(v) + v.get('long_name', k): <{gap}}{v.get('description', '')}"
+            gap = 60 if v.description else 0
+            return f"{classifier(v) + (v.long_name or k): <{gap}}{v.description or ''}"
 
     return [{"value": k, "name": build_display(v, k)} for k, v in dic.items()]
 
 
-def search_by_key_or_alias(dic, arg):
+def search_by_key_or_alias(dic: Dict[str, Union[Tool, Env]], arg: str):
     if arg:
         for k, v in dic.items():
-            if k == arg or v.get("alias") == arg:
+            if k == arg or v.alias == arg:
                 return k
 
     return None
 
 
-def select_env(available_envs: dict, tool_envs: dict = None, selected=None):
+def select_env(
+    available_envs: Dict[str, Env], tool_envs: dict = None, selected: str = None
+):
     if not tool_envs:
         return None, None
 
@@ -49,7 +56,7 @@ def select_env(available_envs: dict, tool_envs: dict = None, selected=None):
     return env, tool_envs[env]
 
 
-def select_tool(tools_dict: dict, selected=None):
+def select_tool(tools_dict: Dict[str, Tool], selected: str = None):
     if selected:
         return selected, tools_dict[selected]
 

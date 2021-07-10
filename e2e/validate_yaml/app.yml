@@ -1,15 +1,15 @@
 cli: 
   name: Test
-  command: hexagon-test
   custom_tools_dir: .
+
 tools:
-  google:
+  google-invalid:
+    long_name: Google
+    type: web
+
+  google-valid:
     long_name: Google
     type: web
     action: 'open_link'
     envs:
       '*': https://www.google.com/
-
-envs:
-  dev:
-    alias: d

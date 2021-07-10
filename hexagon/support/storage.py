@@ -5,7 +5,7 @@ from typing import Any, Dict, List
 from ruamel.yaml import YAML
 from enum import Enum
 from shutil import rmtree
-from hexagon.cli import cli, configuration
+from hexagon.domain import cli, configuration
 
 HEXAGON_STORAGE_APP = "hexagon"
 
@@ -108,7 +108,7 @@ def _get_app(app: str = None):
         app
         if app
         else (
-            cli["name"].lower()
+            cli.name.lower()
             if cli and configuration.has_config
             else HEXAGON_STORAGE_APP
         )

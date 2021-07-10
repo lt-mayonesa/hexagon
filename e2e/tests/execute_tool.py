@@ -67,7 +67,7 @@ def test_execute_python_module_with_env_by_gui():
                 ["On which environment?", "dev"],
                 "executed python-module",
                 "Env:",
-                "ordereddict([('alias', 'd'), ('name', 'dev')])",
+                "alias='d' long_name='dev' description=None",
                 "Env args:",
                 "[789, 'ghi']",
             ]
@@ -135,7 +135,7 @@ def test_execute_python_module_with_env_and_arguments():
             [
                 "executed python-module",
                 "Env:",
-                "ordereddict([('alias', 'd'), ('name', 'dev')])",
+                "alias='d' long_name='dev' description=None",
                 "Env args:",
                 "[789, 'ghi']",
                 "Cli args:",
@@ -155,7 +155,7 @@ def test_execute_python_module_with_other_env():
             [
                 "executed python-module",
                 "Env:",
-                "ordereddict([('alias', 'q'), ('name', 'qa')])",
+                "alias='q' long_name='qa' description=None",
                 "Env args:",
                 "ordereddict([('foo', 'foo'), ('bar', 'bar')])",
             ]
@@ -205,9 +205,9 @@ def test_execute_script_module_with_env_and_arguments():
             [
                 "executed node module",
                 "CLI arguments:",
-                "name=dev",
                 "789",
                 "ghi",
+                "long_name='dev' description=None",
                 "arg1",
                 "arg2",
             ]
@@ -226,7 +226,7 @@ def test_execute_script_module_with_other_env():
                 "CLI arguments:",
                 "foo=foo",
                 "bar=bar",
-                "name=qa",
+                "long_name='qa' description=None",
             ]
         )
         .exit()

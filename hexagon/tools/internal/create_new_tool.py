@@ -4,51 +4,58 @@ from shutil import copytree
 from InquirerPy import inquirer
 from InquirerPy.validator import PathValidator
 
-from hexagon.cli import configuration
+from hexagon.domain.tool import Tool, ToolType
+from hexagon.domain import configuration
 from hexagon.tools import external
 from hexagon.support.printer import log
 
 
 def main(*_):
     create_action = False
-    output = {
-        "action": inquirer.fuzzy(
+    new_tool = Tool(
+        action=inquirer.fuzzy(
             message="Choose the action of your tool:",
             validate=lambda x: x,
             choices=external.__all__ + ["new_action"],
         ).execute()
-    }
+    )
 
-    if output["action"] == "new_action":
+    if new_tool.action == "new_action":
         create_action = True
-        output["action"] = inquirer.text(
+        new_tool.action = inquirer.text(
             message="What name would you like to give your new action?",
             validate=lambda x: x,
         ).execute()
 
-    output["type"] = inquirer.select(
+    new_tool.type = inquirer.select(
         message="What type of tool is it?",
-        choices=["web", "shell"],
-        default="web" if output["action"] == "open_link" else "shell",
+        choices=[
+            {"value": ToolType.web, "name": ToolType.web.value},
+            {"value": ToolType.shell, "name": ToolType.shell.value},
+        ],
+        default=ToolType.web if new_tool.action == "open_link" else ToolType.shell,
     ).execute()
 
     command = inquirer.text(
         message="What command would you like to give your tool?",
         validate=lambda x: x,
-        default=output["action"].replace("_", "-"),
+        default=new_tool.action.replace("_", "-"),
     ).execute()
 
-    output["alias"] = inquirer.text(
+    new_tool.alias = inquirer.text(
         message="Would you like to add an alias/shortcut? (empty for none)",
         default="".join([z[:1] for z in command.split("-")]),
+        filter=lambda r: r or None,
     ).execute()
 
-    output["long_name"] = inquirer.text(
-        message="Would you like to add a long name? (this will be displayed instead of command)"
+    new_tool.long_name = inquirer.text(
+        message="Would you like to add a long name? (this will be displayed instead of command)",
+        filter=lambda r: r or None,
     ).execute()
 
-    output["description"] = inquirer.text(
-        message="Would you like to add a description? (this will be displayed along side command/long_name)"
+    new_tool.description = inquirer.text(
+        message="Would you like to add a description? (this will be displayed along side command/long_name)",
+        filter=lambda r: r or None,
     ).execute()
 
     cli, tools, _ = configuration.refresh()
@@ -79,19 +86,16 @@ def main(*_):
                     "custom_tool",
                 )
             ),
-            os.path.join(configuration.custom_tools_path, output["action"]),
+            os.path.join(configuration.custom_tools_path, new_tool.action),
         )
 
         _replace_variables(
-            os.path.join(
-                configuration.custom_tools_path, output["action"], "README.md"
-            ),
+            os.path.join(configuration.custom_tools_path, new_tool.action, "README.md"),
             "{{tool}}",
-            output.get("long_name", command),
+            new_tool.long_name or command,
         )
 
-    configuration.add_tool(command, {k: v for k, v in output.items() if v != ""})
-
+    configuration.add_tool(command, new_tool)
     configuration.save()
 
 

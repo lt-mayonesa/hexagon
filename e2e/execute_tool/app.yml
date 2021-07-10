@@ -6,10 +6,10 @@ cli:
 envs:
   dev:
     alias: d
-    name: dev
+    long_name: dev
   qa:
     alias: q
-    name: qa
+    long_name: qa
 
 tools:
   google:

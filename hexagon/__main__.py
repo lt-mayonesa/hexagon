@@ -1,7 +1,7 @@
 import sys
 
 from hexagon.support.args import fill_args
-from hexagon.cli import cli, tools, envs
+from hexagon.domain import cli, tools, envs
 from hexagon.support.execute_tool import execute_action
 from hexagon.support.help import print_help
 from hexagon.support.tracer import tracer
@@ -19,10 +19,10 @@ def main():
     if _tool == "-h" or _tool == "--help":
         return print_help(cli, tools, envs)
 
-    log.start(f'[bold]{cli["name"]}')
+    log.start(f"[bold]{cli.name}")
     log.gap()
 
-    if cli["name"] == "Hexagon":
+    if cli.name == "Hexagon":
         log.info(
             "This looks like your first time running Hexagon.",
             'You should probably run "Install CLI".',
@@ -36,10 +36,10 @@ def main():
         name, tool = select_tool(tools, _tool)
         tracer.tracing(name)
 
-        env, params = select_env(envs, tool["envs"] if "envs" in tool else None, _env)
+        env, params = select_env(envs, tool.envs, _env)
         tracer.tracing(env)
 
-        action = execute_action(tool, params, envs[env] if env else None, sys.argv[3:])
+        action = execute_action(tool, params, envs.get(env, None), sys.argv[3:])
 
         log.gap()
 
@@ -49,20 +49,20 @@ def main():
 
         log.finish()
 
-        if tracer.has_traced() and "command" in cli:
+        if tracer.has_traced() and cli.command:
             log.extra(
                 "[cyan dim]Para repetir este comando:[/cyan dim]",
-                f'[cyan]     {cli["command"]} {tracer.command()}[/cyan]',
+                f"[cyan]     {cli.command} {tracer.command()}[/cyan]",
             )
             command_as_aliases = tracer.command_as_aliases(tools, envs)
             if command_as_aliases:
                 log.extra(
                     "[cyan dim]  o:[/cyan dim]",
-                    f'[cyan]     {cli["command"]} {command_as_aliases}[/cyan]',
+                    f"[cyan]     {cli.command} {command_as_aliases}[/cyan]",
                 )
             store_user_data(
                 HexagonStorageKeys.last_command.value,
-                f'{cli["command"]} {tracer.command()}',
+                f"{cli.command} {tracer.command()}",
             )
     except KeyboardInterrupt:
         sys.exit(1)

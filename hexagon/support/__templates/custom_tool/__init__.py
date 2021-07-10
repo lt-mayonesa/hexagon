@@ -6,13 +6,15 @@ from InquirerPy.validator import EmptyInputValidator
 from hexagon.support.args import fill_args
 from hexagon.support.tracer import tracer
 from hexagon.support.printer import log
+from hexagon.domain.tool import Tool
+from hexagon.domain.env import Env
 
-from typing import Any, Dict, List
+from typing import Any, List, Optional
 
 
 def main(
-    tool: Dict[str, Any],
-    env: Dict[str, Any] = None,
+    tool: Tool,
+    env: Optional[Env] = None,
     env_args: Any = None,
     cli_args: List[Any] = None,
 ):
@@ -39,7 +41,7 @@ def main(
         ).execute()
     )
 
-    log.info(f"Tool.action: {tool['action']}")
+    log.info(f"Tool.action: {tool.action}")
     log.info(f"Env: {env}")
     log.info(f"Valor en tool.envs: {env_args}")
     log.info(f"tu apellido es: {name}")

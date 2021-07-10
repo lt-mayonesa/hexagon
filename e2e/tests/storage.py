@@ -6,7 +6,7 @@ from pathlib import Path
 from ruamel.yaml import YAML
 
 from hexagon.support.storage import store_user_data, load_user_data
-from hexagon.cli import cli
+from hexagon.domain import cli
 
 storage_path = os.path.realpath(
     os.path.join(os.path.dirname(__file__), os.path.pardir, "storage")
@@ -169,9 +169,9 @@ def test_storage_default_app():
         assert file.read() == "data"
 
 
-@patch("hexagon.cli.configuration.has_config", True)
+@patch("hexagon.domain.Configuration.has_config", True)
 def test_storage_configured_app():
-    cli["name"] = "test-app"
+    cli.name = "test-app"
     store_user_data(key, "data")
 
     with open(os.path.join(storage_path, "test-app", key) + ".txt") as file:
