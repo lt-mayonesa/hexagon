@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.11.0 (2021-07-10)
+### Feature
+* **domain:** Map YAML to pydantic BaseModel ([#24](https://github.com/redbeestudios/hexagon/issues/24)) ([`727a09a`](https://github.com/redbeestudios/hexagon/commit/727a09a01f11c34b1225fdcab609b02b2ffbff09))
+
 ## v0.10.0 (2021-07-08)
 ### Feature
 * **execute:** Command actions, closes #22 ([#23](https://github.com/redbeestudios/hexagon/issues/23)) ([`26a9e05`](https://github.com/redbeestudios/hexagon/commit/26a9e051b497354c55177398f95ef98b0b4149bb))

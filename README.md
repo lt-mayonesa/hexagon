@@ -11,7 +11,7 @@ Make your team's knowledge truly accessible, truly shared, and truly empowering 
 
 ### Install hexagon
 ```bash
-python3 -m pip install https://github.com/redbeestudios/hexagon/releases/download/v0.10.0/hexagon-0.10.0.tar.gz
+python3 -m pip install https://github.com/redbeestudios/hexagon/releases/download/v0.11.0/hexagon-0.11.0.tar.gz
 ```
 
 ### Create your teams CLI
