@@ -33,16 +33,14 @@ def main():
         _tool = search_by_name_or_alias(tools, _tool)
         _env = search_by_name_or_alias(envs, _env)
 
-        name, tool = select_tool(tools, _tool)
-        tracer.tracing(name)
+        tool = select_tool(tools, _tool)
+        tracer.tracing(tool.name)
 
         env, params = select_env(envs, tool.envs, _env)
-        tracer.tracing(env)
+        if env:
+            tracer.tracing(env.name)
 
-        # TODO: next() probably should be inside select_env
-        action = execute_action(
-            tool, params, next((e for e in envs if e.name == env), None), sys.argv[3:]
-        )
+        action = execute_action(tool, params, env, sys.argv[3:])
 
         log.gap()
 

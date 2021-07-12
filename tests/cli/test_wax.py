@@ -32,13 +32,13 @@ def env_mock():
     return inquirer_mock("dev")
 
 
-tools_dict = [
+tools = [
     Tool(name="docker", alias="d", action="docker_run"),
     Tool(name="bastion", alias="b", action="bastion"),
     Tool(name="no_alias", action="some_action"),
 ]
 
-envs_dict = [Env(name="dev", alias="d"), Env(name="qa", alias="q")]
+envs = [Env(name="dev", alias="d"), Env(name="qa", alias="q")]
 
 
 @pytest.mark.parametrize(
@@ -54,23 +54,19 @@ envs_dict = [Env(name="dev", alias="d"), Env(name="qa", alias="q")]
     ],
 )
 def test_search_tools_dict_by_key_or_alias(search, expected):
-    assert search_by_name_or_alias(tools_dict, search) == expected
+    assert search_by_name_or_alias(tools, search) == expected
 
 
 def test_tool_is_selected_from_cmd():
-    assert select_tool(tools_dict, "docker") == (
-        "docker",
-        Tool(name="docker", alias="d", action="docker_run"),
+    assert select_tool(tools, "docker") == Tool(
+        name="docker", alias="d", action="docker_run"
     )
 
 
 def test_tool_is_selected_by_prompt(monkeypatch, tool_mock):
     monkeypatch.setattr(inquirer, "fuzzy", tool_mock)
 
-    assert select_tool(tools_dict) == (
-        "docker",
-        Tool(name="docker", alias="d", action="docker_run"),
-    )
+    assert select_tool(tools) == Tool(name="docker", alias="d", action="docker_run")
     assert tool_mock.args[0] == "Hi, which tool would you like to use today?"
     assert tool_mock.args[1] == [
         {"value": "docker", "name": "  docker"},
@@ -81,23 +77,23 @@ def test_tool_is_selected_by_prompt(monkeypatch, tool_mock):
 
 
 def test_tool_has_no_env_property():
-    assert select_env(envs_dict, None) == (None, None)
+    assert select_env(envs, None) == (None, None)
 
 
 def test_tool_has_env_property_with_wildcard():
-    assert select_env(envs_dict, {"*": "sarasa"}) == (None, "sarasa")
+    assert select_env(envs, {"*": "sarasa"}) == (None, "sarasa")
 
 
 def test_env_is_selected_from_cmd():
     tool_envs = {"dev": "env_1", "qa": "env_2"}
-    assert select_env(envs_dict, tool_envs, "qa") == ("qa", "env_2")
+    assert select_env(envs, tool_envs, "qa") == (envs[1], "env_2")
 
 
 def test_env_is_selected_by_prompt(monkeypatch, env_mock):
     tool_envs = {"dev": "env_1", "qa": "env_2"}
     monkeypatch.setattr(inquirer, "fuzzy", env_mock)
 
-    assert select_env(envs_dict, tool_envs) == ("dev", "env_1")
+    assert select_env(envs, tool_envs) == (envs[0], "env_1")
     assert env_mock.args[0] == "On which environment?"
     assert env_mock.args[1] == [
         {"value": "dev", "name": "dev"},
