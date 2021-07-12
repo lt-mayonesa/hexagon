@@ -3,11 +3,11 @@ cli:
   custom_tools_dir: .
 
 tools:
-  google-invalid:
+  - name: google-invalid
     long_name: Google
     type: web
 
-  google-valid:
+  - name: google-valid
     long_name: Google
     type: web
     action: 'open_link'

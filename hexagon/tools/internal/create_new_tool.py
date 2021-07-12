@@ -13,11 +13,12 @@ from hexagon.support.printer import log
 def main(*_):
     create_action = False
     new_tool = Tool(
+        name="invalid",
         action=inquirer.fuzzy(
             message="Choose the action of your tool:",
             validate=lambda x: x,
             choices=external.__all__ + ["new_action"],
-        ).execute()
+        ).execute(),
     )
 
     if new_tool.action == "new_action":
@@ -36,7 +37,7 @@ def main(*_):
         default=ToolType.web if new_tool.action == "open_link" else ToolType.shell,
     ).execute()
 
-    command = inquirer.text(
+    new_tool.name = inquirer.text(
         message="What command would you like to give your tool?",
         validate=lambda x: x,
         default=new_tool.action.replace("_", "-"),
@@ -44,7 +45,7 @@ def main(*_):
 
     new_tool.alias = inquirer.text(
         message="Would you like to add an alias/shortcut? (empty for none)",
-        default="".join([z[:1] for z in command.split("-")]),
+        default="".join([z[:1] for z in new_tool.name.split("-")]),
         filter=lambda r: r or None,
     ).execute()
 
@@ -92,10 +93,10 @@ def main(*_):
         _replace_variables(
             os.path.join(configuration.custom_tools_path, new_tool.action, "README.md"),
             "{{tool}}",
-            new_tool.long_name or command,
+            new_tool.long_name or new_tool.name,
         )
 
-    configuration.add_tool(command, new_tool)
+    configuration.add_tool(new_tool)
     configuration.save()
 
 

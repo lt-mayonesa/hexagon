@@ -12,6 +12,7 @@ class ToolType(str, Enum):
 
 
 class Tool(BaseModel):
+    name: str
     action: str
     type: ToolType = ToolType.misc
     alias: Optional[str] = None

@@ -9,8 +9,10 @@ DESCRIPTION = "Hexagon Custom Action Test Description"
 
 config_file = {
     "cli": {"name": "Test", "command": "hexagon-test", "custom_tools_dir": "."},
-    "tools": {"google": {"long_name": "Google", "type": "web", "action": "open_link"}},
-    "envs": {},
+    "tools": [
+        {"name": "google", "long_name": "Google", "type": "web", "action": "open_link"}
+    ],
+    "envs": [],
 }
 
 

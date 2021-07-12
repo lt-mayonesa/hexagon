@@ -3,9 +3,9 @@ cli:
   command: hexagon-test
   custom_tools_dir: .
 tools:
-  python-module:
+  - name: python-module
     action: python-module
     type: shell
     alias: pm
     long_name: Python Module Test
-envs: {}
+envs: []

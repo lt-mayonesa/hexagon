@@ -3,7 +3,7 @@ from InquirerPy import inquirer
 
 from hexagon.domain.tool import Tool
 from hexagon.domain.env import Env
-from hexagon.support.wax import search_by_key_or_alias, select_tool, select_env
+from hexagon.support.wax import search_by_name_or_alias, select_tool, select_env
 
 
 def inquirer_mock(ret):
@@ -32,13 +32,13 @@ def env_mock():
     return inquirer_mock("dev")
 
 
-tools_dict = {
-    "docker": Tool(alias="d", action="docker_run"),
-    "bastion": Tool(alias="b", action="bastion"),
-    "no_alias": Tool(action="some_action"),
-}
+tools_dict = [
+    Tool(name="docker", alias="d", action="docker_run"),
+    Tool(name="bastion", alias="b", action="bastion"),
+    Tool(name="no_alias", action="some_action"),
+]
 
-envs_dict = {"dev": Env(alias="d"), "qa": Env(alias="q")}
+envs_dict = [Env(name="dev", alias="d"), Env(name="qa", alias="q")]
 
 
 @pytest.mark.parametrize(
@@ -54,20 +54,23 @@ envs_dict = {"dev": Env(alias="d"), "qa": Env(alias="q")}
     ],
 )
 def test_search_tools_dict_by_key_or_alias(search, expected):
-    assert search_by_key_or_alias(tools_dict, search) == expected
+    assert search_by_name_or_alias(tools_dict, search) == expected
 
 
 def test_tool_is_selected_from_cmd():
     assert select_tool(tools_dict, "docker") == (
         "docker",
-        Tool(alias="d", action="docker_run"),
+        Tool(name="docker", alias="d", action="docker_run"),
     )
 
 
 def test_tool_is_selected_by_prompt(monkeypatch, tool_mock):
     monkeypatch.setattr(inquirer, "fuzzy", tool_mock)
 
-    assert select_tool(tools_dict) == ("docker", Tool(alias="d", action="docker_run"))
+    assert select_tool(tools_dict) == (
+        "docker",
+        Tool(name="docker", alias="d", action="docker_run"),
+    )
     assert tool_mock.args[0] == "Hi, which tool would you like to use today?"
     assert tool_mock.args[1] == [
         {"value": "docker", "name": "  docker"},

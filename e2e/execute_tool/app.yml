@@ -4,28 +4,28 @@ cli:
   custom_tools_dir: .
 
 envs:
-  dev:
+  - name: dev
     alias: d
     long_name: dev
-  qa:
+  - name: qa
     alias: q
     long_name: qa
 
 tools:
-  google:
+  - name: google
     long_name: Google
     type: web
     action: open_link
     envs:
       "*": https://www.google.com/
 
-  python-module:
+  - name: python-module
     action: python-module
     type: shell
     alias: pm
     long_name: Python Module Test
 
-  python-module-env:
+  - name: python-module-env
     action: python-module
     type: shell
     alias: pme
@@ -38,7 +38,7 @@ tools:
         foo: foo
         bar: bar
 
-  python-module-env-all:
+  - name: python-module-env-all
     action: python-module
     type: shell
     alias: python-module-env-all
@@ -46,13 +46,13 @@ tools:
     envs:
       "*": all_envs
 
-  node-module:
+  - name: node-module
     action: node-module.js
     type: shell
     alias: nm
     long_name: Node Module Test
 
-  node-module-env:
+  - name: node-module-env
     action: node-module.js
     type: shell
     alias: nme
@@ -65,13 +65,13 @@ tools:
         foo: foo
         bar: bar
 
-  generic-command:
+  - name: generic-command
     action: 'echo "executed generic-command"'
     type: shell
     alias: gc
     long_name: A generic command
 
-  failing-command:
+  - name: failing-command
     action: i-dont-exist
     type: shell
     alias: fc

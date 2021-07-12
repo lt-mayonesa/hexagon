@@ -10,8 +10,10 @@ DESCRIPTION = "Hexagon Custom Action Test Description"
 
 base_app_file = {
     "cli": {"name": "Test", "command": "hexagon-test", "custom_tools_dir": "."},
-    "tools": {"google": {"long_name": "Google", "type": "web", "action": "open_link"}},
-    "envs": {},
+    "tools": [
+        {"name": "google", "long_name": "Google", "type": "web", "action": "open_link"}
+    ],
+    "envs": [],
 }
 
 
@@ -95,7 +97,7 @@ def test_create_new_open_link_tool():
     )
 
     app_file = read_hexagon_config(__file__)
-    created_tool = app_file["tools"]["open-link-test"]
+    created_tool = app_file["tools"][1]
     assert created_tool["action"] == "open_link"
     assert created_tool["type"] == "web"
     assert created_tool["alias"] == "olt"
@@ -141,7 +143,7 @@ def test_create_new_python_module_tool():
     )
 
     app_file = read_hexagon_config(__file__)
-    created_tool = app_file["tools"]["a-new-action-command"]
+    created_tool = app_file["tools"][1]
     assert created_tool["action"] == "a-new-action"
     assert created_tool["type"] == "shell"
     assert created_tool["alias"] == "anac"

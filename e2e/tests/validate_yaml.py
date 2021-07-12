@@ -13,7 +13,7 @@ def test_show_errors_when_invalid_yaml():
                 "field required (type=value_error.missing)",
                 "envs",
                 "field required (type=value_error.missing)",
-                "tools -> google-invalid -> action",
+                "tools -> 0 -> action",
                 "field required (type=value_error.missing)",
             ]
         )

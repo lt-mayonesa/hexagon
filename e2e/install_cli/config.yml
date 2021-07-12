@@ -2,8 +2,9 @@ cli:
   name: Test
   command: hexagon-test
   custom_tools_dir: .
+
 tools:
-  google:
+  - name: google
     long_name: Google
     type: web
     action: 'open_link'
@@ -11,5 +12,5 @@ tools:
       '*': https://www.google.com/
 
 envs:
-  dev:
+  - name: dev
     alias: d

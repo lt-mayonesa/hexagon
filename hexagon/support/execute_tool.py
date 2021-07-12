@@ -69,7 +69,7 @@ def _execute_python_module(action_id: str, tool: Tool, env: Env, env_args, args)
         tool_action_module.main(tool, env, env_args, args)
         return True
     except AttributeError as e:
-        log.error(f"Execution of tool [bold]{action_id}[/bold] thru: {e}")
+        log.error(f"Execution of tool [bold]{action_id}[/bold] thru: {e}", e)
         log.error("Does it have the required `main(args...)` method?")
         sys.exit(1)
 
