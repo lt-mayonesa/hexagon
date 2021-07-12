@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.12.0 (2021-07-12)
+### Feature
+* Define tools & envs as lists ([#26](https://github.com/redbeestudios/hexagon/issues/26)) ([`4db03b4`](https://github.com/redbeestudios/hexagon/commit/4db03b4e279bf2c82f6c9e8af8265026ea6e25c6))
+
 ## v0.11.0 (2021-07-10)
 ### Feature
 * **domain:** Map YAML to pydantic BaseModel ([#24](https://github.com/redbeestudios/hexagon/issues/24)) ([`727a09a`](https://github.com/redbeestudios/hexagon/commit/727a09a01f11c34b1225fdcab609b02b2ffbff09))
