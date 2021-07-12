@@ -24,14 +24,14 @@ cli:
   command: tc
 
 envs:
-  dev:
+  - name: dev
     alias: d
-  qa:
+  - name: qa
     alias: q
 
 tools:
 
-  google:
+  - name: google
     alias: g
     long_name: Google
     description: Open google
@@ -41,7 +41,7 @@ tools:
       qa: google.qa
     action: open_link
 
-  docker-registry:
+  - name: docker-registry
     alias: dr
     long_name: Docker Registry
     type: shell
