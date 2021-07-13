@@ -1,11 +1,9 @@
-cli: 
+cli:
   name: Test
   custom_tools_dir: .
+  command: [ 'test' ]
 
 tools:
-  - name: google-invalid
-    long_name: Google
-    type: web
 
   - name: google-valid
     long_name: Google
@@ -13,3 +11,7 @@ tools:
     action: 'open_link'
     envs:
       '*': https://www.google.com/
+
+  - name: google-invalid
+    long_name: Google
+    type: web

@@ -32,9 +32,13 @@ jobs:
           python -m pip install pytest
           python -m pip install -e .
 
-      - name: Test with pytest
+      - name: Unit tests
         run: |
-          pytest -svv
+          pytest -svv tests/
+
+      - name: e2e tests
+        run: |
+          pytest -svv e2e/
 
   release:
     if: ${{ github.event_name != 'pull_request' && github.event_name != 'pull_request_target' }}

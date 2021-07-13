@@ -8,7 +8,7 @@ from ruamel.yaml import YAML
 from hexagon.domain.cli import Cli
 from hexagon.domain.env import Env
 from hexagon.domain.tool import Tool, ToolType
-from hexagon.support.printer import log
+from hexagon.support.yaml import display_yaml_errors
 
 
 class ConfigFile(BaseModel):
@@ -45,17 +45,15 @@ class Configuration:
         self.project_path = os.path.dirname(self.project_yaml)
 
         try:
-            with open(path, "r") as f:
-                self.__yaml = YAML().load(f)
-                self.__config = ConfigFile(**self.__yaml)
+            self.__yaml = YAML().load(open(path, "r"))
+            self.__config = ConfigFile(**self.__yaml)
 
-                if self.__config.cli.custom_tools_dir:
-                    self.__register_custom_tools_path()
-
+            if self.__config.cli.custom_tools_dir:
+                self.__register_custom_tools_path()
         except FileNotFoundError:
             return self.__initial_setup_config()
         except ValidationError as errors:
-            log.error("There was an error validating your YAML", errors)
+            display_yaml_errors(errors, self.__yaml, self.project_yaml)
             sys.exit(1)
 
         return (

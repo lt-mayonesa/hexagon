@@ -1,6 +1,7 @@
-from typing import Optional
+from typing import Optional, Union
 
 from rich.console import Console
+from rich.syntax import Syntax
 
 from hexagon.support.printer.themes import LoggingTheme
 
@@ -29,15 +30,27 @@ class Logger:
     def result(self, message: str):
         self.__console.print(f"{self.__decorations.border_result}{message}")
 
-    def example(self, *message: str):
-        if not self.__decorations.result_only:
-            self.__console.print(f"{self.__decorations.process_out}\n")
+    def example(
+        self,
+        *message: Union[str, Syntax],
+        decorator_start: Union[str, bool] = True,
+        decorator_end: Union[str, bool] = True,
+    ):
+        def __use_decorator(param, default):
+            return param if isinstance(param, str) else default
+
+        if not self.__decorations.result_only and decorator_start is not False:
+            self.__console.print(
+                __use_decorator(decorator_start, f"{self.__decorations.process_out}\n")
+            )
 
         for msg in message:
             self.__console.print(msg)
 
-        if not self.__decorations.result_only:
-            self.__console.print(f"\n{self.__decorations.process_in}")
+        if not self.__decorations.result_only and decorator_end is not False:
+            self.__console.print(
+                __use_decorator(decorator_end, f"\n{self.__decorations.process_in}")
+            )
 
     def error(self, message: str, err: Optional[Exception] = None):
         self.__console.print(f"[red]{message}")
