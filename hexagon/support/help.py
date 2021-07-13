@@ -1,5 +1,5 @@
 from itertools import groupby
-from typing import Dict
+from typing import List
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import Tool
@@ -7,7 +7,8 @@ from hexagon.domain.cli import Cli
 from hexagon.support.printer import log
 
 
-def print_help(cli_config: Cli, tools: Dict[str, Tool], envs: Dict[str, Env]):
+# TODO: add e2e tests of help
+def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):
     """
     Print the command line help text based on the tools and envs in configuration yaml
 
@@ -25,23 +26,19 @@ def print_help(cli_config: Cli, tools: Dict[str, Tool], envs: Dict[str, Env]):
     log.info(f"[bold]{cli_config.name}", gap_end=1)
 
     log.info("[bold][u]Envs:")
-    for k, v in envs.items():
-        log.info(f'  {k + (" (" + v.alias + ")" if v.alias else "")}')
+    for env in envs:
+        log.info(f'  {env.name + (" (" + env.alias + ")" if env.alias else "")}')
 
     log.info("[bold][u]Tools:", gap_start=2)
 
-    def key_func(z):
-        x, y = z
-        return y.type
+    data = sorted(tools, key=lambda t: t.type, reverse=True)
 
-    data = sorted(tools.items(), key=key_func, reverse=True)
-
-    for gk, g in groupby(data, key_func):
+    for gk, g in groupby(data, lambda t: t.type):
         log.info(f"[bold]{gk}:", gap_start=1)
 
-        for k, v in g:
+        for tool in g:
             log.info(
-                f'  {k + (" (" + v.alias + ")" if v.alias else ""):<60}[dim]{v.long_name or ""}'
+                f'  {tool.name + (" (" + tool.alias + ")" if tool.alias else ""):<60}[dim]{tool.long_name or ""}'
             )
-            if v.description:
-                log.info(f'  {"": <60}[dim]{v.description}', gap_end=1)
+            if tool.description:
+                log.info(f'  {"": <60}[dim]{tool.description}', gap_end=1)
