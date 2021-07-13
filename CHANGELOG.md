@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.13.1 (2021-07-13)
+### Fix
+* **help:** Help expecting dict crashes ([`cf86f99`](https://github.com/redbeestudios/hexagon/commit/cf86f99c56e9c5a4affe426021b3230ef342d99f))
+
 ## v0.13.0 (2021-07-13)
 ### Feature
 * **yaml:** Show a more precise error to users ([#27](https://github.com/redbeestudios/hexagon/issues/27)) ([`b635964`](https://github.com/redbeestudios/hexagon/commit/b635964789a54006f3f3b4dc31196940487b687f))
