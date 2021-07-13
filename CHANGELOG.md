@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.13.0 (2021-07-13)
+### Feature
+* **yaml:** Show a more precise error to users ([#27](https://github.com/redbeestudios/hexagon/issues/27)) ([`b635964`](https://github.com/redbeestudios/hexagon/commit/b635964789a54006f3f3b4dc31196940487b687f))
+
 ## v0.12.0 (2021-07-12)
 ### Feature
 * Define tools & envs as lists ([#26](https://github.com/redbeestudios/hexagon/issues/26)) ([`4db03b4`](https://github.com/redbeestudios/hexagon/commit/4db03b4e279bf2c82f6c9e8af8265026ea6e25c6))
