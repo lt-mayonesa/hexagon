@@ -7,7 +7,6 @@ from hexagon.domain.cli import Cli
 from hexagon.support.printer import log
 
 
-# TODO: add e2e tests of help
 def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):
     """
     Print the command line help text based on the tools and envs in configuration yaml
@@ -27,7 +26,13 @@ def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):
 
     log.info("[bold][u]Envs:")
     for env in envs:
-        log.info(f'  {env.name + (" (" + env.alias + ")" if env.alias else "")}')
+        log.info(
+            f'  {env.name + (" (" + env.alias + ")" if env.alias else ""):<60}[dim]{env.long_name or ""}'
+        )
+        if env.description:
+            # TODO: if env is the last one it should not print with gap
+            # the same for tools
+            log.info(f'  {"": <60}[dim]{env.description}', gap_end=1)
 
     log.info("[bold][u]Tools:", gap_start=2)
 

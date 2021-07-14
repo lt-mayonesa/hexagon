@@ -25,9 +25,12 @@ def _save_last_output_and_raise(
     if not timeouted:
         for line in process.stdout.readlines():
             lines.append(line)
-    print("Last command output:")
+    print("command output:")
     for line in lines:
         print(line.rstrip())
+
+    print(process.stderr.read())
+
     _save_last_output(lines)
     raise error
 

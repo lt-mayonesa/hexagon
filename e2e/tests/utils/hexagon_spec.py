@@ -20,7 +20,9 @@ class HexagonSpec:
         write_hexagon_config(self.__file, config)
         return self
 
-    def run_hexagon(self, command=None, os_env_vars: Optional[Dict[str, str]] = None):
+    def run_hexagon(
+        self, command: List[str] = None, os_env_vars: Optional[Dict[str, str]] = None
+    ):
         __tracebackhide__ = True
         if command:
             self.command = command
@@ -71,6 +73,9 @@ class HexagonSpec:
 
     def exit(self, status: int = 0):
         __tracebackhide__ = True
+        # FIXME: e2e exit status code is not validated correctly
+        # label=e2e estimate=30m
+        # if i have a e2e test with .exit(status=1) when actual exit status is 0 test passes
         assert_process_ended(self.process, status)
 
 

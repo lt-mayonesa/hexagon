@@ -1,0 +1,41 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+
+envs:
+  - name: dev
+    alias: d
+    long_name: Development
+    description: this env has a description
+  - name: qa
+    alias: q
+    long_name: Quality Assurance
+
+tools:
+  - name: google
+    long_name: Google
+    type: web
+    action: open_link
+    envs:
+      "*": https://www.google.com/
+
+  - name: python-module
+    action: python-module
+    type: shell
+    alias: pm
+    long_name: Python Module Test
+    description: This is a description that should be rendered
+
+  - name: python-module-env
+    action: python-module
+    type: shell
+    alias: pme
+    long_name: Python Module Env Test
+    envs:
+      dev:
+        - 789
+        - ghi
+      qa:
+        foo: foo
+        bar: bar
