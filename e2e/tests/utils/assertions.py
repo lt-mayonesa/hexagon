@@ -39,6 +39,8 @@ def _check_process_return_code(process: subprocess.Popen, exit_status: int = 0):
     __tracebackhide__ = True
     if process.returncode and process.returncode > exit_status:
         raise Exception("\n".join(process.stderr.readlines()))
+    elif process.returncode:
+        assert process.returncode == exit_status
 
 
 Expected_Process_Output_Item = str or Callable[[str], bool]
