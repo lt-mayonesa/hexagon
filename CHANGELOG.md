@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.13.2 (2021-07-17)
+### Fix
+* **last-command:** Store last command whe tool executed directly ([`1f6c887`](https://github.com/redbeestudios/hexagon/commit/1f6c8875317245b599b18063420650277d9d27b8))
+
 ## v0.13.1 (2021-07-13)
 ### Fix
 * **help:** Help expecting dict crashes ([`cf86f99`](https://github.com/redbeestudios/hexagon/commit/cf86f99c56e9c5a4affe426021b3230ef342d99f))
