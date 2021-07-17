@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.13.3 (2021-07-17)
+### Fix
+* Simplify always true cli.command ([`c72de85`](https://github.com/redbeestudios/hexagon/commit/c72de855b7f8a0e236a9ea100d0e2662f8d90895))
+
 ## v0.13.2 (2021-07-17)
 ### Fix
 * **last-command:** Store last command whe tool executed directly ([`1f6c887`](https://github.com/redbeestudios/hexagon/commit/1f6c8875317245b599b18063420650277d9d27b8))
