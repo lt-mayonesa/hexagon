@@ -4,6 +4,8 @@ import signal
 import re
 from typing import Callable, List
 
+from e2e.tests.utils.path import e2e_test_folder_path
+
 last_output_file_path = os.path.realpath(
     os.path.join(
         __file__, os.path.pardir, os.path.pardir, os.path.pardir, "last-output.txt"
@@ -169,3 +171,15 @@ def assert_process_ended(process: subprocess.Popen, exit_status: int = 0):
         _save_last_output_and_raise(process, [], error)
 
     _check_process_return_code(process, exit_status)
+
+
+def assert_file_has_contents(test_file: str, file: str, contents: str):
+    test_dir = e2e_test_folder_path(test_file)
+
+    with open(os.path.join(test_dir, file), "r") as f:
+        assert f.read() == contents
+
+
+def assert_file_does_not_exist(test_file: str, file: str):
+    test_dir = e2e_test_folder_path(test_file)
+    assert os.path.isfile(os.path.join(test_dir, file)) is False

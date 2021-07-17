@@ -50,17 +50,23 @@ def main():
 
         log.finish()
 
-        if tracer.has_traced() and cli.command:
-            log.extra(
-                "[cyan dim]Para repetir este comando:[/cyan dim]",
-                f"[cyan]     {cli.command} {tracer.command()}[/cyan]",
-            )
-            command_as_aliases = tracer.command_as_aliases(tools, envs)
-            if command_as_aliases:
+        # TODO: cli.command is always true
+        #
+        # with the addition of pydantic cli.command is always set.
+        # we should find another way of knowing if executing hexagon or a project cli
+        # the same goes for the if at line 25
+        if cli.command:
+            if tracer.has_traced():
                 log.extra(
-                    "[cyan dim]  o:[/cyan dim]",
-                    f"[cyan]     {cli.command} {command_as_aliases}[/cyan]",
+                    "[cyan dim]Para repetir este comando:[/cyan dim]",
+                    f"[cyan]     {cli.command} {tracer.command()}[/cyan]",
                 )
+                command_as_aliases = tracer.command_as_aliases(tools, envs)
+                if command_as_aliases:
+                    log.extra(
+                        "[cyan dim]  o:[/cyan dim]",
+                        f"[cyan]     {cli.command} {command_as_aliases}[/cyan]",
+                    )
             store_user_data(
                 HexagonStorageKeys.last_command.value,
                 f"{cli.command} {tracer.command()}",
