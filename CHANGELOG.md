@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.13.4 (2021-07-19)
+### Fix
+* **yaml:** Handle error for None values ([`33300c6`](https://github.com/redbeestudios/hexagon/commit/33300c6463ab7f0accdccf0b46ed7fb96be64ac4))
+
 ## v0.13.3 (2021-07-17)
 ### Fix
 * Simplify always true cli.command ([`c72de85`](https://github.com/redbeestudios/hexagon/commit/c72de855b7f8a0e236a9ea100d0e2662f8d90895))
