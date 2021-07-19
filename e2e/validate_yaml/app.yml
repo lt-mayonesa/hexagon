@@ -15,3 +15,8 @@ tools:
   - name: google-invalid
     long_name: Google
     type: web
+
+  - name: another-invalid
+    long_name: Google 2
+    type: web
+    action:

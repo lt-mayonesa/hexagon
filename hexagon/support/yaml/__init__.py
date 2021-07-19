@@ -46,8 +46,12 @@ def __yaml_line_number(yml, loc: list, line_count_hack: int = 0):
     """
     if len(loc) == 1:
         try:
-            return line_count_hack + yml[loc[0]].lc.line
-        except (LookupError, TypeError):
+            return (
+                line_count_hack + yml[loc[0]].lc.line
+                if yml[loc[0]]
+                else yml.lc.data[loc[0]][2]
+            )
+        except (LookupError, TypeError, AttributeError):
             return (
                 line_count_hack - 1 if line_count_hack > 0 else line_count_hack
             ) + yml.lc.line
