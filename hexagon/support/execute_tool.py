@@ -9,7 +9,7 @@ from hexagon.domain.env import Env
 from hexagon.domain import configuration
 from hexagon.support.printer import log
 
-_command_by_file_extension = {"js": "node", "sh": "bash"}
+_command_by_file_extension = {"js": "node", "sh": "sh"}
 
 
 def execute_action(tool: Tool, env_args, env: Env, args):
@@ -36,25 +36,22 @@ def execute_action(tool: Tool, env_args, env: Env, args):
             env_args,
             args,
             action_args=split_action[1:],
-            handle_error=True,
         )
 
         if return_code != 0:
-            if isinstance(return_code, int):
-                log.error(f"{executed_command} returned {return_code}\n")
-            elif return_code:
-                log.error(f"{executed_command} failed with: {return_code}")
-            else:
-                log.error(f"{executed_command} failed")
-            log.error("[dim] We tried looking for:")
-            log.error(
-                f"[dim]   - Your CLI's custom_tools_dir: [bold]{configuration.custom_tools_path}"
-            )
-            log.error(
-                "[dim]   - Hexagon repository of externals tools (hexagon.tools.external)"
-            )
-            log.error("[dim]   - A known script file (.js, .sh)")
-            log.error("[dim]   - Running your action as a shell command directly")
+            log.error(f"{executed_command} returned code: {return_code}\n")
+
+            if return_code == 127:
+                log.error(f"Hexagon couldn't execute the action: [bold]{tool.action}")
+                log.error("We tried:")
+                log.error(
+                    f"  - Your CLI's custom_tools_dir: [bold]{configuration.custom_tools_path}"
+                )
+                log.error(
+                    "  - Hexagon repository of externals tools (hexagon.tools.external)"
+                )
+                log.error("  - A known script file (.js, .sh)")
+                log.error("  - Running your action as a shell command directly")
             sys.exit(1)
 
 
@@ -75,28 +72,13 @@ def _execute_python_module(action_id: str, tool: Tool, env: Env, env_args, args)
 
 
 def _execute_command(
-    command: str,
-    env_args,
-    cli_args,
-    env: Env = None,
-    action_args: List[str] = None,
-    handle_error=False,
+    command: str, env_args, cli_args, env: Env = None, action_args: List[str] = None
 ):
     action_args = action_args if action_args else []
     hexagon_args = __sanitize_args_for_command(env_args, env, *cli_args)
-    command_to_execute = [command] + action_args + hexagon_args
-    command_to_execute_as_string = " ".join(command_to_execute)
+    cmd_as_string = " ".join([command] + action_args + hexagon_args)
 
-    def run():
-        return subprocess.call(command_to_execute), command_to_execute_as_string
-
-    if handle_error:
-        try:
-            return run()
-        except Exception as error:
-            return str(error), command_to_execute_as_string
-
-    return run()
+    return subprocess.call(cmd_as_string, shell=True), cmd_as_string
 
 
 def _execute_script(command: str, script: str, env_args, env: Env, args):
@@ -123,7 +105,7 @@ def __sanitize_args_for_command(*args: Union[List[any], Dict, Env]):
                 named += [f"{k}={v}" for k, v in arg.items() if v]
             except AttributeError:
                 # Unknown arg type, try to append it directly
-                positional.append(str(arg))
+                positional.append(f'"{str(arg)}"')
     return named + positional
 
 
