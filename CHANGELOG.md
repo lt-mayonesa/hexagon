@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.14.0 (2021-07-20)
+### Feature
+* **updates:** Hexagon auto update ([#35](https://github.com/redbeestudios/hexagon/issues/35)) ([`16b93ff`](https://github.com/redbeestudios/hexagon/commit/16b93ffab29aa817c22b4a9b06e6dda43cc54fc7))
+
 ## v0.13.5 (2021-07-20)
 ### Fix
 * **execute:** Use subprocess shell=True ([#38](https://github.com/redbeestudios/hexagon/issues/38)) ([`6d5e1e8`](https://github.com/redbeestudios/hexagon/commit/6d5e1e8e2e6ce62ca15acbf9d002d3ae6d0881ef))
