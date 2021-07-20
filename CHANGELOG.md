@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.13.5 (2021-07-20)
+### Fix
+* **execute:** Use subprocess shell=True ([#38](https://github.com/redbeestudios/hexagon/issues/38)) ([`6d5e1e8`](https://github.com/redbeestudios/hexagon/commit/6d5e1e8e2e6ce62ca15acbf9d002d3ae6d0881ef))
+
 ## v0.13.4 (2021-07-19)
 ### Fix
 * **yaml:** Handle error for None values ([`33300c6`](https://github.com/redbeestudios/hexagon/commit/33300c6463ab7f0accdccf0b46ed7fb96be64ac4))
