@@ -1,3 +1,4 @@
+import time
 from typing import Callable, Dict, List, Optional
 
 from e2e.tests.utils.assertions import (
@@ -82,6 +83,13 @@ class HexagonSpec:
 
     @property
     def _and_(self):
+        return self
+
+    def force_exit(self):
+        return self.write("^C")
+
+    def wait(self, seconds: int):
+        time.sleep(seconds)
         return self
 
 

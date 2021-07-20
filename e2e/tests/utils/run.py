@@ -7,11 +7,7 @@ from e2e.tests.utils.path import e2e_test_folder_path
 
 hexagon_path = os.path.realpath(
     os.path.join(
-        os.path.dirname(__file__),
-        os.path.pardir,
-        os.path.pardir,
-        os.path.pardir,
-        "hexagon",
+        os.path.dirname(__file__), os.path.pardir, os.path.pardir, os.path.pardir
     )
 )
 
@@ -19,9 +15,9 @@ HEXAGON_COMMAND: List[str]
 
 try:
     subprocess.check_call(["pipenv", "--version"])
-    HEXAGON_COMMAND = ["pipenv", "run", "python", hexagon_path]
+    HEXAGON_COMMAND = ["pipenv", "run", "python", "-m", "hexagon"]
 except Exception:
-    HEXAGON_COMMAND = ["python", hexagon_path]
+    HEXAGON_COMMAND = ["python", "-m" "hexagon"]
 
 
 def run_hexagon_e2e_test(
@@ -43,6 +39,9 @@ def run_hexagon_e2e_test(
     if "HEXAGON_THEME" not in os_env_vars:
         os_env_vars["HEXAGON_THEME"] = "result_only"
 
+    if "HEXAGON_UPDATE_DISABLED" not in os_env_vars:
+        os_env_vars["HEXAGON_UPDATE_DISABLED"] = "1"
+
     os.environ["HEXAGON_STORAGE_PATH"] = os_env_vars.get(
         "HEXAGON_STORAGE_PATH",
         os.getenv("HEXAGON_STORAGE_PATH", os.path.join(test_folder_path, ".config")),
@@ -52,15 +51,16 @@ def run_hexagon_e2e_test(
     if os.path.isfile(app_config_path):
         os_env_vars["HEXAGON_CONFIG_FILE"] = app_config_path
 
+    os_env_vars["PYTHONPATH"] = hexagon_path
+
     return run_hexagon(test_folder_path, args, os_env_vars)
 
 
 def run_hexagon(
     cwd: str, args: List[str] = tuple(), os_env_vars: Optional[Dict[str, str]] = None
 ):
-    environment = None
+    environment = os.environ.copy()
     if os_env_vars:
-        environment = os.environ.copy()
         environment.update(os_env_vars)
 
     command = [*HEXAGON_COMMAND, *args]

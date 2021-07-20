@@ -1,0 +1,11 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+tools:
+  - name: my-module
+    action: echo "my-module"
+    type: shell
+    alias: pm
+    long_name: Python Module Test
+envs: []

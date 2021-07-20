@@ -34,6 +34,19 @@
                 "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/create_new_tool/app.yml",
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL"
             }
+        },
+        {
+            "name": "Update Hexagon",
+            "type": "python",
+            "request": "launch",
+            "module": "hexagon",
+            "console": "integratedTerminal",
+            "subProcess": true,
+            "env": {
+                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/e2e/update_hexagon/storage",
+                "HEXAGON_TEST_VERSION_OVERRIDE": "0.1.0",
+                "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL"
+            }
         }
     ]
 }

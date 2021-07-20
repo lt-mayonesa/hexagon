@@ -7,6 +7,7 @@ from hexagon.support.help import print_help
 from hexagon.support.tracer import tracer
 from hexagon.support.wax import search_by_name_or_alias, select_env, select_tool
 from hexagon.support.printer import log
+from hexagon.support.update_hexagon import check_for_hexagon_updates
 from hexagon.support.storage import (
     HexagonStorageKeys,
     store_user_data,
@@ -21,6 +22,8 @@ def main():
 
     log.start(f"[bold]{cli.name}")
     log.gap()
+
+    check_for_hexagon_updates()
 
     if cli.name == "Hexagon":
         log.info(

@@ -12,6 +12,7 @@ HEXAGON_STORAGE_APP = "hexagon"
 
 class HexagonStorageKeys(Enum):
     last_command = "last-command"
+    last_update_check = "last-update-check"
 
 
 class StorageValueType(Enum):
@@ -99,6 +100,8 @@ def _storage_value_type_by_file_path(file_path: str):
 def _storage_file(dir_path: str, file_name: str):
     base_file_path = os.path.join(dir_path, file_name)
     value_type = _storage_value_type_by_file_path(base_file_path)
+    if not value_type:
+        return None, None
     file_path = base_file_path + _extension_by_value_type[value_type]
     return file_path, value_type
 
