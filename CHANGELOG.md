@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.14.1 (2021-07-21)
+### Fix
+* Hexagon auto-update ([#42](https://github.com/redbeestudios/hexagon/issues/42)) ([`2720c6a`](https://github.com/redbeestudios/hexagon/commit/2720c6a1d1e1a2ecb2682244702a3b313a1a9a0d))
+
 ## v0.14.0 (2021-07-20)
 ### Feature
 * **updates:** Hexagon auto update ([#35](https://github.com/redbeestudios/hexagon/issues/35)) ([`16b93ff`](https://github.com/redbeestudios/hexagon/commit/16b93ffab29aa817c22b4a9b06e6dda43cc54fc7))
