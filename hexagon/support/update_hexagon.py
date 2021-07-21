@@ -1,11 +1,9 @@
-import setuptools
+import pkg_resources
 import json
 import os
 import subprocess
 import sys
-from unittest import mock
 from urllib.request import urlopen
-from urllib.parse import urlparse
 from packaging.version import parse as parse_version
 from hexagon.support.printer import log
 from hexagon.support.storage import (
@@ -18,6 +16,8 @@ from InquirerPy import inquirer
 import datetime
 
 LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
+REPO_ORG = "redbeestudios"
+REPO_NAME = "hexagon"
 
 
 def __already_checked():
@@ -52,20 +52,12 @@ def check_for_hexagon_updates():
     if __already_checked():
         return
 
-    with mock.patch.object(setuptools, "setup") as mock_setup:
-        import setup  # noqa: F401
-
-    _, setup_info = mock_setup.call_args
-
-    current_version = os.getenv("HEXAGON_TEST_VERSION_OVERRIDE", setup_info["version"])
-    hexagon_github_repo_info = urlparse(setup_info["url"]).path.split("/")
-    hexagon_github_repo_org = hexagon_github_repo_info[1]
-    hexagon_github_repo_name = hexagon_github_repo_info[2]
+    current_version = os.getenv(
+        "HEXAGON_TEST_VERSION_OVERRIDE", pkg_resources.require("hexagon")[0].version
+    )
 
     latest_github_release = json.load(
-        urlopen(
-            f"https://api.github.com/repos/{hexagon_github_repo_org}/{hexagon_github_repo_name}/releases/latest"
-        )
+        urlopen(f"https://api.github.com/repos/{REPO_ORG}/{REPO_NAME}/releases/latest")
     )
     latest_github_release_version = latest_github_release["name"].replace("v", "")
 
@@ -80,7 +72,7 @@ def check_for_hexagon_updates():
         return
 
     subprocess.check_call(
-        f"{sys.executable} -m pip install https://github.com/{hexagon_github_repo_org}/{hexagon_github_repo_name}/releases/download/v{latest_github_release_version}/hexagon-{latest_github_release_version}.tar.gz",
+        f"{sys.executable} -m pip install https://github.com/{REPO_ORG}/{REPO_NAME}/releases/download/v{latest_github_release_version}/hexagon-{latest_github_release_version}.tar.gz",
         shell=True,
         stdout=subprocess.DEVNULL,
     )
