@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.14.2 (2021-07-23)
+### Fix
+* Added packaging to dependencies ([#44](https://github.com/redbeestudios/hexagon/issues/44)) ([`6b5ddec`](https://github.com/redbeestudios/hexagon/commit/6b5ddec86d53ca0f8d64f3f3938f959a084ae375))
+
 ## v0.14.1 (2021-07-21)
 ### Fix
 * Hexagon auto-update ([#42](https://github.com/redbeestudios/hexagon/issues/42)) ([`2720c6a`](https://github.com/redbeestudios/hexagon/commit/2720c6a1d1e1a2ecb2682244702a3b313a1a9a0d))
