@@ -32,6 +32,7 @@ setuptools.setup(
         "requests",
         "ruamel.yaml",
         "pydantic",
+        "packaging",
     ],
     python_requires=">=3.7",
     entry_points="""
