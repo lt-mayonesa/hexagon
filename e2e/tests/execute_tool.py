@@ -129,6 +129,71 @@ def test_execute_python_module_by_argument():
     )
 
 
+def test_execute_python_module_as_single_file_by_argument():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["python-module-file"])
+        .then_output_should_be(
+            [
+                "executed single-file-module",
+            ]
+        )
+        .exit()
+    )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test python-module-file"
+    )
+
+
+def test_show_correct_error_when_execute_python_module_with_import_error():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["p-m-import-error"])
+        .then_output_should_be(
+            [
+                "╭───────────────────── Traceback (most recent call last) ──────────────────────╮",
+                "p-m-import-error.py:4",
+                "",
+                "",
+                "1",
+                "2",
+                "3",
+                "4 from hexagon.cli.env import Env",
+                "5",
+                "6",
+            ]
+        )
+        .exit(status=1)
+    )
+
+
+def test_show_correct_error_when_execute_python_module_with_script_error():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["p-m-script-error"])
+        .then_output_should_be(
+            [
+                "executed p-m-script-error",
+                "╭───────────────────── Traceback (most recent call last) ──────────────────────╮",
+                "p-m-script-error.py:15",
+                "",
+                "",
+                "12",
+                "13",
+                "14",
+                "15 │   err = [][3]",
+                "16",
+                "17",
+                "18",
+                "─────────────────────────────────────────────────────────────────────",
+                "IndexError: list index out of range",
+                "Execution of tool p-m-script-error failed",
+            ]
+        )
+        .exit(status=1)
+    )
+
+
 def test_execute_python_module_by_alias():
     (
         as_a_user(__file__)

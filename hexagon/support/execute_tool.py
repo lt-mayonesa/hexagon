@@ -2,7 +2,11 @@ import importlib
 import subprocess
 import sys
 import os
+import traceback
+from pathlib import Path
 from typing import List, Union, Dict
+
+from rich import traceback as rich_traceback
 
 from hexagon.domain.tool import Tool
 from hexagon.domain.env import Env
@@ -62,12 +66,14 @@ def _execute_python_module(action_id: str, tool: Tool, env: Env, env_args, args)
 
     if not tool_action_module:
         return False
+
+    # noinspection PyBroadException
     try:
         tool_action_module.main(tool, env, env_args, args)
         return True
-    except AttributeError as e:
-        log.error(f"Execution of tool [bold]{action_id}[/bold] thru: {e}", e)
-        log.error("Does it have the required `main(args...)` method?")
+    except Exception:
+        __pretty_print_external_error(action_id)
+        log.error(f"Execution of tool [bold]{action_id}[/bold] failed")
         sys.exit(1)
 
 
@@ -112,8 +118,13 @@ def __sanitize_args_for_command(*args: Union[List[any], Dict, Env]):
 def _load_action_module(action_id: str):
     try:
         return __load_module(action_id)
-    except ModuleNotFoundError:
-        return None
+    except ModuleNotFoundError as e:
+        if e.name == action_id:
+            return None
+        else:
+            __pretty_print_external_error(action_id)
+            log.error("Your custom action seems to have a module dependency error")
+            sys.exit(1)
 
 
 def __load_module(module: str):
@@ -121,3 +132,48 @@ def __load_module(module: str):
         return sys.modules[module]
 
     return importlib.import_module(module)
+
+
+def __pretty_print_external_error(action_id):
+    exc_type, exc_value, tb = sys.exc_info()
+
+    trace = __find_python_module_in_traceback(action_id, tb)
+
+    if trace:
+        log.example(
+            rich_traceback.Traceback.from_exception(
+                exc_type,
+                exc_value,
+                trace,
+            ),
+            decorator_start=False,
+            decorator_end=False,
+        )
+    else:
+        log.error(exc_value)
+
+
+def __find_python_module_in_traceback(action_id, tb):
+    return next(
+        (
+            t
+            for t, path, file_name in __walk_tb(tb)
+            if file_name == action_id
+            or path == os.path.join(configuration.custom_tools_path, action_id)
+        ),
+        None,
+    )
+
+
+def __walk_tb(tb):
+    def extract_metadata(_t):
+        try:
+            p = Path(traceback.extract_tb(_t)[0].filename)
+            return p.parent, p.stem
+        except IndexError:
+            return None
+
+    while tb is not None:
+        path, file_name = extract_metadata(tb)
+        yield tb, path.__str__(), file_name
+        tb = tb.tb_next
