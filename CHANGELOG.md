@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.15.0 (2021-07-26)
+### Feature
+* **execute:** Display action errors nicely to user ([#43](https://github.com/redbeestudios/hexagon/issues/43)) ([`b8ab97f`](https://github.com/redbeestudios/hexagon/commit/b8ab97f377bb10fe7c5533c5bbdbbd19938a74b1))
+
 ## v0.14.2 (2021-07-23)
 ### Fix
 * Added packaging to dependencies ([#44](https://github.com/redbeestudios/hexagon/issues/44)) ([`6b5ddec`](https://github.com/redbeestudios/hexagon/commit/6b5ddec86d53ca0f8d64f3f3938f959a084ae375))
