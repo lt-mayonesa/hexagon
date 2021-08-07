@@ -23,13 +23,13 @@ class Configuration:
             name="save-alias",
             long_name="Save Last Command as Linux Alias",
             type=ToolType.hexagon,
-            action="hexagon.tools.internal.save_new_alias",
+            action="hexagon.actions.internal.save_new_alias",
         ),
         Tool(
             name="create-tool",
             long_name="Create A New Tool",
             type=ToolType.hexagon,
-            action="hexagon.tools.internal.create_new_tool",
+            action="hexagon.actions.internal.create_new_tool",
         ),
     ]
 

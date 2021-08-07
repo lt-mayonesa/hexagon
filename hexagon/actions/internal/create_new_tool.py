@@ -6,7 +6,7 @@ from InquirerPy.validator import PathValidator
 
 from hexagon.domain.tool import Tool, ToolType
 from hexagon.domain import configuration
-from hexagon.tools import external
+from hexagon.actions import external
 from hexagon.support.printer import log
 
 

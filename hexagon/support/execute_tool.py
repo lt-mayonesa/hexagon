@@ -19,9 +19,7 @@ _command_by_file_extension = {"js": "node", "sh": "sh"}
 def execute_action(tool: Tool, env_args, env: Env, args):
     action_to_execute: str = tool.action
     ext = action_to_execute.split(".")[-1]
-    script_action_command = (
-        _command_by_file_extension[ext] if ext in _command_by_file_extension else None
-    )
+    script_action_command = _command_by_file_extension.get(ext)
 
     if script_action_command:
         _execute_script(
@@ -52,7 +50,7 @@ def execute_action(tool: Tool, env_args, env: Env, args):
                     f"  - Your CLI's custom_tools_dir: [bold]{configuration.custom_tools_path}"
                 )
                 log.error(
-                    "  - Hexagon repository of externals tools (hexagon.tools.external)"
+                    "  - Hexagon repository of external actions (hexagon.actions.external)"
                 )
                 log.error("  - A known script file (.js, .sh)")
                 log.error("  - Running your action as a shell command directly")
@@ -61,7 +59,7 @@ def execute_action(tool: Tool, env_args, env: Env, args):
 
 def _execute_python_module(action_id: str, tool: Tool, env: Env, env_args, args):
     tool_action_module = _load_action_module(action_id) or _load_action_module(
-        f"hexagon.tools.external.{action_id}"
+        f"hexagon.actions.external.{action_id}"
     )
 
     if not tool_action_module:

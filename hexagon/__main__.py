@@ -43,13 +43,13 @@ def main():
         if env:
             tracer.tracing(env.name)
 
-        action = execute_action(tool, params, env, sys.argv[3:])
+        result = execute_action(tool, params, env, sys.argv[3:])
 
         log.gap()
 
-        if action:
-            for result in action:
-                log.info(result)
+        if result:
+            for item in result:
+                log.info(item)
 
         log.finish()
 
