@@ -103,7 +103,7 @@ class Configuration:
                     long_name="Install CLI",
                     description="Install a custom project CLI from a YAML file.",
                     type=ToolType.hexagon,
-                    action="hexagon.tools.internal.install_cli",
+                    action="hexagon.actions.internal.install_cli",
                 )
             ],
             [],
