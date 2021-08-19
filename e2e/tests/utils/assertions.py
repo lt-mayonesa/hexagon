@@ -99,6 +99,14 @@ def _read_next_line(process: subprocess.Popen, lines_read: List[str]):
     return line
 
 
+def _assert_expected_text(line: str, expected: str or List[str]):
+    if isinstance(expected, list):
+        for assertion in expected:
+            single_assert_line(line, assertion)
+    else:
+        single_assert_line(line, expected)
+
+
 def _assert_dynamic_line_width(
     process: subprocess.Popen,
     line: str,
@@ -119,7 +127,7 @@ def _assert_dynamic_line_width(
             accumulated_line += _read_next_line(process, lines_read)
             accumulated_line = accumulated_line.replace(line_delimiter, "")
             try:
-                single_assert_line(accumulated_line, text)
+                _assert_expected_text(accumulated_line, text)
                 return True
             except Exception as last:
                 number_of_lines_read += 1
@@ -145,16 +153,12 @@ def _assert_process_output_line(
                     "Expected config object must contain the expected text in the expected property"
                 )
             try:
-                single_assert_line(line, text)
+                _assert_expected_text(line, text)
             except Exception as error:
                 _assert_dynamic_line_width(
                     process, line, error, expected, lines_read, text
                 )
-        if isinstance(expected, list):
-            for assertion in expected:
-                single_assert_line(line, assertion)
-        else:
-            single_assert_line(line, expected)
+        _assert_expected_text(line, expected)
     except Exception as error:
         _check_process_return_code(process)
 

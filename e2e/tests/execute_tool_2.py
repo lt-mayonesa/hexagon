@@ -59,7 +59,7 @@ def test_show_correct_error_when_execute_python_module_with_script_error():
                 "executed p-m-script-error",
                 "╭───────────────────── Traceback (most recent call last) ──────────────────────╮",
                 {
-                    "expected": "p-m-script-error.py:15 in main",
+                    "expected": ["p-m-script-error.py:15", "in", "main"],
                     "max_lines": 2,
                     "line_delimiter": " │\n│ ",
                 },
