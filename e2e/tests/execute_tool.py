@@ -1,40 +1,45 @@
 from e2e.tests.utils.assertions import (
     assert_file_has_contents,
 )
-from e2e.tests.utils.hexagon_spec import as_a_user
+from e2e.tests.utils.hexagon_spec import HexagonSpec, as_a_user
 
-shared_prompt_output = [
-    "Hi, which tool would you like to use today?",
-    "┌──────────────────────────────────────────────────────────────────────────────",
-    "",
-    "",
-    "",
-    "⦾ Google",
-    "",
-    "ƒ Python Module Test",
-    "",
-    "ƒ Python Module Env Test",
-    "",
-    "ƒ Python Module Asterisk Env Test",
-    "",
-    "ƒ Node Module Test",
-    "",
-    "ƒ Node Module Env Test",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "└──────────────────────────────────────────────────────────────────────────────",
-    "",
-]
+
+def _shared_assertions(spec: HexagonSpec):
+    (
+        spec.then_output_should_be(
+            [
+                "Hi, which tool would you like to use today?",
+                "┌──────────────────────────────────────────────────────────────────────────────",
+                "",
+                "",
+                "",
+                "⦾ Google",
+                "",
+                "ƒ Python Module Test",
+                "",
+                "ƒ Python Module Env Test",
+                "",
+                "ƒ Python Module Asterisk Env Test",
+                "",
+                "ƒ Node Module Test",
+                "",
+                "ƒ Node Module Env Test",
+            ]
+        ).then_output_should_be(
+            [
+                "└──────────────────────────────────────────────────────────────────────────────",
+                "",
+            ],
+            True,
+        )
+    )
 
 
 def test_execute_python_module_by_gui():
     (
         as_a_user(__file__)
         .run_hexagon()
-        .then_output_should_be(shared_prompt_output)
+        .with_shared_behavior(_shared_assertions)
         .arrow_down()
         .enter()
         .then_output_should_be(
@@ -54,7 +59,7 @@ def test_execute_python_module_with_env_by_gui():
     (
         as_a_user(__file__)
         .run_hexagon()
-        .then_output_should_be(shared_prompt_output)
+        .with_shared_behavior(_shared_assertions)
         .arrow_down()
         .arrow_down()
         .enter()
@@ -91,7 +96,7 @@ def test_execute_python_module_with_env_asterisk_by_gui():
     (
         as_a_user(__file__)
         .run_hexagon()
-        .then_output_should_be(shared_prompt_output)
+        .with_shared_behavior(_shared_assertions)
         .arrow_down()
         .arrow_down()
         .arrow_down()
@@ -194,7 +199,7 @@ def test_execute_script_module_by_gui():
     (
         as_a_user(__file__)
         .run_hexagon()
-        .then_output_should_be(shared_prompt_output)
+        .with_shared_behavior(_shared_assertions)
         .arrow_down()
         .arrow_down()
         .arrow_down()

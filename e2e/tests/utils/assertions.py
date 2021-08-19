@@ -2,7 +2,7 @@ import subprocess
 import os
 import signal
 import re
-from typing import Callable, List
+from typing import Any, Callable, Dict, List
 
 from e2e.tests.utils.path import e2e_test_folder_path
 
@@ -46,7 +46,7 @@ def _check_process_return_code(process: subprocess.Popen, exit_status: int = 0):
         )
 
 
-Expected_Process_Output_Item = str or Callable[[str], bool]
+Expected_Process_Output_Item = str or Callable[[str], bool] or Dict[str, Any]
 Expected_Process_Output = (
     Expected_Process_Output_Item or List[Expected_Process_Output_Item]
 )
@@ -79,6 +79,56 @@ def single_assert_line(line: str, expected: Expected_Process_Output_Item):
         assert expected(line)
 
 
+def _read_next_line(process: subprocess.Popen, lines_read: List[str]):
+    def timeout_handler(signum, frame):
+        _save_last_output_and_raise(
+            process,
+            lines_read,
+            Exception("Timeout reading from process"),
+            timeouted=True,
+        )
+
+    signal.signal(signal.SIGALRM, timeout_handler)
+
+    signal.alarm(3)
+    line: str = process.stdout.readline()
+    signal.alarm(0)
+
+    lines_read.append(line)
+
+    return line
+
+
+def _assert_dynamic_line_width(
+    process: subprocess.Popen,
+    line: str,
+    error: Exception,
+    expected: Expected_Process_Output,
+    lines_read: List[str],
+    text: str,
+):
+    if "max_lines" in expected and isinstance(expected["max_lines"], int):
+        line_delimiter = "\n"
+        if "line_delimiter" in expected and isinstance(expected["line_delimiter"], str):
+            line_delimiter = expected["line_delimiter"]
+        max_lines = expected["max_lines"]
+        accumulated_line = line
+        number_of_lines_read = 1
+        last_error = error
+        while number_of_lines_read < max_lines:
+            accumulated_line += _read_next_line(process, lines_read)
+            accumulated_line = accumulated_line.replace(line_delimiter, "")
+            try:
+                single_assert_line(accumulated_line, text)
+                return True
+            except Exception as last:
+                number_of_lines_read += 1
+                last_error = last
+        raise last_error
+    else:
+        raise error
+
+
 def _assert_process_output_line(
     process: subprocess.Popen,
     line: str,
@@ -88,6 +138,18 @@ def _assert_process_output_line(
 ):
     __tracebackhide__ = True
     try:
+        if isinstance(expected, dict):
+            text = expected["expected"]
+            if not text:
+                raise Exception(
+                    "Expected config object must contain the expected text in the expected property"
+                )
+            try:
+                single_assert_line(line, text)
+            except Exception as error:
+                _assert_dynamic_line_width(
+                    process, line, error, expected, lines_read, text
+                )
         if isinstance(expected, list):
             for assertion in expected:
                 single_assert_line(line, assertion)
@@ -131,23 +193,7 @@ def assert_process_output(
     attempts = 0
     # Read from stdout until assertion fails or all expected lines are reads
     while line_index < len(expected_output):
-
-        def timeout_handler(signum, frame):
-            _save_last_output_and_raise(
-                process,
-                lines_read,
-                Exception("Timeout reading from process"),
-                timeouted=True,
-            )
-
-        signal.signal(signal.SIGALRM, timeout_handler)
-
-        signal.alarm(3)
-        line: str = process.stdout.readline()
-        signal.alarm(0)
-
-        lines_read.append(line)
-
+        line: str = _read_next_line(process, lines_read)
         expected = expected_output[line_index]
 
         if _assert_process_output_line(
