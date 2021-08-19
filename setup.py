@@ -33,6 +33,7 @@ setuptools.setup(
         "ruamel.yaml",
         "pydantic",
         "packaging",
+        "halo",
     ],
     python_requires=">=3.7",
     entry_points="""

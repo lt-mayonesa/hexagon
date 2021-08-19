@@ -14,6 +14,7 @@ from hexagon.support.storage import (
 )
 from InquirerPy import inquirer
 import datetime
+from halo import Halo
 
 LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
 REPO_ORG = "redbeestudios"
@@ -71,11 +72,12 @@ def check_for_hexagon_updates():
     if not inquirer.confirm("Would you like to update?", default=True).execute():
         return
 
-    subprocess.check_call(
-        f"{sys.executable} -m pip install https://github.com/{REPO_ORG}/{REPO_NAME}/releases/download/v{latest_github_release_version}/hexagon-{latest_github_release_version}.tar.gz",
-        shell=True,
-        stdout=subprocess.DEVNULL,
-    )
-    log.info("[green]✔️ [white]Updated to latest version")
+    with Halo(text="Updating"):
+        subprocess.check_call(
+            f"{sys.executable} -m pip --disable-pip-version-check install https://github.com/{REPO_ORG}/{REPO_NAME}/releases/download/v{latest_github_release_version}/hexagon-{latest_github_release_version}.tar.gz",
+            shell=True,
+            stdout=subprocess.DEVNULL,
+        )
+    log.info("[green]🗸 [white]Updated to latest version")
     log.finish()
     sys.exit(1)
