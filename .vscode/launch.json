@@ -45,7 +45,9 @@
             "env": {
                 "HEXAGON_STORAGE_PATH": "${workspaceFolder}/e2e/update_hexagon/storage",
                 "HEXAGON_TEST_VERSION_OVERRIDE": "0.1.0",
-                "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL"
+                "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
+                "HEXAGON_CHANGELOG_FILE_PATH_TEST_OVERRIDE": "${workspaceFolder}/e2e/update_hexagon/CHANGELOG.md",
+                "HEXAGON_THEME": "default"
             }
         }
     ]

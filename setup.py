@@ -34,6 +34,7 @@ setuptools.setup(
         "pydantic",
         "packaging",
         "halo",
+        "markdown",
     ],
     python_requires=">=3.7",
     entry_points="""

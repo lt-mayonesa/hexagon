@@ -1,13 +1,12 @@
+from e2e.tests.utils.path import e2e_test_folder_path
 import os
 from datetime import date, timedelta
 from e2e.tests.utils.hexagon_spec import as_a_user
 
 LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
 
-storage_path = os.path.realpath(
-    os.path.join(os.path.dirname(__file__), os.path.pardir, "update_hexagon", "storage")
-)
-
+test_folder_path = e2e_test_folder_path(__file__)
+storage_path = os.path.realpath(os.path.join(test_folder_path, "storage"))
 last_checked_storage_path = os.path.join(
     storage_path,
     "hexagon",
@@ -33,11 +32,13 @@ def _clear_last_check():
         os.remove(last_checked_storage_path)
 
 
-os_env_vars = {
+base_os_env_vars = {
     "HEXAGON_UPDATE_DISABLED": "",
     "HEXAGON_TEST_VERSION_OVERRIDE": "0.1.0",
     "HEXAGON_STORAGE_PATH": storage_path,
 }
+
+no_changelog_env_vars = {**base_os_env_vars, "HEXAGON_UPDATE_SHOW_CHANGELOG": ""}
 
 
 def test_new_hexagon_version_available():
@@ -47,7 +48,7 @@ def test_new_hexagon_version_available():
         as_a_user(__file__)
         .run_hexagon(
             ["my-module"],
-            os_env_vars=os_env_vars,
+            os_env_vars=no_changelog_env_vars,
         )
         .write("n")
         .then_output_should_be([["Would you like to update?", "No"]])
@@ -63,7 +64,7 @@ def test_prompt_to_update_hexagon_only_once():
         as_a_user(__file__)
         .run_hexagon(
             ["my-module"],
-            os_env_vars=os_env_vars,
+            os_env_vars=no_changelog_env_vars,
         )
         .write("n")
         .then_output_should_be([["Would you like to update?", "No"]])
@@ -75,7 +76,7 @@ def test_prompt_to_update_hexagon_only_once():
         as_a_user(__file__)
         .run_hexagon(
             ["my-module"],
-            os_env_vars=os_env_vars,
+            os_env_vars=no_changelog_env_vars,
         )
         .then_output_should_be(["my-module"])
         .exit()
@@ -89,7 +90,7 @@ def test_prompt_to_update_hexagon_once_a_day():
         as_a_user(__file__)
         .run_hexagon(
             ["my-module"],
-            os_env_vars=os_env_vars,
+            os_env_vars=no_changelog_env_vars,
         )
         .then_output_should_be(["my-module"])
         .exit()
@@ -103,7 +104,46 @@ def test_prompt_to_update_hexagon_again_next_day():
         as_a_user(__file__)
         .run_hexagon(
             ["my-module"],
-            os_env_vars=os_env_vars,
+            os_env_vars=no_changelog_env_vars,
+        )
+        .write("n")
+        .then_output_should_be([["Would you like to update?", "No"]])
+        .then_output_should_be(["my-module"])
+        .exit()
+    )
+
+
+def test_show_changelog():
+    _clear_last_check()
+
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["my-module"],
+            os_env_vars={
+                **base_os_env_vars,
+                "HEXAGON_CHANGELOG_FILE_PATH_TEST_OVERRIDE": os.path.join(
+                    test_folder_path, "CHANGELOG.md"
+                ),
+                "HEXAGON_THEME": "default",
+            },
+        )
+        .then_output_should_be(["New hexagon version available"], True)
+        .then_output_should_be(
+            [
+                "- Feature 1",
+                "- Feature 2",
+                "- Feature 3",
+                "- Feature 4",
+                "- Fix 1",
+                "- Fix 2",
+                "- Fix 3",
+                "- Fix 4",
+                "- Documentation 1",
+                "- Documentation 2",
+                "and much more!",
+            ],
+            True,
         )
         .write("n")
         .then_output_should_be([["Would you like to update?", "No"]])
