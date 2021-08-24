@@ -24,11 +24,14 @@ def run_hexagon_e2e_test(
     test_file: str,
     args: List[str] = tuple(),
     os_env_vars: Optional[Dict[str, str]] = None,
+    test_file_path_is_absoulte: bool = False,
 ):
     if os_env_vars is None:
         os_env_vars = {}
 
-    test_folder_path = e2e_test_folder_path(test_file)
+    test_folder_path = (
+        test_file if test_file_path_is_absoulte else e2e_test_folder_path(test_file)
+    )
 
     os_env_vars["HEXAGON_TEST_SHELL"] = (
         os_env_vars["HEXAGON_TEST_SHELL"]
@@ -41,6 +44,9 @@ def run_hexagon_e2e_test(
 
     if "HEXAGON_UPDATE_DISABLED" not in os_env_vars:
         os_env_vars["HEXAGON_UPDATE_DISABLED"] = "1"
+
+    if "HEXAGON_CLI_UPDATE_DISABLED" not in os_env_vars:
+        os_env_vars["HEXAGON_CLI_UPDATE_DISABLED"] = "1"
 
     if "HEXAGON_DISABLE_SPINNER" not in os_env_vars:
         os_env_vars["HEXAGON_DISABLE_SPINNER"] = "1"

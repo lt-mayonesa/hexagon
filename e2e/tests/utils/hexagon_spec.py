@@ -26,16 +26,26 @@ class HexagonSpec:
         return self
 
     def run_hexagon(
-        self, command: List[str] = None, os_env_vars: Optional[Dict[str, str]] = None
+        self,
+        command: List[str] = None,
+        os_env_vars: Optional[Dict[str, str]] = None,
+        test_file_path_is_absoulte: bool = False,
     ):
         __tracebackhide__ = True
         if command:
             self.command = command
             self.process = run_hexagon_e2e_test(
-                self.__file, self.command, os_env_vars=os_env_vars
+                self.__file,
+                self.command,
+                os_env_vars=os_env_vars,
+                test_file_path_is_absoulte=test_file_path_is_absoulte,
             )
         else:
-            self.process = run_hexagon_e2e_test(self.__file, os_env_vars=os_env_vars)
+            self.process = run_hexagon_e2e_test(
+                self.__file,
+                os_env_vars=os_env_vars,
+                test_file_path_is_absoulte=test_file_path_is_absoulte,
+            )
         return self
 
     def with_shared_behavior(self, func: Callable):

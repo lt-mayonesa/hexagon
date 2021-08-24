@@ -141,7 +141,7 @@ def store_user_data(key: str, data: InputDataType, append=False, app: str = None
 
     elif value_type == StorageValueType.dictionary:
         previous = None
-        if append:
+        if append and os.path.exists(file_path):
             with open(file_path, "r") as file:
                 previous = YAML().load(file)
 

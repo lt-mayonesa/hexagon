@@ -1,3 +1,5 @@
+from hexagon.support.storage import HEXAGON_STORAGE_APP
+from hexagon.support.update.shared import already_checked_for_updates
 from hexagon.support.github import add_github_access_token
 import re
 from typing import List
@@ -11,14 +13,7 @@ from packaging.version import parse as parse_version, Version
 from markdown import Markdown
 from io import StringIO
 from hexagon.support.printer import log
-from hexagon.support.storage import (
-    store_user_data,
-    load_user_data,
-    HEXAGON_STORAGE_APP,
-    HexagonStorageKeys,
-)
 from InquirerPy import inquirer
-import datetime
 from halo import Halo
 from functools import reduce
 
@@ -35,32 +30,6 @@ CHANGELOG_ENTRY_TYPE_ORDER_MAP = {
     CHANGELOG_TYPE_DOCUMENTATION: 0,
 }
 CHANGELOG_MAX_EMPTY_LINES = 10
-
-
-def __already_checked():
-    last_checked = load_user_data(
-        HexagonStorageKeys.last_update_check.value, HEXAGON_STORAGE_APP
-    )
-
-    result = False
-
-    if last_checked:
-        last_checked_date = datetime.datetime.strptime(
-            last_checked, LAST_UPDATE_DATE_FORMAT
-        ).date()
-
-        # TODO: Move to hexagon configuration
-        # See https://github.com/redbeestudios/hexagon/pull/35#discussion_r670870804 for more information
-        result = last_checked_date >= datetime.date.today()
-
-    if not result:
-        store_user_data(
-            HexagonStorageKeys.last_update_check.value,
-            datetime.date.today().strftime(LAST_UPDATE_DATE_FORMAT),
-            app=HEXAGON_STORAGE_APP,
-        )
-
-    return result
 
 
 class ChangelogEntry:
@@ -81,6 +50,7 @@ class ChangelogVersionEntry:
     entries: List[ChangelogEntry]
 
 
+# TODO: Move changelog logic to its own module in the update module
 def _parse_changelog(
     current_hexagon_version: Version, repo_org: str, repo_name: str
 ) -> List[ChangelogVersionEntry]:
@@ -194,7 +164,7 @@ def _show_changelog(
 def check_for_hexagon_updates():
     if bool(os.getenv("HEXAGON_UPDATE_DISABLED")):
         return
-    if __already_checked():
+    if already_checked_for_updates(HEXAGON_STORAGE_APP):
         return
 
     current_version = parse_version(
@@ -217,6 +187,7 @@ def check_for_hexagon_updates():
         f"New [cyan]hexagon [white]version available [green]{latest_github_release_version}[white]!"
     )
 
+    # TODO: Create helper to show spinner control
     spinners_disabled = bool(os.getenv("HEXAGON_DISABLE_SPINNER", ""))
 
     _show_changelog(current_version, spinners_disabled)

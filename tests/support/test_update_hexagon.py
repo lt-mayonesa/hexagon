@@ -3,7 +3,7 @@ from unittest import mock
 import subprocess
 from InquirerPy import inquirer
 
-from hexagon.support.update_hexagon import check_for_hexagon_updates
+from hexagon.support.update.hexagon import check_for_hexagon_updates
 from hexagon.support.storage import (
     HEXAGON_STORAGE_APP,
     HexagonStorageKeys,
