@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.16.0 (2021-08-24)
+### Feature
+* Auto-update for clis ([#49](https://github.com/redbeestudios/hexagon/issues/49)) ([`a03d3e0`](https://github.com/redbeestudios/hexagon/commit/a03d3e00c27a39e72298e3f5979711162ded6f1d))
+
 ## v0.15.1 (2021-08-20)
 ### Fix
 * Changelog in hexagon update ([#48](https://github.com/redbeestudios/hexagon/issues/48)) ([`c6ab57d`](https://github.com/redbeestudios/hexagon/commit/c6ab57de27d3d0f8d4d441e198f273b0cd204554))
