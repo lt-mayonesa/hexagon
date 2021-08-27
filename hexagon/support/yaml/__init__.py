@@ -1,28 +1,30 @@
 from pydantic import ValidationError
 from rich.syntax import Syntax
+from ruamel import yaml
 
 from hexagon.support.printer import log
 
 
-def display_yaml_errors(errors: ValidationError, ruamel_yaml, yaml_path):
-    yml = open(yaml_path, "r").read()
+def display_yaml_errors(errors: ValidationError, ruamel_yaml=None, yaml_path=None):
+    yml = open(yaml_path, "r").read() if yaml_path else None
     errors_as_dict = errors.errors()
     log.error(f"There were {len(errors_as_dict)} error(s) in your YAML")
     for err in errors_as_dict:
-        (start, line_number, end) = __lines_of_error(err, ruamel_yaml)
         log.error(
             f"\n✗ [u][bold]{'.'.join(map(lambda i: str(i), err['loc']))}[/bold] -> {err['msg']}"
         )
-        log.example(
-            Syntax(
-                "\n".join(yml.splitlines()[start:end]),
-                "yaml",
-                line_numbers=True,
-                start_line=start + 1,
-            ),
-            decorator_start=False,
-            decorator_end=False,
-        )
+        if ruamel_yaml and yaml:
+            (start, line_number, end) = __lines_of_error(err, ruamel_yaml)
+            log.example(
+                Syntax(
+                    "\n".join(yml.splitlines()[start:end]),
+                    "yaml",
+                    line_numbers=True,
+                    start_line=start + 1,
+                ),
+                decorator_start=False,
+                decorator_end=False,
+            )
 
 
 def __lines_of_error(err, ruamel_yaml):

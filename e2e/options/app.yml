@@ -1,0 +1,9 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+tools:
+  - name: print-options
+    action: hexagon.actions.internal.get_options
+    type: hexagon
+envs: []

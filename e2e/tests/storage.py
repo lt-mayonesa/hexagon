@@ -5,9 +5,6 @@ import shutil
 from pathlib import Path
 from ruamel.yaml import YAML
 
-from hexagon.support.storage import store_user_data, load_user_data
-from hexagon.domain import cli
-
 storage_path = os.path.realpath(
     os.path.join(os.path.dirname(__file__), os.path.pardir, "storage")
 )
@@ -29,6 +26,8 @@ def _create_dir_for_file(file_path: str):
 
 
 def test_storage_text():
+    from hexagon.support.storage import store_user_data
+
     text = "text-single-line"
     store_user_data(key, text, app=app)
 
@@ -37,6 +36,8 @@ def test_storage_text():
 
 
 def test_storage_text_append():
+    from hexagon.support.storage import store_user_data
+
     file_path = os.path.join(storage_path, app, key) + ".txt"
     _create_dir_for_file(file_path)
     with open(file_path, "w") as file:
@@ -49,6 +50,8 @@ def test_storage_text_append():
 
 
 def test_storage_text_multiline():
+    from hexagon.support.storage import store_user_data
+
     text = ["text", "multi", "line"]
     store_user_data(key, text, app=app)
 
@@ -57,6 +60,8 @@ def test_storage_text_multiline():
 
 
 def test_storage_text_multiline_append():
+    from hexagon.support.storage import store_user_data
+
     file_path = os.path.join(storage_path, app, key) + ".txt"
     _create_dir_for_file(file_path)
     existing_lines = list(f"existing line {i}\n" for i in range(1, 4))
@@ -76,6 +81,8 @@ def test_storage_text_multiline_append():
 
 
 def test_storage_dictionary():
+    from hexagon.support.storage import store_user_data
+
     dictionary = {
         "prop1": 1,
         "prop2": 123,
@@ -89,6 +96,8 @@ def test_storage_dictionary():
 
 
 def test_storage_dictionary_append():
+    from hexagon.support.storage import store_user_data
+
     file_path = os.path.join(storage_path, app, key) + ".yaml"
     _create_dir_for_file(file_path)
     existing_dictionary = {
@@ -118,6 +127,8 @@ def test_storage_dictionary_append():
 
 
 def test_storage_nested_key():
+    from hexagon.support.storage import store_user_data
+
     text = "text-single-line"
     store_user_data("very.nested.key", text, app=app)
 
@@ -128,6 +139,8 @@ def test_storage_nested_key():
 
 
 def test_storage_load_existing_text():
+    from hexagon.support.storage import load_user_data
+
     text = "existing text"
     file_path = os.path.join(storage_path, app, key) + ".txt"
     _create_dir_for_file(file_path)
@@ -138,6 +151,8 @@ def test_storage_load_existing_text():
 
 
 def test_storage_load_existing_text_multiline():
+    from hexagon.support.storage import load_user_data
+
     file_path = os.path.join(storage_path, app, key) + ".txt"
     _create_dir_for_file(file_path)
     existing_lines = list(f"existing line {i}\n" for i in range(1, 4))
@@ -148,6 +163,8 @@ def test_storage_load_existing_text_multiline():
 
 
 def test_storage_load_existing_dictionary():
+    from hexagon.support.storage import load_user_data
+
     file_path = os.path.join(storage_path, app, key) + ".yaml"
     _create_dir_for_file(file_path)
     existing_dictionary = {
@@ -163,6 +180,8 @@ def test_storage_load_existing_dictionary():
 
 
 def test_storage_default_app():
+    from hexagon.support.storage import store_user_data
+
     store_user_data(key, "data")
 
     with open(os.path.join(storage_path, "hexagon", key) + ".txt") as file:
@@ -171,7 +190,12 @@ def test_storage_default_app():
 
 @patch("hexagon.domain.Configuration.has_config", True)
 def test_storage_configured_app():
+    from hexagon.domain import cli
+
     cli.name = "test-app"
+
+    from hexagon.support.storage import store_user_data
+
     store_user_data(key, "data")
 
     with open(os.path.join(storage_path, "test-app", key) + ".txt") as file:
