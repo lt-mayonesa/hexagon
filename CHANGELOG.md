@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.18.0 (2021-08-27)
+### Feature
+* Options by env variables, local options file or defaults ([#52](https://github.com/redbeestudios/hexagon/issues/52)) ([`6687b94`](https://github.com/redbeestudios/hexagon/commit/6687b94a53723f56fb683d53ad26c1a64dd3d025))
+
 ## v0.17.0 (2021-08-27)
 ### Feature
 * Nested tools, for grouping and organizing ([#54](https://github.com/redbeestudios/hexagon/issues/54)) ([`b5831fd`](https://github.com/redbeestudios/hexagon/commit/b5831fdc4f69a6765973f1f5ce1a41ea58d8218c))
