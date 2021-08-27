@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.17.0 (2021-08-27)
+### Feature
+* Nested tools, for grouping and organizing ([#54](https://github.com/redbeestudios/hexagon/issues/54)) ([`b5831fd`](https://github.com/redbeestudios/hexagon/commit/b5831fdc4f69a6765973f1f5ce1a41ea58d8218c))
+
 ## v0.16.0 (2021-08-24)
 ### Feature
 * Auto-update for clis ([#49](https://github.com/redbeestudios/hexagon/issues/49)) ([`a03d3e0`](https://github.com/redbeestudios/hexagon/commit/a03d3e00c27a39e72298e3f5979711162ded6f1d))
