@@ -1,0 +1,36 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+
+envs:
+  - name: dev
+    alias: d
+    long_name: dev
+  - name: qa
+    alias: q
+    long_name: qa
+
+tools:
+  - name: google
+    long_name: Google
+    type: web
+    action: open_link
+    envs:
+      "*": https://www.google.com/
+  - name: group
+    long_name: A group of tools
+    type: group
+    tools: group.yml
+  - name: custom-tools-dir-group
+    long_name: A group of tools with a custom dir
+    type: group
+    tools: custom_tools_dir_group.yml
+  - name: group-in-dir
+    long_name: A group of tools in a dir with no custom dir
+    type: group
+    tools: group_tool_dir/app.yml
+  - name: top-level-echo
+    long_name: An echo in the main app.yml file
+    type: shell
+    action: echo "top level echo"

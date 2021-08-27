@@ -8,7 +8,7 @@ from typing import List, Union, Dict
 
 from rich import traceback as rich_traceback
 
-from hexagon.domain.tool import Tool
+from hexagon.domain.tool import ActionTool
 from hexagon.domain.env import Env
 from hexagon.domain import configuration
 from hexagon.support.printer import log
@@ -16,7 +16,10 @@ from hexagon.support.printer import log
 _command_by_file_extension = {"js": "node", "sh": "sh"}
 
 
-def execute_action(tool: Tool, env_args, env: Env, args):
+def execute_action(tool: ActionTool, env_args, env: Env, args, custom_tools_path=None):
+    custom_tools_path = (
+        custom_tools_path if custom_tools_path else configuration.custom_tools_path
+    )
     action_to_execute: str = tool.action
     ext = action_to_execute.split(".")[-1]
     script_action_command = _command_by_file_extension.get(ext)
@@ -27,7 +30,7 @@ def execute_action(tool: Tool, env_args, env: Env, args):
         )
     else:
         python_module_found = _execute_python_module(
-            action_to_execute, tool, env, env_args, args
+            action_to_execute, tool, env, env_args, args, custom_tools_path
         )
         if python_module_found:
             return
@@ -46,9 +49,7 @@ def execute_action(tool: Tool, env_args, env: Env, args):
             if return_code == 127:
                 log.error(f"Hexagon couldn't execute the action: [bold]{tool.action}")
                 log.error("We tried:")
-                log.error(
-                    f"  - Your CLI's custom_tools_dir: [bold]{configuration.custom_tools_path}"
-                )
+                log.error(f"  - Your CLI's custom_tools_dir: [bold]{custom_tools_path}")
                 log.error(
                     "  - Hexagon repository of external actions (hexagon.actions.external)"
                 )
@@ -57,10 +58,12 @@ def execute_action(tool: Tool, env_args, env: Env, args):
             sys.exit(1)
 
 
-def _execute_python_module(action_id: str, tool: Tool, env: Env, env_args, args):
-    tool_action_module = _load_action_module(action_id) or _load_action_module(
-        f"hexagon.actions.external.{action_id}"
-    )
+def _execute_python_module(
+    action_id: str, tool: ActionTool, env: Env, env_args, args, custom_tools_path
+):
+    tool_action_module = _load_action_module(
+        action_id, custom_tools_path
+    ) or _load_action_module(f"hexagon.actions.external.{action_id}", custom_tools_path)
 
     if not tool_action_module:
         return False
@@ -70,7 +73,7 @@ def _execute_python_module(action_id: str, tool: Tool, env: Env, env_args, args)
         tool_action_module.main(tool, env, env_args, args)
         return True
     except Exception:
-        __pretty_print_external_error(action_id)
+        __pretty_print_external_error(action_id, custom_tools_path)
         log.error(f"Execution of tool [bold]{action_id}[/bold] failed")
         sys.exit(1)
 
@@ -113,14 +116,14 @@ def __sanitize_args_for_command(*args: Union[List[any], Dict, Env]):
     return named + positional
 
 
-def _load_action_module(action_id: str):
+def _load_action_module(action_id: str, custom_tools_path):
     try:
         return __load_module(action_id)
     except ModuleNotFoundError as e:
         if e.name == action_id:
             return None
         else:
-            __pretty_print_external_error(action_id)
+            __pretty_print_external_error(action_id, custom_tools_path)
             log.error("Your custom action seems to have a module dependency error")
             sys.exit(1)
 
@@ -132,10 +135,10 @@ def __load_module(module: str):
     return importlib.import_module(module)
 
 
-def __pretty_print_external_error(action_id):
+def __pretty_print_external_error(action_id, custom_tools_path):
     exc_type, exc_value, tb = sys.exc_info()
 
-    trace = __find_python_module_in_traceback(action_id, tb)
+    trace = __find_python_module_in_traceback(action_id, tb, custom_tools_path)
 
     if trace:
         log.example(
@@ -151,13 +154,13 @@ def __pretty_print_external_error(action_id):
         log.error(exc_value)
 
 
-def __find_python_module_in_traceback(action_id, tb):
+def __find_python_module_in_traceback(action_id, tb, custom_tools_path):
     return next(
         (
             t
             for t, path, file_name in __walk_tb(tb)
             if file_name == action_id
-            or path == os.path.join(configuration.custom_tools_path, action_id)
+            or path == os.path.join(custom_tools_path, action_id)
         ),
         None,
     )

@@ -1,0 +1,19 @@
+tools:
+  - name: python-module
+    action: python-module
+    type: shell
+    alias: pm
+    long_name: Python Module Test
+
+  - name: python-module-env
+    action: python-module
+    type: shell
+    alias: pme
+    long_name: Python Module Env Test
+    envs:
+      dev:
+        - 789
+        - ghi
+      qa:
+        foo: foo
+        bar: bar

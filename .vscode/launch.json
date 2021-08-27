@@ -24,6 +24,20 @@
             }
         },
         {
+            "name": "Execute tool group",
+            "type": "python",
+            "request": "launch",
+            "module": "hexagon",
+            "console": "integratedTerminal",
+            "subProcess": true,
+            "args": [],
+            "env": {
+                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/execute_tool_group/app.yml",
+                "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
+                "HEXAGON_UPDATE_DISABLED": "1",
+            }
+        },
+        {
             "name": "Create New Tool",
             "type": "python",
             "request": "launch",

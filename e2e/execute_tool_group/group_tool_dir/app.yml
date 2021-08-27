@@ -1,0 +1,4 @@
+tools:
+  - name: echo
+    action: echo "group tools in dir"
+    type: shell

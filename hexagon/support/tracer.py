@@ -15,6 +15,9 @@ class Tracer:
             self.trace.append(what)
         return what
 
+    def remove_last(self):
+        del self.trace[-1]
+
     def command(self):
         return " ".join(self.trace)
 

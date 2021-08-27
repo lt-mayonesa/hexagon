@@ -4,7 +4,7 @@ from shutil import copytree
 from InquirerPy import inquirer
 from InquirerPy.validator import PathValidator
 
-from hexagon.domain.tool import Tool, ToolType
+from hexagon.domain.tool import ActionTool, ToolType
 from hexagon.domain import configuration
 from hexagon.actions import external
 from hexagon.support.printer import log
@@ -12,7 +12,7 @@ from hexagon.support.printer import log
 
 def main(*_):
     create_action = False
-    new_tool = Tool(
+    new_tool = ActionTool(
         name="invalid",
         action=inquirer.fuzzy(
             message="Choose the action of your tool:",

@@ -1,0 +1,5 @@
+custom_tools_dir: custom_tools_directory
+tools:
+  - name: echo
+    action: echo "custom tools directory action"
+    type: shell

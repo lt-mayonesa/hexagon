@@ -1,31 +1,31 @@
 import os
 import sys
-from typing import List, Optional, Tuple
+from typing import Any, List, Optional, Tuple, Union
 
 from pydantic import BaseModel, ValidationError
 from ruamel.yaml import YAML
 
 from hexagon.domain.cli import Cli
 from hexagon.domain.env import Env
-from hexagon.domain.tool import Tool, ToolType
+from hexagon.domain.tool import ActionTool, GroupTool, Tool, ToolType
 from hexagon.support.yaml import display_yaml_errors
 
 
 class ConfigFile(BaseModel):
     cli: Cli
     envs: List[Env]
-    tools: List[Tool]
+    tools: List[Union[ActionTool, GroupTool]]
 
 
 class Configuration:
     __defaults = [
-        Tool(
+        ActionTool(
             name="save-alias",
             long_name="Save Last Command as Linux Alias",
             type=ToolType.hexagon,
             action="hexagon.actions.internal.save_new_alias",
         ),
-        Tool(
+        ActionTool(
             name="create-tool",
             long_name="Create A New Tool",
             type=ToolType.hexagon,
@@ -45,7 +45,7 @@ class Configuration:
         self.project_path = os.path.dirname(self.project_yaml)
 
         try:
-            self.__yaml = YAML().load(open(path, "r"))
+            self.__yaml = read_configuration_file(path)
             self.__config = ConfigFile(**self.__yaml)
 
             if self.__config.cli.custom_tools_dir:
@@ -84,10 +84,9 @@ class Configuration:
         self.__register_custom_tools_path()
 
     def __register_custom_tools_path(self):
-        self.custom_tools_path = os.path.abspath(
-            os.path.join(self.project_path, self.__config.cli.custom_tools_dir)
+        self.custom_tools_path = register_custom_tools_path(
+            self.__config.cli.custom_tools_dir, self.project_path
         )
-        sys.path.append(self.custom_tools_path)
 
     @property
     def has_config(self):
@@ -98,7 +97,7 @@ class Configuration:
         return (
             Cli(name="Hexagon", command="hexagon"),
             [
-                Tool(
+                ActionTool(
                     name="install",
                     long_name="Install CLI",
                     description="Install a custom project CLI from a YAML file.",
@@ -108,3 +107,13 @@ class Configuration:
             ],
             [],
         )
+
+
+def read_configuration_file(path: str) -> Any:
+    return YAML().load(open(path, "r"))
+
+
+def register_custom_tools_path(path: str, realtive_to: str) -> str:
+    absolute_path = os.path.abspath(os.path.join(realtive_to, path))
+    sys.path.append(absolute_path)
+    return absolute_path
