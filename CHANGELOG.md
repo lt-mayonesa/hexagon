@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.19.0 (2021-09-07)
+### Feature
+* **analytics:** Log and send hexagon usage events ([#57](https://github.com/redbeestudios/hexagon/issues/57)) ([`c096900`](https://github.com/redbeestudios/hexagon/commit/c0969009862e1763ac79d5f5c82d5ee110f4ec88))
+
 ## v0.18.0 (2021-08-27)
 ### Feature
 * Options by env variables, local options file or defaults ([#52](https://github.com/redbeestudios/hexagon/issues/52)) ([`6687b94`](https://github.com/redbeestudios/hexagon/commit/6687b94a53723f56fb683d53ad26c1a64dd3d025))
