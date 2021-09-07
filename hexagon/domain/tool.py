@@ -40,5 +40,5 @@ class FunctionTool(Tool):
 
 
 class ToolGroupConfigFile(BaseModel):
-    tools: List[Union[ActionTool, GroupTool]]
+    tools: List[Union[ActionTool, GroupTool, FunctionTool]]
     custom_tools_dir: Optional[str]

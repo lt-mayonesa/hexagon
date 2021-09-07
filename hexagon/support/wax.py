@@ -4,6 +4,8 @@ from InquirerPy import inquirer
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import Tool
+from hexagon.support import analytics
+from hexagon.support.analytics import UserEvent
 
 
 def __classifier(value: Union[Tool, Env]):
@@ -48,24 +50,31 @@ def select_env(available_envs: List[Env], tool_envs: dict = None, selected: str 
     if "*" in tool_envs:
         return None, tool_envs["*"]
 
-    env = (
-        selected
-        or inquirer.fuzzy(
-            message="On which environment?",
-            choices=__choices_with_long_name(
-                [e for e in available_envs if e.name in tool_envs.keys()]
-            ),
-            validate=lambda x: x and "__separator" not in x,
-            invalid_message="Please select a valid environment",
-        ).execute()
+    (env, prompted) = (
+        (selected, False)
+        if selected
+        else (
+            inquirer.fuzzy(
+                message="On which environment?",
+                choices=__choices_with_long_name(
+                    [e for e in available_envs if e.name in tool_envs.keys()]
+                ),
+                validate=lambda x: x and "__separator" not in x,
+                invalid_message="Please select a valid environment",
+            ).execute(),
+            True,
+        )
     )
 
-    return next((e for e in available_envs if e.name == env), None), tool_envs[env]
+    return (
+        _select_and_register_event(env, available_envs, prompted, target="env"),
+        tool_envs[env],
+    )
 
 
 def select_tool(tools: List[Tool], selected: str = None):
     if selected:
-        return next(t for t in tools if t.name == selected)
+        return _select_and_register_event(selected, tools, target="tool")
 
     name = inquirer.fuzzy(
         message="Hi, which tool would you like to use today?",
@@ -74,4 +83,18 @@ def select_tool(tools: List[Tool], selected: str = None):
         invalid_message="Please select a valid tool",
     ).execute()
 
-    return next(t for t in tools if t.name == name)
+    return _select_and_register_event(name, tools, target="tool", prompt=True)
+
+
+def _select_and_register_event(
+    name: str, options: List[Union[Tool, Env]], prompt=False, **kwargs
+):
+    selected = next((e for e in options if e.name == name), None)
+    if selected:
+        analytics.user_event(
+            UserEvent.selection,
+            mode="prompt" if prompt else "args",
+            selected=selected.name,
+            **kwargs,
+        )
+    return selected

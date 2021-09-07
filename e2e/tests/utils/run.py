@@ -51,6 +51,9 @@ def run_hexagon_e2e_test(
     if "HEXAGON_DISABLE_SPINNER" not in os_env_vars:
         os_env_vars["HEXAGON_DISABLE_SPINNER"] = "1"
 
+    if "HEXAGON_SEND_TELEMETRY" not in os_env_vars:
+        os_env_vars["HEXAGON_SEND_TELEMETRY"] = "0"
+
     os.environ["HEXAGON_STORAGE_PATH"] = os_env_vars.get(
         "HEXAGON_STORAGE_PATH",
         os.getenv("HEXAGON_STORAGE_PATH", os.path.join(test_folder_path, ".config")),

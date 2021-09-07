@@ -3,10 +3,12 @@ from InquirerPy import inquirer
 
 from hexagon.domain.tool import Tool
 from hexagon.domain.env import Env
+from hexagon.support.analytics import UserEvent
 from hexagon.support.wax import search_by_name_or_alias, select_tool, select_env
+from hexagon.support import analytics
 
 
-def inquirer_mock(ret):
+def args_mock(ret):
     class FuzzyMock:
         @staticmethod
         def execute():
@@ -24,12 +26,22 @@ def inquirer_mock(ret):
 
 @pytest.fixture
 def tool_mock():
-    return inquirer_mock("docker")
+    return args_mock("docker")
 
 
 @pytest.fixture
 def env_mock():
-    return inquirer_mock("dev")
+    return args_mock("dev")
+
+
+@pytest.fixture
+def analytics_mock():
+    class TestArgs(object):
+        def __call__(self, e: UserEvent, **kwargs):
+            self.args = {"e": e, **kwargs}
+            return
+
+    return TestArgs()
 
 
 tools = [
@@ -57,14 +69,17 @@ def test_search_tools_dict_by_key_or_alias(search, expected):
     assert search_by_name_or_alias(tools, search) == expected
 
 
-def test_tool_is_selected_from_cmd():
+def test_tool_is_selected_from_cmd(monkeypatch, analytics_mock):
+    monkeypatch.setattr(analytics, "user_event", analytics_mock)
+
     assert select_tool(tools, "docker") == Tool(
         name="docker", alias="d", action="docker_run"
     )
 
 
-def test_tool_is_selected_by_prompt(monkeypatch, tool_mock):
+def test_tool_is_selected_by_prompt(monkeypatch, tool_mock, analytics_mock):
     monkeypatch.setattr(inquirer, "fuzzy", tool_mock)
+    monkeypatch.setattr(analytics, "user_event", analytics_mock)
 
     assert select_tool(tools) == Tool(name="docker", alias="d", action="docker_run")
     assert tool_mock.args[0] == "Hi, which tool would you like to use today?"
@@ -84,14 +99,17 @@ def test_tool_has_env_property_with_wildcard():
     assert select_env(envs, {"*": "sarasa"}) == (None, "sarasa")
 
 
-def test_env_is_selected_from_cmd():
+def test_env_is_selected_from_cmd(monkeypatch, analytics_mock):
+    monkeypatch.setattr(analytics, "user_event", analytics_mock)
+
     tool_envs = {"dev": "env_1", "qa": "env_2"}
     assert select_env(envs, tool_envs, "qa") == (envs[1], "env_2")
 
 
-def test_env_is_selected_by_prompt(monkeypatch, env_mock):
+def test_env_is_selected_by_prompt(monkeypatch, env_mock, analytics_mock):
     tool_envs = {"dev": "env_1", "qa": "env_2"}
     monkeypatch.setattr(inquirer, "fuzzy", env_mock)
+    monkeypatch.setattr(analytics, "user_event", analytics_mock)
 
     assert select_env(envs, tool_envs) == (envs[0], "env_1")
     assert env_mock.args[0] == "On which environment?"

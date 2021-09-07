@@ -71,7 +71,7 @@ GO_BACK_TOOL = Tool(
 
 
 def _execute_group_tool(
-    tool: Tool,
+    tool: GroupTool,
     previous: Tuple[List[Tool], str, str, List[object], str] = None,
     env_argument: str = None,
     arguments: List[object] = None,
@@ -105,12 +105,12 @@ def _execute_group_tool(
 
     if previous:
 
-        def goback():
+        def go_back():
             tracer.remove_last()
             select_and_execute_tool(*previous)
 
         tools = tools + [
-            FunctionTool(**GO_BACK_TOOL.dict(), function=goback),
+            FunctionTool(**GO_BACK_TOOL.dict(), function=go_back),
         ]
 
     return select_and_execute_tool(

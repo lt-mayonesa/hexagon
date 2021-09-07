@@ -22,33 +22,51 @@ class StorageValueType(Enum):
     dictionary = "dictionary"
 
 
+class StoragePurpose(Enum):
+    config = "config"
+    data = "local/share"
+
+
 _extension_by_value_type = {
     StorageValueType.text: ".txt",
     StorageValueType.text_multiline: ".txt",
     StorageValueType.dictionary: ".yaml",
 }
 
-_storage_path_by_os = {
-    "linux": os.path.expanduser("~/.config/hexagon"),
-    "darwin": os.path.expanduser("~/.config/hexagon"),
-    "cygwin": os.path.expanduser("~/.config/hexagon"),
-    "win32": os.path.expanduser("~/hexagon"),
-}
+
+_config_storage_path = None
+_data_storage_path = None
 
 InputDataType = str or List[str] or Dict[Any]
 
 
-def _get_storage_dir_path():
-    result = os.getenv("HEXAGON_STORAGE_PATH", _storage_path_by_os[sys.platform])
-    Path(result).mkdir(exist_ok=True)
+def __storage_path_by_os(purpose: StoragePurpose):
+    return {
+        "linux": os.path.expanduser(f"~/.{purpose.value}/hexagon"),
+        "darwin": os.path.expanduser(f"~/.{purpose.value}/hexagon"),
+        "cygwin": os.path.expanduser(f"~/.{purpose.value}/hexagon"),
+        "win32": os.path.expanduser("~/hexagon"),
+    }
 
-    return result
+
+def _get_storage_dir_path():
+    global _config_storage_path
+    if _config_storage_path:
+        return _config_storage_path
+
+    _config_storage_path = os.getenv(
+        "HEXAGON_STORAGE_PATH",
+        __storage_path_by_os(StoragePurpose.config)[sys.platform],
+    )
+    Path(_config_storage_path).mkdir(exist_ok=True)
+
+    return _config_storage_path
 
 
 def _resolve_storage_path(app: str, key: str, base_dir=None):
     base_dir = base_dir if base_dir else _get_storage_dir_path()
-    key_splitted = key.split(".")
-    return (os.path.join(base_dir, app, *key_splitted[:-1]), *key_splitted[-1:])
+    key_split = key.split(".")
+    return (os.path.join(base_dir, app, *key_split[:-1]), *key_split[-1:])
 
 
 def _storage_value_type_by_data_type(data: InputDataType):
@@ -170,3 +188,15 @@ def clear_storage():
     storage_dir_path = _get_storage_dir_path()
     rmtree(storage_dir_path)
     os.mkdir(storage_dir_path)
+
+
+def store_local_data(key: str, data: str):
+    dir_path = get_local_data_dir()
+    with open(os.path.join(dir_path, key), "a") as f:
+        f.write(f"{data}\n")
+
+
+def get_local_data_dir():
+    dir_path = __storage_path_by_os(StoragePurpose.data)[sys.platform]
+    Path(dir_path).mkdir(exist_ok=True, parents=True)
+    return dir_path
