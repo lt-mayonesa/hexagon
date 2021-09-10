@@ -9,15 +9,15 @@ from hexagon.support.storage import load_user_data, store_user_data, HEXAGON_STO
 def event(name: str, **kwargs):
     version = pkg_resources.require("hexagon")[0].version
 
-    cid = load_user_data("client_id", app=HEXAGON_STORAGE_APP)
+    cid = load_user_data("client_id")
     if not cid:
         cid = str(uuid.uuid4())
-        store_user_data("user_id", cid, app=HEXAGON_STORAGE_APP)
+        store_user_data("client_id", cid)
 
-    uid = load_user_data("user_id")
+    uid = load_user_data("user_id", app=HEXAGON_STORAGE_APP)
     if not uid:
         uid = str(uuid.uuid4())
-        store_user_data("user_id", uid)
+        store_user_data("user_id", uid, app=HEXAGON_STORAGE_APP)
 
     mid = "G-Y28H5KHQEZ"
 

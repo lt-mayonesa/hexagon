@@ -208,6 +208,6 @@ def check_for_hexagon_updates():
         with Halo(text="Updating"):
             update()
 
-    log.info("[green]✔️ [white]Updated to latest version")
+    log.info("[green]🗸️ [white]Updated to latest version")
     log.finish()
     sys.exit(1)
