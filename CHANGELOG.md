@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.19.1 (2021-09-10)
+### Fix
+* **analytics:** Register user_id and client_id ([`18a621e`](https://github.com/redbeestudios/hexagon/commit/18a621ed1b6998644ff5bcdb59218393fc7e726f))
+
 ## v0.19.0 (2021-09-07)
 ### Feature
 * **analytics:** Log and send hexagon usage events ([#57](https://github.com/redbeestudios/hexagon/issues/57)) ([`c096900`](https://github.com/redbeestudios/hexagon/commit/c0969009862e1763ac79d5f5c82d5ee110f4ec88))
