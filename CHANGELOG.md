@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.19.2 (2021-09-10)
+### Fix
+* **analytics:** Switch user_id and client_id scope ([`6718c7c`](https://github.com/redbeestudios/hexagon/commit/6718c7cb94c8a2693d795cfc97339bf6dd9a6678))
+
 ## v0.19.1 (2021-09-10)
 ### Fix
 * **analytics:** Register user_id and client_id ([`18a621e`](https://github.com/redbeestudios/hexagon/commit/18a621ed1b6998644ff5bcdb59218393fc7e726f))
