@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.20.0 (2021-09-20)
+### Feature
+* Plugins and hooks ([#61](https://github.com/redbeestudios/hexagon/issues/61)) ([`b7f1c08`](https://github.com/redbeestudios/hexagon/commit/b7f1c080129c53fcf28db424a0bcca5630e4febd))
+
 ## v0.19.2 (2021-09-10)
 ### Fix
 * **analytics:** Switch user_id and client_id scope ([`6718c7c`](https://github.com/redbeestudios/hexagon/commit/6718c7cb94c8a2693d795cfc97339bf6dd9a6678))
