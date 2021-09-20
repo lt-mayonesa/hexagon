@@ -10,11 +10,11 @@ from typing import List, Union, Dict
 from rich import traceback as rich_traceback
 
 from hexagon.domain.tool import ActionTool
+from hexagon.domain.tool.execution import ToolExecutionData
 from hexagon.domain.env import Env
 from hexagon.domain import configuration
-from hexagon.support import analytics
-from hexagon.support.analytics import SystemEvent
 from hexagon.support.printer import log
+from hexagon.support.hooks import HexagonHooks
 
 _command_by_file_extension = {"js": "node", "sh": "sh"}
 
@@ -23,8 +23,8 @@ _command_by_file_extension = {"js": "node", "sh": "sh"}
 def execute_action(tool: ActionTool, env_args, env: Env, args, custom_tools_path=None):
     start = time.time()
     _execute_action(tool, env_args, env, args, custom_tools_path)
-    analytics.system_event(
-        SystemEvent.execution, tool=tool.name, duration=(time.time() - start)
+    HexagonHooks.tool_executed.run(
+        ToolExecutionData(tool=tool, duration=(time.time() - start))
     )
 
 

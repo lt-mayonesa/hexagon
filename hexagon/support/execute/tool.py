@@ -1,3 +1,4 @@
+from hexagon.support.hooks import HexagonHooks
 from hexagon.support.yaml import display_yaml_errors
 from prompt_toolkit.validation import ValidationError
 from hexagon.support.execute.action import execute_action
@@ -9,6 +10,7 @@ from hexagon.domain.tool import (
     ToolGroupConfigFile,
     ToolType,
 )
+from hexagon.domain.tool.execution import ToolExecutionParamters
 from typing import List, Tuple
 from hexagon.domain import envs, configuration
 from hexagon.support.tracer import tracer
@@ -56,6 +58,16 @@ def select_and_execute_tool(
 
     if env:
         tracer.tracing(env.name)
+
+    HexagonHooks.before_tool_executed.run(
+        ToolExecutionParamters(
+            tool=tool,
+            parameters=params,
+            env=env,
+            arguments=arguments,
+            custom_tools_path=custom_tools_path,
+        )
+    )
 
     return execute_action(tool, params, env, arguments, custom_tools_path)
 

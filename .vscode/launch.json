@@ -96,6 +96,24 @@
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
                 "HEXAGON_UPDATE_DISABLED": "1"
             }
+        },
+        {
+            "name": "Plugins",
+            "type": "python",
+            "request": "launch",
+            "module": "hexagon",
+            "console": "integratedTerminal",
+            "subProcess": true,
+            "args": [
+                "echo",
+                "dev"
+            ],
+            "env": {
+                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/plugins/app.yml",
+                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/e2e/plugins/storage",
+                "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
+                "HEXAGON_UPDATE_DISABLED": "1"
+            }
         }
     ]
 }

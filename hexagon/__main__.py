@@ -1,9 +1,8 @@
-from hexagon.support.analytics import SessionEvent
+from hexagon.support.hooks import HexagonHooks
 from hexagon.support.execute.tool import select_and_execute_tool
 from hexagon.support.update.cli import check_for_cli_updates
 import sys
 
-from hexagon.support import analytics
 from hexagon.support.args import fill_args
 from hexagon.domain import cli, tools, envs
 from hexagon.support.help import print_help
@@ -14,6 +13,7 @@ from hexagon.support.storage import (
     HexagonStorageKeys,
     store_user_data,
 )
+from hexagon.plugins import collect_plugins
 
 
 def main():
@@ -22,7 +22,9 @@ def main():
     if _tool == "-h" or _tool == "--help":
         return print_help(cli, tools, envs)
 
-    analytics.session(SessionEvent.start)
+    collect_plugins()
+
+    HexagonHooks.start.run()
     log.start(f"[bold]{cli.name}")
     log.gap()
 
@@ -66,7 +68,7 @@ def main():
     except KeyboardInterrupt:
         sys.exit(1)
 
-    analytics.session(SessionEvent.end)
+    HexagonHooks.end.run()
 
 
 if __name__ == "__main__":
