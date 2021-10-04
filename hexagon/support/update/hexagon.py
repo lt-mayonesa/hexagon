@@ -1,8 +1,9 @@
+from hexagon.support.printer.spinner import with_spinner
 from hexagon.support.storage import HEXAGON_STORAGE_APP
 from hexagon.support.update.shared import already_checked_for_updates
 from hexagon.support.github import add_github_access_token
 import re
-from typing import List
+from typing import List, Optional
 import pkg_resources
 import json
 import os
@@ -14,7 +15,6 @@ from markdown import Markdown
 from io import StringIO
 from hexagon.support.printer import log
 from InquirerPy import inquirer
-from halo import Halo
 from functools import reduce
 
 LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
@@ -65,7 +65,7 @@ def _parse_changelog(
         request
     ) as changelog_file:
         entries = []
-        current_version: ChangelogVersionEntry = None
+        current_version: Optional[ChangelogVersionEntry] = None
         current_entry_type: str
         while True:
             readed_line = changelog_file.readline()
@@ -124,25 +124,20 @@ __md = Markdown(output_format="plain")
 __md.stripTopLevelTags = False
 
 
-def unmark(text):
+def _unmark(text):
     return __md.convert(text)
 
 
 def _show_changelog(
     current_hexagon_version: Version,
-    spinners_disabled: bool,
 ):
     if bool(os.getenv("HEXAGON_UPDATE_SHOW_CHANGELOG", "1")):
-        changelog = None
 
+        @with_spinner("Fetching changelog")
         def get_changelog():
             return _parse_changelog(current_hexagon_version, REPO_ORG, REPO_NAME)
 
-        if spinners_disabled:
-            changelog = get_changelog()
-        else:
-            with Halo(text="Loading changelog"):
-                changelog = get_changelog()
+        changelog = get_changelog()
 
         if changelog:
 
@@ -156,7 +151,7 @@ def _show_changelog(
                 reverse=True,
             )
             for entry in entries[:CHANGELOG_MAX_ENTRIES]:
-                log.info("  - " + unmark(entry.message))
+                log.info("  - " + _unmark(entry.message))
             if len(entries) > CHANGELOG_MAX_ENTRIES:
                 log.info("and much more!")
 
@@ -172,13 +167,7 @@ def check_for_hexagon_updates():
             "HEXAGON_TEST_VERSION_OVERRIDE", pkg_resources.require("hexagon")[0].version
         )
     )
-
-    latest_release_request = Request(
-        f"https://api.github.com/repos/{REPO_ORG}/{REPO_NAME}/releases/latest"
-    )
-    add_github_access_token(latest_release_request)
-    latest_github_release = json.load(urlopen(latest_release_request))
-    latest_github_release_version = latest_github_release["name"].replace("v", "")
+    latest_github_release_version = _latest_github_release()
 
     if current_version >= parse_version(latest_github_release_version):
         return
@@ -187,14 +176,12 @@ def check_for_hexagon_updates():
         f"New [cyan]hexagon [white]version available [green]{latest_github_release_version}[white]!"
     )
 
-    # TODO: Create helper to show spinner control
-    spinners_disabled = bool(os.getenv("HEXAGON_DISABLE_SPINNER", ""))
-
-    _show_changelog(current_version, spinners_disabled)
+    _show_changelog(current_version)
 
     if not inquirer.confirm("Would you like to update?", default=True).execute():
         return
 
+    @with_spinner("Updating")
     def update():
         subprocess.check_call(
             f"{sys.executable} -m pip --disable-pip-version-check install https://github.com/{REPO_ORG}/{REPO_NAME}/releases/download/v{latest_github_release_version}/hexagon-{latest_github_release_version}.tar.gz",
@@ -202,12 +189,18 @@ def check_for_hexagon_updates():
             stdout=subprocess.DEVNULL,
         )
 
-    if spinners_disabled:
-        update()
-    else:
-        with Halo(text="Updating"):
-            update()
+    update()
 
     log.info("[green]🗸️ [white]Updated to latest version")
     log.finish()
     sys.exit(1)
+
+
+@with_spinner("Checking for new hexagon versions")
+def _latest_github_release():
+    latest_release_request = Request(
+        f"https://api.github.com/repos/{REPO_ORG}/{REPO_NAME}/releases/latest"
+    )
+    add_github_access_token(latest_release_request)
+    latest_github_release = json.load(urlopen(latest_release_request))
+    return latest_github_release["name"].replace("v", "")

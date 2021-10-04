@@ -35,7 +35,11 @@ def test_show_correct_error_when_execute_python_module_with_import_error():
         .then_output_should_be(
             [
                 "╭───────────────────── Traceback (most recent call last) ──────────────────────╮",
-                "p-m-import-error.py:4",
+                {
+                    "expected": "p-m-import-error.py:4",
+                    "max_lines": 2,
+                    "line_delimiter": " │\n│ ",
+                },
                 "",
                 "",
                 "1",
@@ -58,11 +62,13 @@ def test_show_correct_error_when_execute_python_module_with_script_error():
             [
                 "executed p-m-script-error",
                 "╭───────────────────── Traceback (most recent call last) ──────────────────────╮",
+                "",
                 {
-                    "expected": ["p-m-script-error.py:15", "in", "main"],
+                    "expected": ["p-m-script-error.py:15"],
                     "max_lines": 2,
                     "line_delimiter": " │\n│ ",
                 },
+                "",
                 "",
                 "12",
                 "13",
