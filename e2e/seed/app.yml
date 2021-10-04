@@ -1,0 +1,18 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+tools:
+  - name: seed-test
+    action: seed
+    type: shell
+    alias: st
+    long_name: Seed Test
+  - name: seed-spring-test
+    action: seed
+    type: shell
+    alias: sst
+    long_name: Seed Spring Boot Test
+    envs:
+      "*": springboot
+envs: []

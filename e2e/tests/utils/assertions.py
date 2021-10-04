@@ -214,10 +214,12 @@ def assert_process_output(
             attempts += 1
 
 
-def assert_process_ended(process: subprocess.Popen, exit_status: int = 0):
+def assert_process_ended(
+    process: subprocess.Popen, exit_status: int = 0, timeout_in_seconds: int = 5
+):
     __tracebackhide__ = True
     try:
-        process.wait(5)
+        process.wait(timeout_in_seconds)
     except Exception as error:
         _save_last_output_and_raise(process, [], error)
 

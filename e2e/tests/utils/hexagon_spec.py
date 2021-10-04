@@ -30,6 +30,7 @@ class HexagonSpec:
         command: List[str] = None,
         os_env_vars: Optional[Dict[str, str]] = None,
         test_file_path_is_absoulte: bool = False,
+        cwd: str = None,
     ):
         __tracebackhide__ = True
         if command:
@@ -39,12 +40,14 @@ class HexagonSpec:
                 self.command,
                 os_env_vars=os_env_vars,
                 test_file_path_is_absoulte=test_file_path_is_absoulte,
+                cwd=cwd,
             )
         else:
             self.process = run_hexagon_e2e_test(
                 self.__file,
                 os_env_vars=os_env_vars,
                 test_file_path_is_absoulte=test_file_path_is_absoulte,
+                cwd=cwd,
             )
         return self
 
@@ -86,9 +89,9 @@ class HexagonSpec:
         write_to_process(self.process, text)
         return self
 
-    def exit(self, status: int = 0):
+    def exit(self, status: int = 0, timeout_in_seconds: int = 5):
         __tracebackhide__ = True
-        assert_process_ended(self.process, status)
+        assert_process_ended(self.process, status, timeout_in_seconds)
         clean_hexagon_environment()
 
     @property
