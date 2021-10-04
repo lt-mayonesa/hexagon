@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.21.0 (2021-10-04)
+### Feature
+* Springboot, react, nextjs seeds ([#63](https://github.com/redbeestudios/hexagon/issues/63)) ([`951b3ab`](https://github.com/redbeestudios/hexagon/commit/951b3ab8df92a5cfccc379c0b8cee824dff16cf2))
+
 ## v0.20.0 (2021-09-20)
 ### Feature
 * Plugins and hooks ([#61](https://github.com/redbeestudios/hexagon/issues/61)) ([`b7f1c08`](https://github.com/redbeestudios/hexagon/commit/b7f1c080129c53fcf28db424a0bcca5630e4febd))
