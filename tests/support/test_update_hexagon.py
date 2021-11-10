@@ -1,4 +1,5 @@
 import sys
+import pkg_resources
 from unittest import mock
 import subprocess
 from InquirerPy import inquirer
@@ -20,9 +21,18 @@ def _confirm_mock(_, default=None):
     return ConfirmMock()
 
 
+def _require_mock(_, default=None):
+    class PackageMock:
+        version = "0.1.0"
+
+    return [PackageMock()]
+
+
 def test_hexagon_updates_itself(monkeypatch):
     monkeypatch.setenv("HEXAGON_TEST_VERSION_OVERRIDE", "0.1.0")
     monkeypatch.setattr(inquirer, "confirm", _confirm_mock)
+    monkeypatch.setattr(pkg_resources, "require", _require_mock)
+
     delete_user_data(HEXAGON_STORAGE_APP, HexagonStorageKeys.last_update_check.value)
     with mock.patch.object(
         subprocess, "check_call"

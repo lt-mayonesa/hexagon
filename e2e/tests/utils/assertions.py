@@ -31,6 +31,10 @@ def _save_last_output_and_raise(
     for line in lines:
         print(line.rstrip())
 
+    print("command error:")
+    for line in process.stderr.readlines():
+        print(line.rstrip())
+
     _save_last_output(lines)
     raise error
 

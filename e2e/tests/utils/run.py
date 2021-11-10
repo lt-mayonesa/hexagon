@@ -11,13 +11,7 @@ hexagon_path = os.path.realpath(
     )
 )
 
-HEXAGON_COMMAND: List[str]
-
-try:
-    subprocess.check_call(["pipenv", "--version"])
-    HEXAGON_COMMAND = ["pipenv", "run", "python", "-m", "hexagon"]
-except Exception:
-    HEXAGON_COMMAND = ["python", "-m" "hexagon"]
+HEXAGON_COMMAND: List[str] = ["python", "-m" "hexagon"]
 
 
 def run_hexagon_e2e_test(

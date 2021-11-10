@@ -19,7 +19,8 @@ version_variable = [
     'setup.py:__version__'
 ]
 version_pattern = [
-    'README.md:{version}'
+    'README.md:{version}',
+    '.github/workflows/python-package.yml:{version}'
 ]
 upload_to_pypi = false
 commit_subject = "chore(release): {version}"

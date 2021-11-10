@@ -4,13 +4,22 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-hexagon = {editable = true, path = "."}
+inquirerpy = "==0.2.0"
+rich = "*"
+clipboard = "*"
+requests = "*"
+"ruamel.yaml" = "*"
+pydantic = "*"
+packaging = "*"
+halo = "*"
+markdown = "*"
 
 [dev-packages]
 flake8 = "*"
 pytest = "*"
 black = "*"
 flake8-bugbear = "*"
+pipenv-setup = "*"
 
 [requires]
 python_version = "3.8"

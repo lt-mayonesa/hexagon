@@ -28,17 +28,22 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install pytest
-          python -m pip install -e .
+          python -m pip install --upgrade pipenv
+          pipenv install --dev --ignore-pipfile
 
       - name: Unit tests
         run: |
-          pytest -svv tests/
+          pipenv run pytest -svv tests/
+
+      - name: Setup e2e dependencies
+        run: |
+          python -m pip install wheel
+          python setup.py sdist bdist_wheel
+          python -m pip install --find-links=./dist hexagon
 
       - name: e2e tests
         run: |
-          pytest -svv e2e/
+          pipenv run pytest -svv e2e/
 
   release:
     if: ${{ github.event_name != 'pull_request' && github.event_name != 'pull_request_target' }}

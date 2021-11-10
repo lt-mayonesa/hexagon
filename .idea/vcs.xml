@@ -8,6 +8,5 @@
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/e2e/update_cli/remote" vcs="Git" />
   </component>
 </project>
