@@ -128,9 +128,7 @@ def _unmark(text):
     return __md.convert(text)
 
 
-def _show_changelog(
-    current_hexagon_version: Version,
-):
+def _show_changelog(current_hexagon_version: Version):
     if bool(os.getenv("HEXAGON_UPDATE_SHOW_CHANGELOG", "1")):
 
         @with_spinner("Fetching changelog")

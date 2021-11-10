@@ -180,7 +180,7 @@ MAX_ATTEMPTS = 50
 def assert_process_output(
     process: subprocess.Popen,
     expected_output: List[Expected_Process_Output],
-    discard_until_initial=False,
+    discard_until_first_match=False,
 ):
     """
     Assert the output of a CLI process
@@ -192,7 +192,7 @@ def assert_process_output(
 
     :param process: The process, usualy instantiaded using `e2e.test.utils.run.run_hexagon_e2e_test`
     :param expected_output: Expected lines to be compared with the actual output lines.
-    :param discard_until_initial: Discard lines until the first expected line is found
+    :param discard_until_first_match: Discard lines until the first expected line is found
     :return:
     """
     __tracebackhide__ = True
@@ -205,7 +205,7 @@ def assert_process_output(
         expected = expected_output[line_index]
 
         if _assert_process_output_line(
-            process, line, expected, lines_read, discard_until_initial
+            process, line, expected, lines_read, discard_until_first_match
         ):
             line_index += 1
         else:

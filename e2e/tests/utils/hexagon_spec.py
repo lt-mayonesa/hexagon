@@ -59,11 +59,13 @@ class HexagonSpec:
     def then_output_should_be(
         self,
         expected_output: List[Expected_Process_Output],
-        discard_until_initial=False,
+        discard_until_first_match=False,
     ):
         __tracebackhide__ = True
         assert_process_output(
-            self.process, expected_output, discard_until_initial=discard_until_initial
+            self.process,
+            expected_output,
+            discard_until_first_match=discard_until_first_match,
         )
         return self
 
