@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.21.1 (2021-11-10)
+### Fix
+* **alias:** Source new aliases ([#64](https://github.com/redbeestudios/hexagon/issues/64)) ([`c13f59b`](https://github.com/redbeestudios/hexagon/commit/c13f59b454e7c3df45efd3c3267eb0ed32cad1a8))
+
 ## v0.21.0 (2021-10-04)
 ### Feature
 * Springboot, react, nextjs seeds ([#63](https://github.com/redbeestudios/hexagon/issues/63)) ([`951b3ab`](https://github.com/redbeestudios/hexagon/commit/951b3ab8df92a5cfccc379c0b8cee824dff16cf2))

@@ -2,7 +2,7 @@ import setuptools
 import json
 
 # esto se actualiza solo con https://python-semantic-release.readthedocs.io/en/latest/index.html
-__version__ = "0.21.0"
+__version__ = "0.21.1"
 
 
 def __markers(config: dict):
