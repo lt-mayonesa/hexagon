@@ -52,13 +52,13 @@ def main():
 
         if tracer.has_traced():
             log.extra(
-                "[cyan dim]Para repetir este comando:[/cyan dim]",
+                "[cyan dim]To run again do:[/cyan dim]",
                 f"[cyan]     {cli.command} {tracer.command()}[/cyan]",
             )
             command_as_aliases = tracer.command_as_aliases(tools, envs)
             if command_as_aliases:
                 log.extra(
-                    "[cyan dim]  o:[/cyan dim]",
+                    "[cyan dim]  or:[/cyan dim]",
                     f"[cyan]     {cli.command} {command_as_aliases}[/cyan]",
                 )
         store_user_data(
