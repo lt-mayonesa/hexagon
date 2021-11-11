@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.22.0 (2021-11-11)
+### Feature
+* **install-cli:** Use shell scripts instead of aliases ([`c3d7ed7`](https://github.com/redbeestudios/hexagon/commit/c3d7ed76fce7bfae2448554fdb322f777ea5d59d))
+
 ## v0.21.1 (2021-11-10)
 ### Fix
 * **alias:** Source new aliases ([#64](https://github.com/redbeestudios/hexagon/issues/64)) ([`c13f59b`](https://github.com/redbeestudios/hexagon/commit/c13f59b454e7c3df45efd3c3267eb0ed32cad1a8))
