@@ -14,6 +14,7 @@ class HexagonStorageKeys(Enum):
     options = "options"
     last_command = "last-command"
     last_update_check = "last-update-check"
+    cli_install_path = "cli-install-path"
 
 
 class StorageValueType(Enum):

@@ -200,7 +200,9 @@ def assert_process_output(
     lines_read = []
     attempts = 0
     # Read from stdout until assertion fails or all expected lines are reads
-    while line_index < len(expected_output):
+    while line_index < (
+        1 if isinstance(expected_output, str) else len(expected_output)
+    ):
         line: str = _read_next_line(process, lines_read)
         expected = expected_output[line_index]
 

@@ -1,4 +1,5 @@
 import time
+from subprocess import Popen
 from typing import Callable, Dict, List, Optional
 
 from e2e.tests.utils.assertions import (
@@ -16,9 +17,18 @@ from e2e.tests.utils.run import (
 
 
 class HexagonSpec:
+    HEXAGON_TEST_SHELL = "HEXAGON_TEST_SHELL"
+    HEXAGON_THEME = "HEXAGON_THEME"
+    HEXAGON_UPDATE_DISABLED = "HEXAGON_UPDATE_DISABLED"
+    HEXAGON_CLI_UPDATE_DISABLED = "HEXAGON_CLI_UPDATE_DISABLED"
+    HEXAGON_DISABLE_SPINNER = "HEXAGON_DISABLE_SPINNER"
+    HEXAGON_SEND_TELEMETRY = "HEXAGON_SEND_TELEMETRY"
+    HEXAGON_STORAGE_PATH = "HEXAGON_STORAGE_PATH"
+    HEXAGON_CONFIG_FILE = "HEXAGON_CONFIG_FILE"
+
     def __init__(self, file) -> None:
         self.__file = file
-        self.process = None
+        self.process: Optional[Popen[str]] = None
         self.command = None
 
     def given_a_cli_yaml(self, config: dict):

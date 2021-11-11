@@ -1,5 +1,4 @@
 import os
-import subprocess
 
 from InquirerPy import inquirer
 from InquirerPy.validator import EmptyInputValidator
@@ -47,10 +46,15 @@ def save_new_alias(alias_name, command):
         __pretty_print_created_alias(aliases_file, aliases_file_path, lines_to_show=-3)
         aliases_file.close()
 
-    if shell_ != "HEXAGON_TEST_SHELL":
-        subprocess.call([shell_, "-c", f"source {aliases_file_path}"])
-    log.info("[u]All done! Now you can execute your project's CLI like:", gap_end=1)
+    log.info(
+        "[green]🗸️ [white][u]All done! You can now run your alias like:", gap_end=1
+    )
     log.result(f"[b]$ {alias_name}")
+    log.info("[dim][u]Tip:", gap_start=1)
+    log.info("[dim]You probably need to reload your shell built-ins.")
+    log.info(
+        f"[dim]Either by running 'source {aliases_file_path}' or restarting your terminal."
+    )
 
 
 def __pretty_print_created_alias(aliases_file, file, lines_to_show=-10):
