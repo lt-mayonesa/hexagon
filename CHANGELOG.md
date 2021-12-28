@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.22.1 (2021-12-28)
+### Fix
+* **yaml:** Print YAML path ([`bfc60ae`](https://github.com/redbeestudios/hexagon/commit/bfc60ae1b60f2664934f999176067dfe374b2015))
+
+### Documentation
+* Better resolution gif ([`897eeee`](https://github.com/redbeestudios/hexagon/commit/897eeee4ed1472ab993a36eadd1408161d2a2317))
+* Adding gif example to readme ([`e2b4c1b`](https://github.com/redbeestudios/hexagon/commit/e2b4c1ba0e082ec998a63ba497dd627022037c1b))
+
 ## v0.22.0 (2021-11-11)
 ### Feature
 * **install-cli:** Use shell scripts instead of aliases ([`c3d7ed7`](https://github.com/redbeestudios/hexagon/commit/c3d7ed76fce7bfae2448554fdb322f777ea5d59d))
