@@ -8,7 +8,9 @@ from hexagon.support.printer import log
 def display_yaml_errors(errors: ValidationError, ruamel_yaml=None, yaml_path=None):
     yml = open(yaml_path, "r").read() if yaml_path else None
     errors_as_dict = errors.errors()
-    log.error(f"There were {len(errors_as_dict)} error(s) in your YAML")
+    log.error(
+        f"There were {len(errors_as_dict)} error(s) in your YAML file: {yaml_path}"
+    )
     for err in errors_as_dict:
         log.error(
             f"\n✗ [u][bold]{'.'.join(map(lambda i: str(i), err['loc']))}[/bold] -> {err['msg']}"
