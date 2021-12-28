@@ -9,6 +9,7 @@ def test_show_errors_when_invalid_yaml():
             [
                 "There were 6 error(s) in your YAML",
                 "",
+                "",
                 "✗ cli.command -> str type expected",
                 "2   name: Test",
                 "3   custom_tools_dir: .",

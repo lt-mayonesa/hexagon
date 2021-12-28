@@ -157,9 +157,9 @@ def check_for_hexagon_updates():
         return
 
     current_version = parse_version(
-        os.getenv(
-            "HEXAGON_TEST_VERSION_OVERRIDE", pkg_resources.require("hexagon")[0].version
-        )
+        os.getenv("HEXAGON_TEST_VERSION_OVERRIDE")
+        if "HEXAGON_TEST_VERSION_OVERRIDE" in os.environ
+        else pkg_resources.require("hexagon")[0].version
     )
     latest_github_release_version = _latest_github_release()
 

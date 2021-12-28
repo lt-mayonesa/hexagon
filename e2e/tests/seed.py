@@ -1,4 +1,7 @@
 import subprocess
+
+import pytest
+
 from e2e.tests.utils.hexagon_spec import as_a_user
 from e2e.tests.utils.path import e2e_test_folder_path
 import os
@@ -44,6 +47,9 @@ def __assert_react_app_works(created_project_path: str):
         local_server_process.send_signal(signal.SIGINT)
 
 
+@pytest.mark.skip(
+    reason="Tests take too long to run, run manually when changing source"
+)
 def test_seed_springboot():
     created_project_path = __clean_springboot()
 
@@ -70,6 +76,9 @@ def test_seed_springboot():
     __assert_gradle_works(created_project_path)
 
 
+@pytest.mark.skip(
+    reason="Tests take too long to run, run manually when changing source"
+)
 def test_seed_react():
     react_folder_path = os.path.join(test_folder_path, "react")
 
@@ -97,6 +106,9 @@ def test_seed_react():
     __assert_react_app_works(created_project_path)
 
 
+@pytest.mark.skip(
+    reason="Tests take too long to run, run manually when changing source"
+)
 def test_seed_nextjs():
     nextjs_folder_path = os.path.join(test_folder_path, "nextjs")
 
@@ -125,6 +137,9 @@ def test_seed_nextjs():
     __assert_react_app_works(created_project_path)
 
 
+@pytest.mark.skip(
+    reason="Tests take too long to run, run manually when changing source"
+)
 def test_seed_type_as_env_arg():
     created_project_path = __clean_springboot()
 
