@@ -1,4 +1,3 @@
-from hexagon.support.printer.spinner import with_spinner
 from hexagon.support.storage import HEXAGON_STORAGE_APP
 from hexagon.support.update.shared import already_checked_for_updates
 from hexagon.support.github import add_github_access_token
@@ -131,11 +130,8 @@ def _unmark(text):
 def _show_changelog(current_hexagon_version: Version):
     if bool(os.getenv("HEXAGON_UPDATE_SHOW_CHANGELOG", "1")):
 
-        @with_spinner("Fetching changelog")
-        def get_changelog():
-            return _parse_changelog(current_hexagon_version, REPO_ORG, REPO_NAME)
-
-        changelog = get_changelog()
+        with log.status("Fetching changelog"):
+            changelog = _parse_changelog(current_hexagon_version, REPO_ORG, REPO_NAME)
 
         if changelog:
 
@@ -179,26 +175,23 @@ def check_for_hexagon_updates():
     if not inquirer.confirm("Would you like to update?", default=True).execute():
         return
 
-    @with_spinner("Updating")
-    def update():
+    with log.status("Updating"):
         subprocess.check_call(
             f"{sys.executable} -m pip --disable-pip-version-check install https://github.com/{REPO_ORG}/{REPO_NAME}/releases/download/v{latest_github_release_version}/hexagon-{latest_github_release_version}.tar.gz",
             shell=True,
             stdout=subprocess.DEVNULL,
         )
 
-    update()
-
     log.info("[green]🗸️ [white]Updated to latest version")
     log.finish()
     sys.exit(1)
 
 
-@with_spinner("Checking for new hexagon versions")
 def _latest_github_release():
-    latest_release_request = Request(
-        f"https://api.github.com/repos/{REPO_ORG}/{REPO_NAME}/releases/latest"
-    )
-    add_github_access_token(latest_release_request)
-    latest_github_release = json.load(urlopen(latest_release_request))
-    return latest_github_release["name"].replace("v", "")
+    with log.status("Checking for new hexagon versions"):
+        latest_release_request = Request(
+            f"https://api.github.com/repos/{REPO_ORG}/{REPO_NAME}/releases/latest"
+        )
+        add_github_access_token(latest_release_request)
+        latest_github_release = json.load(urlopen(latest_release_request))
+        return latest_github_release["name"].replace("v", "")

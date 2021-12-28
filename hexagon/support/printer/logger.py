@@ -65,3 +65,6 @@ class Logger:
     def finish(self, message: str = None):
         if not self.__decorations.result_only:
             self.__console.print(f"{self.__decorations.finish}{message or ''}")
+
+    def status(self, message: str = None):
+        return self.__console.status(message)

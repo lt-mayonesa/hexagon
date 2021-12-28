@@ -11,7 +11,6 @@ requests = "*"
 "ruamel.yaml" = "*"
 pydantic = "*"
 packaging = "*"
-halo = "*"
 markdown = "*"
 
 [dev-packages]
