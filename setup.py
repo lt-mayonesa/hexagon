@@ -3,7 +3,7 @@ import json
 import glob
 
 # esto se actualiza solo con https://python-semantic-release.readthedocs.io/en/latest/index.html
-__version__ = "0.22.1"
+__version__ = "0.23.0"
 
 
 def __markers(config: dict):

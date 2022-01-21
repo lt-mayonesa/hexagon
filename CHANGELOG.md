@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.23.0 (2022-01-21)
+### Feature
+* **i18n:** Added EN and ES transltions + CI ([#73](https://github.com/redbeestudios/hexagon/issues/73)) ([`7c65e74`](https://github.com/redbeestudios/hexagon/commit/7c65e740dd74cc7c0e0bdb2ba75587f185d327d2))
+
 ## v0.22.1 (2021-12-28)
 ### Fix
 * **yaml:** Print YAML path ([`bfc60ae`](https://github.com/redbeestudios/hexagon/commit/bfc60ae1b60f2664934f999176067dfe374b2015))
