@@ -1,5 +1,6 @@
 import setuptools
 import json
+import glob
 
 # esto se actualiza solo con https://python-semantic-release.readthedocs.io/en/latest/index.html
 __version__ = "0.22.1"
@@ -19,6 +20,8 @@ with open("Pipfile.lock", "r", encoding="utf-8") as lock:
         for name, config in json_lock["default"].items()
         if "version" in config
     ]
+
+translations = glob.glob("./locales/*/LC_MESSAGES/*.mo")
 
 setuptools.setup(
     name="hexagon",
@@ -44,5 +47,5 @@ setuptools.setup(
         hexagon=hexagon.__main__:main
     """,
     platform="debian",
-    data_files=[("*", ["Pipfile.lock"])],
+    data_files=[("*", ["Pipfile.lock"]), ("locales", translations)],
 )

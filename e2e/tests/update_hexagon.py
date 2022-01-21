@@ -8,7 +8,7 @@ LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
 test_folder_path = e2e_test_folder_path(__file__)
 storage_path = os.path.realpath(os.path.join(test_folder_path, "storage"))
 last_checked_storage_path = os.path.join(
-    storage_path, "hexagon", "last-update-check.txt",
+    storage_path, "hexagon", "last-update-check.txt"
 )
 
 
@@ -44,7 +44,7 @@ def test_new_hexagon_version_available():
 
     (
         as_a_user(__file__)
-        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars,)
+        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars)
         .write("n")
         .then_output_should_be(
             [["Would you like to update?", "No"]], discard_until_first_match=True
@@ -59,7 +59,7 @@ def test_prompt_to_update_hexagon_only_once():
 
     (
         as_a_user(__file__)
-        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars,)
+        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars)
         .write("n")
         .then_output_should_be(
             [["Would you like to update?", "No"]], discard_until_first_match=True
@@ -70,7 +70,7 @@ def test_prompt_to_update_hexagon_only_once():
 
     (
         as_a_user(__file__)
-        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars,)
+        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars)
         .then_output_should_be(["my-module"])
         .exit()
     )
@@ -81,7 +81,7 @@ def test_prompt_to_update_hexagon_once_a_day():
 
     (
         as_a_user(__file__)
-        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars,)
+        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars)
         .then_output_should_be(["my-module"])
         .exit()
     )
@@ -92,7 +92,7 @@ def test_prompt_to_update_hexagon_again_next_day():
 
     (
         as_a_user(__file__)
-        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars,)
+        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars)
         .write("n")
         .then_output_should_be(
             [["Would you like to update?", "No"]], discard_until_first_match=True

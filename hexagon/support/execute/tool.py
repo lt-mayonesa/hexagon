@@ -18,9 +18,11 @@ from hexagon.domain.configuration import (
     read_configuration_file,
     register_custom_tools_path,
 )
-from hexagon.support.printer import log
+from hexagon.support.printer import log, translator
 import sys
 import os
+
+_ = translator
 
 
 def select_and_execute_tool(
@@ -74,10 +76,10 @@ def select_and_execute_tool(
 
 GO_BACK_TOOL = Tool(
     name="goback",
-    long_name="Go back",
+    long_name=_("msg.support.execute.tool.go_back_long_name"),
     type=ToolType.function,
-    description="Go back to the previous menu",
-    icon="🠔",
+    description=_("msg.support.execute.tool.go_back_description"),
+    icon=_("icon.global.go_back"),
     traced=False,
 )
 
@@ -94,7 +96,12 @@ def _execute_group_tool(
     try:
         group_config_yaml = read_configuration_file(config_file_path)
     except FileNotFoundError:
-        log.error(f"File {config_file_path} could not be found")
+        # "File {config_file_path} could not be found"
+        log.error(
+            _("error.support.execute.tool.group_tool_file_not_found").format(
+                config_file_path=config_file_path
+            )
+        )
         sys.exit(1)
 
     try:

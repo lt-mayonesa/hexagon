@@ -82,13 +82,13 @@ def test_tool_is_selected_by_prompt(monkeypatch, tool_mock, analytics_mock):
     monkeypatch.setattr(analytics, "user_event", analytics_mock)
 
     assert select_tool(tools) == Tool(name="docker", alias="d", action="docker_run")
-    assert tool_mock.args[0] == "Hi, which tool would you like to use today?"
+    assert tool_mock.args[0] == "action.support.wax.select_tool"
     assert tool_mock.args[1] == [
         {"value": "docker", "name": "  docker"},
         {"value": "bastion", "name": "  bastion"},
         {"value": "no_alias", "name": "  no_alias"},
     ]
-    assert tool_mock.args[3] == "Please select a valid tool"
+    assert tool_mock.args[3] == "error.support.wax.invalid_tool"
 
 
 def test_tool_has_no_env_property():
@@ -112,9 +112,9 @@ def test_env_is_selected_by_prompt(monkeypatch, env_mock, analytics_mock):
     monkeypatch.setattr(analytics, "user_event", analytics_mock)
 
     assert select_env(envs, tool_envs) == (envs[0], "env_1")
-    assert env_mock.args[0] == "On which environment?"
+    assert env_mock.args[0] == "action.support.wax.select_environment"
     assert env_mock.args[1] == [
         {"value": "dev", "name": "dev"},
         {"value": "qa", "name": "qa"},
     ]
-    assert env_mock.args[3] == "Please select a valid environment"
+    assert env_mock.args[3] == "error.support.wax.invalid_environment"

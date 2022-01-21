@@ -23,7 +23,6 @@ def test_save_alias():
         .input("hexagon-save-alias-test")
         .then_output_should_be(
             [
-                "Last command: hexagon-test python-module Alias name?",
                 "# added by hexagon",
                 'alias hexagon-save-alias-test="hexagon-test python-module"',
                 "$ hexagon-save-alias-test",

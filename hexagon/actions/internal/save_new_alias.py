@@ -3,19 +3,29 @@ import os
 from InquirerPy import inquirer
 from InquirerPy.validator import EmptyInputValidator
 
-from hexagon.support.printer import log
+from hexagon.support.printer import log, translator
 from hexagon.support.storage import (
     HexagonStorageKeys,
     load_user_data,
 )
 
+_ = translator
 
-def main(*_):
+
+def main(*__):
     last_command = load_user_data(HexagonStorageKeys.last_command.value)
 
+    log.info(
+        _("msg.actions.internal.save_new_alias.last_command").format(
+            last_command=last_command
+        )
+    )
+
     alias_name = inquirer.text(
-        message=f"Last command: {last_command} Alias name?",
-        validate=EmptyInputValidator("Please insert a valid unix alias."),
+        message=_("action.actions.internal.save_new_alias.prompt_alias_name"),
+        validate=EmptyInputValidator(
+            _("error.actions.internal.save_new_alias.insert_valid_alias")
+        ),
     ).execute()
 
     save_new_alias(alias_name, last_command)
@@ -47,17 +57,27 @@ def save_new_alias(alias_name, command):
         aliases_file.close()
 
     log.info(
-        "[green]🗸️ [white][u]All done! You can now run your alias like:", gap_end=1
+        "[green]{} [white][u]{}".format(
+            _("icon.global.ok"), _("msg.actions.internal.save_new_alias.success")
+        ),
+        gap_end=1,
     )
     log.result(f"[b]$ {alias_name}")
-    log.info("[dim][u]Tip:", gap_start=1)
-    log.info("[dim]You probably need to reload your shell built-ins.")
     log.info(
-        f"[dim]Either by running 'source {aliases_file_path}' or restarting your terminal."
+        "[dim][u]{}".format(_("msg.actions.internal.save_new_alias.execute_tip")),
+        gap_start=1,
+    )
+    log.info("[dim]{}".format(_("msg.actions.internal.save_new_alias.reload_builtins")))
+    log.info(
+        "[dim]{}".format(
+            _("msg.actions.internal.save_new_alias.run_source").format(
+                file_path=aliases_file_path
+            )
+        )
     )
 
 
 def __pretty_print_created_alias(aliases_file, file, lines_to_show=-10):
     log.gap()
-    log.info(f"Added alias to {file}")
+    log.info(_("msg.actions.internal.save_new_alias.added_to_file").format(file=file))
     log.example("\n".join(aliases_file.read().splitlines()[lines_to_show:]))

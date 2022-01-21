@@ -49,6 +49,9 @@ def run_hexagon_e2e_test(
     if "HEXAGON_SEND_TELEMETRY" not in os_env_vars:
         os_env_vars["HEXAGON_SEND_TELEMETRY"] = "0"
 
+    if "HEXAGON_LOCALES_DIR" not in os_env_vars:
+        os_env_vars["HEXAGON_LOCALES_DIR"] = os.path.join(hexagon_path, "locales")
+
     os.environ["HEXAGON_STORAGE_PATH"] = os_env_vars.get(
         "HEXAGON_STORAGE_PATH",
         os.getenv("HEXAGON_STORAGE_PATH", os.path.join(test_folder_path, ".config")),

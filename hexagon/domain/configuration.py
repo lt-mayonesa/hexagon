@@ -8,7 +8,10 @@ from ruamel.yaml import YAML
 from hexagon.domain.cli import Cli
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool, GroupTool, Tool, ToolType
+from hexagon.support.printer import translator
 from hexagon.support.yaml import display_yaml_errors
+
+_ = translator
 
 
 class ConfigFile(BaseModel):
@@ -21,13 +24,13 @@ class Configuration:
     __defaults = [
         ActionTool(
             name="save-alias",
-            long_name="Save Last Command as Linux Alias",
+            long_name=_("msg.domain.configuration.save_alias_long_name"),
             type=ToolType.hexagon,
             action="hexagon.actions.internal.save_new_alias",
         ),
         ActionTool(
             name="create-tool",
-            long_name="Create A New Tool",
+            long_name=_("msg.domain.configuration.create_tool_long_name"),
             type=ToolType.hexagon,
             action="hexagon.actions.internal.create_new_tool",
         ),
@@ -99,8 +102,8 @@ class Configuration:
             [
                 ActionTool(
                     name="install",
-                    long_name="Install CLI",
-                    description="Install a custom project CLI from a YAML file.",
+                    long_name=_("msg.domain.configuration.install_cli_long_name"),
+                    description=_("msg.domain.configuration.install_cli_description"),
                     type=ToolType.hexagon,
                     action="hexagon.actions.internal.install_cli",
                 )

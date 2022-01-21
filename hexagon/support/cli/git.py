@@ -1,6 +1,11 @@
+from typing import Optional
+
 from hexagon.support.cli.command import output_from_command_in_cli_project_path
+from hexagon.support.printer import translator
 from hexagon.support.storage import load_user_data, store_user_data
 import re
+
+_ = translator
 
 
 class CliGitConfig:
@@ -13,10 +18,9 @@ class CliGitConfig:
 
 
 CLI_GIT_CONFIG_STORAGE_KEY = "git-config"
-GENERAL_GIT_CONFIG_ERROR = "Please make sure your hexagon configuration file is located in a working git repository"
 
 
-def load_cli_git_config() -> CliGitConfig:
+def load_cli_git_config() -> Optional[CliGitConfig]:
     raw_data = load_user_data(CLI_GIT_CONFIG_STORAGE_KEY)
     try:
         write_dict = {}
@@ -28,9 +32,7 @@ def load_cli_git_config() -> CliGitConfig:
             elif "origin" in remotes:
                 remote = "origin"
             else:
-                raise Exception(
-                    "Couldn't get the remote name from your cli's repository, too many choices and origin is not present"
-                )
+                raise Exception(_("error.support.cli.git.failed_to_get_remote"))
 
             write_dict["remote"] = remote
 

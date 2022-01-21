@@ -12,9 +12,11 @@ from urllib.request import Request, urlopen
 from packaging.version import parse as parse_version, Version
 from markdown import Markdown
 from io import StringIO
-from hexagon.support.printer import log
+from hexagon.support.printer import log, translator
 from InquirerPy import inquirer
 from functools import reduce
+
+_ = translator
 
 LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
 REPO_ORG = "redbeestudios"
@@ -130,7 +132,7 @@ def _unmark(text):
 def _show_changelog(current_hexagon_version: Version):
     if bool(os.getenv("HEXAGON_UPDATE_SHOW_CHANGELOG", "1")):
 
-        with log.status("Fetching changelog"):
+        with log.status(_("msg.support.update.hexagon.fetching_changelog")):
             changelog = _parse_changelog(current_hexagon_version, REPO_ORG, REPO_NAME)
 
         if changelog:
@@ -141,13 +143,12 @@ def _show_changelog(current_hexagon_version: Version):
 
             entries = reduce(reducer, changelog, [])
             entries.sort(
-                key=lambda entry: CHANGELOG_ENTRY_TYPE_ORDER_MAP[entry.type],
-                reverse=True,
+                key=lambda e: CHANGELOG_ENTRY_TYPE_ORDER_MAP[e.type], reverse=True
             )
             for entry in entries[:CHANGELOG_MAX_ENTRIES]:
                 log.info("  - " + _unmark(entry.message))
             if len(entries) > CHANGELOG_MAX_ENTRIES:
-                log.info("and much more!")
+                log.info(_("msg.support.update.hexagon.and_much_more"))
 
 
 def check_for_hexagon_updates():
@@ -166,29 +167,42 @@ def check_for_hexagon_updates():
     if current_version >= parse_version(latest_github_release_version):
         return
 
+    # FIXME find a better way of handling colors in translations
     log.info(
-        f"New [cyan]hexagon [white]version available [green]{latest_github_release_version}[white]!"
+        _("msg.support.update.hexagon.new_version_available").format(
+            latest_version=latest_github_release_version,
+            hexagon_start="[cyan]",
+            hexagon_end="[/cyan]",
+            version_start="[green]",
+            version_end="[/green]",
+        )
     )
 
     _show_changelog(current_version)
 
-    if not inquirer.confirm("Would you like to update?", default=True).execute():
+    if not inquirer.confirm(
+        _("action.support.update.hexagon.confirm_update"), default=True
+    ).execute():
         return
 
-    with log.status("Updating"):
+    with log.status(_("msg.support.update.hexagon.updating")):
         subprocess.check_call(
             f"{sys.executable} -m pip --disable-pip-version-check install https://github.com/{REPO_ORG}/{REPO_NAME}/releases/download/v{latest_github_release_version}/hexagon-{latest_github_release_version}.tar.gz",
             shell=True,
             stdout=subprocess.DEVNULL,
         )
 
-    log.info("[green]🗸️ [white]Updated to latest version")
+    log.info(
+        "[green]{}️[white]{}".format(
+            _("icon.global.ok"), _("msg.support.update.hexagon.updated")
+        )
+    )
     log.finish()
     sys.exit(1)
 
 
 def _latest_github_release():
-    with log.status("Checking for new hexagon versions"):
+    with log.status(_("msg.support.update.hexagon.checking_new_versions")):
         latest_release_request = Request(
             f"https://api.github.com/repos/{REPO_ORG}/{REPO_NAME}/releases/latest"
         )

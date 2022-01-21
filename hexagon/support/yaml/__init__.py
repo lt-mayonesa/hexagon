@@ -2,14 +2,19 @@ from pydantic import ValidationError
 from rich.syntax import Syntax
 from ruamel import yaml
 
-from hexagon.support.printer import log
+from hexagon.support.printer import log, translator
+
+_ = translator
 
 
 def display_yaml_errors(errors: ValidationError, ruamel_yaml=None, yaml_path=None):
     yml = open(yaml_path, "r").read() if yaml_path else None
     errors_as_dict = errors.errors()
     log.error(
-        f"There were {len(errors_as_dict)} error(s) in your YAML file: {yaml_path}"
+        # There were {errors_length} error(s) in your YAML file: {yaml_path}
+        _("error.support.yaml.invalid_yaml").format(
+            errors_length=len(errors_as_dict), yaml_path=yaml_path
+        )
     )
     for err in errors_as_dict:
         log.error(

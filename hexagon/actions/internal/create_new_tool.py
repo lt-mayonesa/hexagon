@@ -7,15 +7,17 @@ from InquirerPy.validator import PathValidator
 from hexagon.domain.tool import ActionTool, ToolType
 from hexagon.domain import configuration
 from hexagon.actions import external
-from hexagon.support.printer import log
+from hexagon.support.printer import log, translator
+
+_ = translator
 
 
-def main(*_):
+def main(*__):
     create_action = False
     new_tool = ActionTool(
         name="invalid",
         action=inquirer.fuzzy(
-            message="Choose the action of your tool:",
+            message=_("action.actions.internal.create_new_tool.choose_action"),
             validate=lambda x: x,
             choices=external.__all__ + ["new_action"],
         ).execute(),
@@ -24,12 +26,12 @@ def main(*_):
     if new_tool.action == "new_action":
         create_action = True
         new_tool.action = inquirer.text(
-            message="What name would you like to give your new action?",
+            message=_("action.actions.internal.create_new_tool.input_action"),
             validate=lambda x: x,
         ).execute()
 
     new_tool.type = inquirer.select(
-        message="What type of tool is it?",
+        message=_("action.actions.internal.create_new_tool.choose_type"),
         choices=[
             {"value": ToolType.web, "name": ToolType.web.value},
             {"value": ToolType.shell, "name": ToolType.shell.value},
@@ -38,42 +40,52 @@ def main(*_):
     ).execute()
 
     new_tool.name = inquirer.text(
-        message="What command would you like to give your tool?",
+        message=_("action.actions.internal.create_new_tool.input_name"),
         validate=lambda x: x,
         default=new_tool.action.replace("_", "-"),
     ).execute()
 
     new_tool.alias = inquirer.text(
-        message="Would you like to add an alias/shortcut? (empty for none)",
+        message=_("action.actions.internal.create_new_tool.input_alias"),
         default="".join([z[:1] for z in new_tool.name.split("-")]),
         filter=lambda r: r or None,
     ).execute()
 
     new_tool.long_name = inquirer.text(
-        message="Would you like to add a long name? (this will be displayed instead of command)",
+        message=_("action.actions.internal.create_new_tool.input_long_name"),
         filter=lambda r: r or None,
     ).execute()
 
     new_tool.description = inquirer.text(
-        message="Would you like to add a description? (this will be displayed along side command/long_name)",
+        message=_("action.actions.internal.create_new_tool.input_description"),
         filter=lambda r: r or None,
     ).execute()
 
-    cli, tools, _ = configuration.refresh()
+    cli, tools, envs = configuration.refresh()
 
     if create_action:
         if not configuration.custom_tools_path:
-            log.info("[magenta]Your CLI does not have a custom tools dir.")
+            log.info(
+                "[magenta]{}".format(
+                    _("msg.actions.internal.create_new_tool.custom_tools_dir_not_set")
+                )
+            )
             configuration.update_custom_tools_path(
                 inquirer.filepath(
-                    message="Where would you like it to be? "
-                    "(can be absolute path or relative to YAML. ie: ./tools or .)",
+                    message=_(
+                        "action.actions.internal.create_new_tool.input_custom_tools_path"
+                    ),
                     default=".",
                     validate=PathValidator(
-                        is_dir=True, message="Please select a valid directory"
+                        is_dir=True,
+                        message=_(
+                            "error.actions.internal.create_new_tool.insert_valid_directory"
+                        ),
                     ),
                 ).execute(),
-                comment="relative to this file",
+                comment=_(
+                    "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
+                ),
             )
 
         copytree(

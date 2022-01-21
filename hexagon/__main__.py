@@ -7,7 +7,7 @@ from hexagon.support.args import fill_args
 from hexagon.domain import cli, tools, envs
 from hexagon.support.help import print_help
 from hexagon.support.tracer import tracer
-from hexagon.support.printer import log
+from hexagon.support.printer import log, translator
 from hexagon.support.update.hexagon import check_for_hexagon_updates
 from hexagon.support.storage import (
     HexagonStorageKeys,
@@ -15,9 +15,11 @@ from hexagon.support.storage import (
 )
 from hexagon.plugins import collect_plugins
 
+_ = translator
+
 
 def main():
-    _, _tool, _env = fill_args(sys.argv, 3)
+    _u, _tool, _env = fill_args(sys.argv, 3)
 
     if _tool == "-h" or _tool == "--help":
         return print_help(cli, tools, envs)
@@ -32,9 +34,7 @@ def main():
 
     if cli.name == "Hexagon":
         log.info(
-            "This looks like your first time running Hexagon.",
-            'You should probably run "Install CLI".',
-            gap_end=1,
+            _("msg.main.first_time_intro"), _("msg.main.first_time_tool"), gap_end=1
         )
     else:
         check_for_cli_updates()
@@ -52,18 +52,17 @@ def main():
 
         if tracer.has_traced():
             log.extra(
-                "[cyan dim]To run again do:[/cyan dim]",
+                f"[cyan dim]{_('msg.main.tracer.run_again')}[/cyan dim]",
                 f"[cyan]     {cli.command} {tracer.command()}[/cyan]",
             )
             command_as_aliases = tracer.command_as_aliases(tools, envs)
             if command_as_aliases:
                 log.extra(
-                    "[cyan dim]  or:[/cyan dim]",
+                    f"[cyan dim]  {_('msg.main.tracer.or')}[/cyan dim]",
                     f"[cyan]     {cli.command} {command_as_aliases}[/cyan]",
                 )
         store_user_data(
-            HexagonStorageKeys.last_command.value,
-            f"{cli.command} {tracer.command()}",
+            HexagonStorageKeys.last_command.value, f"{cli.command} {tracer.command()}"
         )
     except KeyboardInterrupt:
         sys.exit(1)

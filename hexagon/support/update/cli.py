@@ -3,13 +3,15 @@ from hexagon.support.cli.command import (
     execute_command_in_cli_project_path,
     output_from_command_in_cli_project_path,
 )
-from hexagon.support.printer import log
+from hexagon.support.printer import log, translator
 from hexagon.support.update.shared import already_checked_for_updates
 import os
 import re
 from hexagon.domain import cli
 from InquirerPy import inquirer
 import sys
+
+_ = translator
 
 
 def check_for_cli_updates():
@@ -42,11 +44,21 @@ def check_for_cli_updates():
     branch_status = output_from_command_in_cli_project_path("git status -uno")
 
     if "is behind" in branch_status:
-        log.info(f"New [cyan]{cli.name} [white]version available")
-        if not inquirer.confirm("Would you like to update?", default=True).execute():
+        log.info(
+            _("msg.support.update.cli.new_version_available").format(
+                cli_name=cli.name, cli_start="[cyan]", cli_end="[/cyan]"
+            )
+        )
+        if not inquirer.confirm(
+            _("action.support.update.cli.confirm_update"), default=True
+        ).execute():
             return
         execute_command_in_cli_project_path("git pull", show_stdout=True)
-        log.info("[green]🗸 [white]Updated to latest version")
+        log.info(
+            "[green]{}️[white]{}".format(
+                _("icon.global.ok"), _("msg.support.update.cli.updated")
+            )
+        )
         log.finish()
         sys.exit(1)
 

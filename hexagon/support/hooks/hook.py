@@ -2,6 +2,10 @@ from enum import Enum
 from typing import Callable, Generic, List, TypeVar
 import threading
 
+from hexagon.support.printer import translator
+
+_ = translator
+
 
 class HookSubscrptionType(Enum):
     blocking = "blocking"
@@ -47,4 +51,9 @@ class Hook(Generic[T]):
                 )
                 thread.start()
             else:
-                raise Exception(f"Unknown HookSubscriptionType {subscription.type}")
+                # Unknown HookSubscriptionType {subscription_type}
+                raise Exception(
+                    _("error.support.hooks.hook.unknown_type").format(
+                        subscription_type=subscription.type
+                    )
+                )

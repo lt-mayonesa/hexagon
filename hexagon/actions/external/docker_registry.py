@@ -7,7 +7,9 @@ from InquirerPy import inquirer
 
 from hexagon.support.args import cli_arg
 from hexagon.support.tracer import tracer
-from hexagon.support.printer import log
+from hexagon.support.printer import log, translator
+
+_ = translator
 
 
 def main(tool, env, env_args, cli_args):
@@ -25,7 +27,7 @@ def main(tool, env, env_args, cli_args):
     image = tracer.tracing(
         _image
         or inquirer.fuzzy(
-            message="¿Qué imagen estás buscando?",
+            message=_("action.actions.external.docker_registry.prompt_docker_image"),
             choices=lambda _: get_authenticated(
                 f"https://{registry_host}/v2/_catalog", "repositories"
             ),
@@ -35,7 +37,7 @@ def main(tool, env, env_args, cli_args):
     tag = tracer.tracing(
         _filter
         or inquirer.fuzzy(
-            message="¿Qué tag?",
+            message=_("action.actions.external.docker_registry.prompt_tag"),
             choices=lambda _: get_authenticated(
                 f"https://{registry_host}/v2/{image}/tags/list", "tags"
             ),
@@ -43,10 +45,13 @@ def main(tool, env, env_args, cli_args):
     )
 
     clipboard.copy(f"{registry_host}/{image}:{tag}")
-    log.result(f"[dim][u]{registry_host}/{image}:{tag}[/u] se copió al portapapeles")
+    log.result(
+        f"[dim][u]{registry_host}/{image}:{tag}[/u] {_('msg.actions.external.docker_registry.copied_to_clipboard')}"
+    )
 
     manifest = inquirer.confirm(
-        message="¿Te gustaría ver el manifest?", default=False
+        message=_("action.actions.external.docker_registry.confirm_see_manifest"),
+        default=False,
     ).execute()
 
     if manifest:

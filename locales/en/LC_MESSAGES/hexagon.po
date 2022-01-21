@@ -1,0 +1,322 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2022-01-18 00:32-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+#: hexagon/__main__.py:37
+msgid "msg.main.first_time_intro"
+msgstr "This looks like your first time running hexagon."
+
+#: hexagon/__main__.py:37
+msgid "msg.main.first_time_tool"
+msgstr "You should probably run \"Install CLI\"."
+
+#: hexagon/actions/external/docker_registry.py:30
+msgid "action.actions.external.docker_registry.prompt_docker_image"
+msgstr "What docker image are you looking for?"
+
+#: hexagon/actions/external/docker_registry.py:40
+msgid "action.actions.external.docker_registry.prompt_tag"
+msgstr "Which tag?"
+
+#: hexagon/actions/external/docker_registry.py:53
+msgid "action.actions.external.docker_registry.confirm_see_manifest"
+msgstr "Do you want to see the manifest?"
+
+#: hexagon/actions/external/open_link.py:10
+msgid "msg.actions.external.open_link.result"
+msgstr "Opening URL: {url}"
+
+#: hexagon/actions/internal/create_new_tool.py:20
+msgid "action.actions.internal.create_new_tool.choose_action"
+msgstr "Choose the action of your tool:"
+
+#: hexagon/actions/internal/create_new_tool.py:29
+msgid "action.actions.internal.create_new_tool.input_action"
+msgstr "What name would you like to give your new action?"
+
+#: hexagon/actions/internal/create_new_tool.py:34
+msgid "action.actions.internal.create_new_tool.choose_type"
+msgstr "What type of tool is it?"
+
+#: hexagon/actions/internal/create_new_tool.py:43
+msgid "action.actions.internal.create_new_tool.input_name"
+msgstr "What command would you like to give your tool?"
+
+#: hexagon/actions/internal/create_new_tool.py:49
+msgid "action.actions.internal.create_new_tool.input_alias"
+msgstr "Would you like to add an alias/shortcut? (empty for none)"
+
+#: hexagon/actions/internal/create_new_tool.py:55
+msgid "action.actions.internal.create_new_tool.input_long_name"
+msgstr ""
+"Would you like to add a long name? (this will be displayed instead of "
+"command)"
+
+#: hexagon/actions/internal/create_new_tool.py:60
+msgid "action.actions.internal.create_new_tool.input_description"
+msgstr ""
+"Would you like to add a description? (this will be displayed along side "
+"command/long_name)"
+
+#: hexagon/actions/internal/create_new_tool.py:70
+msgid "msg.actions.internal.create_new_tool.custom_tools_dir_not_set"
+msgstr "Your CLI does not have a custom tools dir."
+
+#: hexagon/actions/internal/create_new_tool.py:75
+msgid "action.actions.internal.create_new_tool.input_custom_tools_path"
+msgstr ""
+"Where would you like it to be? (can be absolute path or relative to YAML. "
+"ie: ./tools or .)"
+
+#: hexagon/actions/internal/create_new_tool.py:81
+msgid "error.actions.internal.create_new_tool.insert_valid_directory"
+msgstr "Please select a valid directory"
+
+#: hexagon/actions/internal/create_new_tool.py:86
+msgid "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
+msgstr "relative to this file"
+
+#: hexagon/actions/internal/install_cli.py:27
+msgid "action.actions.internal.install_cli.config_file_location"
+msgstr "Where is your CLI's hexagon config YAML? (app.yml/yaml)"
+
+#: hexagon/actions/internal/install_cli.py:31
+msgid "error.actions.internal.install_cli.select_valid_file"
+msgstr "Please select a valid YAML file"
+
+#: hexagon/actions/internal/install_cli.py:40
+msgid "action.actions.internal.install_cli.commands_path"
+msgstr ""
+"Where do you want your CLI commands to be saved? This should be on your path"
+
+#: hexagon/actions/internal/install_cli.py:44
+msgid "error.actions.internal.install_cli.select_valid_directory"
+msgstr "Please select a valid directory"
+
+#: hexagon/actions/internal/install_cli.py:61
+msgid "msg.actions.internal.install_cli.success"
+msgstr "All done! Now you can execute your project's CLI like:"
+
+#: hexagon/actions/internal/install_cli.py:61
+#: hexagon/actions/internal/save_new_alias.py:61
+#: hexagon/support/update/cli.py:59 hexagon/support/update/hexagon.py:197
+msgid "icon.global.ok"
+msgstr "🗸"
+
+#: hexagon/actions/internal/save_new_alias.py:19
+msgid "msg.actions.internal.save_new_alias.last_command"
+msgstr "Last command: {last_command}"
+
+#: hexagon/actions/internal/save_new_alias.py:25
+msgid "action.actions.internal.save_new_alias.prompt_alias_name"
+msgstr "Alias name?"
+
+#: hexagon/actions/internal/save_new_alias.py:27
+msgid "error.actions.internal.save_new_alias.insert_valid_alias"
+msgstr "Please insert a valid unix alias."
+
+#: hexagon/actions/internal/save_new_alias.py:61
+msgid "msg.actions.internal.save_new_alias.success"
+msgstr "All done! You can now run your alias like:"
+
+#: hexagon/actions/internal/save_new_alias.py:67
+msgid "msg.actions.internal.save_new_alias.execute_tip"
+msgstr "Tip:"
+
+#: hexagon/actions/internal/save_new_alias.py:70
+msgid "msg.actions.internal.save_new_alias.reload_builtins"
+msgstr "You probably need to reload your shell built-ins."
+
+#: hexagon/actions/internal/save_new_alias.py:73
+msgid "msg.actions.internal.save_new_alias.run_source"
+msgstr "Either by running 'source {file_path}' or restarting your terminal."
+
+#: hexagon/actions/internal/save_new_alias.py:82
+msgid "msg.actions.internal.save_new_alias.added_to_file"
+msgstr "Added alias to {file}"
+
+#: hexagon/domain/configuration.py:27
+msgid "msg.domain.configuration.save_alias_long_name"
+msgstr "Save Last Command as Shell Alias"
+
+#: hexagon/domain/configuration.py:33
+msgid "msg.domain.configuration.create_tool_long_name"
+msgstr "Create A New Tool"
+
+#: hexagon/domain/configuration.py:105
+msgid "msg.domain.configuration.install_cli_long_name"
+msgstr "Install CLI"
+
+#: hexagon/domain/configuration.py:106
+msgid "msg.domain.configuration.install_cli_description"
+msgstr "Install a custom project CLI from a YAML file."
+
+#: hexagon/support/analytics/__init__.py:78
+msgid "msg.support.analytics.telemetry_notice"
+msgstr "In order to make Hexagon better we record anonymous usage statistics."
+
+#: hexagon/support/analytics/__init__.py:80
+msgid "msg.support.analytics.telemetry_directory"
+msgstr "You can see what's collected in {directory}"
+
+#: hexagon/support/analytics/__init__.py:86
+msgid "action.support.analytics.confirm_telemetry"
+msgstr "Do you agree to participate?"
+
+#: hexagon/support/cli/git.py:35
+msgid "error.support.cli.git.failed_to_get_remote"
+msgstr ""
+"Couldn't get the remote name from your cli's repository, too many choices "
+"and origin is not present"
+
+#: hexagon/support/execute/action.py:59
+msgid "error.support.execute.action.command_result_code"
+msgstr "{executed_command} returned code: {return_code}"
+
+#: hexagon/support/execute/action.py:67
+msgid "error.support.execute.action.could_not_execute"
+msgstr "Hexagon couldn't execute the action:"
+
+#: hexagon/support/execute/action.py:70
+msgid "error.support.execute.action.we_tried"
+msgstr "We tried:"
+
+#: hexagon/support/execute/action.py:73
+msgid "error.support.execute.action.attempt_cli_custom_dir"
+msgstr "Your CLI's custom_tools_dir:"
+
+#: hexagon/support/execute/action.py:79
+msgid "error.support.execute.action.attempt_internal_tools"
+msgstr "Hexagon repository of external actions"
+
+#: hexagon/support/execute/action.py:84
+msgid "error.support.execute.action.attempt_known_script"
+msgstr "A known script file"
+
+#: hexagon/support/execute/action.py:89
+msgid "error.support.execute.action.attempt_inline_command"
+msgstr "Running your action as a shell command directly"
+
+#: hexagon/support/execute/action.py:112
+msgid "error.support.execute.action.execute_tool_failed"
+msgstr "Execution of tool {action} failed"
+
+#: hexagon/support/execute/action.py:165
+msgid "error.support.execute.action.python_dependency_error"
+msgstr "Your custom action seems to have a module dependency error"
+
+#: hexagon/support/execute/tool.py:79
+msgid "msg.support.execute.tool.go_back_long_name"
+msgstr "Go back"
+
+#: hexagon/support/execute/tool.py:81
+msgid "msg.support.execute.tool.go_back_description"
+msgstr "Go back to the previous menu"
+
+#: hexagon/support/execute/tool.py:82
+msgid "icon.global.go_back"
+msgstr "🠔"
+
+#: hexagon/support/execute/tool.py:101
+msgid "error.support.execute.tool.group_tool_file_not_found"
+msgstr "File {config_file_path} could not be found"
+
+#: hexagon/support/help.py:23
+msgid "msg.support.help.no_install"
+msgstr "You are executing Hexagon without an install."
+
+#: hexagon/support/help.py:24
+msgid "msg.support.help.get_started"
+msgstr "To get started run hexagon's \"Install CLI\" tool"
+
+#: hexagon/support/help.py:29
+msgid "msg.global.envs"
+msgstr "Envs"
+
+#: hexagon/support/help.py:39
+msgid "msg.global.tools"
+msgstr "Tools"
+
+#: hexagon/support/hooks/hook.py:56
+msgid "error.support.hooks.hook.unknown_type"
+msgstr "Unknown HookSubscriptionType {subscription_type}"
+
+#: hexagon/support/storage.py:86
+msgid "error.support.storage.unsupported_type"
+msgstr ""
+"Type {type} cannot be stored: supported types are str, List[str] or Dict"
+
+#: hexagon/support/update/cli.py:48
+msgid "msg.support.update.cli.new_version_available"
+msgstr "New {cli_start}{cli_name}{cli_end} version available"
+
+#: hexagon/support/update/cli.py:53
+msgid "action.support.update.cli.confirm_update"
+msgstr "Would you like to update?"
+
+#: hexagon/support/update/cli.py:59
+msgid "msg.support.update.cli.updated"
+msgstr "Updated to latest version"
+
+#: hexagon/support/update/hexagon.py:135
+msgid "msg.support.update.hexagon.fetching_changelog"
+msgstr "Fetching changelog"
+
+#: hexagon/support/update/hexagon.py:151
+msgid "msg.support.update.hexagon.and_much_more"
+msgstr "and much more!"
+
+#: hexagon/support/update/hexagon.py:172
+msgid "msg.support.update.hexagon.new_version_available"
+msgstr ""
+"New {hexagon_start}hexagon{hexagon_end} version available {version_start}"
+"{latest_version}{version_end}!"
+
+#: hexagon/support/update/hexagon.py:184
+msgid "action.support.update.hexagon.confirm_update"
+msgstr "Would you like to update?"
+
+#: hexagon/support/update/hexagon.py:188
+msgid "msg.support.update.hexagon.updating"
+msgstr "Updating"
+
+#: hexagon/support/update/hexagon.py:197
+msgid "msg.support.update.hexagon.updated"
+msgstr "Updated to latest version"
+
+#: hexagon/support/update/hexagon.py:205
+msgid "msg.support.update.hexagon.checking_new_versions"
+msgstr "Checking for new hexagon versions"
+
+#: hexagon/support/wax.py:61
+msgid "action.support.wax.select_environment"
+msgstr "On which environment?"
+
+#: hexagon/support/wax.py:66
+msgid "error.support.wax.invalid_environment"
+msgstr "Please select a valid environment"
+
+#: hexagon/support/wax.py:83
+msgid "action.support.wax.select_tool"
+msgstr "Hi, which tool would you like to use today?"
+
+#: hexagon/support/wax.py:86
+msgid "error.support.wax.invalid_tool"
+msgstr "Please select a valid tool"
+
+#: hexagon/support/yaml/__init__.py:15
+msgid "error.support.yaml.invalid_yaml"
+msgstr "There were {errors_length} error(s) in your YAML file: {yaml_path}"

@@ -4,7 +4,9 @@ from typing import List
 from hexagon.domain.env import Env
 from hexagon.domain.tool import Tool
 from hexagon.domain.cli import Cli
-from hexagon.support.printer import log
+from hexagon.support.printer import log, translator
+
+_ = translator
 
 
 def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):
@@ -18,13 +20,13 @@ def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):
     """
     if cli_config.name == "Hexagon":
         log.info("[bold]Hexagon", gap_end=1)
-        log.info("You are executing Hexagon without an install.")
-        log.info('To get started run hexagon\'s "Install Hexagon" tool')
+        log.info(_("msg.support.help.no_install"))
+        log.info(_("msg.support.help.get_started"))
         return
 
     log.info(f"[bold]{cli_config.name}", gap_end=1)
 
-    log.info("[bold][u]Envs:")
+    log.info("[bold][u]{}:".format(_("msg.global.envs")))
     for env in envs:
         log.info(
             f'  {env.name + (" (" + env.alias + ")" if env.alias else ""):<60}[dim]{env.long_name or ""}'
@@ -34,7 +36,7 @@ def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):
             # the same for tools
             log.info(f'  {"": <60}[dim]{env.description}', gap_end=1)
 
-    log.info("[bold][u]Tools:", gap_start=2)
+    log.info("[bold][u]{}:".format(_("msg.global.tools")), gap_start=2)
 
     data = sorted(tools, key=lambda t: t.type, reverse=True)
 

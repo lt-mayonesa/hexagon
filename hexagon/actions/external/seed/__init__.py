@@ -23,10 +23,7 @@ def main(tool, env, env_args, cli_args):
 
     seed = tracer.tracing(
         seed
-        or inquirer.fuzzy(
-            message="¿Qué seed querés usar?",
-            choices=SEEDS,
-        ).execute()
+        or inquirer.fuzzy(message="¿Qué seed querés usar?", choices=SEEDS).execute()
     )
 
     if seed == "springboot":

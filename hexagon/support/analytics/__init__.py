@@ -5,10 +5,11 @@ from InquirerPy import inquirer
 
 from hexagon.domain import get_options
 from hexagon.domain.options import update_options
-from hexagon.support.printer import log
+from hexagon.support.printer import log, translator
 from hexagon.support.storage import store_local_data, get_local_data_dir
 from hexagon.support.analytics import google_analytics
 
+_ = translator
 _data_file_name = "events_" + datetime.date.today().isoformat()
 
 
@@ -74,13 +75,15 @@ def _send_event(s):
 def _send_telemetry():
     opt = get_options()
     if opt.send_telemetry is None:
+        log.info(_("msg.support.analytics.telemetry_notice"))
         log.info(
-            "In order to make Hexagon better we record anonymous usage statistics. "
-            f"You can see what's collected in {get_local_data_dir()}",
+            _("msg.support.analytics.telemetry_directory").format(
+                directory=get_local_data_dir()
+            ),
             gap_start=1,
         )
         opt.send_telemetry = inquirer.confirm(
-            message="Do you agree to participate?", default=True
+            message=_("action.support.analytics.confirm_telemetry"), default=True
         ).execute()
         update_options(opt)
     return opt.send_telemetry

@@ -13,9 +13,10 @@ from hexagon.domain.tool import ActionTool
 from hexagon.domain.tool.execution import ToolExecutionData
 from hexagon.domain.env import Env
 from hexagon.domain import configuration
-from hexagon.support.printer import log
+from hexagon.support.printer import log, translator
 from hexagon.support.hooks import HexagonHooks
 
+_ = translator
 _command_by_file_extension = {"js": "node", "sh": "sh"}
 
 
@@ -49,24 +50,45 @@ def _execute_action(tool: ActionTool, env_args, env: Env, args, custom_tools_pat
 
         split_action = action_to_execute.split(" ")
         return_code, executed_command = _execute_command(
-            split_action[0],
-            env_args,
-            args,
-            action_args=split_action[1:],
+            split_action[0], env_args, args, action_args=split_action[1:]
         )
 
         if return_code != 0:
-            log.error(f"{executed_command} returned code: {return_code}\n")
+            # "{executed_command} returned code: {return_code}\n"
+            log.error(
+                _("error.support.execute.action.command_result_code").format(
+                    executed_command=executed_command, return_code=return_code
+                )
+            )
 
             if return_code == 127:
-                log.error(f"Hexagon couldn't execute the action: [bold]{tool.action}")
-                log.error("We tried:")
-                log.error(f"  - Your CLI's custom_tools_dir: [bold]{custom_tools_path}")
                 log.error(
-                    "  - Hexagon repository of external actions (hexagon.actions.external)"
+                    "{} [bold]{}".format(
+                        _("error.support.execute.action.could_not_execute"), tool.action
+                    )
                 )
-                log.error("  - A known script file (.js, .sh)")
-                log.error("  - Running your action as a shell command directly")
+                log.error(_("error.support.execute.action.we_tried"))
+                log.error(
+                    "  - {} [bold]{}".format(
+                        _("error.support.execute.action.attempt_cli_custom_dir"),
+                        custom_tools_path,
+                    )
+                )
+                log.error(
+                    "  - {} (hexagon.actions.external)".format(
+                        _("error.support.execute.action.attempt_internal_tools")
+                    )
+                )
+                log.error(
+                    "  - {} (.js, .sh)".format(
+                        _("error.support.execute.action.attempt_known_script")
+                    )
+                )
+                log.error(
+                    "  - {}".format(
+                        _("error.support.execute.action.attempt_inline_command")
+                    )
+                )
             sys.exit(1)
 
 
@@ -86,7 +108,11 @@ def _execute_python_module(
         return True
     except Exception:
         __pretty_print_external_error(action_id, custom_tools_path)
-        log.error(f"Execution of tool [bold]{action_id}[/bold] failed")
+        log.error(
+            _("error.support.execute.action.execute_tool_failed").format(
+                action=action_id
+            )
+        )
         sys.exit(1)
 
 
@@ -136,7 +162,7 @@ def _load_action_module(action_id: str, custom_tools_path):
             return None
         else:
             __pretty_print_external_error(action_id, custom_tools_path)
-            log.error("Your custom action seems to have a module dependency error")
+            log.error(_("error.support.execute.action.python_dependency_error"))
             sys.exit(1)
 
 
@@ -154,11 +180,7 @@ def __pretty_print_external_error(action_id, custom_tools_path):
 
     if trace:
         log.example(
-            rich_traceback.Traceback.from_exception(
-                exc_type,
-                exc_value,
-                trace,
-            ),
+            rich_traceback.Traceback.from_exception(exc_type, exc_value, trace),
             decorator_start=False,
             decorator_end=False,
         )

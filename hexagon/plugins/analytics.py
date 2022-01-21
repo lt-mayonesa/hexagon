@@ -33,17 +33,13 @@ def main():
 
     HexagonHooks.tool_selected.subscribe(
         HookSubscription(
-            SUBSCRIPTION_NAME,
-            _track_selection,
-            type=HookSubscrptionType.background,
+            SUBSCRIPTION_NAME, _track_selection, type=HookSubscrptionType.background
         )
     )
 
     HexagonHooks.env_selected.subscribe(
         HookSubscription(
-            SUBSCRIPTION_NAME,
-            _track_selection,
-            type=HookSubscrptionType.background,
+            SUBSCRIPTION_NAME, _track_selection, type=HookSubscrptionType.background
         )
     )
 
@@ -51,9 +47,7 @@ def main():
         HookSubscription(
             SUBSCRIPTION_NAME,
             lambda data: analytics.system_event(
-                SystemEvent.execution,
-                tool=data.tool.name,
-                duration=data.duration,
+                SystemEvent.execution, tool=data.tool.name, duration=data.duration
             ),
             type=HookSubscrptionType.background,
         )

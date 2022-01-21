@@ -6,6 +6,9 @@ from hexagon.domain.env import Env
 from hexagon.domain.tool import Tool
 from hexagon.domain.wax import Selection, SelectionType
 from hexagon.support.hooks import HexagonHooks
+from hexagon.support.printer import translator
+
+_ = translator
 
 
 def __classifier(value: Union[Tool, Env]):
@@ -55,12 +58,12 @@ def select_env(available_envs: List[Env], tool_envs: dict = None, selected: str 
         if selected
         else (
             inquirer.fuzzy(
-                message="On which environment?",
+                message=_("action.support.wax.select_environment"),
                 choices=__choices_with_long_name(
                     [e for e in available_envs if e.name in tool_envs.keys()]
                 ),
                 validate=lambda x: x and "__separator" not in x,
-                invalid_message="Please select a valid environment",
+                invalid_message=_("error.support.wax.invalid_environment"),
             ).execute(),
             True,
         )
@@ -77,10 +80,10 @@ def select_tool(tools: List[Tool], selected: str = None):
         return _select_and_register_event(selected, tools, target="tool")
 
     name = inquirer.fuzzy(
-        message="Hi, which tool would you like to use today?",
+        message=_("action.support.wax.select_tool"),
         choices=__choices_with_long_name(tools, classifier=__classifier),
         validate=lambda x: x and "__separator" not in x,
-        invalid_message="Please select a valid tool",
+        invalid_message=_("error.support.wax.invalid_tool"),
     ).execute()
 
     return _select_and_register_event(name, tools, target="tool", prompt=True)

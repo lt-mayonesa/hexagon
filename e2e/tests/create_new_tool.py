@@ -28,7 +28,7 @@ def _shared_assertions(spec: HexagonSpec):
                 "",
                 "⦾ Google",
                 "",
-                "⬡ Save Last Command as Linux Alias",
+                "⬡ Save Last Command as Shell Alias",
                 "",
                 "⬡ Create A New Tool",
                 "",
