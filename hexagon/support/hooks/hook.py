@@ -1,10 +1,6 @@
+import threading
 from enum import Enum
 from typing import Callable, Generic, List, TypeVar
-import threading
-
-from hexagon.support.printer import translator
-
-_ = translator
 
 
 class HookSubscrptionType(Enum):

@@ -2,9 +2,7 @@ from pydantic import ValidationError
 from rich.syntax import Syntax
 from ruamel import yaml
 
-from hexagon.support.printer import log, translator
-
-_ = translator
+from hexagon.support.printer import log
 
 
 def display_yaml_errors(errors: ValidationError, ruamel_yaml=None, yaml_path=None):

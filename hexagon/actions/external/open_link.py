@@ -1,8 +1,6 @@
 import webbrowser
 
-from hexagon.support.printer import log, translator
-
-_ = translator
+from hexagon.support.printer import log
 
 
 def main(tool, env, env_args, cli_args):

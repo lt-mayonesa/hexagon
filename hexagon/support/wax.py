@@ -6,9 +6,6 @@ from hexagon.domain.env import Env
 from hexagon.domain.tool import Tool
 from hexagon.domain.wax import Selection, SelectionType
 from hexagon.support.hooks import HexagonHooks
-from hexagon.support.printer import translator
-
-_ = translator
 
 
 def __classifier(value: Union[Tool, Env]):

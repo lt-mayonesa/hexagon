@@ -3,13 +3,11 @@ import os
 from InquirerPy import inquirer
 from InquirerPy.validator import EmptyInputValidator
 
-from hexagon.support.printer import log, translator
+from hexagon.support.printer import log
 from hexagon.support.storage import (
     HexagonStorageKeys,
     load_user_data,
 )
-
-_ = translator
 
 
 def main(*__):

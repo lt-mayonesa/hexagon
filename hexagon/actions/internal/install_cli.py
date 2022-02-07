@@ -6,10 +6,8 @@ from InquirerPy.validator import PathValidator
 from prompt_toolkit.validation import ValidationError
 
 from hexagon.domain import configuration
-from hexagon.support.printer import log, translator
+from hexagon.support.printer import log
 from hexagon.support.storage import load_user_data, HexagonStorageKeys, store_user_data
-
-_ = translator
 
 
 class YamlFileValidator(PathValidator):

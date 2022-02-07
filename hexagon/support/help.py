@@ -1,12 +1,10 @@
 from itertools import groupby
 from typing import List
 
+from hexagon.domain.cli import Cli
 from hexagon.domain.env import Env
 from hexagon.domain.tool import Tool
-from hexagon.domain.cli import Cli
-from hexagon.support.printer import log, translator
-
-_ = translator
+from hexagon.support.printer import log
 
 
 def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):

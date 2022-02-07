@@ -1,17 +1,17 @@
-from hexagon.support.cli.git import load_cli_git_config
+import os
+import re
+import sys
+
+from InquirerPy import inquirer
+
+from hexagon.domain import cli
 from hexagon.support.cli.command import (
     execute_command_in_cli_project_path,
     output_from_command_in_cli_project_path,
 )
-from hexagon.support.printer import log, translator
+from hexagon.support.cli.git import load_cli_git_config
+from hexagon.support.printer import log
 from hexagon.support.update.shared import already_checked_for_updates
-import os
-import re
-from hexagon.domain import cli
-from InquirerPy import inquirer
-import sys
-
-_ = translator
 
 
 def check_for_cli_updates():

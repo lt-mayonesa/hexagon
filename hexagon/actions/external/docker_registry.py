@@ -6,10 +6,8 @@ import requests
 from InquirerPy import inquirer
 
 from hexagon.support.args import cli_arg
+from hexagon.support.printer import log
 from hexagon.support.tracer import tracer
-from hexagon.support.printer import log, translator
-
-_ = translator
 
 
 def main(tool, env, env_args, cli_args):

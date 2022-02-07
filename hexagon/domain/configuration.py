@@ -8,10 +8,7 @@ from ruamel.yaml import YAML
 from hexagon.domain.cli import Cli
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool, GroupTool, Tool, ToolType
-from hexagon.support.printer import translator
 from hexagon.support.yaml import display_yaml_errors
-
-_ = translator
 
 
 class ConfigFile(BaseModel):

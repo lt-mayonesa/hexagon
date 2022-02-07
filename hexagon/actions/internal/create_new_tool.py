@@ -4,12 +4,10 @@ from shutil import copytree
 from InquirerPy import inquirer
 from InquirerPy.validator import PathValidator
 
-from hexagon.domain.tool import ActionTool, ToolType
-from hexagon.domain import configuration
 from hexagon.actions import external
-from hexagon.support.printer import log, translator
-
-_ = translator
+from hexagon.domain import configuration
+from hexagon.domain.tool import ActionTool, ToolType
+from hexagon.support.printer import log
 
 
 def main(*__):

@@ -1,7 +1,7 @@
 import importlib
+import os
 import subprocess
 import sys
-import os
 import time
 import traceback
 from pathlib import Path
@@ -9,14 +9,13 @@ from typing import List, Union, Dict
 
 from rich import traceback as rich_traceback
 
+from hexagon.domain import configuration
+from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
 from hexagon.domain.tool.execution import ToolExecutionData
-from hexagon.domain.env import Env
-from hexagon.domain import configuration
-from hexagon.support.printer import log, translator
 from hexagon.support.hooks import HexagonHooks
+from hexagon.support.printer import log
 
-_ = translator
 _command_by_file_extension = {"js": "node", "sh": "sh"}
 
 

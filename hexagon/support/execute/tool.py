@@ -1,8 +1,14 @@
-from hexagon.support.hooks import HexagonHooks
-from hexagon.support.yaml import display_yaml_errors
+import os
+import sys
+from typing import List, Tuple
+
 from prompt_toolkit.validation import ValidationError
-from hexagon.support.execute.action import execute_action
-from hexagon.support.wax import search_by_name_or_alias, select_env, select_tool
+
+from hexagon.domain import envs, configuration
+from hexagon.domain.configuration import (
+    read_configuration_file,
+    register_custom_tools_path,
+)
 from hexagon.domain.tool import (
     FunctionTool,
     GroupTool,
@@ -11,18 +17,12 @@ from hexagon.domain.tool import (
     ToolType,
 )
 from hexagon.domain.tool.execution import ToolExecutionParamters
-from typing import List, Tuple
-from hexagon.domain import envs, configuration
+from hexagon.support.execute.action import execute_action
+from hexagon.support.hooks import HexagonHooks
+from hexagon.support.printer import log
 from hexagon.support.tracer import tracer
-from hexagon.domain.configuration import (
-    read_configuration_file,
-    register_custom_tools_path,
-)
-from hexagon.support.printer import log, translator
-import sys
-import os
-
-_ = translator
+from hexagon.support.wax import search_by_name_or_alias, select_env, select_tool
+from hexagon.support.yaml import display_yaml_errors
 
 
 def select_and_execute_tool(

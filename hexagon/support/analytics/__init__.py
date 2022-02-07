@@ -1,15 +1,14 @@
-from enum import Enum
 import datetime
+from enum import Enum
 
 from InquirerPy import inquirer
 
 from hexagon.domain import get_options
 from hexagon.domain.options import update_options
-from hexagon.support.printer import log, translator
-from hexagon.support.storage import store_local_data, get_local_data_dir
 from hexagon.support.analytics import google_analytics
+from hexagon.support.printer import log
+from hexagon.support.storage import store_local_data, get_local_data_dir
 
-_ = translator
 _data_file_name = "events_" + datetime.date.today().isoformat()
 
 

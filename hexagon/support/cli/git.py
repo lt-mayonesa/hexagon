@@ -1,11 +1,8 @@
+import re
 from typing import Optional
 
 from hexagon.support.cli.command import output_from_command_in_cli_project_path
-from hexagon.support.printer import translator
 from hexagon.support.storage import load_user_data, store_user_data
-import re
-
-_ = translator
 
 
 class CliGitConfig:

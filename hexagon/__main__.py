@@ -1,21 +1,19 @@
-from hexagon.support.hooks import HexagonHooks
-from hexagon.support.execute.tool import select_and_execute_tool
-from hexagon.support.update.cli import check_for_cli_updates
 import sys
 
-from hexagon.support.args import fill_args
 from hexagon.domain import cli, tools, envs
+from hexagon.plugins import collect_plugins
+from hexagon.support.args import fill_args
+from hexagon.support.execute.tool import select_and_execute_tool
 from hexagon.support.help import print_help
-from hexagon.support.tracer import tracer
-from hexagon.support.printer import log, translator
-from hexagon.support.update.hexagon import check_for_hexagon_updates
+from hexagon.support.hooks import HexagonHooks
+from hexagon.support.printer import log
 from hexagon.support.storage import (
     HexagonStorageKeys,
     store_user_data,
 )
-from hexagon.plugins import collect_plugins
-
-_ = translator
+from hexagon.support.tracer import tracer
+from hexagon.support.update.cli import check_for_cli_updates
+from hexagon.support.update.hexagon import check_for_hexagon_updates
 
 
 def main():
