@@ -1,0 +1,26 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+
+envs:
+  - name: dev
+    alias: d
+    long_name: dev
+  - name: qa
+    alias: q
+    long_name: qa
+
+tools:
+  - name: google
+    long_name: Google
+    type: web
+    action: open_link
+    envs:
+      "*": https://www.google.com/
+
+  - name: python-i18n
+    action: echo "stub"
+    type: shell
+    alias: pm
+    long_name: Python i18n Test
