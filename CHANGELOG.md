@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.23.1 (2022-02-08)
+### Fix
+* **i18n:** Search local and system dirs ([`af62986`](https://github.com/redbeestudios/hexagon/commit/af6298632e78c289f2bf50b855a63a93526efd89))
+
 ## v0.23.0 (2022-01-21)
 ### Feature
 * **i18n:** Added EN and ES transltions + CI ([#73](https://github.com/redbeestudios/hexagon/issues/73)) ([`7c65e74`](https://github.com/redbeestudios/hexagon/commit/7c65e740dd74cc7c0e0bdb2ba75587f185d327d2))
