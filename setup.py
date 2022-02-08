@@ -42,7 +42,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     packages=setuptools.find_packages(exclude=["tests", "tests.*", "e2e", "e2e.*"]),
-    package_data={"": ["*.md", "Pipfile.lock"]},
+    include_package_data=True,
     install_requires=requires,
     python_requires=">=3.7",
     entry_points="""
