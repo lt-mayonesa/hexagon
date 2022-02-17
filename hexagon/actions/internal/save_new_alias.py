@@ -55,22 +55,18 @@ def save_new_alias(alias_name, command):
         aliases_file.close()
 
     log.info(
-        "[green]{} [white][u]{}".format(
-            _("icon.global.ok"), _("msg.actions.internal.save_new_alias.success")
-        ),
+        _("msg.actions.internal.save_new_alias.success"),
         gap_end=1,
     )
     log.result(f"[b]$ {alias_name}")
     log.info(
-        "[dim][u]{}".format(_("msg.actions.internal.save_new_alias.execute_tip")),
+        _("msg.actions.internal.save_new_alias.execute_tip"),
         gap_start=1,
     )
-    log.info("[dim]{}".format(_("msg.actions.internal.save_new_alias.reload_builtins")))
+    log.info(_("msg.actions.internal.save_new_alias.reload_builtins"))
     log.info(
-        "[dim]{}".format(
-            _("msg.actions.internal.save_new_alias.run_source").format(
-                file_path=aliases_file_path
-            )
+        _("msg.actions.internal.save_new_alias.run_source").format(
+            file_path=aliases_file_path
         )
     )
 

@@ -44,7 +44,9 @@ def main(tool, env, env_args, cli_args):
 
     clipboard.copy(f"{registry_host}/{image}:{tag}")
     log.result(
-        f"[dim][u]{registry_host}/{image}:{tag}[/u] {_('msg.actions.external.docker_registry.copied_to_clipboard')}"
+        _("msg.actions.external.docker_registry.copied_to_clipboard").format(
+            host=registry_host, image=image, tag=tag
+        )
     )
 
     manifest = inquirer.confirm(

@@ -96,7 +96,6 @@ def _execute_group_tool(
     try:
         group_config_yaml = read_configuration_file(config_file_path)
     except FileNotFoundError:
-        # "File {config_file_path} could not be found"
         log.error(
             _("error.support.execute.tool.group_tool_file_not_found").format(
                 config_file_path=config_file_path

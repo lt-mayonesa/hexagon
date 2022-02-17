@@ -50,14 +50,16 @@ def main():
 
         if tracer.has_traced():
             log.extra(
-                f"[cyan dim]{_('msg.main.tracer.run_again')}[/cyan dim]",
-                f"[cyan]     {cli.command} {tracer.command()}[/cyan]",
+                _("msg.main.tracer.run_again").format(
+                    command=" ".join([cli.command, tracer.command()])
+                )
             )
             command_as_aliases = tracer.command_as_aliases(tools, envs)
             if command_as_aliases:
                 log.extra(
-                    f"[cyan dim]  {_('msg.main.tracer.or')}[/cyan dim]",
-                    f"[cyan]     {cli.command} {command_as_aliases}[/cyan]",
+                    _("msg.main.tracer.or").format(
+                        command=" ".join([cli.command, command_as_aliases])
+                    )
                 )
         store_user_data(
             HexagonStorageKeys.last_command.value, f"{cli.command} {tracer.command()}"

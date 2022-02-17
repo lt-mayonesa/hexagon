@@ -53,7 +53,6 @@ def _execute_action(tool: ActionTool, env_args, env: Env, args, custom_tools_pat
         )
 
         if return_code != 0:
-            # "{executed_command} returned code: {return_code}\n"
             log.error(
                 _("error.support.execute.action.command_result_code").format(
                     executed_command=executed_command, return_code=return_code
@@ -62,32 +61,27 @@ def _execute_action(tool: ActionTool, env_args, env: Env, args, custom_tools_pat
 
             if return_code == 127:
                 log.error(
-                    "{} [bold]{}".format(
-                        _("error.support.execute.action.could_not_execute"), tool.action
+                    _("error.support.execute.action.could_not_execute").format(
+                        action=tool.action
                     )
                 )
                 log.error(_("error.support.execute.action.we_tried"))
                 log.error(
-                    "  - {} [bold]{}".format(
-                        _("error.support.execute.action.attempt_cli_custom_dir"),
-                        custom_tools_path,
+                    _("error.support.execute.action.attempt_cli_custom_dir").format(
+                        path=custom_tools_path
                     )
                 )
                 log.error(
-                    "  - {} (hexagon.actions.external)".format(
-                        _("error.support.execute.action.attempt_internal_tools")
+                    _("error.support.execute.action.attempt_internal_tools").format(
+                        package="hexagon.actions.external"
                     )
                 )
                 log.error(
-                    "  - {} (.js, .sh)".format(
-                        _("error.support.execute.action.attempt_known_script")
+                    _("error.support.execute.action.attempt_known_script").format(
+                        extensions=".js, .sh"
                     )
                 )
-                log.error(
-                    "  - {}".format(
-                        _("error.support.execute.action.attempt_inline_command")
-                    )
-                )
+                log.error(_("error.support.execute.action.attempt_inline_command"))
             sys.exit(1)
 
 

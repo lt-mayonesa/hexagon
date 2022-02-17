@@ -45,20 +45,14 @@ def check_for_cli_updates():
 
     if "is behind" in branch_status:
         log.info(
-            _("msg.support.update.cli.new_version_available").format(
-                cli_name=cli.name, cli_start="[cyan]", cli_end="[/cyan]"
-            )
+            _("msg.support.update.cli.new_version_available").format(cli_name=cli.name)
         )
         if not inquirer.confirm(
             _("action.support.update.cli.confirm_update"), default=True
         ).execute():
             return
         execute_command_in_cli_project_path("git pull", show_stdout=True)
-        log.info(
-            "[green]{}️[white]{}".format(
-                _("icon.global.ok"), _("msg.support.update.cli.updated")
-            )
-        )
+        log.info(_("msg.support.update.cli.updated"))
         log.finish()
         sys.exit(1)
 

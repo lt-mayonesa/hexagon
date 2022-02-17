@@ -63,11 +63,7 @@ def main(*__):
 
     if create_action:
         if not configuration.custom_tools_path:
-            log.info(
-                "[magenta]{}".format(
-                    _("msg.actions.internal.create_new_tool.custom_tools_dir_not_set")
-                )
-            )
+            log.info(_("msg.actions.internal.create_new_tool.custom_tools_dir_not_set"))
             configuration.update_custom_tools_path(
                 inquirer.filepath(
                     message=_(

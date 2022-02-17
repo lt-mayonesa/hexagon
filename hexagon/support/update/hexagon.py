@@ -167,14 +167,9 @@ def check_for_hexagon_updates():
     if current_version >= parse_version(latest_github_release_version):
         return
 
-    # FIXME find a better way of handling colors in translations
     log.info(
         _("msg.support.update.hexagon.new_version_available").format(
-            latest_version=latest_github_release_version,
-            hexagon_start="[cyan]",
-            hexagon_end="[/cyan]",
-            version_start="[green]",
-            version_end="[/green]",
+            latest_version=latest_github_release_version
         )
     )
 
@@ -192,11 +187,7 @@ def check_for_hexagon_updates():
             stdout=subprocess.DEVNULL,
         )
 
-    log.info(
-        "[green]{}️[white]{}".format(
-            _("icon.global.ok"), _("msg.support.update.hexagon.updated")
-        )
-    )
+    log.info(_("msg.support.update.hexagon.updated"))
     log.finish()
     sys.exit(1)
 
