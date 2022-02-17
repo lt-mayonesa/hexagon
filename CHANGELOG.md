@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.23.2 (2022-02-17)
+### Fix
+* **i18n:** Missing translation strings ([#76](https://github.com/redbeestudios/hexagon/issues/76)) ([`97a1068`](https://github.com/redbeestudios/hexagon/commit/97a1068ec8c4eb771466676a84215a0b458fc84c))
+
 ## v0.23.1 (2022-02-08)
 ### Fix
 * **i18n:** Search local and system dirs ([`af62986`](https://github.com/redbeestudios/hexagon/commit/af6298632e78c289f2bf50b855a63a93526efd89))
