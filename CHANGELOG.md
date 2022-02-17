@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.23.3 (2022-02-17)
+### Fix
+* **create-tool:** README lost during package ([#77](https://github.com/redbeestudios/hexagon/issues/77)) ([`b7238cd`](https://github.com/redbeestudios/hexagon/commit/b7238cddbcc07c09e5e20eb10d9e5dd7f396516f))
+
 ## v0.23.2 (2022-02-17)
 ### Fix
 * **i18n:** Missing translation strings ([#76](https://github.com/redbeestudios/hexagon/issues/76)) ([`97a1068`](https://github.com/redbeestudios/hexagon/commit/97a1068ec8c4eb771466676a84215a0b458fc84c))
