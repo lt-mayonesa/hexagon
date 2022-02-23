@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.24.0 (2022-02-23)
+### Feature
+* **storage:** Add get_local_config_dir() function ([#79](https://github.com/redbeestudios/hexagon/issues/79)) ([`ec817d2`](https://github.com/redbeestudios/hexagon/commit/ec817d2d4b3bfdd962c6a2dc51216e3b0b53c1ca))
+
 ## v0.23.4 (2022-02-23)
 ### Fix
 * **action:** Validate action is valid module identifier ([#78](https://github.com/redbeestudios/hexagon/issues/78)) ([`e583078`](https://github.com/redbeestudios/hexagon/commit/e5830787b96432c2c142f96a5850089c5958ace9))
