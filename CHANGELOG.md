@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.23.4 (2022-02-23)
+### Fix
+* **action:** Validate action is valid module identifier ([#78](https://github.com/redbeestudios/hexagon/issues/78)) ([`e583078`](https://github.com/redbeestudios/hexagon/commit/e5830787b96432c2c142f96a5850089c5958ace9))
+
 ## v0.23.3 (2022-02-17)
 ### Fix
 * **create-tool:** README lost during package ([#77](https://github.com/redbeestudios/hexagon/issues/77)) ([`b7238cd`](https://github.com/redbeestudios/hexagon/commit/b7238cddbcc07c09e5e20eb10d9e5dd7f396516f))
