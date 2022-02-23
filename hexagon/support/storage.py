@@ -196,6 +196,10 @@ def store_local_data(key: str, data: str):
         f.write(f"{data}\n")
 
 
+def get_local_config_dir():
+    return _get_storage_dir_path()
+
+
 def get_local_data_dir():
     dir_path = __storage_path_by_os(StoragePurpose.data)[sys.platform]
     Path(dir_path).mkdir(exist_ok=True, parents=True)
