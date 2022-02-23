@@ -17,7 +17,7 @@ config_file = {
 
 
 def _clear_custom_tool():
-    custom_tool_path = os.path.join(e2e_test_folder_path(__file__), "a-new-action")
+    custom_tool_path = os.path.join(e2e_test_folder_path(__file__), "a_new_action")
     if os.path.isdir(custom_tool_path):
         shutil.rmtree(custom_tool_path)
 
@@ -31,7 +31,7 @@ def test_creates_a_python_tool_and_executes_it():
         .arrow_down()
         .arrow_down()
         .enter()
-        .input("a-new-action")
+        .input("a_new_action")
         .carriage_return()
         .input("-command")
         .enter()
@@ -50,7 +50,7 @@ def test_creates_a_python_tool_and_executes_it():
             [
                 "╭╼ Test",
                 "│",
-                "│ Tool.action: a-new-action",
+                "│ Tool.action: a_new_action",
                 "│ Env: None",
                 "│ Valor en tool.envs: None",
                 "│ tu apellido es: my-last-name",

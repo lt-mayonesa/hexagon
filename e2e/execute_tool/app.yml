@@ -20,13 +20,13 @@ tools:
       "*": https://www.google.com/
 
   - name: python-module
-    action: python-module
+    action: python_module
     type: shell
     alias: pm
     long_name: Python Module Test
 
   - name: python-module-env
-    action: python-module
+    action: python_module
     type: shell
     alias: pme
     long_name: Python Module Env Test
@@ -39,7 +39,7 @@ tools:
         bar: bar
 
   - name: python-module-env-all
-    action: python-module
+    action: python_module
     type: shell
     alias: python-module-env-all
     long_name: Python Module Asterisk Env Test
@@ -64,3 +64,9 @@ tools:
       qa:
         foo: foo
         bar: bar
+
+  - name: single-file-python-module
+    action: single_file_module
+    type: shell
+    alias: sfpm
+    long_name: Python Module Single File Test

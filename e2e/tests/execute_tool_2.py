@@ -1,6 +1,4 @@
-from e2e.tests.utils.assertions import (
-    assert_file_has_contents,
-)
+from e2e.tests.utils.assertions import assert_file_has_contents
 from e2e.tests.utils.hexagon_spec import as_a_user
 
 shared_prompt_output = [
@@ -36,7 +34,7 @@ def test_show_correct_error_when_execute_python_module_with_import_error():
             [
                 "╭───────────────────── Traceback (most recent call last) ──────────────────────╮",
                 {
-                    "expected": "p-m-import-error.py:4",
+                    "expected": "p_m_import_error.py:4",
                     "max_lines": 2,
                     "line_delimiter": " │\n│ ",
                 },
@@ -60,10 +58,10 @@ def test_show_correct_error_when_execute_python_module_with_script_error():
         .run_hexagon(["p-m-script-error"])
         .then_output_should_be(
             [
-                "executed p-m-script-error",
+                "executed p_m_script_error",
                 "╭───────────────────── Traceback (most recent call last) ──────────────────────╮",
                 {
-                    "expected": ["p-m-script-error.py:15"],
+                    "expected": ["p_m_script_error.py:15"],
                     "max_lines": 2,
                     "line_delimiter": " │\n│ ",
                 },
@@ -78,7 +76,7 @@ def test_show_correct_error_when_execute_python_module_with_script_error():
                 "18",
                 "─────────────────────────────────────────────────────────────────────",
                 "IndexError: list index out of range",
-                "Execution of tool p-m-script-error failed",
+                "Execution of tool p_m_script_error failed",
             ]
         )
         .exit(status=1)
@@ -106,6 +104,20 @@ def test_execute_complex_command():
     )
     assert_file_has_contents(
         __file__, ".config/test/last-command.txt", "hexagon-test complex-command"
+    )
+
+
+def test_execute_complex_command_with_dots():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["complex-command-with-dots"])
+        .then_output_should_be(["with . dots hexagon"])
+        .exit()
+    )
+    assert_file_has_contents(
+        __file__,
+        ".config/test/last-command.txt",
+        "hexagon-test complex-command-with-dots",
     )
 
 

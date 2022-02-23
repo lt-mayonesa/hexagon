@@ -8,7 +8,7 @@ def test_execute_tool_group_from_ui():
         .arrow_down()
         .enter()
         .enter()
-        .then_output_should_be(["executed python-module"], True)
+        .then_output_should_be(["executed python_module"], True)
         .exit()
     )
 
@@ -40,7 +40,7 @@ def test_execute_tool_group_by_argument():
     (
         as_a_user(__file__)
         .run_hexagon(["group", "python-module"])
-        .then_output_should_be(["executed python-module"])
+        .then_output_should_be(["executed python_module"])
         .exit()
     )
 
@@ -51,7 +51,7 @@ def test_execute_tool_group_by_argument_with_inherited_env_and_cli_arguments():
         .run_hexagon(["group", "python-module-env", "dev", "123", "abc"])
         .then_output_should_be(
             [
-                "executed python-module",
+                "executed python_module",
                 "Env:",
                 "alias='d' long_name='dev' description=None",
                 "Env args:",

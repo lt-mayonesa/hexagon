@@ -4,7 +4,7 @@ cli:
   custom_tools_dir: .
 tools:
   - name: python-module
-    action: python-module
+    action: python_module
     type: shell
     alias: pm
     long_name: Python Module Test
