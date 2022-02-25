@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.25.0 (2022-02-25)
+### Feature
+* **groups:** Allow for inline groups in YAML ([`d29a587`](https://github.com/redbeestudios/hexagon/commit/d29a58748dac4e2a60dc0760d526cf78ed2c1034))
+
+### Fix
+* **execute-again:** Show command aliases correctly ([`922e554`](https://github.com/redbeestudios/hexagon/commit/922e5547c214f3819c9159eea174da28c3bd3856))
+
 ## v0.24.0 (2022-02-23)
 ### Feature
 * **storage:** Add get_local_config_dir() function ([#79](https://github.com/redbeestudios/hexagon/issues/79)) ([`ec817d2`](https://github.com/redbeestudios/hexagon/commit/ec817d2d4b3bfdd962c6a2dc51216e3b0b53c1ca))
