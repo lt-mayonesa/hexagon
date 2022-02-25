@@ -1,0 +1,38 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+
+envs:
+  - name: dev
+    alias: d
+    long_name: dev
+
+tools:
+  - name: command-with-alias
+    action: echo "alias"
+    type: shell
+    alias: cwa
+    long_name: This is a command with alias
+
+  - name: command-env-with-alias
+    action: echo "alias $@"
+    type: shell
+    alias: cewa
+    envs:
+      dev: d
+    long_name: This is a command with env with alias
+
+  - name: command-no-alias
+    action: echo "no alias"
+    type: shell
+    long_name: this is a command with no alias
+
+  - name: tool-group
+    alias: tg
+    type: group
+    tools:
+      - name: group-command-first
+        alias: gcf
+        action: echo "test"
+        type: shell

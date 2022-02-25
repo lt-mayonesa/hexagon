@@ -79,6 +79,22 @@ class HexagonSpec:
         )
         return self
 
+    def then_output_should_not_contain(
+        self, output_to_match: List[Expected_Process_Output],
+    ):
+        __tracebackhide__ = True
+        # noinspection PyBroadException
+        try:
+            self.then_output_should_be(output_to_match, discard_until_first_match=True)
+            matched = True
+        except Exception:
+            matched = False
+
+        if matched:
+            raise Exception(f"Output contains expected content:\n{output_to_match}")
+
+        return self
+
     def arrow_down(self):
         __tracebackhide__ = True
         write_to_process(self.process, ARROW_DOWN_CHARACTER)

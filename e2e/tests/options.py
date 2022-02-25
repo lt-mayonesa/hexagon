@@ -70,10 +70,7 @@ def test_invalid_local_options():
 
     (
         as_a_user(__file__)
-        .run_hexagon(
-            ["print-options"],
-            base_env_vars,
-        )
+        .run_hexagon(["print-options"], base_env_vars)
         .then_output_should_be(
             [
                 "There were 1 error(s) in your YAML",

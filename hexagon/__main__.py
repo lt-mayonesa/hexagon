@@ -48,21 +48,23 @@ def main():
 
         log.finish()
 
+        command = tracer.command()
         if tracer.has_traced():
             log.extra(
                 _("msg.main.tracer.run_again").format(
-                    command=" ".join([cli.command, tracer.command()])
+                    command=" ".join([cli.command, command])
                 )
             )
             command_as_aliases = tracer.command_as_aliases(tools, envs)
-            if command_as_aliases:
+            if command_as_aliases and command != command_as_aliases:
                 log.extra(
                     _("msg.main.tracer.or").format(
                         command=" ".join([cli.command, command_as_aliases])
                     )
                 )
+
         store_user_data(
-            HexagonStorageKeys.last_command.value, f"{cli.command} {tracer.command()}"
+            HexagonStorageKeys.last_command.value, f"{cli.command} {command}"
         )
     except KeyboardInterrupt:
         sys.exit(1)

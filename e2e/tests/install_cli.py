@@ -51,10 +51,7 @@ def test_install_cli():
         .enter()
         .input("/config.yml")
         .enter()
-        .then_output_should_be(
-            "$ hexagon-test",
-            True,
-        )
+        .then_output_should_be("$ hexagon-test", True)
         .exit()
     )
 

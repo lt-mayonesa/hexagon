@@ -55,13 +55,11 @@ def save_new_alias(alias_name, command):
         aliases_file.close()
 
     log.info(
-        _("msg.actions.internal.save_new_alias.success"),
-        gap_end=1,
+        _("msg.actions.internal.save_new_alias.success"), gap_end=1,
     )
     log.result(f"[b]$ {alias_name}")
     log.info(
-        _("msg.actions.internal.save_new_alias.execute_tip"),
-        gap_start=1,
+        _("msg.actions.internal.save_new_alias.execute_tip"), gap_start=1,
     )
     log.info(_("msg.actions.internal.save_new_alias.reload_builtins"))
     log.info(

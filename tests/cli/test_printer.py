@@ -39,11 +39,7 @@ def test_log_start(decoration, message, expected):
         ("", 1, ""),
         ("│", 1, "│"),
         ("│", 0, ""),
-        (
-            "border",
-            5,
-            "\n".join(["border", "border", "border", "border", "border"]),
-        ),
+        ("border", 5, "\n".join(["border", "border", "border", "border", "border"])),
         ("│         ", 1, "│         "),
     ],
 )
@@ -123,12 +119,7 @@ def test_log_result(decoration, message, expected):
     [
         ("", "", "", "\n\n\n\n"),
         ("┆", "┆", "docker", "┆\n\ndocker\n\n┆"),
-        (
-            "┆",
-            "",
-            "sarasa asdfasd ",
-            "┆\n\nsarasa asdfasd \n\n",
-        ),
+        ("┆", "", "sarasa asdfasd ", "┆\n\nsarasa asdfasd \n\n"),
     ],
 )
 def test_log_example(process_out, process_in, message, expected):
