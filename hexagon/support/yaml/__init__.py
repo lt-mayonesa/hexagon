@@ -1,10 +1,33 @@
 import os
+from typing import Any, Type
 
 from pydantic import ValidationError
 from rich.syntax import Syntax
 from ruamel import yaml
+from ruamel.yaml import YAML
 
 from hexagon.support.printer import log
+
+
+def read_file(path: str) -> Any:
+    try:
+        return YAML().load(open(path, "r"))
+    except FileNotFoundError:
+        return None
+
+
+def write_file(path: str, content: str):
+    with open(path, "w") as f:
+        YAML().dump(content, f)
+    return True
+
+
+def load_model(model: Type, content: dict, path: str):
+    try:
+        return model(**content)
+    except ValidationError as errors:
+        display_yaml_errors(errors, content, path)
+        return None
 
 
 def display_yaml_errors(errors: ValidationError, ruamel_yaml=None, yaml_path=None):

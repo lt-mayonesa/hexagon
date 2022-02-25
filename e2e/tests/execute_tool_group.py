@@ -94,3 +94,11 @@ def test_execute_tool_group_has_correct_trace():
         .then_output_should_be(["hexagon-test group python-module-env dev"], True)
         .exit()
     )
+
+
+def test_execute_tool_inside_inline_group():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["inline-group", "echo-2"])
+        .then_output_should_be(["inline tool 2"])
+    )

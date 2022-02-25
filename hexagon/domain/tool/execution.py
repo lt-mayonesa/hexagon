@@ -4,20 +4,14 @@ from hexagon.domain.tool import Tool
 from hexagon.domain.env import Env
 
 
-class ToolExecutionParamters:
+class ToolExecutionParameters:
     def __init__(
-        self,
-        tool: Tool,
-        parameters: Any,
-        env: Env,
-        arguments: List[object],
-        custom_tools_path: str,
+        self, tool: Tool, parameters: Any, env: Env, arguments: List[object]
     ) -> None:
         self.tool = tool
         self.parameters = parameters
         self.env = env
         self.arguments = arguments
-        self.custom_tools_path = custom_tools_path
 
     tool: Tool
     parameters: Any

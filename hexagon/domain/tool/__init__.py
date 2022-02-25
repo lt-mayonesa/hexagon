@@ -1,3 +1,4 @@
+from __future__ import annotations
 from enum import Enum
 from typing import Callable, List, Optional, Dict, Any, Union
 
@@ -31,14 +32,16 @@ class ActionTool(Tool):
     action: str
 
 
-class GroupTool(Tool):
-    tools: str
-
-
 class FunctionTool(Tool):
     function: Callable
 
 
+class GroupTool(Tool):
+    tools: Union[str, List[Union[ActionTool, GroupTool]]]
+
+
+GroupTool.update_forward_refs()
+
+
 class ToolGroupConfigFile(BaseModel):
     tools: List[Union[ActionTool, GroupTool, FunctionTool]]
-    custom_tools_dir: Optional[str]

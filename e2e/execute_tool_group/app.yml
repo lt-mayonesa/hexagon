@@ -34,3 +34,16 @@ tools:
     long_name: An echo in the main app.yml file
     type: shell
     action: echo "top level echo"
+  - name: inline-group
+    long_name: A group of tools defined in the same yaml
+    type: group
+    tools:
+      - name: echo-1
+        action: echo "inline tool 1"
+        type: shell
+      - name: echo-2
+        action: echo "inline tool 2"
+        type: shell
+      - name: echo-3
+        action: echo "inline tool 3"
+        type: shell

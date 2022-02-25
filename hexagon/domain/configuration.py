@@ -1,14 +1,20 @@
 import os
 import sys
-from typing import Any, List, Optional, Tuple, Union
+from typing import List, Optional, Tuple, Union
 
-from pydantic import BaseModel, ValidationError
-from ruamel.yaml import YAML
+from pydantic import BaseModel
 
 from hexagon.domain.cli import Cli
 from hexagon.domain.env import Env
-from hexagon.domain.tool import ActionTool, GroupTool, Tool, ToolType
-from hexagon.support.yaml import display_yaml_errors
+from hexagon.domain.tool import (
+    ActionTool,
+    GroupTool,
+    Tool,
+    ToolType,
+    ToolGroupConfigFile,
+)
+from hexagon.support.printer import log
+from hexagon.support.yaml import write_file, read_file, load_model
 
 
 class ConfigFile(BaseModel):
@@ -44,37 +50,60 @@ class Configuration:
         self.project_yaml = path
         self.project_path = os.path.dirname(self.project_yaml)
 
-        try:
-            self.__yaml = read_configuration_file(path)
-            self.__config = ConfigFile(**self.__yaml)
-
-            if self.__config.cli.custom_tools_dir:
-                self.__register_custom_tools_path()
-        except FileNotFoundError:
+        self.__yaml = read_file(path)
+        if not self.__yaml:
             return self.__initial_setup_config()
-        except ValidationError as errors:
-            display_yaml_errors(errors, self.__yaml, self.project_yaml)
+
+        self.__config = load_model(ConfigFile, self.__yaml, self.project_yaml)
+        if not self.__config:
             sys.exit(1)
+
+        if self.__config.cli.custom_tools_dir:
+            self.__register_custom_tools_path()
+
+        self.__recursive_group_load(self.__config.tools)
 
         return (
             self.__config.cli,
             self.__config.tools + self.__defaults,
             self.__config.envs,
         )
+
+    def __recursive_group_load(self, tools):
+        for tool in tools:
+            if tool.type == ToolType.group:
+                if isinstance(tool.tools, str):
+                    group_yaml_path = os.path.join(self.project_path, tool.tools)
+                    group_config_yaml = read_file(group_yaml_path)
+                    if not group_config_yaml:
+                        log.error(
+                            _(
+                                "error.support.execute.tool.group_tool_file_not_found"
+                            ).format(config_file_path=group_yaml_path)
+                        )
+                        sys.exit(1)
+
+                    group_config = load_model(
+                        ToolGroupConfigFile, group_config_yaml, group_yaml_path
+                    )
+                    if not group_config:
+                        sys.exit(1)
+
+                    tool.tools = group_config.tools
+                self.__recursive_group_load(tool.tools)
 
     def refresh(self) -> Tuple[Cli, List[Tool], List[Env]]:
         return self.init_config(self.project_yaml)
 
     def save(self) -> Tuple[Cli, List[Tool], List[Env]]:
-        with open(self.project_yaml, "w") as f:
-            YAML().dump(self.__yaml, f)
+        write_file(self.project_yaml, self.__yaml)
         return (
             self.__config.cli,
             self.__config.tools + self.__defaults,
             self.__config.envs,
         )
 
-    def add_tool(self, tool: Tool):
+    def add_tool(self, tool: Union[ActionTool, GroupTool]):
         self.__config.tools.append(tool)
         self.__yaml["tools"].append(tool.dict(exclude_none=True, exclude_unset=True))
 
@@ -107,10 +136,6 @@ class Configuration:
             ],
             [],
         )
-
-
-def read_configuration_file(path: str) -> Any:
-    return YAML().load(open(path, "r"))
 
 
 def register_custom_tools_path(path: str, realtive_to: str) -> str:

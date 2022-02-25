@@ -1,28 +1,17 @@
-import os
-import sys
 from typing import List, Tuple
 
-from prompt_toolkit.validation import ValidationError
-
-from hexagon.domain import envs, configuration
-from hexagon.domain.configuration import (
-    read_configuration_file,
-    register_custom_tools_path,
-)
+from hexagon.domain import envs
 from hexagon.domain.tool import (
     FunctionTool,
     GroupTool,
     Tool,
-    ToolGroupConfigFile,
     ToolType,
 )
-from hexagon.domain.tool.execution import ToolExecutionParamters
+from hexagon.domain.tool.execution import ToolExecutionParameters
 from hexagon.support.execute.action import execute_action
 from hexagon.support.hooks import HexagonHooks
-from hexagon.support.printer import log
 from hexagon.support.tracer import tracer
 from hexagon.support.wax import search_by_name_or_alias, select_env, select_tool
-from hexagon.support.yaml import display_yaml_errors
 
 
 def select_and_execute_tool(
@@ -30,7 +19,6 @@ def select_and_execute_tool(
     tool_argument: str = None,
     env_argument: str = None,
     arguments: List[object] = None,
-    custom_tools_path: str = None,
 ) -> List[str]:
     arguments = arguments if arguments else []
     tool = search_by_name_or_alias(tools, tool_argument)
@@ -43,7 +31,7 @@ def select_and_execute_tool(
     env, params = select_env(envs, tool.envs, env)
 
     if isinstance(tool, GroupTool):
-        previous = tools, tool_argument, env_argument, arguments, custom_tools_path
+        previous = tools, tool_argument, env_argument, arguments
         return _execute_group_tool(
             tool,
             # If the tool matched the tool argument, disable navigating back
@@ -52,7 +40,6 @@ def select_and_execute_tool(
             else None,
             env_argument,
             arguments,
-            custom_tools_path,
         )
 
     if isinstance(tool, FunctionTool):
@@ -62,16 +49,12 @@ def select_and_execute_tool(
         tracer.tracing(env.name)
 
     HexagonHooks.before_tool_executed.run(
-        ToolExecutionParamters(
-            tool=tool,
-            parameters=params,
-            env=env,
-            arguments=arguments,
-            custom_tools_path=custom_tools_path,
+        ToolExecutionParameters(
+            tool=tool, parameters=params, env=env, arguments=arguments,
         )
     )
 
-    return execute_action(tool, params, env, arguments, custom_tools_path)
+    return execute_action(tool, params, env, arguments)
 
 
 GO_BACK_TOOL = Tool(
@@ -89,37 +72,14 @@ def _execute_group_tool(
     previous: Tuple[List[Tool], str, str, List[object], str] = None,
     env_argument: str = None,
     arguments: List[object] = None,
-    previous_custom_tools_path: str = None,
 ) -> List[str]:
-    config_file_path = os.path.join(configuration.project_path, tool.tools)
-
-    try:
-        group_config_yaml = read_configuration_file(config_file_path)
-    except FileNotFoundError:
-        log.error(
-            _("error.support.execute.tool.group_tool_file_not_found").format(
-                config_file_path=config_file_path
-            )
-        )
-        sys.exit(1)
-
-    try:
-        group_config = ToolGroupConfigFile(**group_config_yaml)
-    except ValidationError as errors:
-        display_yaml_errors(errors, group_config_yaml, config_file_path)
-        sys.exit(1)
 
     # Shift cli args one place to the right
     tool_argument = env_argument
     env_argument = arguments[0] if len(arguments) > 0 else None
     sub_tool_arguments = arguments[1:]
 
-    custom_tools_absolute_path = register_custom_tools_path(
-        group_config.custom_tools_dir if group_config.custom_tools_dir else ".",
-        os.path.dirname(tool.tools),
-    )
-
-    tools = group_config.tools
+    tools = tool.tools
 
     if previous:
 
@@ -127,16 +87,13 @@ def _execute_group_tool(
             tracer.remove_last()
             select_and_execute_tool(*previous)
 
-        tools = tools + [
+        # FunctionTool is not set as a type GroupTool.tools
+        # so yaml validations dont show that tool.function is required
+        # noinspection PyTypeChecker
+        tools = tool.tools + [
             FunctionTool(**GO_BACK_TOOL.dict(), function=go_back),
         ]
 
     return select_and_execute_tool(
-        tools,
-        tool_argument,
-        env_argument,
-        sub_tool_arguments,
-        custom_tools_absolute_path
-        if custom_tools_absolute_path
-        else previous_custom_tools_path,
+        tools, tool_argument, env_argument, sub_tool_arguments,
     )
