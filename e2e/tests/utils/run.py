@@ -11,7 +11,7 @@ hexagon_path = os.path.realpath(
     )
 )
 
-HEXAGON_COMMAND: List[str] = ["python", "-m" "hexagon"]
+HEXAGON_COMMAND: List[str] = ["python", "-m", "hexagon"]
 
 
 def run_hexagon_e2e_test(
