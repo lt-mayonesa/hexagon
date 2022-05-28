@@ -25,14 +25,16 @@ def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):
     log.info(f"[bold]{cli_config.name}", gap_end=1)
 
     log.info(_("msg.support.help.envs"))
-    for env in envs:
+    for i, env in enumerate(envs):
         log.info(
             f'  {env.name + (" (" + env.alias + ")" if env.alias else ""):<60}[dim]{env.long_name or ""}'
         )
         if env.description:
-            # TODO: if env is the last one it should not print with gap
-            # the same for tools
-            log.info(f'  {"": <60}[dim]{env.description}', gap_end=1)
+            log.info(
+                f'  {"": <60}[dim]{env.description}', gap_end=gap_if_last(envs, i),
+            )
+        else:
+            log.gap()
 
     log.info(_("msg.support.help.tools"), gap_start=2)
 
@@ -40,10 +42,18 @@ def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):
 
     for gk, g in groupby(data, lambda t: t.type):
         log.info(f"[bold]{gk}:", gap_start=1)
+        type_tools = list(g)
 
-        for tool in g:
+        for i, tool in enumerate(type_tools):
             log.info(
                 f'  {tool.name + (" (" + tool.alias + ")" if tool.alias else ""):<60}[dim]{tool.long_name or ""}'
             )
             if tool.description:
-                log.info(f'  {"": <60}[dim]{tool.description}', gap_end=1)
+                log.info(
+                    f'  {"": <60}[dim]{tool.description}',
+                    gap_end=gap_if_last(type_tools, i),
+                )
+
+
+def gap_if_last(envs, i):
+    return 1 if i + 1 < len(envs) else 0

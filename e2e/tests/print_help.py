@@ -32,6 +32,7 @@ def test_print_help_using_yaml_contents(command):
                     },
                     {
                         "name": "python-module-env",
+                        "description": "This is",
                         "action": "python-module",
                         "type": "shell",
                         "alias": "pme",
@@ -43,13 +44,13 @@ def test_print_help_using_yaml_contents(command):
                     },
                 ],
                 "envs": [
+                    {"name": "dev", "alias": "d", "long_name": "Development"},
                     {
-                        "name": "dev",
-                        "alias": "d",
-                        "long_name": "Development",
-                        "description": "this env has a description",
+                        "name": "qa",
+                        "alias": "q",
+                        "long_name": "Quality Assurance",
+                        "description": "QA Environment",
                     },
-                    {"name": "qa", "alias": "q", "long_name": "Quality Assurance"},
                 ],
             }
         )
@@ -60,10 +61,9 @@ def test_print_help_using_yaml_contents(command):
                 "",
                 "Envs:",
                 " dev (d)                                                     Development",
-                "                                                             this env has a",
-                "description",
                 "",
                 " qa (q)                                                      Quality Assurance",
+                "                                                             QA Environment",
                 "",
                 "",
                 "Tools:",
@@ -78,6 +78,7 @@ def test_print_help_using_yaml_contents(command):
                 "",
                 "  python-module-env (pme)                                     Python Module Env",
                 "Test",
+                "                                                              This is",
                 "",
                 "hexagon:",
                 "  save-alias                                                  Save Last Command",
