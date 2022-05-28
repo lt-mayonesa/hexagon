@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.25.1 (2022-05-28)
+### Fix
+* Print help gaps ([`e130331`](https://github.com/redbeestudios/hexagon/commit/e130331f4e347c57e0bcb246b476063452c15911))
+
 ## v0.25.0 (2022-02-25)
 ### Feature
 * **groups:** Allow for inline groups in YAML ([`d29a587`](https://github.com/redbeestudios/hexagon/commit/d29a58748dac4e2a60dc0760d526cf78ed2c1034))
