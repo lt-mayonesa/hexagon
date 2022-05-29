@@ -80,7 +80,8 @@ class HexagonSpec:
         return self
 
     def then_output_should_not_contain(
-        self, output_to_match: List[Expected_Process_Output],
+        self,
+        output_to_match: List[Expected_Process_Output],
     ):
         __tracebackhide__ = True
         # noinspection PyBroadException

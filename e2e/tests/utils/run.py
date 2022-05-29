@@ -67,7 +67,9 @@ def run_hexagon_e2e_test(
 
 
 def run_hexagon(
-    cwd: str, args: List[str] = tuple(), os_env_vars: Optional[Dict[str, str]] = None
+    cwd: str,
+    args: List[str] = tuple(),
+    os_env_vars: Optional[Dict[str, str]] = None,
 ):
     environment = os.environ.copy()
     if os_env_vars:
@@ -77,6 +79,7 @@ def run_hexagon(
     print(
         f"\nrunning command:\n{' '.join([f'{k}={v}' for k,v in environment.items() if 'HEXAGON_' in k] + command)}"
     )
+
     return subprocess.Popen(
         command,
         stdout=subprocess.PIPE,

@@ -23,7 +23,11 @@ tools_dict = [
         type=ToolType.group,
         envs={"dev": "value dev", "qa": "value qa"},
         tools=[
-            ActionTool(name="one", alias="o", action="tool_one",),
+            ActionTool(
+                name="one",
+                alias="o",
+                action="tool_one",
+            ),
             ActionTool(
                 name="two",
                 alias="t",
@@ -36,7 +40,11 @@ tools_dict = [
                 type=ToolType.group,
                 envs={"dev": "inner dev", "qa": "inner qa"},
                 tools=[
-                    ActionTool(name="inner_one", alias="io", action="tool_one",),
+                    ActionTool(
+                        name="inner_one",
+                        alias="io",
+                        action="tool_one",
+                    ),
                     ActionTool(
                         name="inner_two",
                         alias="it",

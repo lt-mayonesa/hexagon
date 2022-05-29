@@ -113,7 +113,8 @@ def test_cli_updates_fail_silently_if_not_in_a_git_repository():
     os.mkdir(local_repo_path)
 
     shutil.copyfile(
-        os.path.join(test_folder_path, "app.yml"), os.path.join(tmp_dir, "app.yml"),
+        os.path.join(test_folder_path, "app.yml"),
+        os.path.join(tmp_dir, "app.yml"),
     )
 
     (

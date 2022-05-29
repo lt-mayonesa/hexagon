@@ -31,7 +31,8 @@ def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):
         )
         if env.description:
             log.info(
-                f'  {"": <60}[dim]{env.description}', gap_end=gap_if_last(envs, i),
+                f'  {"": <60}[dim]{env.description}',
+                gap_end=gap_if_last(envs, i),
             )
         else:
             log.gap()

@@ -50,7 +50,10 @@ def select_and_execute_tool(
 
     HexagonHooks.before_tool_executed.run(
         ToolExecutionParameters(
-            tool=tool, parameters=params, env=env, arguments=arguments,
+            tool=tool,
+            parameters=params,
+            env=env,
+            arguments=arguments,
         )
     )
 
@@ -95,5 +98,8 @@ def _execute_group_tool(
         ]
 
     return select_and_execute_tool(
-        tools, tool_argument, env_argument, sub_tool_arguments,
+        tools,
+        tool_argument,
+        env_argument,
+        sub_tool_arguments,
     )

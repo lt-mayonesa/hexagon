@@ -75,6 +75,7 @@ def test_execute_python_module_with_env_by_gui():
         .enter()
         .then_output_should_be(
             [
+                "",
                 ["On which environment?", "dev"],
                 "executed python_module",
                 "Env:",

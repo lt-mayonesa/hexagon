@@ -73,10 +73,13 @@ def test_create_new_open_link_tool():
         .then_output_should_be([["Choose the action of your tool:", "open_link"]])
         .then_output_should_be(["What type of tool is it?", "web", "shell"])
         .carriage_return()
-        .then_output_should_be([["What type of tool is it?", "web"]])
+        .then_output_should_be(
+            [["What type of tool is it?", "web"]], discard_until_first_match=True
+        )
         .input("-test")
         .then_output_should_be(
-            [["What command would you like to give your tool?", "open-link-test"]]
+            [["What command would you like to give your tool?", "open-link-test"]],
+            discard_until_first_match=True,
         )
         .enter()
         .then_output_should_be(
@@ -86,7 +89,8 @@ def test_create_new_open_link_tool():
         .then_output_should_be(
             [
                 "Would you like to add a long name? (this will be displayed instead of command"
-            ]
+            ],
+            discard_until_first_match=True,
         )
         .input(DESCRIPTION)
         .then_output_should_be(
@@ -115,14 +119,24 @@ def test_create_new_python_module_tool():
         .then_output_should_be([["Choose the action of your tool:", "new_action"]])
         .input("a-new-action")
         .then_output_should_be(
-            [["What name would you like to give your new action?", "a-new-action"]]
+            [["What name would you like to give your new action?", "a-new-action"]],
+            discard_until_first_match=True,
         )
         .then_output_should_be(["What type of tool is it?", "web", "shell"])
         .carriage_return()
-        .then_output_should_be([["What type of tool is it?", "shell"]])
+        .then_output_should_be(
+            [["What type of tool is it?", "shell"]],
+            discard_until_first_match=True,
+        )
         .input("-command")
         .then_output_should_be(
-            [["What command would you like to give your tool?", "a-new-action-command"]]
+            [
+                [
+                    "What command would you like to give your tool?",
+                    "a-new-action-command",
+                ]
+            ],
+            discard_until_first_match=True,
         )
         .enter()
         .then_output_should_be(
@@ -133,7 +147,8 @@ def test_create_new_python_module_tool():
         .then_output_should_be(
             [
                 "Would you like to add a long name? (this will be displayed instead of command"
-            ]
+            ],
+            discard_until_first_match=True,
         )
         .then_output_should_be(
             ["Would you like to add a description? (this will be displayed along side"],

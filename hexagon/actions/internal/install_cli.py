@@ -55,7 +55,9 @@ def main(*__):
         )
     _make_executable(command_path)
     log.info(
-        _("msg.actions.internal.install_cli.success"), gap_end=1, gap_start=1,
+        _("msg.actions.internal.install_cli.success"),
+        gap_end=1,
+        gap_start=1,
     )
     log.result(f"[b]$ {cli.command}")
 
