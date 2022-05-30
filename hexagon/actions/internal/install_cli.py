@@ -7,6 +7,7 @@ from prompt_toolkit.validation import ValidationError
 
 from hexagon.domain import configuration
 from hexagon.support.printer import log
+from hexagon.support.dependencies import scan_and_install_dependencies
 from hexagon.support.storage import load_user_data, HexagonStorageKeys, store_user_data
 
 
@@ -53,7 +54,10 @@ def main(*__):
             "# file create by hexagon\n"
             f"HEXAGON_CONFIG_FILE={src_path} hexagon $@"
         )
+
     _make_executable(command_path)
+    scan_and_install_dependencies(cli.custom_tools_dir)
+
     log.info(
         _("msg.actions.internal.install_cli.success"),
         gap_end=1,

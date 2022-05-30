@@ -2,6 +2,16 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "${workspaceRoot}"
+            }
+        },
+        {
             "name": "Debug test",
             "type": "python",
             "request": "test",
@@ -50,6 +60,22 @@
             }
         },
         {
+            "name": "Install CLI",
+            "type": "python",
+            "request": "launch",
+            "module": "hexagon",
+            "console": "integratedTerminal",
+            "subProcess": true,
+            "env": {
+                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/e2e/install_cli/storage",
+                "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
+                "HEXAGON_SEND_TELEMETRY": "0",
+                "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
+                "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
+                "HEXAGON_UPDATE_DISABLED": "1"
+            }
+        },
+        {
             "name": "Update Hexagon",
             "type": "python",
             "request": "launch",
@@ -77,7 +103,10 @@
             "env": {
                 "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/update_cli/local/app.yml",
                 "HEXAGON_STORAGE_PATH": "${workspaceFolder}/e2e/update_cli/storage",
-                "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL"
+                "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
+                "HEXAGON_SEND_TELEMETRY": "0",
+                "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
+                "HEXAGON_TEST_VERSION_OVERRIDE": "1000.1.0",
             }
         },
         {

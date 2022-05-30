@@ -2,6 +2,7 @@ import itertools
 import signal
 import os
 import subprocess
+import platform
 from typing import Dict, List, Optional
 from e2e.tests.utils.path import e2e_test_folder_path
 
@@ -12,6 +13,7 @@ hexagon_path = os.path.realpath(
 )
 
 HEXAGON_COMMAND: List[str] = ["python", "-m", "hexagon"]
+HEXAGON_COMMAND_DARWIN: List[str] = ["python3", "-m", "hexagon"]
 
 
 def run_hexagon_e2e_test(
@@ -52,6 +54,9 @@ def run_hexagon_e2e_test(
     if "HEXAGON_LOCALES_DIR" not in os_env_vars:
         os_env_vars["HEXAGON_LOCALES_DIR"] = os.path.join(hexagon_path, "locales")
 
+    if "HEXAGON_DISABLE_DEPENDENCY_SCAN" not in os_env_vars:
+        os_env_vars["HEXAGON_DISABLE_DEPENDENCY_SCAN"] = "1"
+
     os.environ["HEXAGON_STORAGE_PATH"] = os_env_vars.get(
         "HEXAGON_STORAGE_PATH",
         os.getenv("HEXAGON_STORAGE_PATH", os.path.join(test_folder_path, ".config")),
@@ -75,7 +80,14 @@ def run_hexagon(
     if os_env_vars:
         environment.update(os_env_vars)
 
-    command = [*HEXAGON_COMMAND, *args]
+    command = []
+
+    if platform.system() == "Darwin":
+        command += HEXAGON_COMMAND_DARWIN
+    else:
+        command += HEXAGON_COMMAND
+
+    command += args
     print(
         f"\nrunning command:\n{' '.join([f'{k}={v}' for k,v in environment.items() if 'HEXAGON_' in k] + command)}"
     )

@@ -6,6 +6,9 @@ from e2e.tests.utils.hexagon_spec import as_a_user, HexagonSpec
 import os
 
 from hexagon.support.storage import HexagonStorageKeys
+from hexagon.support.dependencies import (
+    HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED_ENVIRONMENT_VARIABLE,
+)
 
 commands_dir_path = os.path.realpath(
     os.path.join(__file__, os.path.pardir, os.path.pardir, "install_cli", "bin")
@@ -34,7 +37,13 @@ def test_install_cli():
     command = "hexagon-test"
     (
         as_a_user(__file__)
-        .run_hexagon(os_env_vars={HexagonSpec.HEXAGON_STORAGE_PATH: storage_path})
+        .run_hexagon(
+            os_env_vars={
+                HexagonSpec.HEXAGON_STORAGE_PATH: storage_path,
+                "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
+                HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED_ENVIRONMENT_VARIABLE: "1",
+            }
+        )
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
@@ -51,7 +60,11 @@ def test_install_cli():
         .enter()
         .input("/config.yml")
         .enter()
-        .then_output_should_be("$ hexagon-test", True)
+        .then_output_should_be(
+            ["would have ran python3 -m pip install -r requirements.txt"], True
+        )
+        .then_output_should_be(["would have ran npm install --only=production"])
+        .then_output_should_be(["$ hexagon-test"], True)
         .exit()
     )
 

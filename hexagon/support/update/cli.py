@@ -4,12 +4,13 @@ import sys
 
 from InquirerPy import inquirer
 
-from hexagon.domain import cli
+from hexagon.domain import cli, configuration
 from hexagon.support.cli.command import (
     execute_command_in_cli_project_path,
     output_from_command_in_cli_project_path,
 )
 from hexagon.support.cli.git import load_cli_git_config
+from hexagon.support.dependencies import scan_and_install_dependencies
 from hexagon.support.printer import log
 from hexagon.support.update.shared import already_checked_for_updates
 
@@ -52,6 +53,7 @@ def check_for_cli_updates():
         ).execute():
             return
         execute_command_in_cli_project_path("git pull", show_stdout=True)
+        scan_and_install_dependencies(configuration.custom_tools_path)
         log.info(_("msg.support.update.cli.updated"))
         log.finish()
         sys.exit(1)
