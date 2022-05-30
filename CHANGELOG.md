@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.26.0 (2022-05-30)
+### Feature
+* Detect and install dependencies (Python, NodeJS) for CLIs ([#72](https://github.com/redbeestudios/hexagon/issues/72)) ([`febdb38`](https://github.com/redbeestudios/hexagon/commit/febdb383e442a5e3cbc528e2c80729b72b651da4))
+
 ## v0.25.1 (2022-05-28)
 ### Fix
 * Print help gaps ([`e130331`](https://github.com/redbeestudios/hexagon/commit/e130331f4e347c57e0bcb246b476063452c15911))
