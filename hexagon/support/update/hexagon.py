@@ -1,154 +1,23 @@
 import json
 import os
-import re
 import subprocess
 import sys
-from functools import reduce
-from io import StringIO
-from typing import List, Optional
 from urllib.request import Request, urlopen
 
 import pkg_resources
 from InquirerPy import inquirer
-from markdown import Markdown
-from packaging.version import parse as parse_version, Version
+from packaging.version import parse as parse_version
 
 from hexagon.support.github import add_github_access_token
 from hexagon.support.printer import log
 from hexagon.support.storage import HEXAGON_STORAGE_APP
+from hexagon.support.update import REPO_ORG, REPO_NAME
+from hexagon.support.update.changelog.format import format_entries
+from hexagon.support.update.changelog.parse import parse_changelog
+from hexagon.support.update.changelog.fetch import fetch_changelog
 from hexagon.support.update.shared import already_checked_for_updates
 
-LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
-REPO_ORG = "redbeestudios"
-REPO_NAME = "hexagon"
-CHANGELOG_TYPE_FEATURE = "Feature"
-CHANGELOG_TYPE_FIX = "Fix"
-CHANGELOG_TYPE_DOCUMENTATION = "Documentation"
-CHANGELOG_MAX_ENTRIES = 10
-CHANGELOG_ENTRY_TYPE_ORDER_MAP = {
-    CHANGELOG_TYPE_FEATURE: 2,
-    CHANGELOG_TYPE_FIX: 1,
-    CHANGELOG_TYPE_DOCUMENTATION: 0,
-}
-CHANGELOG_MAX_EMPTY_LINES = 10
-
-
-class ChangelogEntry:
-    def __init__(self, type: str, message: str):
-        self.type = type
-        self.message = message
-
-    type: str
-    message: str
-
-
-class ChangelogVersionEntry:
-    def __init__(self, version: str):
-        self.version = version
-        self.entries = []
-
-    version: str
-    entries: List[ChangelogEntry]
-
-
-# TODO: Move changelog logic to its own module in the update module
-def _parse_changelog(
-    current_hexagon_version: Version, repo_org: str, repo_name: str
-) -> List[ChangelogVersionEntry]:
-    request = Request(
-        f"https://api.github.com/repos/{repo_org}/{repo_name}/contents/CHANGELOG.md"
-    )
-    request.add_header("Accept", "application/vnd.github.3.raw")
-    add_github_access_token(request)
-    changelog_file_path = os.getenv("HEXAGON_CHANGELOG_FILE_PATH_TEST_OVERRIDE")
-    consecutive_empty_lines_count = 0
-    with open(changelog_file_path, "r") if changelog_file_path else urlopen(
-        request
-    ) as changelog_file:
-        entries = []
-        current_version: Optional[ChangelogVersionEntry] = None
-        current_entry_type: str
-        while True:
-            readed_line = changelog_file.readline()
-            line = (
-                readed_line
-                if changelog_file_path
-                else readed_line.decode(changelog_file.headers.get_content_charset())
-            )
-
-            version_match = re.search("^## v(\\d+\\.\\d+\\.\\d+)", line)
-            if version_match:
-                if current_version:
-                    entries.append(current_version)
-                current_version = ChangelogVersionEntry(version_match.groups(0)[0])
-                if current_hexagon_version == parse_version(current_version.version):
-                    entries.append(current_version)
-                    break
-
-            entry_type_match = re.search("^### (\\w+)$", line)
-            if entry_type_match:
-                current_entry_type = entry_type_match.groups(0)[0]
-
-            match = re.search("^\\* ([^(]+)", line)
-            if match:
-                current_version.entries.append(
-                    ChangelogEntry(current_entry_type, match.groups(0)[0])
-                )
-
-            if not line:
-                if consecutive_empty_lines_count > CHANGELOG_MAX_EMPTY_LINES:
-                    entries.append(current_version)
-                    break
-                else:
-                    consecutive_empty_lines_count += 1
-            else:
-                consecutive_empty_lines_count = 0
-
-        return entries
-
-
-def _unmark_element(element, stream=None):
-    if stream is None:
-        stream = StringIO()
-    if element.text:
-        stream.write(element.text)
-    for sub in element:
-        _unmark_element(sub, stream)
-    if element.tail:
-        stream.write(element.tail)
-    return stream.getvalue()
-
-
-# patching Markdown
-Markdown.output_formats["plain"] = _unmark_element
-__md = Markdown(output_format="plain")
-__md.stripTopLevelTags = False
-
-
-def _unmark(text):
-    return __md.convert(text)
-
-
-def _show_changelog(current_hexagon_version: Version):
-    if bool(os.getenv("HEXAGON_UPDATE_SHOW_CHANGELOG", "1")):
-
-        with log.status(_("msg.support.update.hexagon.fetching_changelog")):
-            changelog = _parse_changelog(current_hexagon_version, REPO_ORG, REPO_NAME)
-
-        if changelog:
-
-            def reducer(acc: List[ChangelogEntry], version: ChangelogVersionEntry):
-                acc.extend(version.entries)
-                return acc
-
-            entries = reduce(reducer, changelog, [])
-            entries.sort(
-                key=lambda e: CHANGELOG_ENTRY_TYPE_ORDER_MAP[e.type], reverse=True
-            )
-            for entry in entries[:CHANGELOG_MAX_ENTRIES]:
-                log.info("  - " + _unmark(entry.message))
-            if len(entries) > CHANGELOG_MAX_ENTRIES:
-                log.info(_("msg.support.update.hexagon.and_much_more"))
+CHANGELOG_MAX_PRINT_ENTRIES = 10
 
 
 def check_for_hexagon_updates():
@@ -173,7 +42,19 @@ def check_for_hexagon_updates():
         )
     )
 
-    _show_changelog(current_version)
+    if bool(os.getenv("HEXAGON_UPDATE_SHOW_CHANGELOG", "1")):
+        with log.status(_("msg.support.update.hexagon.fetching_changelog")):
+            changelog = parse_changelog(
+                current_version, fetch_changelog(REPO_ORG, REPO_NAME)
+            )
+
+        entries = format_entries(changelog)
+
+        for entry in entries[:CHANGELOG_MAX_PRINT_ENTRIES]:
+            log.info("  - " + entry.message)
+
+        if len(entries) > CHANGELOG_MAX_PRINT_ENTRIES:
+            log.info(_("msg.support.update.hexagon.and_much_more"))
 
     if not inquirer.confirm(
         _("action.support.update.hexagon.confirm_update"), default=True

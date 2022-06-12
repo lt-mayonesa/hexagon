@@ -5,8 +5,6 @@ import os
 import shutil
 import tempfile
 
-LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
-
 test_folder_path = e2e_test_folder_path(__file__)
 storage_path = os.path.join(test_folder_path, "storage")
 local_repo_path = os.path.join(test_folder_path, "local")
