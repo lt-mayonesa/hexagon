@@ -33,9 +33,10 @@ def main(*__):
 
     cli, tools, envs = configuration.init_config(src_path)
 
-    bin_path = (
-        load_user_data(HexagonStorageKeys.cli_install_path.value)
-        or inquirer.filepath(
+    bin_path = load_user_data(HexagonStorageKeys.cli_install_path.value)
+
+    if not bin_path:
+        bin_path = inquirer.filepath(
             message=_("action.actions.internal.install_cli.commands_path"),
             default=str(os.path.expanduser(os.path.join("~", "bin"))),
             validate=PathValidator(
@@ -43,9 +44,7 @@ def main(*__):
                 message=_("error.actions.internal.install_cli.select_valid_directory"),
             ),
         ).execute()
-    )
-
-    store_user_data(HexagonStorageKeys.cli_install_path.value, bin_path)
+        store_user_data(HexagonStorageKeys.cli_install_path.value, bin_path)
 
     command_path = os.path.join(bin_path, cli.command)
     with open(command_path, "w") as command:
