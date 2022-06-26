@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.26.1 (2022-06-26)
+### Fix
+* **install-cli:** Only store bin_path if prompted ([`32dbc6c`](https://github.com/redbeestudios/hexagon/commit/32dbc6c0c5081b1a4db589f49e3b5fa8498c9a74))
+
 ## v0.26.0 (2022-05-30)
 ### Feature
 * Detect and install dependencies (Python, NodeJS) for CLIs ([#72](https://github.com/redbeestudios/hexagon/issues/72)) ([`febdb38`](https://github.com/redbeestudios/hexagon/commit/febdb383e442a5e3cbc528e2c80729b72b651da4))
