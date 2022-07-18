@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.28.0 (2022-07-18)
+### Feature
+* **dependencies:** Show status on deps install ([#87](https://github.com/redbeestudios/hexagon/issues/87)) ([`f84d00b`](https://github.com/redbeestudios/hexagon/commit/f84d00b855e6548ec869252075dc0c9b4289457a))
+
 ## v0.27.0 (2022-07-18)
 ### Feature
 * **install:** Warn commands dir not in PATH ([#86](https://github.com/redbeestudios/hexagon/issues/86)) ([`9b42bd4`](https://github.com/redbeestudios/hexagon/commit/9b42bd4bc765112e4d799e4c4ca57c128fddbb10))
