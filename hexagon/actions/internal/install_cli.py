@@ -64,6 +64,14 @@ def main(*__):
     )
     log.result(f"[b]$ {cli.command}")
 
+    path = os.getenv("PATH").split(":")
+
+    if bin_path not in path:
+        log.info(
+            _("msg.actions.internal.install_cli.not_in_path").format(dir=bin_path),
+            gap_start=1,
+        )
+
 
 def _make_executable(path):
     mode = os.stat(path).st_mode
