@@ -1,4 +1,6 @@
 import os
+
+from hexagon.support.printer import log
 from hexagon.support.dependencies.node import scan_and_install_node_dependencies
 from hexagon.support.dependencies.python import scan_and_install_python_dependencies
 
@@ -19,5 +21,13 @@ def scan_and_install_dependencies(path: str):
         and os.environ[HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED_ENVIRONMENT_VARIABLE]
         == "1"
     )
-    scan_and_install_python_dependencies(path, mocked)
-    scan_and_install_node_dependencies(path, mocked)
+
+    with log.status(
+        _("msg.support.dependencies.installing_dependencies").format(runtime="python")
+    ):
+        scan_and_install_python_dependencies(path, mocked)
+
+    with log.status(
+        _("msg.support.dependencies.installing_dependencies").format(runtime="node")
+    ):
+        scan_and_install_node_dependencies(path, mocked)

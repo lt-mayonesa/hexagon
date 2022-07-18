@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-07-18 01:06+0000\n"
+"POT-Creation-Date: 2022-07-18 01:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -206,6 +206,11 @@ msgid "error.support.cli.git.failed_to_get_remote"
 msgstr ""
 "Hubo un error de git accediendo al remote del repositorio de tu CLI, hay "
 "varias opciones y origin no está presente."
+
+#: hexagon/support/dependencies/__init__.py:26
+#: hexagon/support/dependencies/__init__.py:31
+msgid "msg.support.dependencies.installing_dependencies"
+msgstr "Instalando dependencias de {runtime}"
 
 #: hexagon/support/execute/action.py:56
 msgid "error.support.execute.action.command_result_code"
