@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.27.0 (2022-07-18)
+### Feature
+* **install:** Warn commands dir not in PATH ([#86](https://github.com/redbeestudios/hexagon/issues/86)) ([`9b42bd4`](https://github.com/redbeestudios/hexagon/commit/9b42bd4bc765112e4d799e4c4ca57c128fddbb10))
+
 ## v0.26.1 (2022-06-26)
 ### Fix
 * **install-cli:** Only store bin_path if prompted ([`32dbc6c`](https://github.com/redbeestudios/hexagon/commit/32dbc6c0c5081b1a4db589f49e3b5fa8498c9a74))
