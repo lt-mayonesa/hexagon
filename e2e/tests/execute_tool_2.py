@@ -65,8 +65,10 @@ def test_show_correct_error_when_execute_python_module_with_script_error():
                     "max_lines": 2,
                     "line_delimiter": " │\n│ ",
                 },
-                "",
-                "",
+            ]
+        )
+        .then_output_should_be(
+            [
                 "12",
                 "13",
                 "14",
@@ -77,7 +79,8 @@ def test_show_correct_error_when_execute_python_module_with_script_error():
                 "─────────────────────────────────────────────────────────────────────",
                 "IndexError: list index out of range",
                 "Execution of tool p_m_script_error failed",
-            ]
+            ],
+            discard_until_first_match=True,
         )
         .exit(status=1)
     )
@@ -138,6 +141,26 @@ def test_execute_multiline_command():
         __file__,
         ".config/test/last-command.txt",
         "hexagon-test generic-multiline-command",
+    )
+
+
+def test_execute_multiline_command_with_input_as_list():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["multiline-command-as-list"])
+        .then_output_should_be(
+            [
+                "executed generic-multiline-command #1",
+                "executed generic-multiline-command #2",
+                "executed generic-multiline-command #3",
+            ]
+        )
+        .exit()
+    )
+    assert_file_has_contents(
+        __file__,
+        ".config/test/last-command.txt",
+        "hexagon-test multiline-command-as-list",
     )
 
 

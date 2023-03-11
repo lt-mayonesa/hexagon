@@ -29,7 +29,13 @@ class Tool(BaseModel):
 
 
 class ActionTool(Tool):
-    action: str
+    action: Union[str, List[str]]
+
+    @property
+    def executable_str(self):
+        if isinstance(self.action, list):
+            return "\n".join(self.action)
+        return self.action
 
 
 class FunctionTool(Tool):
