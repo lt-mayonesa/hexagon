@@ -23,7 +23,7 @@ def scan_and_install_python_dependencies(path: str, mocked=False):
 
     crawl_directory(path, crawler)
 
-    for (dir, files) in declarations_found.items():
+    for directory, files in declarations_found.items():
         command: Optional[str] = None
         if PYTHON_REQUIREMENTS_NAME in files:
             command = f"python3 -m pip install -r {PYTHON_REQUIREMENTS_NAME}"
@@ -36,7 +36,7 @@ def scan_and_install_python_dependencies(path: str, mocked=False):
             subprocess.check_call(
                 command,
                 shell=True,
-                cwd=dir,
+                cwd=directory,
                 stdout=sys.stdout,
                 stderr=subprocess.DEVNULL,
             )

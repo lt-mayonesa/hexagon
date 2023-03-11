@@ -29,7 +29,7 @@ def scan_and_install_node_dependencies(path: str, mocked=False):
 
     crawl_directory(path, crawler)
 
-    for (dir, files) in declarations.items():
+    for directory, files in declarations.items():
         command: Optional[str] = None
         if PACKAGE_JSON_FILE_NAME in files:
             if YARN_LOCK_FILE_NAME in files and PACKAGE_JSON_LOCK_FILE_NAME in files:
@@ -45,7 +45,7 @@ def scan_and_install_node_dependencies(path: str, mocked=False):
             subprocess.check_call(
                 command,
                 shell=True,
-                cwd=dir,
+                cwd=directory,
                 stdout=sys.stdout,
                 stderr=subprocess.DEVNULL,
             )

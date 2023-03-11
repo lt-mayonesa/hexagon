@@ -10,6 +10,7 @@ clipboard = "*"
 requests = "*"
 "ruamel.yaml" = "*"
 pydantic = "*"
+typing-extensions = "*"
 packaging = "*"
 markdown = "*"
 
