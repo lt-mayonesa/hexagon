@@ -1,0 +1,15 @@
+name: 'download-i18n'
+description: 'download locale artifacts and display structure'
+runs:
+  using: "composite"
+  steps:
+    - name: download locale artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: i18n
+        path: locales
+
+    - name: display structure of downloaded files
+      run: ls -R
+      working-directory: locales
+      shell: bash

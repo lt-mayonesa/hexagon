@@ -76,11 +76,9 @@ def _execute_group_tool(
     env_argument: str = None,
     arguments: List[object] = None,
 ) -> List[str]:
-
-    # Shift cli args one place to the right
-    tool_argument = env_argument
-    env_argument = arguments[0] if len(arguments) > 0 else None
-    sub_tool_arguments = arguments[1:]
+    env_argument, sub_tool_arguments, tool_argument = shift_args_right(
+        arguments, env_argument
+    )
 
     tools = tool.tools
 
@@ -103,3 +101,10 @@ def _execute_group_tool(
         env_argument,
         sub_tool_arguments,
     )
+
+
+def shift_args_right(arguments, env_argument, places=1):
+    tool_argument = env_argument
+    env_argument = arguments[0] if len(arguments) > 0 else None
+    sub_tool_arguments = arguments[places:]
+    return env_argument, sub_tool_arguments, tool_argument
