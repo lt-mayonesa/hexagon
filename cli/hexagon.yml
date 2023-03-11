@@ -1,0 +1,28 @@
+cli:
+  custom_tools_dir: .  # relative to this file
+  name: hexagon dev cli
+  command: hex
+
+commands:
+  build-i18n: &i18n ./.github/scripts/i18n/build.sh
+
+envs:
+  - name: local
+    alias: l
+
+tools:
+
+  - name: build-i18n
+    alias: b18
+    long_name: Build i18n .po files
+    type: shell
+    action: *i18n
+
+  - name: e2e-tests
+    alias: e2e
+    long_name: run end to end tests
+    description: execute a set of end to end tests
+    type: shell
+    action: |
+      hex build-i18n
+      pipenv run pytest -svv e2e/

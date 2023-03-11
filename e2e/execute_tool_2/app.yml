@@ -37,7 +37,16 @@ tools:
       echo "executed generic-multiline-command #3"
     type: shell
     alias: gmc
-    long_name: A generic multinline command
+    long_name: A generic multiline command
+
+  - name: multiline-command-as-list
+    action:
+      - 'echo "executed generic-multiline-command #1"'
+      - 'echo "executed generic-multiline-command #2"'
+      - 'echo "executed generic-multiline-command #3"'
+    type: shell
+    alias: mcal
+    long_name: A multiline command as list
 
   - name: failing-command
     action: i-dont-exist

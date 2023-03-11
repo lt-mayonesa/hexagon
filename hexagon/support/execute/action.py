@@ -32,7 +32,7 @@ def _execute_action(tool: ActionTool, env_args, env: Env, args, custom_tools_pat
     custom_tools_path = (
         custom_tools_path if custom_tools_path else configuration.custom_tools_path
     )
-    action_to_execute: str = tool.action
+    action_to_execute: str = tool.executable_str
     script_action_command = __script_action_command(action_to_execute)
 
     if script_action_command:
@@ -61,7 +61,7 @@ def _execute_action(tool: ActionTool, env_args, env: Env, args, custom_tools_pat
             if return_code == 127:
                 log.error(
                     _("error.support.execute.action.could_not_execute").format(
-                        action=tool.action
+                        action=tool.executable_str
                     )
                 )
                 log.error(_("error.support.execute.action.we_tried"))
