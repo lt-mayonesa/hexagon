@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.30.0 (2023-03-12)
+### Feature
+* **messages:** Show path when installing dependencies ([`b060dcc`](https://github.com/lt-mayonesa/hexagon/commit/b060dcc8b4311dbf03713b0ef76a0056b222cf96))
+
 ## v0.29.0 (2023-03-12)
 ### Feature
 * **action:** Allow defining action as list of commands ([`fcc20f1`](https://github.com/lt-mayonesa/hexagon/commit/fcc20f1f30a9ebfcbaa50d99ab3a7897d7af07ca))
