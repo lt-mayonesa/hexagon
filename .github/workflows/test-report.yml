@@ -15,4 +15,4 @@ jobs:
           artifact: /test-results-(.*)/
           name: Pytest Tests
           path: '*.xml'
-          reporter: jest-junit
+          reporter: java-junit
