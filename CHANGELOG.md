@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.29.0 (2023-03-12)
+### Feature
+* **action:** Allow defining action as list of commands ([`fcc20f1`](https://github.com/lt-mayonesa/hexagon/commit/fcc20f1f30a9ebfcbaa50d99ab3a7897d7af07ca))
+
 ## v0.28.0 (2022-07-18)
 ### Feature
 * **dependencies:** Show status on deps install ([#87](https://github.com/redbeestudios/hexagon/issues/87)) ([`f84d00b`](https://github.com/redbeestudios/hexagon/commit/f84d00b855e6548ec869252075dc0c9b4289457a))
