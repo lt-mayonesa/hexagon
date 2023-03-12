@@ -1,7 +1,7 @@
 # hexagon
 Make your team's knowledge truly accessible, truly shared, and truly empowering by creating your own CLI.
 
-[![build](https://github.com/redbeestudios/hexagon/actions/workflows/python-package.yml/badge.svg)](https://github.com/redbeestudios/hexagon/actions/workflows/python-package.yml)
+[![build](https://github.com/lt-mayonesa/hexagon/actions/workflows/python-package.yml/badge.svg)](https://github.com/lt-mayonesa/hexagon/actions/workflows/python-package.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 [![hexagon setup example](https://user-images.githubusercontent.com/11464844/141402773-2fa1e859-cbe7-43a2-87e8-81620307167f.gif)](https://asciinema.org/a/Mk8of7EC0grfsSgWYrEdGCjdF)
@@ -12,12 +12,12 @@ Make your team's knowledge truly accessible, truly shared, and truly empowering 
 
 ### Install hexagon
 ```bash
-python3 -m pip install https://github.com/redbeestudios/hexagon/releases/download/v0.29.0/hexagon-0.29.0.tar.gz
+python3 -m pip install https://github.com/lt-mayonesa/hexagon/releases/download/v0.29.0/hexagon-0.29.0.tar.gz
 ```
 
 ### Create your teams CLI
 
-Either use our [template repo](https://github.com/redbeestudios/hexagon-tools) or create a YAML like the following
+Either use our [template repo](https://github.com/lt-mayonesa/hexagon-tools) or create a YAML like the following
 ```yaml
 cli:
   custom_tools_dir: .  # relative to this file

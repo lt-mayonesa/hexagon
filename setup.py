@@ -5,7 +5,7 @@ import json
 
 import glob
 
-# esto se actualiza solo con https://python-semantic-release.readthedocs.io/en/latest/index.html
+# this updates automatically https://python-semantic-release.readthedocs.io/en/latest/index.html
 __version__ = "0.29.0"
 
 
@@ -30,12 +30,12 @@ setuptools.setup(
     name="hexagon",
     version=__version__,
     author="Joaco Campero",
-    author_email="joaquin@redbee.io",
-    description="Una CLI para generar CLIs",
+    author_email="juacocampero@gmail.com",
+    description="Build your Team's CLI",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/redbeestudios/hexagon",
-    project_urls={"Bug Tracker": "https://github.com/redbeestudios/hexagon/issues"},
+    url="https://github.com/lt-mayonesa/hexagon",
+    project_urls={"Bug Tracker": "https://github.com/lt-mayonesa/hexagon/issues"},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
