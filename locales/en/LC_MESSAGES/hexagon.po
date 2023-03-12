@@ -206,7 +206,7 @@ msgstr ""
 #: hexagon/support/dependencies/__init__.py:26
 #: hexagon/support/dependencies/__init__.py:31
 msgid "msg.support.dependencies.installing_dependencies"
-msgstr "Installing {runtime} dependencies"
+msgstr "Installing {runtime} dependencies at path: {path}"
 
 #: hexagon/support/execute/action.py:56
 msgid "error.support.execute.action.command_result_code"

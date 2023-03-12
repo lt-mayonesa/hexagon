@@ -23,11 +23,15 @@ def scan_and_install_dependencies(path: str):
     )
 
     with log.status(
-        _("msg.support.dependencies.installing_dependencies").format(runtime="python")
+        _("msg.support.dependencies.installing_dependencies").format(
+            runtime="python", path=path
+        )
     ):
         scan_and_install_python_dependencies(path, mocked)
 
     with log.status(
-        _("msg.support.dependencies.installing_dependencies").format(runtime="node")
+        _("msg.support.dependencies.installing_dependencies").format(
+            runtime="node", path=path
+        )
     ):
         scan_and_install_node_dependencies(path, mocked)
