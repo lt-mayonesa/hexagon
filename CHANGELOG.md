@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.31.0 (2023-03-13)
+### Feature
+* **analytics:** Remove support for tracking ([`e8adefe`](https://github.com/lt-mayonesa/hexagon/commit/e8adefe440294988742d93d7bcd13454b2e03696))
+
 ## v0.30.0 (2023-03-12)
 ### Feature
 * **messages:** Show path when installing dependencies ([`b060dcc`](https://github.com/lt-mayonesa/hexagon/commit/b060dcc8b4311dbf03713b0ef76a0056b222cf96))
