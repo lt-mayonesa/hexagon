@@ -16,3 +16,4 @@ jobs:
           name: Pytest Tests
           path: '*.xml'
           reporter: java-junit
+          token: ${{ secrets.USER_TOKEN }}

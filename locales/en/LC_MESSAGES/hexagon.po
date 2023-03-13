@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-07-18 01:09+0000\n"
+"POT-Creation-Date: 2023-03-12 16:03-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -185,18 +185,6 @@ msgstr "Install CLI"
 msgid "msg.domain.configuration.install_cli_description"
 msgstr "Install a custom project CLI from a YAML file."
 
-#: hexagon/support/analytics/__init__.py:77
-msgid "msg.support.analytics.telemetry_notice"
-msgstr "In order to make Hexagon better we record anonymous usage statistics."
-
-#: hexagon/support/analytics/__init__.py:79
-msgid "msg.support.analytics.telemetry_directory"
-msgstr "You can see what's collected in {directory}"
-
-#: hexagon/support/analytics/__init__.py:85
-msgid "action.support.analytics.confirm_telemetry"
-msgstr "Do you agree to participate?"
-
 #: hexagon/support/cli/git.py:32
 msgid "error.support.cli.git.failed_to_get_remote"
 msgstr ""
@@ -204,7 +192,7 @@ msgstr ""
 "and origin is not present"
 
 #: hexagon/support/dependencies/__init__.py:26
-#: hexagon/support/dependencies/__init__.py:31
+#: hexagon/support/dependencies/__init__.py:33
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Installing {runtime} dependencies at path: {path}"
 
