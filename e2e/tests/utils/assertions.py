@@ -2,6 +2,7 @@ import subprocess
 import os
 import signal
 import re
+import sys
 from typing import Any, Callable, Dict, List
 
 from e2e.tests.utils.path import e2e_test_folder_path
@@ -11,6 +12,11 @@ last_output_file_path = os.path.realpath(
         __file__, os.path.pardir, os.path.pardir, os.path.pardir, "last-output.txt"
     )
 )
+
+
+def debugger_is_active() -> bool:
+    """Return if the debugger is currently active"""
+    return hasattr(sys, "gettrace") and sys.gettrace() is not None
 
 
 def _save_last_output(lines: List[str]):
@@ -94,7 +100,8 @@ def _read_next_line(process: subprocess.Popen, lines_read: List[str]):
 
     signal.signal(signal.SIGALRM, timeout_handler)
 
-    signal.alarm(3)
+    if not debugger_is_active():
+        signal.alarm(3)
     line: str = process.stdout.readline()
     signal.alarm(0)
 
