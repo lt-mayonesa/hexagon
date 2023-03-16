@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.32.0 (2023-03-16)
+### Feature
+* **options:** Allow override options at yaml level ([`08f4258`](https://github.com/lt-mayonesa/hexagon/commit/08f425800f4b719cceb3391e59a1965c7f57c856))
+
 ## v0.31.0 (2023-03-13)
 ### Feature
 * **analytics:** Remove support for tracking ([`e8adefe`](https://github.com/lt-mayonesa/hexagon/commit/e8adefe440294988742d93d7bcd13454b2e03696))
