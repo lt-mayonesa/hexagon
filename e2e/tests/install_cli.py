@@ -5,16 +5,13 @@ from e2e.tests.utils.path import e2e_test_folder_path
 from e2e.tests.utils.hexagon_spec import as_a_user, HexagonSpec
 import os
 
-from hexagon.support.storage import HexagonStorageKeys
-from hexagon.support.dependencies import (
-    HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED_ENVIRONMENT_VARIABLE,
-)
-
 commands_dir_path = os.path.realpath(
     os.path.join(__file__, os.path.pardir, os.path.pardir, "install_cli", "bin")
 )
 test_folder_path = e2e_test_folder_path(__file__)
 storage_path = os.path.join(test_folder_path, "storage")
+
+cli_install_path_storage_key = "cli-install-path"
 
 
 def _delete_directory_if_exists(directory_path):
@@ -27,9 +24,7 @@ def test_install_cli():
     Path(os.path.join(storage_path, "hexagon")).mkdir(exist_ok=True, parents=True)
     Path(os.path.join(test_folder_path, "bin")).mkdir(exist_ok=True, parents=True)
     with open(
-        os.path.join(
-            storage_path, "hexagon", f"{HexagonStorageKeys.cli_install_path.value}.txt"
-        ),
+        os.path.join(storage_path, "hexagon", f"{cli_install_path_storage_key}.txt"),
         "w",
     ) as file:
         file.write(commands_dir_path)
@@ -41,7 +36,7 @@ def test_install_cli():
             os_env_vars={
                 HexagonSpec.HEXAGON_STORAGE_PATH: storage_path,
                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
-                HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED_ENVIRONMENT_VARIABLE: "1",
+                "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
             }
         )
         .then_output_should_be(
@@ -81,9 +76,7 @@ def test_warn_install_dir_not_PATH():
     Path(os.path.join(storage_path, "hexagon")).mkdir(exist_ok=True, parents=True)
     Path(os.path.join(test_folder_path, "bin")).mkdir(exist_ok=True, parents=True)
     with open(
-        os.path.join(
-            storage_path, "hexagon", f"{HexagonStorageKeys.cli_install_path.value}.txt"
-        ),
+        os.path.join(storage_path, "hexagon", f"{cli_install_path_storage_key}.txt"),
         "w",
     ) as file:
         file.write(commands_dir_path)
@@ -94,7 +87,7 @@ def test_warn_install_dir_not_PATH():
             os_env_vars={
                 HexagonSpec.HEXAGON_STORAGE_PATH: storage_path,
                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
-                HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED_ENVIRONMENT_VARIABLE: "1",
+                "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
                 "HEXAGON_THEME": "default",
             }
         )
@@ -130,9 +123,7 @@ def test_do_not_warn_install_dir_not_PATH_when_it_is():
     Path(os.path.join(storage_path, "hexagon")).mkdir(exist_ok=True, parents=True)
     Path(os.path.join(test_folder_path, "bin")).mkdir(exist_ok=True, parents=True)
     with open(
-        os.path.join(
-            storage_path, "hexagon", f"{HexagonStorageKeys.cli_install_path.value}.txt"
-        ),
+        os.path.join(storage_path, "hexagon", f"{cli_install_path_storage_key}.txt"),
         "w",
     ) as file:
         file.write(commands_dir_path)
@@ -143,7 +134,7 @@ def test_do_not_warn_install_dir_not_PATH_when_it_is():
             os_env_vars={
                 HexagonSpec.HEXAGON_STORAGE_PATH: storage_path,
                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
-                HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED_ENVIRONMENT_VARIABLE: "1",
+                "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
                 "HEXAGON_THEME": "default",
                 "PATH": f"{os.getenv('PATH')}:{commands_dir_path}",
             }
