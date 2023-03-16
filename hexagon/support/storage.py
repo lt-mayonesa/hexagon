@@ -19,7 +19,7 @@ class HexagonStorageKeys(Enum):
 
 class StorageValueType(Enum):
     text = "text"
-    text_multiline = "text-multilne"
+    text_multiline = "text-multiline"
     dictionary = "dictionary"
 
 
@@ -66,6 +66,7 @@ def _get_storage_dir_path():
 def _resolve_storage_path(app: str, key: str, base_dir=None):
     base_dir = base_dir if base_dir else _get_storage_dir_path()
     key_split = key.split(".")
+    # noinspection PyRedundantParentheses
     return (os.path.join(base_dir, app, *key_split[:-1]), *key_split[-1:])
 
 

@@ -1,6 +1,9 @@
 import datetime
-from hexagon.support.yaml import display_yaml_errors
 import sys
+
+from pydantic.types import DirectoryPath
+
+from hexagon.support.yaml import display_yaml_errors
 from typing import Any, Dict, Optional
 from pydantic import BaseSettings, ValidationError
 
@@ -32,26 +35,32 @@ def _save_settings_to_source(options):
 
 
 class Options(BaseSettings):
-    update_time_between_checks: datetime.timedelta = datetime.timedelta(days=1)
+    theme: Optional[str] = "default"
+    update_time_between_checks: Optional[datetime.timedelta] = datetime.timedelta(
+        days=1
+    )
     send_telemetry: Optional[bool] = None
+    disable_dependency_scan: Optional[bool] = False
+    update_disabled: Optional[bool] = False
+    cli_update_disabled: Optional[bool] = False
+    config_storage_path: Optional[DirectoryPath] = None
 
     class Config:
         env_prefix = "HEXAGON_"
 
         @classmethod
         def customise_sources(cls, init_settings, env_settings, file_secret_settings):
-            # TODO: allow CLIs to override options from app.yaml (ie: cli.options.update_time_between_checks)
             return (
-                env_settings,
                 init_settings,
+                env_settings,
                 _local_settings_source,
                 file_secret_settings,
             )
 
 
-def get_options() -> Options:
+def get_options(init_settings: dict) -> Options:
     try:
-        return Options()
+        return Options(**init_settings)
     except ValidationError as errors:
         display_yaml_errors(errors)
         sys.exit(1)

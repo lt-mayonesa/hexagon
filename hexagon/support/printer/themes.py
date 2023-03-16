@@ -43,7 +43,7 @@ class LoggingTheme:
         return getattr(self, item)
 
 
-def load_theme():
+def load_theme(theme: str):
     __themes = {
         "default": LoggingTheme(
             start="╭╼ ",
@@ -57,7 +57,7 @@ def load_theme():
         "result_only": LoggingTheme(result_only=True, show_colors=False),
     }
 
-    t = __themes[os.getenv("HEXAGON_THEME", "default")]
+    t = __themes[theme]
 
     for f in fields(t.prompts):
         n = f"INQUIRERPY_STYLE_{f.name.upper()}"

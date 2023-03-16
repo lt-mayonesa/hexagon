@@ -1,10 +1,9 @@
-import os
 import re
 import sys
 
 from InquirerPy import inquirer
 
-from hexagon.domain import cli, configuration
+from hexagon.domain import cli, configuration, options
 from hexagon.support.cli.command import (
     execute_command_in_cli_project_path,
     output_from_command_in_cli_project_path,
@@ -16,7 +15,7 @@ from hexagon.support.update.shared import already_checked_for_updates
 
 
 def check_for_cli_updates():
-    if os.getenv("HEXAGON_CLI_UPDATE_DISABLED"):
+    if options.cli_update_disabled:
         return
     if already_checked_for_updates():
         return

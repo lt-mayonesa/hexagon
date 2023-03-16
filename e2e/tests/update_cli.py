@@ -14,7 +14,7 @@ last_checked_storage_path = os.path.join(storage_path, "test", "last-update-chec
 
 os_env_vars = {
     "HEXAGON_STORAGE_PATH": storage_path,
-    "HEXAGON_CLI_UPDATE_DISABLED": "",
+    "HEXAGON_CLI_UPDATE_DISABLED": "false",
     "PIPENV_PIPFILE": os.path.realpath(
         os.path.join(test_folder_path, os.path.pardir, os.path.pardir, "Pipfile")
     ),

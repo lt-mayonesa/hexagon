@@ -8,6 +8,7 @@ import pkg_resources
 from InquirerPy import inquirer
 from packaging.version import parse as parse_version
 
+from hexagon.domain import options
 from hexagon.support.github import add_github_access_token
 from hexagon.support.printer import log
 from hexagon.support.storage import HEXAGON_STORAGE_APP
@@ -21,7 +22,7 @@ CHANGELOG_MAX_PRINT_ENTRIES = 10
 
 
 def check_for_hexagon_updates():
-    if bool(os.getenv("HEXAGON_UPDATE_DISABLED")):
+    if options.update_disabled:
         return
     if already_checked_for_updates(HEXAGON_STORAGE_APP):
         return

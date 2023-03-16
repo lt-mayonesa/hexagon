@@ -8,3 +8,4 @@ class Cli(BaseModel):
     command: str
     custom_tools_dir: Optional[str] = None
     plugins_dir: Optional[str] = None
+    options: Optional[dict] = None

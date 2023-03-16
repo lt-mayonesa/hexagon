@@ -3,13 +3,19 @@ from typing import Optional, Union
 from rich.console import Console
 from rich.syntax import Syntax
 
-from hexagon.support.printer.themes import LoggingTheme
+from hexagon.support.printer.themes import load_theme, LoggingTheme
 
 
 class Logger:
-    def __init__(self, console: Console, decorations: LoggingTheme) -> None:
-        self.__console = console
-        self.__decorations = decorations
+    def __init__(
+        self, theme: Union[str, LoggingTheme], console: Console = None
+    ) -> None:
+        self.__console = None
+        self.__decorations = None
+        if isinstance(theme, str):
+            self.load_theme(theme)
+        else:
+            self.load_theme(theme, console)
 
     def start(self, message: str):
         if not self.__decorations.result_only:
@@ -68,3 +74,11 @@ class Logger:
 
     def status(self, message: str = None):
         return self.__console.status(message)
+
+    def load_theme(self, theme: Union[str, LoggingTheme], console: Console = None):
+        self.__decorations = (
+            theme if isinstance(theme, LoggingTheme) else load_theme(theme)
+        )
+        self.__console = console or Console(
+            color_system="auto" if self.__decorations.show_colors else None
+        )
