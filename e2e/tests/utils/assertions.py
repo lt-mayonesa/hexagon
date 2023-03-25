@@ -1,7 +1,7 @@
-import subprocess
 import os
-import signal
 import re
+import signal
+import subprocess
 import sys
 from typing import Any, Callable, Dict, List
 
@@ -231,6 +231,10 @@ def assert_process_ended(
     process: subprocess.Popen, exit_status: int = 0, timeout_in_seconds: int = 5
 ):
     __tracebackhide__ = True
+
+    if debugger_is_active():
+        timeout_in_seconds = 60 * 5  # 5 minutes
+
     try:
         process.wait(timeout_in_seconds)
     except Exception as error:

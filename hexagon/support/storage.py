@@ -1,11 +1,13 @@
-from hexagon.utils.dict import merge_dictionaries_deep
 import os
-from pathlib import Path
 import sys
-from typing import Any, Dict, List
-from ruamel.yaml import YAML
 from enum import Enum
+from pathlib import Path
 from shutil import rmtree
+from typing import Any, Dict, List
+
+from ruamel.yaml import YAML
+
+from hexagon.utils.dict import merge_dictionaries_deep
 
 HEXAGON_STORAGE_APP = "hexagon"
 
@@ -72,14 +74,14 @@ def _resolve_storage_path(app: str, key: str, base_dir=None):
 
 def _storage_value_type_by_data_type(data: InputDataType):
     if isinstance(data, str):
-        return StorageValueType.text
-    elif isinstance(data, list) and all(isinstance(s, str) for s in data):
-        return StorageValueType.text_multiline
+        return StorageValueType.text, data
+    elif isinstance(data, list):
+        return StorageValueType.text_multiline, [str(s) for s in data]
     elif isinstance(data, dict):
-        return StorageValueType.dictionary
+        return StorageValueType.dictionary, data
     else:
         raise Exception(
-            f"Type {type} cannot be stored: supported types are str, List[str] or Dict"
+            f"Type {type(data)} cannot be stored: supported types are str, List[str] or Dict"
         )
 
 
@@ -118,7 +120,7 @@ def _get_app(app: str = None):
 def store_user_data(key: str, data: InputDataType, append=False, app: str = None):
     app = _get_app(app)
 
-    value_type = _storage_value_type_by_data_type(data)
+    value_type, sanitized_data = _storage_value_type_by_data_type(data)
     extension = _extension_by_value_type[value_type]
     dir_path, file_name = _resolve_storage_path(app, key)
     file_name += extension
@@ -131,10 +133,10 @@ def store_user_data(key: str, data: InputDataType, append=False, app: str = None
         or value_type == StorageValueType.text
     ):
         with open(file_path, "a" if append else "w") as file:
-            if isinstance(data, list):
-                file.writelines(line + "\n" for line in data)
+            if isinstance(sanitized_data, list):
+                file.writelines(line + "\n" for line in sanitized_data)
             else:
-                file.write(data)
+                file.write(sanitized_data)
 
     elif value_type == StorageValueType.dictionary:
         previous = None
@@ -142,7 +144,11 @@ def store_user_data(key: str, data: InputDataType, append=False, app: str = None
             with open(file_path, "r") as file:
                 previous = YAML().load(file)
 
-        to_write = merge_dictionaries_deep(previous, data) if previous else data
+        to_write = (
+            merge_dictionaries_deep(previous, sanitized_data)
+            if previous
+            else sanitized_data
+        )
 
         with open(file_path, "w") as file:
             YAML().dump(to_write, file)

@@ -2,7 +2,6 @@ import importlib
 import os
 import subprocess
 import sys
-import time
 import traceback
 from pathlib import Path
 from typing import List, Union, Dict
@@ -12,23 +11,14 @@ from rich import traceback as rich_traceback
 from hexagon.domain import configuration
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
-from hexagon.domain.tool.execution import ToolExecutionData
-from hexagon.support.hooks import HexagonHooks
+from hexagon.support.execute.execution_hook import execution_hook
 from hexagon.support.printer import log
 
 _command_by_file_extension = {"js": "node", "sh": "sh"}
 
 
-# TODO: use a decorator?
+@execution_hook()
 def execute_action(tool: ActionTool, env_args, env: Env, args, custom_tools_path=None):
-    start = time.time()
-    _execute_action(tool, env_args, env, args, custom_tools_path)
-    HexagonHooks.tool_executed.run(
-        ToolExecutionData(tool=tool, duration=(time.time() - start))
-    )
-
-
-def _execute_action(tool: ActionTool, env_args, env: Env, args, custom_tools_path=None):
     custom_tools_path = (
         custom_tools_path if custom_tools_path else configuration.custom_tools_path
     )
