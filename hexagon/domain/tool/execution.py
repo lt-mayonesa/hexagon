@@ -1,7 +1,7 @@
 from typing import Any, List
 
-from hexagon.domain.tool import Tool
 from hexagon.domain.env import Env
+from hexagon.domain.tool import Tool
 
 
 class ToolExecutionParameters:
@@ -21,9 +21,11 @@ class ToolExecutionParameters:
 
 
 class ToolExecutionData:
-    def __init__(self, tool: Tool, duration: float) -> None:
+    def __init__(self, tool: Tool, tool_env_args: Any, duration: float) -> None:
         self.tool = tool
+        self.tool_env_args = tool_env_args
         self.duration = duration
 
     tool: Tool
+    tool_env_args: Any
     duration: float
