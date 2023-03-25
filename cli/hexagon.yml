@@ -4,7 +4,7 @@ cli:
   command: hex
 
 commands:
-  build-i18n: &i18n ./.github/scripts/i18n/build.sh
+  build-i18n: &i18n ../.github/scripts/i18n/build.sh
 
 envs:
   - name: local
