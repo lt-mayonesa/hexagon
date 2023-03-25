@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-03-12 16:03-0300\n"
+"POT-Creation-Date: 2023-03-25 20:14-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -175,44 +175,44 @@ msgstr ""
 msgid "error.support.cli.git.failed_to_get_remote"
 msgstr ""
 
-#: hexagon/support/dependencies/__init__.py:26
-#: hexagon/support/dependencies/__init__.py:33
+#: hexagon/support/dependencies/__init__.py:24
+#: hexagon/support/dependencies/__init__.py:31
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr ""
 
-#: hexagon/support/execute/action.py:56
+#: hexagon/support/execute/action.py:46
 msgid "error.support.execute.action.command_result_code"
 msgstr ""
 
-#: hexagon/support/execute/action.py:63
+#: hexagon/support/execute/action.py:53
 msgid "error.support.execute.action.could_not_execute"
 msgstr ""
 
-#: hexagon/support/execute/action.py:67
+#: hexagon/support/execute/action.py:57
 msgid "error.support.execute.action.we_tried"
 msgstr ""
 
-#: hexagon/support/execute/action.py:69
+#: hexagon/support/execute/action.py:59
 msgid "error.support.execute.action.attempt_cli_custom_dir"
 msgstr ""
 
-#: hexagon/support/execute/action.py:74
+#: hexagon/support/execute/action.py:64
 msgid "error.support.execute.action.attempt_internal_tools"
 msgstr ""
 
-#: hexagon/support/execute/action.py:79
+#: hexagon/support/execute/action.py:69
 msgid "error.support.execute.action.attempt_known_script"
 msgstr ""
 
-#: hexagon/support/execute/action.py:83
+#: hexagon/support/execute/action.py:73
 msgid "error.support.execute.action.attempt_inline_command"
 msgstr ""
 
-#: hexagon/support/execute/action.py:110
+#: hexagon/support/execute/action.py:100
 msgid "error.support.execute.action.execute_tool_failed"
 msgstr ""
 
-#: hexagon/support/execute/action.py:166
+#: hexagon/support/execute/action.py:156
 msgid "error.support.execute.action.python_dependency_error"
 msgstr ""
 
@@ -248,43 +248,43 @@ msgstr ""
 msgid "error.support.hooks.hook.unknown_type"
 msgstr ""
 
-#: hexagon/support/update/cli.py:49
+#: hexagon/support/update/cli.py:48
 msgid "msg.support.update.cli.new_version_available"
 msgstr ""
 
-#: hexagon/support/update/cli.py:52
+#: hexagon/support/update/cli.py:51
 msgid "action.support.update.cli.confirm_update"
 msgstr ""
 
-#: hexagon/support/update/cli.py:57
+#: hexagon/support/update/cli.py:56
 msgid "msg.support.update.cli.updated"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:40
+#: hexagon/support/update/hexagon.py:41
 msgid "msg.support.update.hexagon.new_version_available"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:46
+#: hexagon/support/update/hexagon.py:47
 msgid "msg.support.update.hexagon.fetching_changelog"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:57
+#: hexagon/support/update/hexagon.py:58
 msgid "msg.support.update.hexagon.and_much_more"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:60
+#: hexagon/support/update/hexagon.py:61
 msgid "action.support.update.hexagon.confirm_update"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:64
+#: hexagon/support/update/hexagon.py:65
 msgid "msg.support.update.hexagon.updating"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:71
+#: hexagon/support/update/hexagon.py:72
 msgid "msg.support.update.hexagon.updated"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:77
+#: hexagon/support/update/hexagon.py:78
 msgid "msg.support.update.hexagon.checking_new_versions"
 msgstr ""
 

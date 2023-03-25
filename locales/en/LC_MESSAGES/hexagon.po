@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-03-12 16:03-0300\n"
+"POT-Creation-Date: 2023-03-25 20:14-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,44 +191,44 @@ msgstr ""
 "Couldn't get the remote name from your cli's repository, too many choices "
 "and origin is not present"
 
-#: hexagon/support/dependencies/__init__.py:26
-#: hexagon/support/dependencies/__init__.py:33
+#: hexagon/support/dependencies/__init__.py:24
+#: hexagon/support/dependencies/__init__.py:31
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Installing {runtime} dependencies at path: {path}"
 
-#: hexagon/support/execute/action.py:56
+#: hexagon/support/execute/action.py:46
 msgid "error.support.execute.action.command_result_code"
 msgstr "{executed_command} returned code: {return_code}"
 
-#: hexagon/support/execute/action.py:63
+#: hexagon/support/execute/action.py:53
 msgid "error.support.execute.action.could_not_execute"
 msgstr "Hexagon couldn't execute the action: [bold]{action}[/bold]"
 
-#: hexagon/support/execute/action.py:67
+#: hexagon/support/execute/action.py:57
 msgid "error.support.execute.action.we_tried"
 msgstr "We tried:"
 
-#: hexagon/support/execute/action.py:69
+#: hexagon/support/execute/action.py:59
 msgid "error.support.execute.action.attempt_cli_custom_dir"
 msgstr "  - Your CLI's custom_tools_dir: [bold]{path}[/bold]"
 
-#: hexagon/support/execute/action.py:74
+#: hexagon/support/execute/action.py:64
 msgid "error.support.execute.action.attempt_internal_tools"
 msgstr "  - Hexagon repository of external actions ({package})"
 
-#: hexagon/support/execute/action.py:79
+#: hexagon/support/execute/action.py:69
 msgid "error.support.execute.action.attempt_known_script"
 msgstr "  - A known script file ({extensions})"
 
-#: hexagon/support/execute/action.py:83
+#: hexagon/support/execute/action.py:73
 msgid "error.support.execute.action.attempt_inline_command"
 msgstr "Running your action as a shell command directly"
 
-#: hexagon/support/execute/action.py:110
+#: hexagon/support/execute/action.py:100
 msgid "error.support.execute.action.execute_tool_failed"
 msgstr "Execution of tool {action} failed"
 
-#: hexagon/support/execute/action.py:166
+#: hexagon/support/execute/action.py:156
 msgid "error.support.execute.action.python_dependency_error"
 msgstr "Your custom action seems to have a module dependency error"
 
@@ -264,44 +264,44 @@ msgstr "[bold][u]Tools:[/bold][/u]"
 msgid "error.support.hooks.hook.unknown_type"
 msgstr "Unknown HookSubscriptionType {subscription_type}"
 
-#: hexagon/support/update/cli.py:49
+#: hexagon/support/update/cli.py:48
 msgid "msg.support.update.cli.new_version_available"
 msgstr "New [cyan]{cli_name}[/cyan] version available"
 
-#: hexagon/support/update/cli.py:52
+#: hexagon/support/update/cli.py:51
 msgid "action.support.update.cli.confirm_update"
 msgstr "Would you like to update?"
 
-#: hexagon/support/update/cli.py:57
+#: hexagon/support/update/cli.py:56
 msgid "msg.support.update.cli.updated"
 msgstr "[green]✓[/green] [white]Updated to latest version[/white]"
 
-#: hexagon/support/update/hexagon.py:40
+#: hexagon/support/update/hexagon.py:41
 msgid "msg.support.update.hexagon.new_version_available"
 msgstr ""
 "New [cyan]hexagon[/cyan] version available [green]{latest_version}[/green]!"
 
-#: hexagon/support/update/hexagon.py:46
+#: hexagon/support/update/hexagon.py:47
 msgid "msg.support.update.hexagon.fetching_changelog"
 msgstr "Fetching changelog"
 
-#: hexagon/support/update/hexagon.py:57
+#: hexagon/support/update/hexagon.py:58
 msgid "msg.support.update.hexagon.and_much_more"
 msgstr "and much more!"
 
-#: hexagon/support/update/hexagon.py:60
+#: hexagon/support/update/hexagon.py:61
 msgid "action.support.update.hexagon.confirm_update"
 msgstr "Would you like to update?"
 
-#: hexagon/support/update/hexagon.py:64
+#: hexagon/support/update/hexagon.py:65
 msgid "msg.support.update.hexagon.updating"
 msgstr "Updating"
 
-#: hexagon/support/update/hexagon.py:71
+#: hexagon/support/update/hexagon.py:72
 msgid "msg.support.update.hexagon.updated"
 msgstr "Updated to latest version"
 
-#: hexagon/support/update/hexagon.py:77
+#: hexagon/support/update/hexagon.py:78
 msgid "msg.support.update.hexagon.checking_new_versions"
 msgstr "Checking for new hexagon versions"
 
