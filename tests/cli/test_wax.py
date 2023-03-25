@@ -3,7 +3,7 @@ from InquirerPy import inquirer
 
 from hexagon.domain.tool import Tool
 from hexagon.domain.env import Env
-from hexagon.support.wax import search_by_name_or_alias, select_tool, select_env
+from hexagon.support import wax
 
 
 def args_mock(ret):
@@ -20,6 +20,12 @@ def args_mock(ret):
             return FuzzyMock()
 
     return TestArgs()
+
+
+@pytest.fixture(autouse=True)
+def mock_i18n(monkeypatch):
+    monkeypatch.setattr(wax, "_", value=lambda x: x, raising=False)
+    yield
 
 
 @pytest.fixture
@@ -54,11 +60,11 @@ envs = [Env(name="dev", alias="d"), Env(name="qa", alias="q")]
     ],
 )
 def test_search_tools_dict_by_key_or_alias(search, expected):
-    assert search_by_name_or_alias(tools, search) == expected
+    assert wax.search_by_name_or_alias(tools, search) == expected
 
 
 def test_tool_is_selected_from_cmd(monkeypatch):
-    assert select_tool(tools, "docker") == Tool(
+    assert wax.select_tool(tools, "docker") == Tool(
         name="docker", alias="d", action="docker_run"
     )
 
@@ -66,7 +72,7 @@ def test_tool_is_selected_from_cmd(monkeypatch):
 def test_tool_is_selected_by_prompt(monkeypatch, tool_mock):
     monkeypatch.setattr(inquirer, "fuzzy", tool_mock)
 
-    assert select_tool(tools) == Tool(name="docker", alias="d", action="docker_run")
+    assert wax.select_tool(tools) == Tool(name="docker", alias="d", action="docker_run")
     assert tool_mock.args[0] == "action.support.wax.select_tool"
     assert tool_mock.args[1] == [
         {"value": "docker", "name": "  docker"},
@@ -77,23 +83,23 @@ def test_tool_is_selected_by_prompt(monkeypatch, tool_mock):
 
 
 def test_tool_has_no_env_property():
-    assert select_env(envs, None) == (None, None)
+    assert wax.select_env(envs, None) == (None, None)
 
 
 def test_tool_has_env_property_with_wildcard():
-    assert select_env(envs, {"*": "sarasa"}) == (None, "sarasa")
+    assert wax.select_env(envs, {"*": "sarasa"}) == (None, "sarasa")
 
 
 def test_env_is_selected_from_cmd(monkeypatch):
     tool_envs = {"dev": "env_1", "qa": "env_2"}
-    assert select_env(envs, tool_envs, "qa") == (envs[1], "env_2")
+    assert wax.select_env(envs, tool_envs, "qa") == (envs[1], "env_2")
 
 
 def test_env_is_selected_by_prompt(monkeypatch, env_mock):
     tool_envs = {"dev": "env_1", "qa": "env_2"}
     monkeypatch.setattr(inquirer, "fuzzy", env_mock)
 
-    assert select_env(envs, tool_envs) == (envs[0], "env_1")
+    assert wax.select_env(envs, tool_envs) == (envs[0], "env_1")
     assert env_mock.args[0] == "action.support.wax.select_environment"
     assert env_mock.args[1] == [
         {"value": "dev", "name": "dev"},
