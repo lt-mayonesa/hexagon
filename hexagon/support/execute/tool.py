@@ -8,6 +8,7 @@ from hexagon.domain.tool import (
     ToolType,
 )
 from hexagon.domain.tool.execution import ToolExecutionParameters
+from hexagon.support.args import CliArgs, parse_cli_args
 from hexagon.support.execute.action import execute_action
 from hexagon.support.hooks import HexagonHooks
 from hexagon.support.tracer import tracer
@@ -16,30 +17,26 @@ from hexagon.support.wax import search_by_name_or_alias, select_env, select_tool
 
 def select_and_execute_tool(
     tools: List[Tool],
-    tool_argument: str = None,
-    env_argument: str = None,
-    arguments: List[object] = None,
+    cli_args: CliArgs,
 ) -> List[str]:
-    arguments = arguments if arguments else []
-    tool = search_by_name_or_alias(tools, tool_argument)
-    env = search_by_name_or_alias(envs, env_argument)
+    tool = search_by_name_or_alias(tools, cli_args.tool)
+    env = search_by_name_or_alias(envs, cli_args.env)
 
     tool = select_tool(tools, tool)
     if tool.traced:
         tracer.tracing(tool.name)
 
-    env, params = select_env(envs, tool.envs, env)
+    env, tool_env_params = select_env(envs, tool.envs, env)
 
     if isinstance(tool, GroupTool):
-        previous = tools, tool_argument, env_argument, arguments
+        previous = tools, cli_args
         return _execute_group_tool(
             tool,
+            cli_args,
             # If the tool matched the tool argument, disable navigating back
-            previous
-            if not next((t for t in tools if t.name == tool_argument), None)
+            previous=previous
+            if not next((t for t in tools if t.name == cli_args.tool), None)
             else None,
-            env_argument,
-            arguments,
         )
 
     if isinstance(tool, FunctionTool):
@@ -51,13 +48,13 @@ def select_and_execute_tool(
     HexagonHooks.before_tool_executed.run(
         ToolExecutionParameters(
             tool=tool,
-            parameters=params,
+            parameters=tool_env_params,
             env=env,
-            arguments=arguments,
+            arguments=cli_args.extra_args,
         )
     )
 
-    return execute_action(tool, params, env, arguments)
+    return execute_action(tool, tool_env_params, env, cli_args)
 
 
 GO_BACK_TOOL = Tool(
@@ -72,14 +69,9 @@ GO_BACK_TOOL = Tool(
 
 def _execute_group_tool(
     tool: GroupTool,
+    cli_args: CliArgs,
     previous: Tuple[List[Tool], str, str, List[object], str] = None,
-    env_argument: str = None,
-    arguments: List[object] = None,
 ) -> List[str]:
-    env_argument, sub_tool_arguments, tool_argument = shift_args_right(
-        arguments, env_argument
-    )
-
     tools = tool.tools
 
     if previous:
@@ -89,7 +81,7 @@ def _execute_group_tool(
             select_and_execute_tool(*previous)
 
         # FunctionTool is not set as a type GroupTool.tools
-        # so yaml validations dont show that tool.function is required
+        # so yaml validations don't show that tool.function is required
         # noinspection PyTypeChecker
         tools = tool.tools + [
             FunctionTool(**GO_BACK_TOOL.dict(), function=go_back),
@@ -97,14 +89,5 @@ def _execute_group_tool(
 
     return select_and_execute_tool(
         tools,
-        tool_argument,
-        env_argument,
-        sub_tool_arguments,
+        parse_cli_args([cli_args.env] + cli_args.raw_extra_args),
     )
-
-
-def shift_args_right(arguments, env_argument, places=1):
-    tool_argument = env_argument
-    env_argument = arguments[0] if len(arguments) > 0 else None
-    sub_tool_arguments = arguments[places:]
-    return env_argument, sub_tool_arguments, tool_argument

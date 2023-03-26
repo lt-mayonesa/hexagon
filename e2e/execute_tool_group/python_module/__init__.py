@@ -1,14 +1,14 @@
-from typing import Any, List, Optional
+from typing import Any, Optional, Dict
 
-from hexagon.domain.tool import Tool
 from hexagon.domain.env import Env
+from hexagon.domain.tool import ActionTool
 
 
 def main(
-    action: Tool,
+    action: ActionTool,
     env: Optional[Env] = None,
     env_args: Any = None,
-    cli_args: List[Any] = None,
+    cli_args: Dict[str, Any] = None,
 ):
     print(f"executed {action.action}")
 
@@ -20,7 +20,7 @@ def main(
         print("Env args:")
         print(env_args)
 
-    if cli_args and len(cli_args) > 0:
+    if cli_args and len(cli_args.keys()) > 0:
         print("Cli args:")
-        for cli_arg in cli_args:
+        for cli_arg in cli_args.items():
             print(cli_arg)

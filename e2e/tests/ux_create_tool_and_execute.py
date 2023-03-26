@@ -50,10 +50,11 @@ def test_creates_a_python_tool_and_executes_it():
             [
                 "╭╼ Test",
                 "│",
-                "│ Tool.action: a_new_action",
-                "│ Env: None",
-                "│ Valor en tool.envs: None",
-                "│ tu apellido es: my-last-name",
+                "│ selected tool: a_new_action",
+                "│ selected env: None",
+                "│ values in tool.envs[env.name]: None",
+                "│ extra cli arguments: {'last-name': 'my-last-name'}",
+                "├ your last name is: my-last-name",
                 "│",
                 "╰╼",
             ]
