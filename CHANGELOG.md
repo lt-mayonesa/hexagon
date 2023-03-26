@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.33.0 (2023-03-26)
+### Feature
+* **cli-args:** Pass extra cli args to execution of actions ([`528827a`](https://github.com/lt-mayonesa/hexagon/commit/528827a3130abbbd4318846036130f9370ff55f0))
+
 ## v0.32.0 (2023-03-16)
 ### Feature
 * **options:** Allow override options at yaml level ([`08f4258`](https://github.com/lt-mayonesa/hexagon/commit/08f425800f4b719cceb3391e59a1965c7f57c856))
