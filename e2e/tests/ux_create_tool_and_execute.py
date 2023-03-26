@@ -43,7 +43,7 @@ def test_creates_a_python_tool_and_executes_it():
     (
         as_a_user(__file__)
         .run_hexagon(
-            ["a-new-action-command", "env", "my-last-name"],
+            ["a-new-action-command", "--last-name", "my-last-name"],
             {"HEXAGON_THEME": "default"},
         )
         .then_output_should_be(

@@ -1,19 +1,17 @@
-import sys
+from typing import Any, List, Optional
 
 from InquirerPy import inquirer
 from InquirerPy.validator import EmptyInputValidator
 
-from hexagon.support.args import fill_args
-from hexagon.support.tracer import tracer
-from hexagon.support.printer import log
-from hexagon.domain.tool import Tool
 from hexagon.domain.env import Env
-
-from typing import Any, List, Optional
+from hexagon.domain.tool import ActionTool
+from hexagon.support.args import parse_cli_args, CliArgs
+from hexagon.support.printer import log
+from hexagon.support.tracer import tracer
 
 
 def main(
-    tool: Tool,
+    tool: ActionTool,
     env: Optional[Env] = None,
     env_args: Any = None,
     cli_args: List[Any] = None,
@@ -29,12 +27,12 @@ def main(
     """
 
     # for now this is the way of obtaining other execution arguments (tool name, env name, etc)
-    _, _tool_name, _env_name, _my_name = fill_args(sys.argv, 4)
+    args: CliArgs = parse_cli_args()
 
     # tracer.tracing is the way of letting hexagon know you asked the user for a parameter for your tool.
-    # this let's hexagon build the "To repeat this command" message correctly
+    # this lets hexagon build the "To repeat this command" message correctly
     name = tracer.tracing(
-        _my_name
+        args.extra_args["last-name"]
         or inquirer.text(
             message="What's your last name?",
             validate=EmptyInputValidator("Please enter your last name."),
