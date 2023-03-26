@@ -1,6 +1,125 @@
-def fill_args(args, size):
-    return (list(args) + [None] * size)[:size] if size > 0 else list(args)
+import argparse
+import re
+import sys
+from typing import Optional, Dict, List, Any
+
+from pydantic import BaseModel
+
+ARGUMENT_KEY_PREFIX = "--"
 
 
-def cli_arg(cli_args, index):
-    return cli_args[index] if cli_args and len(cli_args) > index else None
+def cli_arg(cli_arguments, index):
+    return (
+        cli_arguments[index] if cli_arguments and len(cli_arguments) > index else None
+    )
+
+
+class CliArgs(BaseModel):
+    show_help: bool = False
+    tool: Optional[str] = None
+    env: Optional[str] = None
+
+    extra_args: Optional[Dict[str, Any]] = None
+    raw_extra_args: Optional[List[str]] = None
+
+
+def parse_cli_args(args=None):
+    if args is None:
+        args = sys.argv[1:]
+
+    _parser = __init_parser()
+
+    known_args, extra = _parser.parse_known_args(args)
+
+    if (not known_args.tool and not known_args.env) and any(
+        [a in ["-h", "--help"] for a in args]
+    ):
+        return CliArgs(show_help=True)
+
+    extra_args = __guess_optional_keys(extra)
+    data = vars(known_args)
+    data.update(
+        {
+            "raw_extra_args": extra,
+            "extra_args": extra_args if extra_args else None,
+        }
+    )
+    return CliArgs(**data)
+
+
+def __init_parser():
+    """
+    Add Pydantic model to an ArgumentParser
+    """
+    __p = argparse.ArgumentParser(
+        prog="hexagon", description="Hexagon CLI", add_help=False
+    )
+    __add_parser_argument(__p, CliArgs.__fields__.get("tool"))
+    __add_parser_argument(__p, CliArgs.__fields__.get("env"))
+    return __p
+
+
+def __add_parser_argument(parser, field):
+    parser.add_argument(
+        field.name,
+        nargs="?",
+        type=__validate_special_characters(field.name),
+        default=field.default,
+        help=field.field_info.description,
+    )
+
+
+def __validate_special_characters(field_name):
+    def field(value):
+        if value and not re.match("^[a-zA-Z0-9\\-_]+$", value):
+            raise ValueError(
+                f"{field_name} must be a string and not contain special characters"
+            )
+        return value
+
+    return field
+
+
+def __guess_optional_keys(extra: List[str]):
+    """
+    Return a dict by guessing optional keys from a list of arguments, e.g.:
+    ['--number', '123', '--name', 'John', '--name', 'Doe'] -> {'number': '123','name': ['John', 'Doe']}
+    ['123'] -> {'0': '123'}
+    ['123', '--letter', 'A'] -> {'0': '123', 'letter': 'A'}
+    :param extra:
+    :return:
+    """
+    if not extra:
+        return None
+
+    result = __guess_indexes(extra)
+    return __group_by_key(result)
+
+
+def __guess_indexes(extra):
+    result = []
+    i = 0
+    arg_index = 0
+    while i < len(extra):
+        if extra[i].startswith(ARGUMENT_KEY_PREFIX):
+            result.append({extra[i][2:]: extra[i + 1]})
+            i += 2
+        else:
+            result.append({str(arg_index): extra[i]})
+            i += 1
+            arg_index += 1
+    return result
+
+
+def __group_by_key(result):
+    d = {}
+    for r in result:
+        for k, v in r.items():
+            if k in d:
+                if isinstance(d[k], list):
+                    d[k].append(v)
+                else:
+                    d[k] = [d[k], v]
+            else:
+                d[k] = v
+    return d

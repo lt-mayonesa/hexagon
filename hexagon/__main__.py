@@ -2,7 +2,7 @@ import sys
 
 from hexagon.domain import cli, tools, envs
 from hexagon.plugins import collect_plugins
-from hexagon.support.args import fill_args
+from hexagon.support.args import parse_cli_args
 from hexagon.support.execute.tool import select_and_execute_tool
 from hexagon.support.help import print_help
 from hexagon.support.hooks import HexagonHooks
@@ -17,9 +17,9 @@ from hexagon.support.update.hexagon import check_for_hexagon_updates
 
 
 def main():
-    _u, _tool, _env = fill_args(sys.argv, 3)
+    args = parse_cli_args()
 
-    if _tool == "-h" or _tool == "--help":
+    if args.show_help:
         return print_help(cli, tools, envs)
 
     collect_plugins()
@@ -38,7 +38,7 @@ def main():
         check_for_cli_updates()
 
     try:
-        result = select_and_execute_tool(tools, _tool, _env, sys.argv[3:])
+        result = select_and_execute_tool(tools, args.tool, args.env, sys.argv[3:])
 
         log.gap()
 
