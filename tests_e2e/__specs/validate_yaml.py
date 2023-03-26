@@ -7,8 +7,7 @@ def test_show_errors_when_invalid_yaml():
         .run_hexagon()
         .then_output_should_be(
             [
-                "There were 6 error(s) in your YAML",
-                "",
+                "There were 6 error(s) in your YAML file:",
                 "",
                 "✗ cli.command -> str type expected",
                 "2   name: Test",

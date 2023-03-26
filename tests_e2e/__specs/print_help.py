@@ -73,16 +73,13 @@ def test_print_help_using_yaml_contents(command):
                 "",
                 "shell:",
                 "  python-module (pm)                                          Python Module Test",
-                "                                                            This is a",
-                "description that should be rendered",
+                "                                                              This is a description that should be rendered",  # noqa
                 "",
-                "  python-module-env (pme)                                     Python Module Env",
-                "Test",
+                "  python-module-env (pme)                                     Python Module Env Test",
                 "                                                              This is",
                 "",
                 "hexagon:",
-                "  save-alias                                                  Save Last Command",
-                "as Shell Alias",
+                "  save-alias                                                  Save Last Command as Shell Alias",
                 "  create-tool                                                 Create A New Tool",
             ]
         )

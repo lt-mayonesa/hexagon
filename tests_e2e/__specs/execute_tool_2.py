@@ -32,7 +32,7 @@ def test_show_correct_error_when_execute_python_module_with_import_error():
         .run_hexagon(["p-m-import-error"])
         .then_output_should_be(
             [
-                "╭───────────────────── Traceback (most recent call last) ──────────────────────╮",
+                "╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮",
                 {
                     "expected": "p_m_import_error.py",
                     "max_lines": 2,
@@ -64,7 +64,7 @@ def test_show_correct_error_when_execute_python_module_with_script_error():
         .then_output_should_be(
             [
                 "executed p_m_script_error",
-                "╭───────────────────── Traceback (most recent call last) ──────────────────────╮",
+                "╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮",
                 {
                     "expected": ["p_m_script_error.py:15"],
                     "max_lines": 2,
