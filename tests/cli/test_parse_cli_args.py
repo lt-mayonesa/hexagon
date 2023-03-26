@@ -20,7 +20,7 @@ def test_no_cli_args_passed():
 )
 def test_cli_args_only_tool_passed(args, expected):
     actual = parse_cli_args(args)
-    assert actual.tool is expected
+    assert actual.tool == expected
     assert actual.env is None
     assert actual.extra_args is None
 
@@ -47,15 +47,15 @@ def test_cli_args_handle_invalid_args(args):
 
 def test_cli_args_tool_is_first_argument_2():
     actual = parse_cli_args(["some-env", "some-tool"])
-    assert actual.tool is "some-env"
-    assert actual.env is "some-tool"
+    assert actual.tool == "some-env"
+    assert actual.env == "some-tool"
     assert actual.extra_args is None
 
 
 def test_cli_args_env_is_second_positional_argument():
     actual = parse_cli_args(["some-tool", "some-env"])
-    assert actual.tool is "some-tool"
-    assert actual.env is "some-env"
+    assert actual.tool == "some-tool"
+    assert actual.env == "some-env"
     assert actual.extra_args is None
 
 
@@ -104,8 +104,8 @@ def test_cli_args_all_extra_arguments_are_optional_and_schemaless(
     optional_args, expected
 ):
     actual = parse_cli_args(["some-tool", "some-env"] + optional_args)
-    assert actual.tool is "some-tool"
-    assert actual.env is "some-env"
+    assert actual.tool == "some-tool"
+    assert actual.env == "some-env"
     assert actual.extra_args == expected
 
 
