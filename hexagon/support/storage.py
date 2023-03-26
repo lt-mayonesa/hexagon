@@ -39,7 +39,7 @@ _extension_by_value_type = {
 _config_storage_path = None
 _data_storage_path = None
 
-InputDataType = str or List[str] or Dict[Any]
+InputDataType = str or List[str] or Dict[str, Any]
 
 
 def __storage_path_by_os(purpose: StoragePurpose):

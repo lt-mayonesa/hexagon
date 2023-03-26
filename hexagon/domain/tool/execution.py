@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any, Dict
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import Tool
@@ -6,7 +6,7 @@ from hexagon.domain.tool import Tool
 
 class ToolExecutionParameters:
     def __init__(
-        self, tool: Tool, parameters: Any, env: Env, arguments: List[object]
+        self, tool: Tool, parameters: Any, env: Env, arguments: Dict[str, Any]
     ) -> None:
         self.tool = tool
         self.parameters = parameters
@@ -16,7 +16,7 @@ class ToolExecutionParameters:
     tool: Tool
     parameters: Any
     env: Env
-    arguments: List[object]
+    arguments: Dict[str, Any]
     custom_tools_path: str
 
 

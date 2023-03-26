@@ -14,9 +14,9 @@ def execution_hook():
     """
 
     def decorator(func):
-        def wrapper(tool: ActionTool, env_args, env: Env, args, custom_tools_path=None):
+        def wrapper(tool: ActionTool, env_args, env: Env, args):
             start = time.time()
-            result = func(tool, env_args, env, args, custom_tools_path)
+            result = func(tool, env_args, env, args)
             HexagonHooks.tool_executed.run(
                 ToolExecutionData(
                     tool=tool, tool_env_args=env_args, duration=(time.time() - start)

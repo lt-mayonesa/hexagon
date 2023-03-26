@@ -38,7 +38,7 @@ def main():
         check_for_cli_updates()
 
     try:
-        result = select_and_execute_tool(tools, args.tool, args.env, sys.argv[3:])
+        result = select_and_execute_tool(tools, args)
 
         log.gap()
 

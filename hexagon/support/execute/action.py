@@ -4,13 +4,14 @@ import subprocess
 import sys
 import traceback
 from pathlib import Path
-from typing import List, Union, Dict
+from typing import List, Union, Dict, Any
 
 from rich import traceback as rich_traceback
 
 from hexagon.domain import configuration
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
+from hexagon.support.args import CliArgs
 from hexagon.support.execute.execution_hook import execution_hook
 from hexagon.support.printer import log
 
@@ -18,27 +19,37 @@ _command_by_file_extension = {"js": "node", "sh": "sh"}
 
 
 @execution_hook()
-def execute_action(tool: ActionTool, env_args, env: Env, args, custom_tools_path=None):
-    custom_tools_path = (
-        custom_tools_path if custom_tools_path else configuration.custom_tools_path
-    )
+def execute_action(tool: ActionTool, env_args: Any, env: Env, cli_args: CliArgs):
+    custom_tools_path = configuration.custom_tools_path
     action_to_execute: str = tool.executable_str
     script_action_command = __script_action_command(action_to_execute)
 
     if script_action_command:
         _execute_script(
-            script_action_command, action_to_execute, env_args or [], env, args
+            script_action_command,
+            action_to_execute,
+            env_args or [],
+            env,
+            cli_args.raw_extra_args,
         )
     else:
         python_module_found = _execute_python_module(
-            action_to_execute, tool, env, env_args, args, custom_tools_path
+            action_to_execute,
+            tool,
+            env,
+            env_args,
+            cli_args.extra_args,
+            custom_tools_path,
         )
         if python_module_found:
             return
 
         split_action = action_to_execute.split(" ")
         return_code, executed_command = _execute_command(
-            split_action[0], env_args, args, action_args=split_action[1:]
+            split_action[0],
+            env_args,
+            cli_args.raw_extra_args,
+            action_args=split_action[1:],
         )
 
         if return_code != 0:
@@ -81,7 +92,7 @@ def __script_action_command(action_to_execute):
 
 
 def _execute_python_module(
-    action_id: str, tool: ActionTool, env: Env, env_args, args, custom_tools_path
+    action_id: str, tool: ActionTool, env: Env, env_args, cli_args, custom_tools_path
 ):
     tool_action_module = _load_action_module(
         action_id, custom_tools_path
@@ -92,7 +103,7 @@ def _execute_python_module(
 
     # noinspection PyBroadException
     try:
-        tool_action_module.main(tool, env, env_args, args)
+        tool_action_module.main(tool, env, env_args, cli_args)
         return True
     except Exception:
         __pretty_print_external_error(action_id, custom_tools_path)
@@ -114,12 +125,12 @@ def _execute_command(
     return subprocess.call(cmd_as_string, shell=True), cmd_as_string
 
 
-def _execute_script(command: str, script: str, env_args, env: Env, args):
+def _execute_script(command: str, script: str, env_args, env: Env, cli_args):
     # Script should be relative to the project path
     script_path = os.path.join(configuration.project_path, script)
     if env and env.alias:
         del env.alias
-    _execute_command(command, env_args, args, env, [script_path])
+    _execute_command(command, env_args, cli_args, env, [script_path])
 
 
 def __sanitize_args_for_command(*args: Union[List[any], Dict, Env]):
