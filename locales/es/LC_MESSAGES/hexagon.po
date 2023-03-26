@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-03-25 20:14-0300\n"
+"POT-Creation-Date: 2023-03-26 14:31-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,53 +198,53 @@ msgstr ""
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Instalando dependencias de {runtime} en directorio {path}"
 
-#: hexagon/support/execute/action.py:46
+#: hexagon/support/execute/action.py:57
 msgid "error.support.execute.action.command_result_code"
 msgstr "{executed_command} returned code: {return_code}"
 
-#: hexagon/support/execute/action.py:53
+#: hexagon/support/execute/action.py:64
 msgid "error.support.execute.action.could_not_execute"
 msgstr "No fue posible ejecutar la acción: [bold]{action}[/bold]"
 
-#: hexagon/support/execute/action.py:57
+#: hexagon/support/execute/action.py:68
 msgid "error.support.execute.action.we_tried"
 msgstr "Intentamos lo siguiente:"
 
-#: hexagon/support/execute/action.py:59
+#: hexagon/support/execute/action.py:70
 msgid "error.support.execute.action.attempt_cli_custom_dir"
 msgstr ""
 "  - Buscar la acción en tu directorio de herramientas (custom_tools_dir) "
 "[bold]{path}[/bold]"
 
-#: hexagon/support/execute/action.py:64
+#: hexagon/support/execute/action.py:75
 msgid "error.support.execute.action.attempt_internal_tools"
 msgstr "  - Buscar en el registro interno de acciones de hexagon ({package})"
 
-#: hexagon/support/execute/action.py:69
+#: hexagon/support/execute/action.py:80
 msgid "error.support.execute.action.attempt_known_script"
 msgstr "  - Ejecutar según extensiones conocidas de archivos ({extensions})"
 
-#: hexagon/support/execute/action.py:73
+#: hexagon/support/execute/action.py:84
 msgid "error.support.execute.action.attempt_inline_command"
 msgstr "  - Ejecutando la acción como un comando directamente"
 
-#: hexagon/support/execute/action.py:100
+#: hexagon/support/execute/action.py:111
 msgid "error.support.execute.action.execute_tool_failed"
 msgstr "La ejecución de {action} falló"
 
-#: hexagon/support/execute/action.py:156
+#: hexagon/support/execute/action.py:167
 msgid "error.support.execute.action.python_dependency_error"
 msgstr "Tu acción parece tener un error de dependencias de módulos"
 
-#: hexagon/support/execute/tool.py:65
+#: hexagon/support/execute/tool.py:62
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr "Atrás"
 
-#: hexagon/support/execute/tool.py:67
+#: hexagon/support/execute/tool.py:64
 msgid "msg.support.execute.tool.go_back_description"
 msgstr "Volver al menú anterior"
 
-#: hexagon/support/execute/tool.py:68
+#: hexagon/support/execute/tool.py:65
 msgid "icon.global.go_back"
 msgstr "🠔"
 

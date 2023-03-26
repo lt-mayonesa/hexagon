@@ -18,6 +18,13 @@ tools:
     type: shell
     action: *i18n
 
+  - name: unit-tests
+    alias: ut
+    long_name: run unit tests tests
+    type: shell
+    action: |
+      pipenv run pytest -svv tests/
+
   - name: e2e-tests
     alias: e2e
     long_name: run end to end tests
@@ -25,4 +32,10 @@ tools:
     type: shell
     action: |
       hex build-i18n
-      pipenv run pytest -svv e2e/
+      pipenv run pytest -svv tests_e2e/
+
+  - name: build
+    alias: b
+    long_name: build hexagon
+    type: shell
+    action: pipenv run python setup.py sdist bdist_wheel

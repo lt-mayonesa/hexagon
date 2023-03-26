@@ -1,9 +1,8 @@
+import glob
+import json
 from os.path import dirname
 
 import setuptools
-import json
-
-import glob
 
 # this updates automatically https://python-semantic-release.readthedocs.io/en/latest/index.html
 __version__ = "0.33.0"
@@ -41,7 +40,9 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    packages=setuptools.find_packages(exclude=["tests", "tests.*", "e2e", "e2e.*"]),
+    packages=setuptools.find_packages(
+        exclude=["tests", "tests.*", "tests_e2e", "tests_e2e.*"]
+    ),
     include_package_data=True,
     install_requires=requires,
     python_requires=">=3.7",

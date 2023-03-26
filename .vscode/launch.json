@@ -28,7 +28,7 @@
             "console": "integratedTerminal",
             "subProcess": true,
             "env": {
-                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/execute_tool/app.yml",
+                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/tests_e2e/execute_tool/app.yml",
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
                 "HEXAGON_THEME": "result_only"
             }
@@ -42,9 +42,9 @@
             "subProcess": true,
             "args": [],
             "env": {
-                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/execute_tool_group/app.yml",
+                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/tests_e2e/execute_tool_group/app.yml",
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
-                "HEXAGON_UPDATE_DISABLED": "1",
+                "HEXAGON_UPDATE_DISABLED": "1"
             }
         },
         {
@@ -55,7 +55,7 @@
             "console": "integratedTerminal",
             "subProcess": true,
             "env": {
-                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/create_new_tool/app.yml",
+                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/tests_e2e/create_new_tool/app.yml",
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL"
             }
         },
@@ -67,7 +67,7 @@
             "console": "integratedTerminal",
             "subProcess": true,
             "env": {
-                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/e2e/install_cli/storage",
+                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/tests_e2e/install_cli/storage",
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
                 "HEXAGON_SEND_TELEMETRY": "0",
                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
@@ -83,10 +83,10 @@
             "console": "integratedTerminal",
             "subProcess": true,
             "env": {
-                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/e2e/update_hexagon/storage",
+                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/tests_e2e/update_hexagon/storage",
                 "HEXAGON_TEST_VERSION_OVERRIDE": "0.1.0",
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
-                "HEXAGON_CHANGELOG_FILE_PATH_TEST_OVERRIDE": "${workspaceFolder}/e2e/update_hexagon/CHANGELOG.md",
+                "HEXAGON_CHANGELOG_FILE_PATH_TEST_OVERRIDE": "${workspaceFolder}/tests_e2e/update_hexagon/CHANGELOG.md",
                 "HEXAGON_THEME": "default"
             }
         },
@@ -101,12 +101,12 @@
                 "echo"
             ],
             "env": {
-                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/update_cli/local/app.yml",
-                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/e2e/update_cli/storage",
+                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/tests_e2e/update_cli/local/app.yml",
+                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/tests_e2e/update_cli/storage",
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
                 "HEXAGON_SEND_TELEMETRY": "0",
                 "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
-                "HEXAGON_TEST_VERSION_OVERRIDE": "1000.1.0",
+                "HEXAGON_TEST_VERSION_OVERRIDE": "1000.1.0"
             }
         },
         {
@@ -120,8 +120,8 @@
                 "print-options"
             ],
             "env": {
-                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/options/app.yml",
-                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/e2e/options/storage",
+                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/tests_e2e/options/app.yml",
+                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/tests_e2e/options/storage",
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
                 "HEXAGON_UPDATE_DISABLED": "1"
             }
@@ -138,8 +138,8 @@
                 "dev"
             ],
             "env": {
-                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/plugins/app.yml",
-                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/e2e/plugins/storage",
+                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/tests_e2e/plugins/app.yml",
+                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/tests_e2e/plugins/storage",
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
                 "HEXAGON_UPDATE_DISABLED": "1"
             }
@@ -151,13 +151,13 @@
             "module": "hexagon",
             "console": "integratedTerminal",
             "subProcess": true,
-            "cwd": "${workspaceFolder}/e2e/seed/springboot",
+            "cwd": "${workspaceFolder}/tests_e2e/seed/springboot",
             "args": [
                 "seed-spring-test"
             ],
             "env": {
-                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/e2e/seed/app.yml",
-                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/e2e/seed/storage",
+                "HEXAGON_CONFIG_FILE": "${workspaceFolder}/tests_e2e/seed/app.yml",
+                "HEXAGON_STORAGE_PATH": "${workspaceFolder}/tests_e2e/seed/storage",
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
                 "HEXAGON_UPDATE_DISABLED": "1"
             }

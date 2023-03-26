@@ -17,3 +17,4 @@ jobs:
           path: '*.xml'
           reporter: java-junit
           token: ${{ secrets.GITHUB_TOKEN }}
+          fail-on-error: false

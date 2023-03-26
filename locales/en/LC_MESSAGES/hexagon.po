@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-03-25 20:14-0300\n"
+"POT-Creation-Date: 2023-03-26 14:31-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,51 +196,51 @@ msgstr ""
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Installing {runtime} dependencies at path: {path}"
 
-#: hexagon/support/execute/action.py:46
+#: hexagon/support/execute/action.py:57
 msgid "error.support.execute.action.command_result_code"
 msgstr "{executed_command} returned code: {return_code}"
 
-#: hexagon/support/execute/action.py:53
+#: hexagon/support/execute/action.py:64
 msgid "error.support.execute.action.could_not_execute"
 msgstr "Hexagon couldn't execute the action: [bold]{action}[/bold]"
 
-#: hexagon/support/execute/action.py:57
+#: hexagon/support/execute/action.py:68
 msgid "error.support.execute.action.we_tried"
 msgstr "We tried:"
 
-#: hexagon/support/execute/action.py:59
+#: hexagon/support/execute/action.py:70
 msgid "error.support.execute.action.attempt_cli_custom_dir"
 msgstr "  - Your CLI's custom_tools_dir: [bold]{path}[/bold]"
 
-#: hexagon/support/execute/action.py:64
+#: hexagon/support/execute/action.py:75
 msgid "error.support.execute.action.attempt_internal_tools"
 msgstr "  - Hexagon repository of external actions ({package})"
 
-#: hexagon/support/execute/action.py:69
+#: hexagon/support/execute/action.py:80
 msgid "error.support.execute.action.attempt_known_script"
 msgstr "  - A known script file ({extensions})"
 
-#: hexagon/support/execute/action.py:73
+#: hexagon/support/execute/action.py:84
 msgid "error.support.execute.action.attempt_inline_command"
 msgstr "Running your action as a shell command directly"
 
-#: hexagon/support/execute/action.py:100
+#: hexagon/support/execute/action.py:111
 msgid "error.support.execute.action.execute_tool_failed"
 msgstr "Execution of tool {action} failed"
 
-#: hexagon/support/execute/action.py:156
+#: hexagon/support/execute/action.py:167
 msgid "error.support.execute.action.python_dependency_error"
 msgstr "Your custom action seems to have a module dependency error"
 
-#: hexagon/support/execute/tool.py:65
+#: hexagon/support/execute/tool.py:62
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr "Go back"
 
-#: hexagon/support/execute/tool.py:67
+#: hexagon/support/execute/tool.py:64
 msgid "msg.support.execute.tool.go_back_description"
 msgstr "Go back to the previous menu"
 
-#: hexagon/support/execute/tool.py:68
+#: hexagon/support/execute/tool.py:65
 msgid "icon.global.go_back"
 msgstr "🠔"
 

@@ -101,5 +101,5 @@ pytest -svv tests/
 ### E2E Tests:
 
 ```bash
-pytest -svv e2e/
+pytest -svv tests_e2e/
 ```

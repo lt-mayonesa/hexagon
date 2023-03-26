@@ -76,7 +76,9 @@ jobs:
 
       - name: e2e tests
         run: |
-          pytest -svv e2e/ --junitxml=junit/test-results-${{ matrix.python-version }}.xml
+          echo "Running e2e tests for Python ${{ matrix.python-version }}"
+          echo "COLUMNS: $COLUMNS, ROWS: $ROWS"
+          pytest -svv tests_e2e/ --junitxml=junit/test-results-${{ matrix.python-version }}.xml
 
       - name: Upload test results
         uses: actions/upload-artifact@v3

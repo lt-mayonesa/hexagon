@@ -6,9 +6,9 @@
 /dist/
 /hexagon.egg-info/
 __pycache__
-e2e/*/home-aliases.txt
-e2e/last-output.txt
-e2e/*/last_command
+tests_e2e/*/home-aliases.txt
+tests_e2e/last-output.txt
+tests_e2e/*/last_command
 
 
 **/**/*.mo

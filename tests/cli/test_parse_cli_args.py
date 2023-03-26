@@ -64,7 +64,8 @@ def test_cli_args_env_is_second_positional_argument():
     [
         ([], None),
         (["--number", "123"], {"number": "123"}),
-        (["123", "--number", "123"], {"0": "123", "number": "123"}),
+        (["abc", "--number", "123"], {"0": "abc", "number": "123"}),
+        (["--number", "123", "abc"], {"0": "abc", "number": "123"}),
         (
             ["zero", "one", "two", "three"],
             {"0": "zero", "1": "one", "2": "two", "3": "three"},
