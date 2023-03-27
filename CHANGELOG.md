@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.34.0 (2023-03-27)
+### Feature
+* **tracer:** Add support for optional cli_args ([`a7b5a9d`](https://github.com/lt-mayonesa/hexagon/commit/a7b5a9d9779c3990687db31c83f20393dd552bec))
+
 ## v0.33.0 (2023-03-26)
 ### Feature
 * **cli-args:** Pass extra cli args to execution of actions ([`528827a`](https://github.com/lt-mayonesa/hexagon/commit/528827a3130abbbd4318846036130f9370ff55f0))
