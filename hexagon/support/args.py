@@ -1,7 +1,7 @@
 import argparse
 import re
 import sys
-from typing import Optional, Dict, List, Any
+from typing import Optional, Dict, List, Union
 
 from pydantic import BaseModel
 
@@ -19,8 +19,17 @@ class CliArgs(BaseModel):
     tool: Optional[str] = None
     env: Optional[str] = None
 
-    extra_args: Optional[Dict[str, Any]] = None
+    extra_args: Optional[Dict[str, Union[list, bool, int, str]]] = None
     raw_extra_args: Optional[List[str]] = None
+
+    def as_list(self):
+        return [self.tool, self.env] + (
+            self.raw_extra_args if self.raw_extra_args else []
+        )
+
+    @staticmethod
+    def key_value_arg(key, arg):
+        return f"{ARGUMENT_KEY_PREFIX}{key}={arg}"
 
 
 def parse_cli_args(args=None):
@@ -92,18 +101,26 @@ def __guess_optional_keys(extra: List[str]):
     if not extra:
         return None
 
-    result = __guess_indexes(extra)
-    return __group_by_key(result)
+    result = __args_to_key_vals(extra)
+    return __group_by_key_appending(result)
 
 
-def __guess_indexes(extra):
+def __args_to_key_vals(extra):
     result = []
     i = 0
     arg_index = 0
     while i < len(extra):
         if extra[i].startswith(ARGUMENT_KEY_PREFIX):
-            result.append({extra[i][2:]: extra[i + 1]})
-            i += 2
+            if "=" in extra[i]:
+                key, value = extra[i][2:].split("=")
+                result.append({key: value})
+                i += 1
+            elif extra[i + 1].startswith(ARGUMENT_KEY_PREFIX):
+                result.append({extra[i][2:]: True})
+                i += 1
+            else:
+                result.append({extra[i][2:]: extra[i + 1]})
+                i += 2
         else:
             result.append({str(arg_index): extra[i]})
             i += 1
@@ -111,7 +128,7 @@ def __guess_indexes(extra):
     return result
 
 
-def __group_by_key(result):
+def __group_by_key_appending(result):
     d = {}
     for r in result:
         for k, v in r.items():

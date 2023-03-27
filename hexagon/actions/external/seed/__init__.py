@@ -1,7 +1,7 @@
-from hexagon.actions.external.seed.react import scaffold_react
-from hexagon.actions.external.seed.springboot import scaffold_springboot
 from InquirerPy import inquirer
 
+from hexagon.actions.external.seed.react import scaffold_react
+from hexagon.actions.external.seed.springboot import scaffold_springboot
 from hexagon.support.tracer import tracer
 
 SEEDS = ["springboot", "react", "nextjs"]
@@ -21,7 +21,7 @@ def main(tool, env, env_args, cli_args):
     ):
         seed = cli_args[0]
 
-    seed = tracer.tracing(
+    seed = tracer().tracing(
         seed
         or inquirer.fuzzy(message="¿Qué seed querés usar?", choices=SEEDS).execute()
     )

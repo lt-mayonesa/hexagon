@@ -1,33 +1,35 @@
-import sys
 from typing import List, Union
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ToolType, ActionTool, GroupTool
+from hexagon.support.args import CliArgs
 
 
 class Tracer:
-    def __init__(self, initial_trace):
-        self.initial_trace = initial_trace
-        self.trace = []
+    def __init__(self, initial_cli_args: CliArgs):
+        self._initial_args = initial_cli_args
+        self._trace = []
 
-    def tracing(self, what: str):
-        if what:
-            self.trace.append(what)
-        return what
+    def tracing(self, arg: Union[str, list], key: str = None):
+        if arg:
+            if key:
+                for val in arg if isinstance(arg, list) else [arg]:
+                    self._trace.append(CliArgs.key_value_arg(key, val))
+            else:
+                self._trace.append(arg)
+        return arg
 
     def remove_last(self):
-        del self.trace[-1]
+        del self._trace[-1]
 
-    def command(self):
-        return " ".join(self.trace)
+    def trace(self):
+        return " ".join(self._trace)
 
-    def command_as_aliases(
-        self, tools: List[Union[ActionTool, GroupTool]], envs: List[Env]
-    ):
-        if len(self.trace) < 1:
+    def aliases_trace(self, tools: List[Union[ActionTool, GroupTool]], envs: List[Env]):
+        if len(self._trace) < 1:
             return ""
 
-        first_arg = self.trace[:1][0]
+        first_arg = self._trace[:1][0]
 
         _tool = next((t for t in tools if t.name == first_arg), None)
         if not _tool:
@@ -40,17 +42,33 @@ class Tracer:
     def __collect_aliases(self, _tool, envs):
         _t = _tool
         aliases = []
-        for trace in self.trace[1:]:
+        for trace in self._trace[1:]:
             _env_alias = next(([x.alias] for x in envs if x.name == trace), [])
             if not _env_alias and _t.type == ToolType.group:
                 _t = next((x for x in _t.tools if x.name == trace), None)
-                _env_alias = [_t.alias]
+                if _t and _t.alias:
+                    _env_alias = [_t.alias]
 
             aliases += _env_alias or [trace]
         return aliases
 
     def has_traced(self):
-        return len(self.trace) > len(self.initial_trace)
+        return (
+            len([x for x in self._trace if x not in self._initial_args.as_list()]) > 0
+        )
 
 
-tracer = Tracer(sys.argv[1:])
+_tracer = None
+
+
+def tracer():
+    global _tracer
+    if not _tracer:
+        raise Exception("Tracer not initialized")
+    return _tracer
+
+
+def init_tracer(args: CliArgs):
+    global _tracer
+    _tracer = Tracer(args)
+    return _tracer

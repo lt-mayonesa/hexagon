@@ -25,9 +25,9 @@ def main(
     :return:
     """
 
-    # tracer.tracing is the way of letting hexagon know you asked the user for a parameter for your tool.
+    # tracer().tracing is the way of letting hexagon know you asked the user for a parameter for your tool.
     # this lets hexagon build the "To repeat this command" message correctly
-    name = tracer.tracing(
+    name = tracer().tracing(
         (cli_args and cli_args["last-name"])
         or inquirer.text(
             message="What's your last name?",

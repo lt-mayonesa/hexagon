@@ -22,7 +22,7 @@ def main(tool, env, env_args, cli_args):
         __x = requests.get(_url, headers={"Authorization": f"Basic {auth}"}).json()
         return __x[j_path] if j_path else __x
 
-    image = tracer.tracing(
+    image = tracer().tracing(
         _image
         or inquirer.fuzzy(
             message=_("action.actions.external.docker_registry.prompt_docker_image"),
@@ -32,7 +32,7 @@ def main(tool, env, env_args, cli_args):
         ).execute()
     )
 
-    tag = tracer.tracing(
+    tag = tracer().tracing(
         _filter
         or inquirer.fuzzy(
             message=_("action.actions.external.docker_registry.prompt_tag"),

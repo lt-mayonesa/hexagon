@@ -63,9 +63,9 @@ def test_cli_args_env_is_second_positional_argument():
     "optional_args,expected",
     [
         ([], None),
-        (["--number", "123"], {"number": "123"}),
-        (["abc", "--number", "123"], {"0": "abc", "number": "123"}),
-        (["--number", "123", "abc"], {"0": "abc", "number": "123"}),
+        (["--number", "123"], {"number": 123}),
+        (["abc", "--number", "123"], {"0": "abc", "number": 123}),
+        (["--number", "123", "abc"], {"0": "abc", "number": 123}),
         (
             ["zero", "one", "two", "three"],
             {"0": "zero", "1": "one", "2": "two", "3": "three"},
@@ -74,10 +74,10 @@ def test_cli_args_env_is_second_positional_argument():
             ["zero", "zero", "zero", "zero"],
             {"0": "zero", "1": "zero", "2": "zero", "3": "zero"},
         ),
-        (["--number", "123", "--name", "John"], {"number": "123", "name": "John"}),
+        (["--number", "123", "--name", "John"], {"number": 123, "name": "John"}),
         (
-            ["--number", "123", "--name", "John", "--name", "Doe"],
-            {"number": "123", "name": ["John", "Doe"]},
+            ["--name", "John", "--name", "Doe"],
+            {"name": ["John", "Doe"]},
         ),
         (
             [
@@ -93,21 +93,56 @@ def test_cli_args_env_is_second_positional_argument():
             ],
             {
                 "0": "zero",
-                "number": "123",
+                "number": 123,
                 "name": ["John", "Doe"],
                 "1": "one",
                 "2": "two",
             },
         ),
+        (
+            ["--foo", "bar", "--bar=baz", "--some", "--bass="],
+            {
+                "foo": "bar",
+                "bar": "baz",
+                "some": True,
+                "bass": "",
+            },
+        ),
     ],
 )
-def test_cli_args_all_extra_arguments_are_optional_and_schemaless(
-    optional_args, expected
-):
+def test_cli_args_all_extra_arguments_mapping(optional_args, expected):
     actual = parse_cli_args(["some-tool", "some-env"] + optional_args)
     assert actual.tool == "some-tool"
     assert actual.env == "some-env"
     assert actual.extra_args == expected
+
+
+@pytest.mark.parametrize(
+    "args,expected",
+    [
+        (["some-tool", "some-env"], ["some-tool", "some-env"]),
+        (
+            ["some-tool", "some-env", "--number=123"],
+            ["some-tool", "some-env", "--number=123"],
+        ),
+        (["some-tool", "some-env", "abc"], ["some-tool", "some-env", "abc"]),
+        (
+            ["some-tool", "some-env", "--number", "123", "abc"],
+            ["some-tool", "some-env", "--number", "123", "abc"],
+        ),
+        (
+            ["some-tool", "some-env", "abc", "--number", "123"],
+            ["some-tool", "some-env", "abc", "--number", "123"],
+        ),
+        (
+            ["some-tool-group", "group-zero", "grou-one", "env", "--some-arg", "val"],
+            ["some-tool-group", "group-zero", "grou-one", "env", "--some-arg", "val"],
+        ),
+    ],
+)
+def test_cli_args_as_list(args, expected):
+    actual = parse_cli_args(args)
+    assert actual.as_list() == expected
 
 
 @pytest.mark.parametrize(

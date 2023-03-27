@@ -2,6 +2,7 @@ import pytest
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool, GroupTool, ToolType
+from hexagon.support.args import parse_cli_args
 from hexagon.support.tracer import Tracer
 
 tools_dict = [
@@ -61,47 +62,79 @@ envs_dict = [Env(name="dev", alias="d"), Env(name="qa", alias="q")]
 
 
 @pytest.mark.parametrize(
-    "initial,expected_command",
-    [([], ""), ([""], ""), (["docker"], ""), (["docker", "dev"], "")],
+    "initial,expected_trace",
+    [
+        (parse_cli_args([]), ""),
+        (parse_cli_args(["docker"]), ""),
+        (parse_cli_args(["docker", "dev"]), ""),
+    ],
 )
-def test_build_command_from_initial_trace(initial, expected_command):
+def test_build_command_from_initial_trace(initial, expected_trace):
     tracer = Tracer(initial)
-    assert tracer.command() == expected_command
-    assert tracer.command_as_aliases(tools_dict, envs_dict) == expected_command
+    assert tracer.trace() == expected_trace
+    assert tracer.aliases_trace(tools_dict, envs_dict) == expected_trace
 
 
 @pytest.mark.parametrize(
-    "initial,traced,has_traced,expected_command,expected_alias",
+    "args,traces,has_traced,expected_trace,expected_alias",
     [
-        ([], [], False, "", ""),
-        ([""], [""], False, "", ""),
-        (["docker"], ["docker"], False, "docker", "d"),
-        ([], ["no-alias"], True, "no-alias", "no-alias"),
+        (parse_cli_args([]), [], False, "", ""),
+        (parse_cli_args(["docker"]), ["docker"], False, "docker", "d"),
+        (parse_cli_args([]), ["no-alias"], True, "no-alias", "no-alias"),
         (
-            ["docker", "dev"],
+            parse_cli_args(["docker", "dev"]),
             ["docker", "dev", "something"],
             True,
             "docker dev something",
             "d d something",
         ),
-        (["tool-group", "one"], ["tool-group", "one"], False, "tool-group one", "tg o"),
-        ([], ["tool-group", "one"], True, "tool-group one", "tg o"),
         (
-            [],
+            parse_cli_args(["docker", "dev", "--foo", "bar"]),
+            ["docker", "dev", ("foo", "bar")],
+            True,
+            "docker dev --foo=bar",
+            "d d --foo=bar",
+        ),
+        (
+            parse_cli_args(["docker", "dev", "--foo=bar", "--foo=baz"]),
+            ["docker", "dev", ("foo", ["bar", "baz"])],
+            False,
+            "docker dev --foo=bar --foo=baz",
+            "d d --foo=bar --foo=baz",
+        ),
+        (
+            parse_cli_args(
+                ["docker", "dev", "--foo", "bar", "--bar", "baz", "my-value"]
+            ),
+            ["docker", "dev", ("foo", "bar"), ("bar", "baz"), "my-value"],
+            True,
+            "docker dev --foo=bar --bar=baz my-value",
+            "d d --foo=bar --bar=baz my-value",
+        ),
+        (
+            parse_cli_args(["tool-group", "one"]),
+            ["tool-group", "one"],
+            False,
+            "tool-group one",
+            "tg o",
+        ),
+        (parse_cli_args([]), ["tool-group", "one"], True, "tool-group one", "tg o"),
+        (
+            parse_cli_args([]),
             ["tool-group-envs", "dev", "one"],
             True,
             "tool-group-envs dev one",
             "tge d o",
         ),
         (
-            [],
+            parse_cli_args([]),
             ["tool-group-envs", "qa", "two", "dev"],
             True,
             "tool-group-envs qa two dev",
             "tge q t d",
         ),
         (
-            [],
+            parse_cli_args([]),
             ["tool-group-envs", "qa", "tool-group-inner", "qa", "inner_two", "dev"],
             True,
             "tool-group-envs qa tool-group-inner qa inner_two dev",
@@ -110,11 +143,14 @@ def test_build_command_from_initial_trace(initial, expected_command):
     ],
 )
 def test_build_command_from_traced(
-    initial, traced, has_traced, expected_command, expected_alias
+    args, traces, has_traced, expected_trace, expected_alias
 ):
-    tracer = Tracer(initial)
-    for t in traced:
-        tracer.tracing(t)
+    tracer = Tracer(args)
+    for t in traces:
+        if isinstance(t, tuple):
+            tracer.tracing(t[1], key=t[0])
+        else:
+            tracer.tracing(t)
     assert tracer.has_traced() == has_traced
-    assert tracer.command() == expected_command
-    assert tracer.command_as_aliases(tools_dict, envs_dict) == expected_alias
+    assert tracer.trace() == expected_trace
+    assert tracer.aliases_trace(tools_dict, envs_dict) == expected_alias

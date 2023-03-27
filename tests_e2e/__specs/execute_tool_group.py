@@ -1,7 +1,7 @@
 from tests_e2e.__specs.utils.hexagon_spec import as_a_user
 
 
-def test_execute_tool_group_from_ui():
+def test_execute_tool_group_from_gui():
     (
         as_a_user(__file__)
         .run_hexagon()
@@ -9,6 +9,21 @@ def test_execute_tool_group_from_ui():
         .enter()
         .enter()
         .then_output_should_be(["executed python_module"], True)
+        .exit()
+    )
+
+
+def test_execute_tool_group_with_no_alias_from_gui():
+    (
+        as_a_user(__file__)
+        .run_hexagon()
+        .arrow_down()
+        .arrow_down()
+        .enter()
+        .enter()
+        .then_output_should_be(
+            ["custom tools directory action"], discard_until_first_match=True
+        )
         .exit()
     )
 

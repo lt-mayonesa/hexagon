@@ -11,7 +11,7 @@ from hexagon.support.storage import (
     HexagonStorageKeys,
     store_user_data,
 )
-from hexagon.support.tracer import tracer
+from hexagon.support.tracer import init_tracer
 from hexagon.support.update.cli import check_for_cli_updates
 from hexagon.support.update.hexagon import check_for_hexagon_updates
 
@@ -23,6 +23,7 @@ def main():
         return print_help(cli, tools, envs)
 
     collect_plugins()
+    tracer = init_tracer(args)
 
     HexagonHooks.start.run()
     log.start(f"[bold]{cli.name}")
@@ -48,14 +49,14 @@ def main():
 
         log.finish()
 
-        command = tracer.command()
+        command = tracer.trace()
         if tracer.has_traced():
             log.extra(
                 _("msg.main.tracer.run_again").format(
                     command=" ".join([cli.command, command])
                 )
             )
-            command_as_aliases = tracer.command_as_aliases(tools, envs)
+            command_as_aliases = tracer.aliases_trace(tools, envs)
             if command_as_aliases and command != command_as_aliases:
                 log.extra(
                     _("msg.main.tracer.or").format(

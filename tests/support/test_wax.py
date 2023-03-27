@@ -1,8 +1,8 @@
 import pytest
 from InquirerPy import inquirer
 
-from hexagon.domain.tool import Tool
 from hexagon.domain.env import Env
+from hexagon.domain.tool import Tool
 from hexagon.support import wax
 
 
