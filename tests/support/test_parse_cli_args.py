@@ -1,6 +1,10 @@
-import pytest
+from typing import List, Set, Optional
 
-from hexagon.support.args import parse_cli_args
+import pytest
+from pydantic import ValidationError, BaseModel
+
+from hexagon.domain.args import PositionalArg, OptionalArg
+from hexagon.support.args import parse_cli_args, __should_support_multiple_args
 
 
 def test_no_cli_args_passed():
@@ -41,7 +45,9 @@ def test_cli_args_only_tool_passed(args, expected):
     ],
 )
 def test_cli_args_handle_invalid_args(args):
-    with pytest.raises(SystemExit, match="2"):
+    with pytest.raises(
+        ValidationError, match=" must be a string and not contain special characters"
+    ):
         parse_cli_args(args)
 
 
@@ -157,3 +163,26 @@ def test_cli_args_should_show_help(args):
     assert actual.show_help is True
     assert actual.tool is None
     assert actual.env is None
+
+
+def test_get_generic_type_hint():
+    class TestModel(BaseModel):
+        name: PositionalArg[str] = None
+        last_names: PositionalArg[List[str]] = None
+        age: OptionalArg[int] = None
+        friends: OptionalArg[List[int]] = None
+        enemies: OptionalArg[Set[int]] = None
+        relatives: OptionalArg[set] = None
+        parents: OptionalArg[tuple] = None
+        grand_parents: Optional[OptionalArg[tuple]] = None
+
+    model = TestModel()
+
+    assert __should_support_multiple_args(model.__fields__["name"]) is False
+    assert __should_support_multiple_args(model.__fields__["last_names"]) is True
+    assert __should_support_multiple_args(model.__fields__["age"]) is False
+    assert __should_support_multiple_args(model.__fields__["friends"]) is True
+    assert __should_support_multiple_args(model.__fields__["enemies"]) is True
+    assert __should_support_multiple_args(model.__fields__["relatives"]) is True
+    assert __should_support_multiple_args(model.__fields__["parents"]) is True
+    assert __should_support_multiple_args(model.__fields__["grand_parents"]) is True

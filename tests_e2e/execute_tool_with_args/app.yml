@@ -1,0 +1,26 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+
+envs:
+  - name: dev
+    alias: d
+    long_name: dev
+  - name: qa
+    alias: q
+    long_name: qa
+
+tools:
+
+  - name: p-m-args
+    action: python_module_args
+    type: shell
+    alias: pma
+    long_name: Python Module Script With Args
+
+  - name: only-optionals
+    action: python_module_only_optionals
+    type: shell
+    alias: oo
+    long_name: Python Module Script With Only Optional Args

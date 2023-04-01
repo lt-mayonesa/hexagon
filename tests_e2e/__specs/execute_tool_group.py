@@ -94,6 +94,7 @@ def test_execute_tool_group_in_different_directory_with_default_custom_tools_dir
         as_a_user(__file__)
         .run_hexagon(["group-in-dir", "echo"])
         .then_output_should_be(["group tools in dir"])
+        .exit()
     )
 
 
@@ -116,4 +117,5 @@ def test_execute_tool_inside_inline_group():
         as_a_user(__file__)
         .run_hexagon(["inline-group", "echo-2"])
         .then_output_should_be(["inline tool 2"])
+        .exit()
     )

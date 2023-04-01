@@ -1,11 +1,10 @@
 import argparse
-import re
 import sys
-from typing import Optional, Dict, List, Union
+from typing import List
 
-from pydantic import BaseModel
+from pydantic.fields import ModelField
 
-ARGUMENT_KEY_PREFIX = "--"
+from hexagon.domain.args import CliArgs, ARGUMENT_KEY_PREFIX, OptionalArg, PositionalArg
 
 
 def cli_arg(cli_arguments, index):
@@ -14,29 +13,11 @@ def cli_arg(cli_arguments, index):
     )
 
 
-class CliArgs(BaseModel):
-    show_help: bool = False
-    tool: Optional[str] = None
-    env: Optional[str] = None
-
-    extra_args: Optional[Dict[str, Union[list, bool, int, str]]] = None
-    raw_extra_args: Optional[List[str]] = None
-
-    def as_list(self):
-        return [self.tool, self.env] + (
-            self.raw_extra_args if self.raw_extra_args else []
-        )
-
-    @staticmethod
-    def key_value_arg(key, arg):
-        return f"{ARGUMENT_KEY_PREFIX}{key}={arg}"
-
-
 def parse_cli_args(args=None):
     if args is None:
         args = sys.argv[1:]
 
-    _parser = __init_parser()
+    _parser = init_arg_parser(CliArgs)
 
     known_args, extra = _parser.parse_known_args(args)
 
@@ -56,37 +37,62 @@ def parse_cli_args(args=None):
     return CliArgs(**data)
 
 
-def __init_parser():
+def init_arg_parser(model, fields=None, prog=None, description=None):
     """
     Add Pydantic model to an ArgumentParser
     """
     __p = argparse.ArgumentParser(
-        prog="hexagon", description="Hexagon CLI", add_help=False
+        prog=prog or "hexagon", description=description or "Hexagon CLI", add_help=False
     )
-    __add_parser_argument(__p, CliArgs.__fields__.get("tool"))
-    __add_parser_argument(__p, CliArgs.__fields__.get("env"))
+    for field in model.__fields__.values():
+        if fields and field.name not in fields:
+            continue
+        if field.type_ in [PositionalArg, OptionalArg]:
+            __add_parser_argument(__p, field)
     return __p
 
 
-def __add_parser_argument(parser, field):
+def __add_parser_argument(parser, field: ModelField):
+    reprs = field.type_.cli_repr(field)
+    nargs, action = __config_base_on_type(field)
     parser.add_argument(
-        field.name,
-        nargs="?",
-        type=__validate_special_characters(field.name),
+        *[x for x in reprs if x],
+        nargs=nargs,
+        action=action,
         default=field.default,
         help=field.field_info.description,
     )
 
 
-def __validate_special_characters(field_name):
-    def field(value):
-        if value and not re.match("^[a-zA-Z0-9\\-_]+$", value):
-            raise ValueError(
-                f"{field_name} must be a string and not contain special characters"
-            )
-        return value
+def __config_base_on_type(field):
+    """
+    Return a tuple with the number of arguments and the action to be taken
+    if the field is any kind of collection, nargs should be * and the action is "extend"
+    :param field:
+    :return:
+    """
+    return (
+        (
+            "*",
+            "extend",
+        )
+        if field.type_ == OptionalArg and __should_support_multiple_args(field)
+        else (
+            "?",
+            "store",
+        )
+    )
 
-    return field
+
+def __should_support_multiple_args(field):
+    iterables = [list, tuple, set]
+    t = field.outer_type_
+    while hasattr(t, "__args__") and len(t.__args__) > 0:
+        t = t.__args__[0]
+        if hasattr(t, "__origin__") and t.__origin__ in iterables:
+            return True
+
+    return t in iterables
 
 
 def __guess_optional_keys(extra: List[str]):
@@ -109,6 +115,7 @@ def __args_to_key_vals(extra):
     result = []
     i = 0
     arg_index = 0
+    # FIXME: handle case where optional arg is last, ie: "tool env --verbose"
     while i < len(extra):
         if extra[i].startswith(ARGUMENT_KEY_PREFIX):
             if "=" in extra[i]:
