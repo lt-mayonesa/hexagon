@@ -8,9 +8,9 @@ from hexagon.domain.tool import (
     ToolType,
 )
 from hexagon.domain.tool.execution import ToolExecutionParameters
-from hexagon.support.args import CliArgs, parse_cli_args
 from hexagon.support.execute.action import execute_action
 from hexagon.support.hooks import HexagonHooks
+from hexagon.support.parse_args import CliArgs, parse_cli_args
 from hexagon.support.tracer import tracer
 from hexagon.support.wax import search_by_name_or_alias, select_env, select_tool
 

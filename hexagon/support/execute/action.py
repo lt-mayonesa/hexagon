@@ -12,8 +12,8 @@ from hexagon.domain import configuration
 from hexagon.domain.args import CliArgs
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
-from hexagon.support.args import init_arg_parser
 from hexagon.support.execute.execution_hook import execution_hook
+from hexagon.support.parse_args import init_arg_parser
 from hexagon.support.printer import log
 from hexagon.support.tracer import tracer
 

@@ -2,10 +2,10 @@ import sys
 
 from hexagon.domain import cli, tools, envs
 from hexagon.plugins import collect_plugins
-from hexagon.support.args import parse_cli_args
 from hexagon.support.execute.tool import select_and_execute_tool
 from hexagon.support.help import print_help
 from hexagon.support.hooks import HexagonHooks
+from hexagon.support.parse_args import parse_cli_args
 from hexagon.support.printer import log
 from hexagon.support.storage import (
     HexagonStorageKeys,

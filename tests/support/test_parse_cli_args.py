@@ -4,7 +4,7 @@ import pytest
 from pydantic import ValidationError, BaseModel
 
 from hexagon.domain.args import PositionalArg, OptionalArg
-from hexagon.support.args import parse_cli_args, __should_support_multiple_args
+from hexagon.support.parse_args import parse_cli_args, __should_support_multiple_args
 
 
 def test_no_cli_args_passed():

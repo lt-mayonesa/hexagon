@@ -2,7 +2,7 @@ from typing import List, Union
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ToolType, ActionTool, GroupTool
-from hexagon.support.args import CliArgs
+from hexagon.support.parse_args import CliArgs
 
 
 class Tracer:
