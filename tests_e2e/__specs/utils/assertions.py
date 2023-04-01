@@ -25,12 +25,15 @@ def _save_last_output(lines: List[str]):
 
 
 def _save_last_output_and_raise(
-    process: subprocess.Popen, lines_read: List[str], error: Exception, timeouted=False
+    process: subprocess.Popen,
+    lines_read: List[str],
+    error: Exception = None,
+    timeout_reached=False,
 ):
     __tracebackhide__ = True
     process.kill()
     lines: List[str] = [*lines_read]
-    if not timeouted:
+    if not timeout_reached:
         for line in process.stdout.readlines():
             lines.append(line)
     print("command output:")
@@ -42,13 +45,14 @@ def _save_last_output_and_raise(
         print(line.rstrip())
 
     _save_last_output(lines)
-    raise error
+    if error:
+        raise error
 
 
 def _check_process_return_code(process: subprocess.Popen, exit_status: int = 0):
     __tracebackhide__ = True
     return_code = process.returncode
-    if return_code:
+    if type(return_code) is int:
         error = "\n".join(process.stderr.readlines())
         assert return_code == exit_status, (
             f"Got return_code {return_code}, but {exit_status} was expected\n"
@@ -95,7 +99,7 @@ def _read_next_line(process: subprocess.Popen, lines_read: List[str]):
             process,
             lines_read,
             Exception("Timeout reading from process"),
-            timeouted=True,
+            timeout_reached=True,
         )
 
     signal.signal(signal.SIGALRM, timeout_handler)
@@ -226,20 +230,27 @@ def assert_process_output(
                 )
             attempts += 1
 
+    return lines_read
+
 
 def assert_process_ended(
-    process: subprocess.Popen, exit_status: int = 0, timeout_in_seconds: int = 5
+    process: subprocess.Popen,
+    exit_status: int = 0,
+    timeout_in_seconds: int = 5,
+    lines_read: List[str] = None,
 ):
     __tracebackhide__ = True
 
     if debugger_is_active():
         timeout_in_seconds = 60 * 5  # 5 minutes
 
+    err = None
     try:
         process.wait(timeout_in_seconds)
     except Exception as error:
-        _save_last_output_and_raise(process, [], error)
+        err = error
 
+    _save_last_output_and_raise(process, lines_read or [], err)
     _check_process_return_code(process, exit_status)
 
 
