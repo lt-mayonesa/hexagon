@@ -38,18 +38,29 @@ def parse_cli_args(args=None):
 
 
 def init_arg_parser(model, fields=None, prog=None, description=None):
-    """
-    Add Pydantic model to an ArgumentParser
-    """
     __p = argparse.ArgumentParser(
         prog=prog or "hexagon", description=description or "Hexagon CLI", add_help=False
     )
+
+    if sys.version_info < (3, 8):
+        __polyfill_extend_action(__p)
+
     for field in model.__fields__.values():
         if fields and field.name not in fields:
             continue
         if field.type_ in [PositionalArg, OptionalArg]:
             __add_parser_argument(__p, field)
     return __p
+
+
+def __polyfill_extend_action(__p):
+    class ExtendAction(argparse.Action):
+        def __call__(self, parser, namespace, values, option_string=None):
+            items = getattr(namespace, self.dest) or []
+            items.extend(values)
+            setattr(namespace, self.dest, items)
+
+    __p.register("action", "extend", ExtendAction)
 
 
 def __add_parser_argument(parser, field: ModelField):
