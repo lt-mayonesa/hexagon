@@ -30,6 +30,7 @@ class HexagonSpec:
         self.__file = file
         self.process: Optional[Popen[str]] = None
         self.command = None
+        self.lines_read: List[str] = []
 
     def given_a_cli_yaml(self, config: dict):
         write_hexagon_config(self.__file, config)
@@ -72,11 +73,12 @@ class HexagonSpec:
         discard_until_first_match=False,
     ):
         __tracebackhide__ = True
-        assert_process_output(
+        lines_read = assert_process_output(
             self.process,
             expected_output,
             discard_until_first_match=discard_until_first_match,
         )
+        self.lines_read.extend(lines_read)
         return self
 
     def then_output_should_not_contain(
@@ -120,8 +122,14 @@ class HexagonSpec:
 
     def exit(self, status: int = 0, timeout_in_seconds: int = 5):
         __tracebackhide__ = True
-        assert_process_ended(self.process, status, timeout_in_seconds)
+        assert_process_ended(
+            self.process,
+            exit_status=status,
+            timeout_in_seconds=timeout_in_seconds,
+            lines_read=self.lines_read,
+        )
         clean_hexagon_environment()
+        return self
 
     @property
     def _and_(self):
