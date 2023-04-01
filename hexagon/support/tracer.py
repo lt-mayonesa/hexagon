@@ -8,6 +8,7 @@ from hexagon.support.args import CliArgs
 class Tracer:
     def __init__(self, initial_cli_args: CliArgs):
         self._initial_args = initial_cli_args
+        # TODO: store PositionalArg and OptionalArg in trace instead of strings
         self._trace = []
 
     def tracing(self, arg: Union[str, list], key: str = None):
@@ -23,7 +24,7 @@ class Tracer:
         del self._trace[-1]
 
     def trace(self):
-        return " ".join(self._trace)
+        return " ".join([str(x) for x in self._trace])
 
     def aliases_trace(self, tools: List[Union[ActionTool, GroupTool]], envs: List[Env]):
         if len(self._trace) < 1:
@@ -50,7 +51,7 @@ class Tracer:
                     _env_alias = [_t.alias]
 
             aliases += _env_alias or [trace]
-        return aliases
+        return [str(a) for a in aliases]
 
     def has_traced(self):
         return (
