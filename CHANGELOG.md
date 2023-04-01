@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.35.0 (2023-04-01)
+### Feature
+* **args:** Added support for tool args ([`ebd5443`](https://github.com/lt-mayonesa/hexagon/commit/ebd5443d2d732099765cd7fb869e8cc70818b85e))
+
+### Fix
+* **args:** Support extend on python 3.7 ([`e4c0581`](https://github.com/lt-mayonesa/hexagon/commit/e4c0581a75a635dfb43f1a7166e1f0fd023b7a6d))
+
 ## v0.34.0 (2023-03-27)
 ### Feature
 * **tracer:** Add support for optional cli_args ([`a7b5a9d`](https://github.com/lt-mayonesa/hexagon/commit/a7b5a9d9779c3990687db31c83f20393dd552bec))
