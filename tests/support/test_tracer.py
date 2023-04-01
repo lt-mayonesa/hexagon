@@ -2,7 +2,7 @@ import pytest
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool, GroupTool, ToolType
-from hexagon.support.args import parse_cli_args
+from hexagon.support.parse_args import parse_cli_args
 from hexagon.support.tracer import Tracer
 
 tools_dict = [

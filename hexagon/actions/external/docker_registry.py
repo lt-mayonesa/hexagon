@@ -5,7 +5,7 @@ import clipboard
 import requests
 from InquirerPy import inquirer
 
-from hexagon.support.args import cli_arg
+from hexagon.support.parse_args import cli_arg
 from hexagon.support.printer import log
 from hexagon.support.tracer import tracer
 
