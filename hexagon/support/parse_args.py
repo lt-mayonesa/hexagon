@@ -126,21 +126,21 @@ def __args_to_key_vals(extra):
     result = []
     i = 0
     arg_index = 0
-    # FIXME: handle case where optional arg is last, ie: "tool env --verbose"
     while i < len(extra):
-        if extra[i].startswith(ARGUMENT_KEY_PREFIX):
-            if "=" in extra[i]:
-                key, value = extra[i][2:].split("=")
+        current, next_ = extra[i], extra[i + 1] if i + 1 < len(extra) else None
+        if current.startswith(ARGUMENT_KEY_PREFIX):
+            if "=" in current:
+                key, value = current[2:].split("=")
                 result.append({key: value})
                 i += 1
-            elif extra[i + 1].startswith(ARGUMENT_KEY_PREFIX):
-                result.append({extra[i][2:]: True})
+            elif not next_ or next_.startswith(ARGUMENT_KEY_PREFIX):
+                result.append({current[2:]: True})
                 i += 1
             else:
-                result.append({extra[i][2:]: extra[i + 1]})
+                result.append({current[2:]: next_})
                 i += 2
         else:
-            result.append({str(arg_index): extra[i]})
+            result.append({str(arg_index): current})
             i += 1
             arg_index += 1
     return result

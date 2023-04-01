@@ -123,6 +123,13 @@ def test_cli_args_all_extra_arguments_mapping(optional_args, expected):
     assert actual.extra_args == expected
 
 
+def test_last_optional_arg_is_not_a_value():
+    actual = parse_cli_args(["some-tool", "some-env", "--number"])
+    assert actual.tool == "some-tool"
+    assert actual.env == "some-env"
+    assert actual.extra_args == {"number": True}
+
+
 @pytest.mark.parametrize(
     "args,expected",
     [
