@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.35.1 (2023-04-01)
+### Fix
+* **args:** Handle case when last optional arg has missing value ([`e05004b`](https://github.com/lt-mayonesa/hexagon/commit/e05004bf393ed79bf3a7283fe4d8938aa3a5d236))
+
 ## v0.35.0 (2023-04-01)
 ### Feature
 * **args:** Added support for tool args ([`ebd5443`](https://github.com/lt-mayonesa/hexagon/commit/ebd5443d2d732099765cd7fb869e8cc70818b85e))
