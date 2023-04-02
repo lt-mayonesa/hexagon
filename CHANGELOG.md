@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.36.0 (2023-04-02)
+### Feature
+* **args:** Show help text for tools ([`9e387a7`](https://github.com/lt-mayonesa/hexagon/commit/9e387a7f0872029fd703c0bb87fba35ac6b7aa71))
+
 ## v0.35.1 (2023-04-01)
 ### Fix
 * **args:** Handle case when last optional arg has missing value ([`e05004b`](https://github.com/lt-mayonesa/hexagon/commit/e05004bf393ed79bf3a7283fe4d8938aa3a5d236))
