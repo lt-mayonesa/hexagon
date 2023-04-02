@@ -7,24 +7,41 @@ from pydantic.fields import ModelField
 from hexagon.domain.args import CliArgs, ARGUMENT_KEY_PREFIX, OptionalArg, PositionalArg
 
 
+# noinspection PyProtectedMember
+class HexagonFormatter(argparse.ArgumentDefaultsHelpFormatter):
+    """
+    Custom formatter that merges ArgumentDefaultsHelpFormatter and RawDescriptionHelpFormatter
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._extra_formatter = argparse.RawTextHelpFormatter(*args, **kwargs)
+
+    def _fill_text(self, text, width, indent):
+        return self._extra_formatter._fill_text(text, width, indent)
+
+    def _split_lines(self, text, width):
+        return self._extra_formatter._split_lines(text, width)
+
+
 def cli_arg(cli_arguments, index):
     return (
         cli_arguments[index] if cli_arguments and len(cli_arguments) > index else None
     )
 
 
-def parse_cli_args(args=None):
+def parse_cli_args(args=None, model=CliArgs, **kwargs):
     if args is None:
         args = sys.argv[1:]
 
-    _parser = init_arg_parser(CliArgs)
+    _parser = init_arg_parser(model, **kwargs)
 
     known_args, extra = _parser.parse_known_args(args)
 
-    if (not known_args.tool and not known_args.env) and any(
+    if all(not x for x in known_args.__dict__.values()) and any(
         [a in ["-h", "--help"] for a in args]
     ):
-        return CliArgs(show_help=True)
+        return model(show_help=True)
 
     extra_args = __guess_optional_keys(extra)
     data = vars(known_args)
@@ -34,14 +51,19 @@ def parse_cli_args(args=None):
             "extra_args": extra_args if extra_args else None,
         }
     )
-    return CliArgs(**data)
+    return model(**data)
 
 
-def init_arg_parser(model, fields=None, prog=None, description=None):
+def init_arg_parser(
+    model, fields=None, prog=None, description=None, add_help=False, epilog=None
+):
     __p = argparse.ArgumentParser(
-        prog=prog or "hexagon", description=description or "Hexagon CLI", add_help=False
+        prog=prog or "hexagon",
+        description=description or "Hexagon CLI",
+        add_help=add_help,
+        epilog=epilog,
+        formatter_class=HexagonFormatter,
     )
-
     if sys.version_info < (3, 8):
         __polyfill_extend_action(__p)
 
@@ -71,7 +93,8 @@ def __add_parser_argument(parser, field: ModelField):
         nargs=nargs,
         action=action,
         default=field.default,
-        help=field.field_info.description,
+        type=str,  # type validation is handled by pydantic models
+        help=field.field_info.description or field.name,
     )
 
 
@@ -96,14 +119,10 @@ def __config_base_on_type(field):
 
 
 def __should_support_multiple_args(field):
-    iterables = [list, tuple, set]
-    t = field.outer_type_
-    while hasattr(t, "__args__") and len(t.__args__) > 0:
-        t = t.__args__[0]
-        if hasattr(t, "__origin__") and t.__origin__ in iterables:
-            return True
-
-    return t in iterables
+    type_ = field.sub_fields[0].outer_type_
+    if hasattr(type_, "__origin__"):
+        type_ = type_.__origin__
+    return type_ in [list, tuple, set]
 
 
 def __guess_optional_keys(extra: List[str]):

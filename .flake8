@@ -8,5 +8,5 @@ max-line-length = 88
 
 # see https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html#line-length
 select = C, E, F, W, B
-extend-ignore = E203, E501, W503, B950
+extend-ignore = E203, E501, W503, B950, W605
 builtins = _

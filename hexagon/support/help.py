@@ -22,7 +22,12 @@ def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):
         log.info(_("msg.support.help.get_started"))
         return
 
-    log.info(f"[bold]{cli_config.name}", gap_end=1)
+    log.info(f"[bold]{cli_config.name}")
+    log.info(
+        f"usage: {cli_config.command} \[tool] \[env] \[\[positional-tool-arg] \[--optional-tool-arg=123] ...]",
+        gap_start=1,
+        gap_end=1,
+    )
 
     log.info(_("msg.support.help.envs"))
     for i, env in enumerate(envs):
@@ -37,7 +42,7 @@ def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):
         else:
             log.gap()
 
-    log.info(_("msg.support.help.tools"), gap_start=2)
+    log.info(_("msg.support.help.tools"), gap_start=1)
 
     data = sorted(tools, key=lambda t: t.type, reverse=True)
 

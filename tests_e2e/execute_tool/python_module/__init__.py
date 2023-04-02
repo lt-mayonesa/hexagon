@@ -22,5 +22,5 @@ def main(
 
     if cli_args and len(cli_args.keys()) > 0:
         print("Cli args:")
-        for cli_arg in cli_args.items():
-            print(cli_arg)
+        for _, val in cli_args.items():
+            print(val)

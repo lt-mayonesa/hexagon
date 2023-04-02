@@ -9,13 +9,15 @@ from typing import List, Union, Dict, Any
 from rich import traceback as rich_traceback
 
 from hexagon.domain import configuration
-from hexagon.domain.args import CliArgs
+from hexagon.domain.args import CliArgs, ToolArgs
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
 from hexagon.support.execute.execution_hook import execution_hook
-from hexagon.support.parse_args import init_arg_parser
+from hexagon.support.parse_args import parse_cli_args
 from hexagon.support.printer import log
 from hexagon.support.tracer import tracer
+
+TOOL_ARGUMENTS_CLASS_NAME = "Args"
 
 _command_by_file_extension = {"js": "node", "sh": "sh"}
 
@@ -106,7 +108,14 @@ def _execute_python_module(
     # noinspection PyBroadException
     try:
         tool_args = __parse_tool_args(cli_args, env, tool, tool_action_module)
-        tool_action_module.main(tool, env, env_args, tool_args)
+        tool_action_module.main(
+            tool,
+            env,
+            env_args,
+            tool_args
+            if type(tool_args).__name__ == TOOL_ARGUMENTS_CLASS_NAME
+            else tool_args.extra_args,
+        )
         return True
     except Exception:
         __pretty_print_external_error(action_id, custom_tools_path)
@@ -119,21 +128,19 @@ def _execute_python_module(
 
 
 def __parse_tool_args(cli_args, env, tool, tool_action_module):
-    tool_args = cli_args.extra_args
-    if hasattr(tool_action_module, "Args"):
-        parser = init_arg_parser(
-            tool_action_module.Args,
-            prog=tool.name,
-            description=tool.description or tool.long_name or "Hexagon tool",
-        )
-        tool_args, unknown = parser.parse_known_args(
-            [cli_args.env] + cli_args.raw_extra_args
-            if not env
-            else cli_args.raw_extra_args
-        )
-        tool_args = tool_action_module.Args(**vars(tool_args))
-        tool_args.with_tracer(tracer())
-    return tool_args
+    args = (
+        [cli_args.env] if not env and cli_args.env else []
+    ) + cli_args.raw_extra_args
+    return parse_cli_args(
+        args,
+        tool_action_module.Args
+        if hasattr(tool_action_module, TOOL_ARGUMENTS_CLASS_NAME)
+        else ToolArgs,
+        prog=tool.name,
+        description=tool.description or tool.long_name or "Hexagon tool",
+        add_help=True,
+        epilog=_("hexagon.support.execute.action.tool_help_epilog"),
+    ).with_tracer(tracer())
 
 
 def _execute_command(

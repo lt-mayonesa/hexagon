@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-03-26 14:31-0300\n"
+"POT-Creation-Date: 2023-04-02 14:46-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,21 +15,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: hexagon/__main__.py:35
+#: hexagon/__main__.py:36
 msgid "msg.main.first_time_intro"
 msgstr "This looks like your first time running hexagon."
 
-#: hexagon/__main__.py:35
+#: hexagon/__main__.py:36
 msgid "msg.main.first_time_tool"
 msgstr "You should probably run \"Install CLI\"."
 
-#: hexagon/__main__.py:54
+#: hexagon/__main__.py:55
 msgid "msg.main.tracer.run_again"
 msgstr ""
 "[cyan][dim]To run this tool again do:[/dim]\n"
 "  {command}[/cyan]"
 
-#: hexagon/__main__.py:61
+#: hexagon/__main__.py:62
 msgid "msg.main.tracer.or"
 msgstr ""
 "[cyan][dim] or:[/dim]\n"
@@ -196,39 +196,46 @@ msgstr ""
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Installing {runtime} dependencies at path: {path}"
 
-#: hexagon/support/execute/action.py:57
+#: hexagon/support/execute/action.py:59
 msgid "error.support.execute.action.command_result_code"
 msgstr "{executed_command} returned code: {return_code}"
 
-#: hexagon/support/execute/action.py:64
+#: hexagon/support/execute/action.py:66
 msgid "error.support.execute.action.could_not_execute"
 msgstr "Hexagon couldn't execute the action: [bold]{action}[/bold]"
 
-#: hexagon/support/execute/action.py:68
+#: hexagon/support/execute/action.py:70
 msgid "error.support.execute.action.we_tried"
 msgstr "We tried:"
 
-#: hexagon/support/execute/action.py:70
+#: hexagon/support/execute/action.py:72
 msgid "error.support.execute.action.attempt_cli_custom_dir"
 msgstr "  - Your CLI's custom_tools_dir: [bold]{path}[/bold]"
 
-#: hexagon/support/execute/action.py:75
+#: hexagon/support/execute/action.py:77
 msgid "error.support.execute.action.attempt_internal_tools"
 msgstr "  - Hexagon repository of external actions ({package})"
 
-#: hexagon/support/execute/action.py:80
+#: hexagon/support/execute/action.py:82
 msgid "error.support.execute.action.attempt_known_script"
 msgstr "  - A known script file ({extensions})"
 
-#: hexagon/support/execute/action.py:84
+#: hexagon/support/execute/action.py:86
 msgid "error.support.execute.action.attempt_inline_command"
 msgstr "Running your action as a shell command directly"
 
-#: hexagon/support/execute/action.py:111
+#: hexagon/support/execute/action.py:114
 msgid "error.support.execute.action.execute_tool_failed"
 msgstr "Execution of tool {action} failed"
 
-#: hexagon/support/execute/action.py:167
+#: hexagon/support/execute/action.py:132
+msgid "hexagon.support.execute.action.tool_help_epilog"
+msgstr ""
+"To support tool arguments either add a model extending\n"
+"hexagon.domain.args.ToolArgs class to your script,"
+"\nor a args property in the tool YAML definition."
+
+#: hexagon/support/execute/action.py:187
 msgid "error.support.execute.action.python_dependency_error"
 msgstr "Your custom action seems to have a module dependency error"
 
@@ -252,11 +259,11 @@ msgstr "You are executing Hexagon without an install."
 msgid "msg.support.help.get_started"
 msgstr "To get started run hexagon's \"Install CLI\" tool"
 
-#: hexagon/support/help.py:27
+#: hexagon/support/help.py:32
 msgid "msg.support.help.envs"
 msgstr "[bold][u]Envs:[/bold][/u]"
 
-#: hexagon/support/help.py:40
+#: hexagon/support/help.py:45
 msgid "msg.support.help.tools"
 msgstr "[bold][u]Tools:[/bold][/u]"
 

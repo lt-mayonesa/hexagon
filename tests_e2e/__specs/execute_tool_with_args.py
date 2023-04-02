@@ -1,3 +1,5 @@
+import sys
+
 import pytest
 
 from tests_e2e.__specs.utils.assertions import assert_file_has_contents
@@ -12,8 +14,8 @@ def test_execute_python_tool_with_one_positional_arguments():
             [
                 "name: John",
                 "age: None",
-                "nationality: None",
-                "car_brand: None",
+                "nationality: Argentinian",
+                "car_brand: Ford",
                 "car_model: None",
                 "car_years: None",
             ]
@@ -30,13 +32,13 @@ def test_execute_python_tool_with_one_positional_arguments():
 def test_execute_python_tool_with_several_positional_arguments():
     (
         as_a_user(__file__)
-        .run_hexagon(["p-m-args", "John", "31", "Argentine"])
+        .run_hexagon(["p-m-args", "John", "31", "French"])
         .then_output_should_be(
             [
                 "name: John",
                 "age: 31",
-                "nationality: Argentine",
-                "car_brand: None",
+                "nationality: French",
+                "car_brand: Ford",
                 "car_model: None",
                 "car_years: None",
             ]
@@ -46,7 +48,7 @@ def test_execute_python_tool_with_several_positional_arguments():
     assert_file_has_contents(
         __file__,
         ".config/test/last-command.txt",
-        "hexagon-test p-m-args John 31 Argentine",
+        "hexagon-test p-m-args John 31 French",
     )
 
 
@@ -96,8 +98,8 @@ def test_optional_arguments_as_list():
             [
                 "name: John",
                 "age: None",
-                "nationality: None",
-                "car_brand: None",
+                "nationality: Argentinian",
+                "car_brand: Ford",
                 "car_model: None",
                 "car_years: ['1997', '1998']",
             ]
@@ -108,4 +110,81 @@ def test_optional_arguments_as_list():
         __file__,
         ".config/test/last-command.txt",
         "hexagon-test p-m-args John --car-years=1997 --car-years=1998",
+    )
+
+
+@pytest.mark.parametrize(
+    "help_arg",
+    [
+        "--help",
+        "-h",
+    ],
+)
+def test_show_tool_help_text_when_tool_has_args(help_arg):
+    (
+        as_a_user(__file__)
+        .run_hexagon(["p-m-args", help_arg])
+        .then_output_should_be(
+            [
+                (
+                    "usage: p-m-args [-h] [--car-brand [CAR_BRAND]] [--car-model [CAR_MODEL]] [--car-years [CAR_YEARS ...]] [name] [age] [nationality]"
+                    if sys.version_info >= (3, 9)
+                    else "usage: p-m-args [-h] [--car-brand [CAR_BRAND]] [--car-model [CAR_MODEL]] [--car-years [CAR_YEARS [CAR_YEARS ...]]] [name] [age] [nationality]"
+                ),
+                "",
+                "Python Module Script With Args",
+                "",
+                "positional arguments:",
+                "  name                  name (default: None)",
+                "  age                   the person's age, if provided must be greater than 18 (default: None)",
+                "  nationality           nationality (default: Argentinian)",
+                "",
+                "options:" if sys.version_info >= (3, 10) else "optional arguments:",
+                "  -h, --help            show this help message and exit",
+                "  --car-brand [CAR_BRAND], -cb [CAR_BRAND]",
+                "                        the car's brand (default: Ford)",
+                "  --car-model [CAR_MODEL], -cm [CAR_MODEL]",
+                "                        the car's model (default: None)",
+                (
+                    "  --car-years [CAR_YEARS ...], -cy [CAR_YEARS ...]"
+                    if sys.version_info >= (3, 9)
+                    else "  --car-years [CAR_YEARS [CAR_YEARS ...]], -cy [CAR_YEARS [CAR_YEARS ...]]"
+                ),
+                "                        car_years (default: None)",
+                "",
+                "To support tool arguments either add a model extending",
+                "hexagon.domain.args.ToolArgs class to your script,",
+                "or a args property in the tool YAML definition.",
+            ]
+        )
+        .exit()
+    )
+
+
+@pytest.mark.parametrize(
+    "help_arg",
+    [
+        "--help",
+        "-h",
+    ],
+)
+def test_show_tool_help_text_when_tool_has_no_args(help_arg):
+    (
+        as_a_user(__file__)
+        .run_hexagon(["no-args", help_arg])
+        .then_output_should_be(
+            [
+                "usage: no-args [-h]",
+                "",
+                "Python Module Script With No Args",
+                "",
+                "options:" if sys.version_info >= (3, 10) else "optional arguments:",
+                ["  -h, --help", "show this help message and exit"],
+                "",
+                "To support tool arguments either add a model extending",
+                "hexagon.domain.args.ToolArgs class to your script,",
+                "or a args property in the tool YAML definition.",
+            ]
+        )
+        .exit()
     )

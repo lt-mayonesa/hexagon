@@ -1,5 +1,7 @@
 from typing import Any, Optional
 
+from pydantic import Field
+
 from hexagon.domain.args import ToolArgs, PositionalArg, OptionalArg
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
@@ -13,10 +15,12 @@ class Args(ToolArgs):
     """
 
     name: PositionalArg[str]
-    age: PositionalArg[Optional[int]] = None
-    nationality: PositionalArg[Optional[str]] = None
-    car_brand: OptionalArg[str] = None
-    car_model: OptionalArg[str] = None
+    age: PositionalArg[Optional[int]] = Field(
+        None, description="the person's age, if provided must be greater than 18"
+    )
+    nationality: PositionalArg[Optional[str]] = "Argentinian"
+    car_brand: OptionalArg[str] = Field("Ford", description="the car's brand")
+    car_model: OptionalArg[str] = Field(None, description="the car's model")
     car_years: OptionalArg[list] = None
 
 

@@ -10,7 +10,7 @@ def test_print_help_using_yaml_contents(command):
         .given_a_cli_yaml(
             {
                 "cli": {
-                    "name": "Test",
+                    "name": "Test CLI",
                     "command": "hexagon-test",
                     "custom_tools_dir": ".",
                 },
@@ -57,14 +57,15 @@ def test_print_help_using_yaml_contents(command):
         .run_hexagon([command], os_env_vars={"HEXAGON_THEME": "disabled"})
         .then_output_should_be(
             [
-                "Test",
+                "Test CLI",
+                "",
+                "usage: hexagon-test [tool] [env] [[positional-tool-arg] [--optional-tool-arg=123] ...]",
                 "",
                 "Envs:",
                 " dev (d)                                                     Development",
                 "",
                 " qa (q)                                                      Quality Assurance",
                 "                                                             QA Environment",
-                "",
                 "",
                 "Tools:",
                 "",
@@ -94,7 +95,7 @@ def test_print_help_using_yaml_contents_no_tools(command):
         .given_a_cli_yaml(
             {
                 "cli": {
-                    "name": "Test",
+                    "name": "Test CLI",
                     "command": "hexagon-test",
                     "custom_tools_dir": ".",
                 },
@@ -103,6 +104,18 @@ def test_print_help_using_yaml_contents_no_tools(command):
             }
         )
         .run_hexagon([command], os_env_vars={"HEXAGON_THEME": "disabled"})
-        .then_output_should_be(["Test", "", "Envs:", "", "", "Tools:", "", ""])
+        .then_output_should_be(
+            [
+                "Test CLI",
+                "",
+                "usage: hexagon-test [tool] [env] [[positional-tool-arg] [--optional-tool-arg=123] ...]",
+                "",
+                "Envs:",
+                "",
+                "Tools:",
+                "",
+                "",
+            ]
+        )
         .exit()
     )

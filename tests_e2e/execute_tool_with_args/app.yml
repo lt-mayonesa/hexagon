@@ -24,3 +24,9 @@ tools:
     type: shell
     alias: oo
     long_name: Python Module Script With Only Optional Args
+
+  - name: no-args
+    action: python_module_no_args
+    type: shell
+    alias: na
+    long_name: Python Module Script With No Args
