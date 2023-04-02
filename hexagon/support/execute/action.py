@@ -139,7 +139,7 @@ def __parse_tool_args(cli_args, env, tool, tool_action_module):
         prog=tool.name,
         description=tool.description or tool.long_name or "Hexagon tool",
         add_help=True,
-        epilog=_("hexagon.support.execute.action.tool_help_epilog"),
+        epilog=_("msg.support.execute.action.tool_help_epilog"),
     ).with_tracer(tracer())
 
 

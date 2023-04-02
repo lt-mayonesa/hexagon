@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-04-02 15:28-0300\n"
+"POT-Creation-Date: 2023-04-02 20:51-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -180,43 +180,43 @@ msgstr ""
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr ""
 
-#: hexagon/support/execute/action.py:59
+#: hexagon/support/execute/action.py:61
 msgid "error.support.execute.action.command_result_code"
 msgstr ""
 
-#: hexagon/support/execute/action.py:66
+#: hexagon/support/execute/action.py:68
 msgid "error.support.execute.action.could_not_execute"
 msgstr ""
 
-#: hexagon/support/execute/action.py:70
+#: hexagon/support/execute/action.py:72
 msgid "error.support.execute.action.we_tried"
 msgstr ""
 
-#: hexagon/support/execute/action.py:72
+#: hexagon/support/execute/action.py:74
 msgid "error.support.execute.action.attempt_cli_custom_dir"
 msgstr ""
 
-#: hexagon/support/execute/action.py:77
+#: hexagon/support/execute/action.py:79
 msgid "error.support.execute.action.attempt_internal_tools"
 msgstr ""
 
-#: hexagon/support/execute/action.py:82
+#: hexagon/support/execute/action.py:84
 msgid "error.support.execute.action.attempt_known_script"
 msgstr ""
 
-#: hexagon/support/execute/action.py:86
+#: hexagon/support/execute/action.py:88
 msgid "error.support.execute.action.attempt_inline_command"
 msgstr ""
 
-#: hexagon/support/execute/action.py:114
+#: hexagon/support/execute/action.py:123
 msgid "error.support.execute.action.execute_tool_failed"
 msgstr ""
 
-#: hexagon/support/execute/action.py:132
-msgid "hexagon.support.execute.action.tool_help_epilog"
+#: hexagon/support/execute/action.py:142
+msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 
-#: hexagon/support/execute/action.py:187
+#: hexagon/support/execute/action.py:195
 msgid "error.support.execute.action.python_dependency_error"
 msgstr ""
 
