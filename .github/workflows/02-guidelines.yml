@@ -13,11 +13,12 @@ jobs:
       - uses: actions/checkout@v3
 
       - id: versions
-        name: Find black version from lock file
+        name: get tools versions from lock file
         run: |
-          echo "::set-output name=black::$(cat Pipfile.lock | jq -r '.develop.black.version' | sed 's/==//g')"
-          echo "::set-output name=flake8::$(cat Pipfile.lock | jq -r '.develop.flake8.version' | sed 's/==//g')"
-          echo "::set-output name=bugbear::$(cat Pipfile.lock | jq -r '.develop."flake8-bugbear".version' | sed 's/==//g')"
+          echo "black=$(cat Pipfile.lock | jq -r '.develop.black.version' | sed 's/==//g')" >> $GITHUB_OUTPUT
+          echo "flake8=$(cat Pipfile.lock | jq -r '.develop.flake8.version' | sed 's/==//g')" >> $GITHUB_OUTPUT
+          echo "bugbear=$(cat Pipfile.lock | jq -r '.develop."flake8-bugbear".version' | sed 's/==//g')" >> $GITHUB_OUTPUT
+
       - uses: psf/black@stable
         with:
           version: ${{ steps.versions.outputs.black }}

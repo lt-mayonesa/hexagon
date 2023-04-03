@@ -5,6 +5,8 @@ on:
     workflows: [ '01_ci-cd' ]
     types:
       - completed
+    branches:
+      - main
 
 jobs:
   report:
