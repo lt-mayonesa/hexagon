@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.37.0 (2023-04-03)
+### Feature
+* **args:** Show validation error matching hexagon format ([`6027468`](https://github.com/lt-mayonesa/hexagon/commit/6027468e00b645c64b29f08f1313754033971774))
+
 ## v0.36.0 (2023-04-02)
 ### Feature
 * **args:** Show help text for tools ([`9e387a7`](https://github.com/lt-mayonesa/hexagon/commit/9e387a7f0872029fd703c0bb87fba35ac6b7aa71))
