@@ -7,6 +7,25 @@ from hexagon.support.storage import (
 )
 
 
+def __execute_again(tracer, cli, tools, envs):
+    # TODO: This is a hack, we should refactor this
+    command = tracer.trace()
+    if tracer.has_traced():
+        log.extra(
+            _("msg.main.tracer.run_again").format(
+                command=" ".join([cli.command, command])
+            )
+        )
+        command_as_aliases = tracer.aliases_trace(tools, envs)
+        if command_as_aliases and command != command_as_aliases:
+            log.extra(
+                _("msg.main.tracer.or").format(
+                    command=" ".join([cli.command, command_as_aliases])
+                )
+            )
+    store_user_data(HexagonStorageKeys.last_command.value, f"{cli.command} {command}")
+
+
 def main():
     try:
         from hexagon.domain.singletons import cli, tools, envs, options
@@ -52,24 +71,7 @@ def main():
 
         log.finish()
 
-        command = tracer.trace()
-        if tracer.has_traced():
-            log.extra(
-                _("msg.main.tracer.run_again").format(
-                    command=" ".join([cli.command, command])
-                )
-            )
-            command_as_aliases = tracer.aliases_trace(tools, envs)
-            if command_as_aliases and command != command_as_aliases:
-                log.extra(
-                    _("msg.main.tracer.or").format(
-                        command=" ".join([cli.command, command_as_aliases])
-                    )
-                )
-
-        store_user_data(
-            HexagonStorageKeys.last_command.value, f"{cli.command} {command}"
-        )
+        __execute_again(tracer, cli, tools, envs)
 
         HexagonHooks.end.run()
     except KeyboardInterrupt:
