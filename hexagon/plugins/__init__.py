@@ -1,8 +1,7 @@
 import importlib
 import os
 import sys
-
-from hexagon.domain.singletons import cli, configuration
+from typing import Optional
 
 
 def _import_all_in_folder(path: str):
@@ -14,13 +13,11 @@ def _import_all_in_folder(path: str):
             imported.main()
 
 
-def collect_plugins():
+def collect_plugins(project_path: str, plugins_dir: Optional[str]):
     _import_all_in_folder(os.path.dirname(__file__))
 
-    if cli.plugins_dir:
-        plugins_dir_path = os.path.abspath(
-            os.path.join(configuration.project_path, cli.plugins_dir)
-        )
+    if plugins_dir:
+        plugins_dir_path = os.path.abspath(os.path.join(project_path, plugins_dir))
 
         if os.path.exists(plugins_dir_path):
             _import_all_in_folder(plugins_dir_path)

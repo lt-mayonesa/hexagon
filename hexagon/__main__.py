@@ -1,5 +1,6 @@
 import sys
 
+from hexagon.plugins import collect_plugins
 from hexagon.support.printer import log
 from hexagon.support.storage import (
     HexagonStorageKeys,
@@ -28,8 +29,7 @@ def __execute_again(tracer, cli, tools, envs):
 
 def main():
     try:
-        from hexagon.domain.singletons import cli, tools, envs, options
-        from hexagon.plugins import collect_plugins
+        from hexagon.domain.singletons import cli, tools, envs, options, configuration
         from hexagon.support.execute.tool import select_and_execute_tool
         from hexagon.support.help import print_help
         from hexagon.support.hooks import HexagonHooks
@@ -45,7 +45,7 @@ def main():
         if args.show_help:
             return print_help(cli, tools, envs)
 
-        collect_plugins()
+        collect_plugins(configuration.project_path, cli.plugins_dir)
         tracer = init_tracer(args)
 
         HexagonHooks.start.run()
