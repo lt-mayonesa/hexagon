@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-04-02 21:51-0300\n"
+"POT-Creation-Date: 2023-04-03 01:52-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,21 +15,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: hexagon/__main__.py:36
+#: hexagon/__main__.py:40
 msgid "msg.main.first_time_intro"
 msgstr "Esta parece ser tu primera vez ejecutando hexagon."
 
-#: hexagon/__main__.py:36
+#: hexagon/__main__.py:40
 msgid "msg.main.first_time_tool"
 msgstr "Probablemente deberías ejecutar \"Instalar CLI\""
 
-#: hexagon/__main__.py:55
+#: hexagon/__main__.py:58
 msgid "msg.main.tracer.run_again"
 msgstr ""
 "[cyan][dim]Para ejecutar nuevamente:[/dim]\n"
 "  {command}[/cyan]"
 
-#: hexagon/__main__.py:62
+#: hexagon/__main__.py:65
 msgid "msg.main.tracer.or"
 msgstr ""
 "[cyan][dim] o:[/dim]\n"
@@ -168,22 +168,22 @@ msgid "msg.actions.internal.save_new_alias.added_to_file"
 msgstr "Se agrego el alias al archivo {file}"
 
 #: hexagon/domain/configuration.py:30
+msgid "error.domain.configuration.group_tool_file_not_found"
+msgstr "No se encontró el archivo {config_file_path}"
+
+#: hexagon/domain/configuration.py:41
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr "Guardar el último comando ejecutado como shell alias"
 
-#: hexagon/domain/configuration.py:36
+#: hexagon/domain/configuration.py:47
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr "Crear una nueva herramienta"
 
-#: hexagon/domain/configuration.py:80
-msgid "error.support.execute.tool.group_tool_file_not_found"
-msgstr "No se encontró el archivo {config_file_path}"
-
-#: hexagon/domain/configuration.py:131
+#: hexagon/domain/configuration.py:134
 msgid "msg.domain.configuration.install_cli_long_name"
 msgstr "Instalar CLI"
 
-#: hexagon/domain/configuration.py:132
+#: hexagon/domain/configuration.py:135
 msgid "msg.domain.configuration.install_cli_description"
 msgstr "Instalar una CLI desde un archivo YAML de configuración."
 
@@ -198,58 +198,58 @@ msgstr ""
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Instalando dependencias de {runtime} en directorio {path}"
 
-#: hexagon/support/execute/action.py:62
-msgid "error.support.execute.action.command_result_code"
-msgstr "{executed_command} returned code: {return_code}"
-
-#: hexagon/support/execute/action.py:69
-msgid "error.support.execute.action.could_not_execute"
-msgstr "No fue posible ejecutar la acción: [bold]{action}[/bold]"
-
-#: hexagon/support/execute/action.py:73
-msgid "error.support.execute.action.we_tried"
-msgstr "Intentamos lo siguiente:"
-
-#: hexagon/support/execute/action.py:75
-msgid "error.support.execute.action.attempt_cli_custom_dir"
-msgstr ""
-"  - Buscar la acción en tu directorio de herramientas (custom_tools_dir) "
-"[bold]{path}[/bold]"
-
-#: hexagon/support/execute/action.py:80
-msgid "error.support.execute.action.attempt_internal_tools"
-msgstr "  - Buscar en el registro interno de acciones de hexagon ({package})"
-
-#: hexagon/support/execute/action.py:85
-msgid "error.support.execute.action.attempt_known_script"
-msgstr "  - Ejecutar según extensiones conocidas de archivos ({extensions})"
-
-#: hexagon/support/execute/action.py:89
-msgid "error.support.execute.action.attempt_inline_command"
-msgstr "  - Ejecutando la acción como un comando directamente"
-
-#: hexagon/support/execute/action.py:123
-msgid "error.support.execute.action.invalid_input"
-msgstr "Hay {count} errores en el input para la herramienta {tool}"
-
-#: hexagon/support/execute/action.py:130
-msgid "error.support.execute.action.invalid_argument"
-msgstr "✗ [bold]{loc}[/bold] -> {message}"
-
-#: hexagon/support/execute/action.py:138
-msgid "error.support.execute.action.execute_tool_failed"
-msgstr "La ejecución de {action} falló"
-
-#: hexagon/support/execute/action.py:157
+#: hexagon/support/execute/action.py:114
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 "Para usar argumentos de CLI agregar a tu script\n"
 "un modelo extendiendo hexagon.domain.args.ToolArgs,\n"
 "o una propiedad `args` a la definición de la tool en el YAML."
 
-#: hexagon/support/execute/action.py:210
-msgid "error.support.execute.action.python_dependency_error"
+#: hexagon/support/execute/errors.py:18
+msgid "error.support.execute.errors.command_result_code"
+msgstr "{executed_command} retornó código: {return_code}"
+
+#: hexagon/support/execute/errors.py:25
+msgid "error.support.execute.errors.could_not_execute"
+msgstr "No fue posible ejecutar la acción: [bold]{action}[/bold]"
+
+#: hexagon/support/execute/errors.py:29
+msgid "error.support.execute.errors.we_tried"
+msgstr "Intentamos lo siguiente:"
+
+#: hexagon/support/execute/errors.py:31
+msgid "error.support.execute.errors.attempt_cli_custom_dir"
+msgstr ""
+"  - Buscar la acción en tu directorio de herramientas (custom_tools_dir) "
+"[bold]{path}[/bold]"
+
+#: hexagon/support/execute/errors.py:36
+msgid "error.support.execute.errors.attempt_internal_tools"
+msgstr "  - Buscar en el registro interno de acciones de hexagon ({package})"
+
+#: hexagon/support/execute/errors.py:41
+msgid "error.support.execute.errors.attempt_known_script"
+msgstr "  - Ejecutar según extensiones conocidas de archivos ({extensions})"
+
+#: hexagon/support/execute/errors.py:45
+msgid "error.support.execute.errors.attempt_inline_command"
+msgstr "  - Ejecutando la acción como un comando directamente"
+
+#: hexagon/support/execute/errors.py:52
+msgid "error.support.execute.errors.invalid_input"
+msgstr "Hay {count} errores en el input para la herramienta {tool}"
+
+#: hexagon/support/execute/errors.py:59
+msgid "error.support.execute.errors.invalid_argument"
+msgstr "✗ [bold]{loc}[/bold] -> {message}"
+
+#: hexagon/support/execute/errors.py:123
+msgid "error.support.execute.errors.python_dependency_error"
 msgstr "Tu acción parece tener un error de dependencias de módulos"
+
+#: hexagon/support/execute/errors.py:129
+msgid "error.support.execute.errors.execute_tool_failed"
+msgstr "La ejecución de {action} falló"
 
 #: hexagon/support/execute/tool.py:62
 msgid "msg.support.execute.tool.go_back_long_name"
@@ -341,10 +341,10 @@ msgstr "Hola ¿qué herramienta te gustaría usar hoy?"
 msgid "error.support.wax.invalid_tool"
 msgstr "Por favor, selecciona una herramienta valida"
 
-#: hexagon/support/yaml/__init__.py:37
+#: hexagon/support/yaml/__init__.py:42
 msgid "error.support.yaml.invalid_yaml"
 msgstr "Hay {errors_length} errores en el YAML: {yaml_path}"
 
-#: hexagon/support/yaml/__init__.py:44
+#: hexagon/support/yaml/__init__.py:49
 msgid "error.support.yaml.error_at"
 msgstr "✗ [u][bold]{loc}[/bold] -> {message}[/u]"

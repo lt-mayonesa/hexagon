@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-04-02 21:51-0300\n"
+"POT-Creation-Date: 2023-04-03 01:52-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,21 +15,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: hexagon/__main__.py:36
+#: hexagon/__main__.py:40
 msgid "msg.main.first_time_intro"
 msgstr "This looks like your first time running hexagon."
 
-#: hexagon/__main__.py:36
+#: hexagon/__main__.py:40
 msgid "msg.main.first_time_tool"
 msgstr "You should probably run \"Install CLI\"."
 
-#: hexagon/__main__.py:55
+#: hexagon/__main__.py:58
 msgid "msg.main.tracer.run_again"
 msgstr ""
 "[cyan][dim]To run this tool again do:[/dim]\n"
 "  {command}[/cyan]"
 
-#: hexagon/__main__.py:62
+#: hexagon/__main__.py:65
 msgid "msg.main.tracer.or"
 msgstr ""
 "[cyan][dim] or:[/dim]\n"
@@ -166,22 +166,22 @@ msgid "msg.actions.internal.save_new_alias.added_to_file"
 msgstr "Added alias to {file}"
 
 #: hexagon/domain/configuration.py:30
+msgid "error.domain.configuration.group_tool_file_not_found"
+msgstr "File {config_file_path} could not be found"
+
+#: hexagon/domain/configuration.py:41
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr "Save Last Command as Shell Alias"
 
-#: hexagon/domain/configuration.py:36
+#: hexagon/domain/configuration.py:47
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr "Create A New Tool"
 
-#: hexagon/domain/configuration.py:80
-msgid "error.support.execute.tool.group_tool_file_not_found"
-msgstr "File {config_file_path} could not be found"
-
-#: hexagon/domain/configuration.py:131
+#: hexagon/domain/configuration.py:134
 msgid "msg.domain.configuration.install_cli_long_name"
 msgstr "Install CLI"
 
-#: hexagon/domain/configuration.py:132
+#: hexagon/domain/configuration.py:135
 msgid "msg.domain.configuration.install_cli_description"
 msgstr "Install a custom project CLI from a YAML file."
 
@@ -196,56 +196,56 @@ msgstr ""
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Installing {runtime} dependencies at path: {path}"
 
-#: hexagon/support/execute/action.py:62
-msgid "error.support.execute.action.command_result_code"
-msgstr "{executed_command} returned code: {return_code}"
-
-#: hexagon/support/execute/action.py:69
-msgid "error.support.execute.action.could_not_execute"
-msgstr "Hexagon couldn't execute the action: [bold]{action}[/bold]"
-
-#: hexagon/support/execute/action.py:73
-msgid "error.support.execute.action.we_tried"
-msgstr "We tried:"
-
-#: hexagon/support/execute/action.py:75
-msgid "error.support.execute.action.attempt_cli_custom_dir"
-msgstr "  - Your CLI's custom_tools_dir: [bold]{path}[/bold]"
-
-#: hexagon/support/execute/action.py:80
-msgid "error.support.execute.action.attempt_internal_tools"
-msgstr "  - Hexagon repository of external actions ({package})"
-
-#: hexagon/support/execute/action.py:85
-msgid "error.support.execute.action.attempt_known_script"
-msgstr "  - A known script file ({extensions})"
-
-#: hexagon/support/execute/action.py:89
-msgid "error.support.execute.action.attempt_inline_command"
-msgstr "Running your action as a shell command directly"
-
-#: hexagon/support/execute/action.py:123
-msgid "error.support.execute.action.invalid_input"
-msgstr "There where {count} error(s) in your input for tool {tool}"
-
-#: hexagon/support/execute/action.py:130
-msgid "error.support.execute.action.invalid_argument"
-msgstr "✗ [bold]{loc}[/bold] -> {message}"
-
-#: hexagon/support/execute/action.py:138
-msgid "error.support.execute.action.execute_tool_failed"
-msgstr "Execution of tool {action} failed"
-
-#: hexagon/support/execute/action.py:157
+#: hexagon/support/execute/action.py:114
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 "To support tool arguments either add a model extending\n"
 "hexagon.domain.args.ToolArgs class to your script,\n"
 "or a args property in the tool YAML definition."
 
-#: hexagon/support/execute/action.py:210
-msgid "error.support.execute.action.python_dependency_error"
+#: hexagon/support/execute/errors.py:18
+msgid "error.support.execute.errors.command_result_code"
+msgstr "{executed_command} returned code: {return_code}"
+
+#: hexagon/support/execute/errors.py:25
+msgid "error.support.execute.errors.could_not_execute"
+msgstr "Hexagon couldn't execute the action: [bold]{action}[/bold]"
+
+#: hexagon/support/execute/errors.py:29
+msgid "error.support.execute.errors.we_tried"
+msgstr "We tried:"
+
+#: hexagon/support/execute/errors.py:31
+msgid "error.support.execute.errors.attempt_cli_custom_dir"
+msgstr "  - Your CLI's custom_tools_dir: [bold]{path}[/bold]"
+
+#: hexagon/support/execute/errors.py:36
+msgid "error.support.execute.errors.attempt_internal_tools"
+msgstr "  - Hexagon repository of external actions ({package})"
+
+#: hexagon/support/execute/errors.py:41
+msgid "error.support.execute.errors.attempt_known_script"
+msgstr "  - A known script file ({extensions})"
+
+#: hexagon/support/execute/errors.py:45
+msgid "error.support.execute.errors.attempt_inline_command"
+msgstr "Running your action as a shell command directly"
+
+#: hexagon/support/execute/errors.py:52
+msgid "error.support.execute.errors.invalid_input"
+msgstr "There where {count} error(s) in your input for tool {tool}"
+
+#: hexagon/support/execute/errors.py:59
+msgid "error.support.execute.errors.invalid_argument"
+msgstr "✗ [bold]{loc}[/bold] -> {message}"
+
+#: hexagon/support/execute/errors.py:123
+msgid "error.support.execute.errors.python_dependency_error"
 msgstr "Your custom action seems to have a module dependency error"
+
+#: hexagon/support/execute/errors.py:129
+msgid "error.support.execute.errors.execute_tool_failed"
+msgstr "Execution of tool {action} failed"
 
 #: hexagon/support/execute/tool.py:62
 msgid "msg.support.execute.tool.go_back_long_name"
@@ -336,10 +336,10 @@ msgstr "Hi, which tool would you like to use today?"
 msgid "error.support.wax.invalid_tool"
 msgstr "Please select a valid tool"
 
-#: hexagon/support/yaml/__init__.py:37
+#: hexagon/support/yaml/__init__.py:42
 msgid "error.support.yaml.invalid_yaml"
 msgstr "There were {errors_length} error(s) in your YAML file: {yaml_path}"
 
-#: hexagon/support/yaml/__init__.py:44
+#: hexagon/support/yaml/__init__.py:49
 msgid "error.support.yaml.error_at"
 msgstr "✗ [u][bold]{loc}[/bold] -> {message}[/u]"
