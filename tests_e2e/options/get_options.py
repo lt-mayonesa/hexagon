@@ -1,7 +1,7 @@
 from datetime import timedelta
 from typing import Any, Dict
 
-from hexagon.domain import options
+from hexagon.domain.singletons import options
 from hexagon.support.printer import log
 
 

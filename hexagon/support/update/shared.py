@@ -1,6 +1,7 @@
-from hexagon.support.storage import HexagonStorageKeys, load_user_data, store_user_data
-from hexagon.domain import options
 import datetime
+
+from hexagon.domain.singletons import options
+from hexagon.support.storage import HexagonStorageKeys, load_user_data, store_user_data
 
 LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
 

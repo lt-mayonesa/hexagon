@@ -1,9 +1,9 @@
 import os
 
-from hexagon.domain import options
-from hexagon.support.printer import log
+from hexagon.domain.singletons import options
 from hexagon.support.dependencies.node import scan_and_install_node_dependencies
 from hexagon.support.dependencies.python import scan_and_install_python_dependencies
+from hexagon.support.printer import log
 
 HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED_ENVIRONMENT_VARIABLE = (
     "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED"

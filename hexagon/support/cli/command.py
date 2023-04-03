@@ -1,6 +1,7 @@
 import subprocess
 import sys
-from hexagon.domain import configuration
+
+from hexagon.domain.singletons import configuration
 
 
 def output_from_command_in_cli_project_path(command: str) -> str:

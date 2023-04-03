@@ -104,7 +104,7 @@ def _storage_file(dir_path: str, file_name: str):
 
 
 def _get_app(app: str = None):
-    from hexagon.domain import cli, configuration
+    from hexagon.domain.singletons import cli, configuration
 
     return (
         app

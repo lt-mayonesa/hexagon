@@ -5,9 +5,9 @@ from InquirerPy import inquirer
 from InquirerPy.validator import PathValidator
 from prompt_toolkit.validation import ValidationError
 
-from hexagon.domain import configuration
-from hexagon.support.printer import log
+from hexagon.domain.singletons import configuration
 from hexagon.support.dependencies import scan_and_install_dependencies
+from hexagon.support.printer import log
 from hexagon.support.storage import load_user_data, HexagonStorageKeys, store_user_data
 
 

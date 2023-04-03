@@ -3,7 +3,7 @@ import sys
 
 from InquirerPy import inquirer
 
-from hexagon.domain import cli, configuration, options
+from hexagon.domain.singletons import cli, configuration, options
 from hexagon.support.cli.command import (
     execute_command_in_cli_project_path,
     output_from_command_in_cli_project_path,

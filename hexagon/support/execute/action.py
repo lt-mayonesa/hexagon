@@ -6,9 +6,9 @@ from typing import List, Union, Dict, Any
 
 from pydantic import ValidationError
 
-from hexagon.domain import configuration
 from hexagon.domain.args import CliArgs, ToolArgs
 from hexagon.domain.env import Env
+from hexagon.domain.singletons import configuration
 from hexagon.domain.tool import ActionTool
 from hexagon.support.execute.errors import (
     ToolExecutionError,

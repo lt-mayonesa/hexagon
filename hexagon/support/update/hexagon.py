@@ -8,14 +8,14 @@ import pkg_resources
 from InquirerPy import inquirer
 from packaging.version import parse as parse_version
 
-from hexagon.domain import options
+from hexagon.domain.singletons import options
 from hexagon.support.github import add_github_access_token
 from hexagon.support.printer import log
 from hexagon.support.storage import HEXAGON_STORAGE_APP
 from hexagon.support.update import REPO_ORG, REPO_NAME
+from hexagon.support.update.changelog.fetch import fetch_changelog
 from hexagon.support.update.changelog.format import format_entries
 from hexagon.support.update.changelog.parse import parse_changelog
-from hexagon.support.update.changelog.fetch import fetch_changelog
 from hexagon.support.update.shared import already_checked_for_updates
 
 CHANGELOG_MAX_PRINT_ENTRIES = 10

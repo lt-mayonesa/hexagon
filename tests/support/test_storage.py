@@ -179,9 +179,9 @@ def test_storage_default_app():
         assert file.read() == "data"
 
 
-@patch("hexagon.domain.Configuration.has_config", True)
+@patch("hexagon.domain.configuration.Configuration.has_config", True)
 def test_storage_configured_app():
-    from hexagon.domain import cli
+    from hexagon.domain.singletons import cli
 
     cli.name = "test-app"
 

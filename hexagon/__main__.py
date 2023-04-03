@@ -9,7 +9,7 @@ from hexagon.support.storage import (
 
 def main():
     try:
-        from hexagon.domain import cli, tools, envs, options
+        from hexagon.domain.singletons import cli, tools, envs, options
         from hexagon.plugins import collect_plugins
         from hexagon.support.execute.tool import select_and_execute_tool
         from hexagon.support.help import print_help

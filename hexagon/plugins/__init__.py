@@ -2,7 +2,7 @@ import importlib
 import os
 import sys
 
-from hexagon.domain import cli, configuration
+from hexagon.domain.singletons import cli, configuration
 
 
 def _import_all_in_folder(path: str):
