@@ -2,7 +2,7 @@ name: 'Test Report'
 
 on:
   workflow_run:
-    workflows: [ 'ci/cd' ]
+    workflows: [ '01_ci-cd' ]
     types:
       - completed
 

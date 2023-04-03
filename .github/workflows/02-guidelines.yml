@@ -1,10 +1,10 @@
-name: guidelines
+name: 02_guidelines
 
 on:
   push:
-    branches: [ "*" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "*" ]
+    branches: [ main ]
 
 jobs:
   lint:
