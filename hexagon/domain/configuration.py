@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 from hexagon.domain.cli import Cli
 from hexagon.domain.env import Env
+from hexagon.domain.hexagon_error import ListHexagonError
 from hexagon.domain.tool import (
     ActionTool,
     GroupTool,
@@ -13,7 +14,6 @@ from hexagon.domain.tool import (
     ToolType,
     ToolGroupConfigFile,
 )
-from hexagon.support.printer import log
 from hexagon.support.yaml import write_file, read_file, load_model
 
 
@@ -21,6 +21,17 @@ class ConfigFile(BaseModel):
     cli: Cli
     envs: List[Env]
     tools: List[Union[ActionTool, GroupTool]]
+
+
+class GroupFileNotFoundError(ListHexagonError):
+    def __init__(self, group_yaml_path: str):
+        super().__init__(
+            [
+                _("error.domain.configuration.group_tool_file_not_found").format(
+                    config_file_path=group_yaml_path
+                )
+            ]
+        )
 
 
 class Configuration:
@@ -55,8 +66,6 @@ class Configuration:
             return self.__initial_setup_config()
 
         self.__config = load_model(ConfigFile, self.__yaml, self.project_yaml)
-        if not self.__config:
-            sys.exit(1)
 
         if self.__config.cli.custom_tools_dir:
             self.__register_custom_tools_path()
@@ -75,19 +84,13 @@ class Configuration:
                 if isinstance(tool.tools, str):
                     group_yaml_path = os.path.join(self.project_path, tool.tools)
                     group_config_yaml = read_file(group_yaml_path)
+
                     if not group_config_yaml:
-                        log.error(
-                            _(
-                                "error.support.execute.tool.group_tool_file_not_found"
-                            ).format(config_file_path=group_yaml_path)
-                        )
-                        sys.exit(1)
+                        raise GroupFileNotFoundError(group_yaml_path)
 
                     group_config = load_model(
                         ToolGroupConfigFile, group_config_yaml, group_yaml_path
                     )
-                    if not group_config:
-                        sys.exit(1)
 
                     tool.tools = group_config.tools
                 self.__recursive_group_load(tool.tools)

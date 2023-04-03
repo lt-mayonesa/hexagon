@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-04-02 21:51-0300\n"
+"POT-Creation-Date: 2023-04-03 01:52-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,19 +15,19 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: hexagon/__main__.py:36
+#: hexagon/__main__.py:40
 msgid "msg.main.first_time_intro"
 msgstr ""
 
-#: hexagon/__main__.py:36
+#: hexagon/__main__.py:40
 msgid "msg.main.first_time_tool"
 msgstr ""
 
-#: hexagon/__main__.py:55
+#: hexagon/__main__.py:58
 msgid "msg.main.tracer.run_again"
 msgstr ""
 
-#: hexagon/__main__.py:62
+#: hexagon/__main__.py:65
 msgid "msg.main.tracer.or"
 msgstr ""
 
@@ -152,22 +152,22 @@ msgid "msg.actions.internal.save_new_alias.added_to_file"
 msgstr ""
 
 #: hexagon/domain/configuration.py:30
+msgid "error.domain.configuration.group_tool_file_not_found"
+msgstr ""
+
+#: hexagon/domain/configuration.py:41
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr ""
 
-#: hexagon/domain/configuration.py:36
+#: hexagon/domain/configuration.py:47
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr ""
 
-#: hexagon/domain/configuration.py:80
-msgid "error.support.execute.tool.group_tool_file_not_found"
-msgstr ""
-
-#: hexagon/domain/configuration.py:131
+#: hexagon/domain/configuration.py:134
 msgid "msg.domain.configuration.install_cli_long_name"
 msgstr ""
 
-#: hexagon/domain/configuration.py:132
+#: hexagon/domain/configuration.py:135
 msgid "msg.domain.configuration.install_cli_description"
 msgstr ""
 
@@ -180,52 +180,52 @@ msgstr ""
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr ""
 
-#: hexagon/support/execute/action.py:62
-msgid "error.support.execute.action.command_result_code"
-msgstr ""
-
-#: hexagon/support/execute/action.py:69
-msgid "error.support.execute.action.could_not_execute"
-msgstr ""
-
-#: hexagon/support/execute/action.py:73
-msgid "error.support.execute.action.we_tried"
-msgstr ""
-
-#: hexagon/support/execute/action.py:75
-msgid "error.support.execute.action.attempt_cli_custom_dir"
-msgstr ""
-
-#: hexagon/support/execute/action.py:80
-msgid "error.support.execute.action.attempt_internal_tools"
-msgstr ""
-
-#: hexagon/support/execute/action.py:85
-msgid "error.support.execute.action.attempt_known_script"
-msgstr ""
-
-#: hexagon/support/execute/action.py:89
-msgid "error.support.execute.action.attempt_inline_command"
-msgstr ""
-
-#: hexagon/support/execute/action.py:123
-msgid "error.support.execute.action.invalid_input"
-msgstr ""
-
-#: hexagon/support/execute/action.py:130
-msgid "error.support.execute.action.invalid_argument"
-msgstr ""
-
-#: hexagon/support/execute/action.py:138
-msgid "error.support.execute.action.execute_tool_failed"
-msgstr ""
-
-#: hexagon/support/execute/action.py:157
+#: hexagon/support/execute/action.py:114
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 
-#: hexagon/support/execute/action.py:210
-msgid "error.support.execute.action.python_dependency_error"
+#: hexagon/support/execute/errors.py:18
+msgid "error.support.execute.errors.command_result_code"
+msgstr ""
+
+#: hexagon/support/execute/errors.py:25
+msgid "error.support.execute.errors.could_not_execute"
+msgstr ""
+
+#: hexagon/support/execute/errors.py:29
+msgid "error.support.execute.errors.we_tried"
+msgstr ""
+
+#: hexagon/support/execute/errors.py:31
+msgid "error.support.execute.errors.attempt_cli_custom_dir"
+msgstr ""
+
+#: hexagon/support/execute/errors.py:36
+msgid "error.support.execute.errors.attempt_internal_tools"
+msgstr ""
+
+#: hexagon/support/execute/errors.py:41
+msgid "error.support.execute.errors.attempt_known_script"
+msgstr ""
+
+#: hexagon/support/execute/errors.py:45
+msgid "error.support.execute.errors.attempt_inline_command"
+msgstr ""
+
+#: hexagon/support/execute/errors.py:52
+msgid "error.support.execute.errors.invalid_input"
+msgstr ""
+
+#: hexagon/support/execute/errors.py:59
+msgid "error.support.execute.errors.invalid_argument"
+msgstr ""
+
+#: hexagon/support/execute/errors.py:123
+msgid "error.support.execute.errors.python_dependency_error"
+msgstr ""
+
+#: hexagon/support/execute/errors.py:129
+msgid "error.support.execute.errors.execute_tool_failed"
 msgstr ""
 
 #: hexagon/support/execute/tool.py:62
@@ -316,11 +316,11 @@ msgstr ""
 msgid "error.support.wax.invalid_tool"
 msgstr ""
 
-#: hexagon/support/yaml/__init__.py:37
+#: hexagon/support/yaml/__init__.py:42
 msgid "error.support.yaml.invalid_yaml"
 msgstr ""
 
-#: hexagon/support/yaml/__init__.py:44
+#: hexagon/support/yaml/__init__.py:49
 msgid "error.support.yaml.error_at"
 msgstr ""
 

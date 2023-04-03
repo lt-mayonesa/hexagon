@@ -2,20 +2,22 @@ import importlib
 import os
 import subprocess
 import sys
-import traceback
-from pathlib import Path
 from typing import List, Union, Dict, Any
 
 from pydantic import ValidationError
-from rich import traceback as rich_traceback
 
 from hexagon.domain import configuration
 from hexagon.domain.args import CliArgs, ToolArgs
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
+from hexagon.support.execute.errors import (
+    ToolExecutionError,
+    ActionInputError,
+    ActionExecuteError,
+    ActionImportError,
+)
 from hexagon.support.execute.execution_hook import execution_hook
 from hexagon.support.parse_args import parse_cli_args
-from hexagon.support.printer import log
 from hexagon.support.tracer import tracer
 
 TOOL_ARGUMENTS_CLASS_NAME = "Args"
@@ -58,36 +60,9 @@ def execute_action(tool: ActionTool, env_args: Any, env: Env, cli_args: CliArgs)
         )
 
         if return_code != 0:
-            log.error(
-                _("error.support.execute.action.command_result_code").format(
-                    executed_command=executed_command, return_code=return_code
-                )
+            raise ToolExecutionError(
+                return_code, executed_command, tool.executable_str, custom_tools_path
             )
-
-            if return_code == 127:
-                log.error(
-                    _("error.support.execute.action.could_not_execute").format(
-                        action=tool.executable_str
-                    )
-                )
-                log.error(_("error.support.execute.action.we_tried"))
-                log.error(
-                    _("error.support.execute.action.attempt_cli_custom_dir").format(
-                        path=custom_tools_path
-                    )
-                )
-                log.error(
-                    _("error.support.execute.action.attempt_internal_tools").format(
-                        package="hexagon.actions.external"
-                    )
-                )
-                log.error(
-                    _("error.support.execute.action.attempt_known_script").format(
-                        extensions=".js, .sh"
-                    )
-                )
-                log.error(_("error.support.execute.action.attempt_inline_command"))
-            sys.exit(1)
 
 
 def __script_action_command(action_to_execute):
@@ -119,27 +94,9 @@ def _execute_python_module(
         )
         return True
     except ValidationError as e:
-        log.error(
-            _("error.support.execute.action.invalid_input").format(
-                count=len(e.errors()), tool=tool.name
-            )
-        )
-        for error in e.errors():
-            log.error(
-                os.linesep
-                + _("error.support.execute.action.invalid_argument").format(
-                    loc=error["loc"][0], message=error["msg"]
-                )
-            )
-        sys.exit(1)
+        raise ActionInputError(e, tool.name)
     except Exception:
-        __pretty_print_external_error(action_id, custom_tools_path)
-        log.error(
-            _("error.support.execute.action.execute_tool_failed").format(
-                action=action_id
-            )
-        )
-        sys.exit(1)
+        raise ActionExecuteError(action_id, custom_tools_path)
 
 
 def __parse_tool_args(cli_args, env, tool, tool_action_module):
@@ -206,9 +163,7 @@ def _load_action_module(action_id: str, custom_tools_path):
         if e.name == action_id:
             return None
         else:
-            __pretty_print_external_error(action_id, custom_tools_path)
-            log.error(_("error.support.execute.action.python_dependency_error"))
-            sys.exit(1)
+            raise ActionImportError(action_id, custom_tools_path)
 
 
 def __load_module(module: str):
@@ -216,44 +171,3 @@ def __load_module(module: str):
         return sys.modules[module]
 
     return importlib.import_module(module)
-
-
-def __pretty_print_external_error(action_id, custom_tools_path):
-    exc_type, exc_value, tb = sys.exc_info()
-
-    trace = __find_python_module_in_traceback(action_id, tb, custom_tools_path)
-
-    if trace:
-        log.example(
-            rich_traceback.Traceback.from_exception(exc_type, exc_value, trace),
-            decorator_start=False,
-            decorator_end=False,
-        )
-    else:
-        log.error(exc_value)
-
-
-def __find_python_module_in_traceback(action_id, tb, custom_tools_path):
-    return next(
-        (
-            t
-            for t, path, file_name in __walk_tb(tb)
-            if file_name == action_id
-            or path == os.path.join(custom_tools_path, action_id)
-        ),
-        None,
-    )
-
-
-def __walk_tb(tb):
-    def extract_metadata(_t):
-        try:
-            p = Path(traceback.extract_tb(_t)[0].filename)
-            return p.parent, p.stem
-        except IndexError:
-            return None
-
-    while tb is not None:
-        path, file_name = extract_metadata(tb)
-        yield tb, path.__str__(), file_name
-        tb = tb.tb_next

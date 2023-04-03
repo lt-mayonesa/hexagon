@@ -1,11 +1,10 @@
 import datetime
-import sys
+from typing import Any, Dict, Optional
 
+from pydantic import BaseSettings, ValidationError
 from pydantic.types import DirectoryPath
 
-from hexagon.support.yaml import display_yaml_errors
-from typing import Any, Dict, Optional
-from pydantic import BaseSettings, ValidationError
+from hexagon.support.yaml import YamlValidationError
 
 
 def _local_settings_source(settings: BaseSettings) -> Dict[str, Any]:
@@ -62,8 +61,7 @@ def get_options(init_settings: dict) -> Options:
     try:
         return Options(**init_settings)
     except ValidationError as errors:
-        display_yaml_errors(errors)
-        sys.exit(1)
+        raise YamlValidationError(errors)
 
 
 def update_options(opt: Options) -> Options:
