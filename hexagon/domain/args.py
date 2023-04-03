@@ -20,9 +20,9 @@ def arg_validator(cls):
             return v
         value = field.sub_fields[0]
 
-        valid_value, error = value.validate(v.value, {}, loc="value")
+        valid_value, error = value.validate(v.value, {}, loc="")
         if error:
-            raise ValidationError([error], cls)
+            raise ValidationError([error], model=cls)
         return valid_value
 
     return validate

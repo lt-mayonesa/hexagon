@@ -70,6 +70,8 @@ def main():
     except KeyboardInterrupt:
         sys.exit(1)
 
+    # TODO: rewrite error handling logic across the project, so they all be handled here
+
     HexagonHooks.end.run()
 
 
