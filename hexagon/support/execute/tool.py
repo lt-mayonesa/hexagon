@@ -1,6 +1,6 @@
 from typing import List, Tuple
 
-from hexagon.domain import envs
+from hexagon.domain.singletons import envs
 from hexagon.domain.tool import (
     FunctionTool,
     GroupTool,
