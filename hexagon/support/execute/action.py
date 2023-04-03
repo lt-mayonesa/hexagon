@@ -6,6 +6,7 @@ import traceback
 from pathlib import Path
 from typing import List, Union, Dict, Any
 
+from pydantic import ValidationError
 from rich import traceback as rich_traceback
 
 from hexagon.domain import configuration
@@ -117,6 +118,20 @@ def _execute_python_module(
             else tool_args.extra_args,
         )
         return True
+    except ValidationError as e:
+        log.error(
+            _("error.support.execute.action.invalid_input").format(
+                count=len(e.errors()), tool=tool.name
+            )
+        )
+        for error in e.errors():
+            log.error(
+                os.linesep
+                + _("error.support.execute.action.invalid_argument").format(
+                    loc=error["loc"][0], message=error["msg"]
+                )
+            )
+        sys.exit(1)
     except Exception:
         __pretty_print_external_error(action_id, custom_tools_path)
         log.error(

@@ -85,7 +85,20 @@ def test_only_optional_arguments(args):
 def test_arguments_type_matters():
     (
         as_a_user(__file__)
-        .run_hexagon(["p-m-args", "John", "not-a-number"])
+        .run_hexagon(
+            ["p-m-args", "John", "not-a-number", "USA", "--car-brand", "Chevrolet"]
+        )
+        .then_output_should_be(
+            [
+                "There where 3 error(s) in your input",
+                "",
+                "✗ age -> value is not a valid integer",
+                "",
+                "✗ nationality -> USA is not a valid nationality",
+                "",
+                "✗ car_brand -> we don't accept Chevrolet cars",
+            ]
+        )
         .exit(status=1)
     )
 

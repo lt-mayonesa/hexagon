@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-04-02 20:51-0300\n"
+"POT-Creation-Date: 2023-04-02 21:51-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -180,43 +180,51 @@ msgstr ""
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr ""
 
-#: hexagon/support/execute/action.py:61
+#: hexagon/support/execute/action.py:62
 msgid "error.support.execute.action.command_result_code"
 msgstr ""
 
-#: hexagon/support/execute/action.py:68
+#: hexagon/support/execute/action.py:69
 msgid "error.support.execute.action.could_not_execute"
 msgstr ""
 
-#: hexagon/support/execute/action.py:72
+#: hexagon/support/execute/action.py:73
 msgid "error.support.execute.action.we_tried"
 msgstr ""
 
-#: hexagon/support/execute/action.py:74
+#: hexagon/support/execute/action.py:75
 msgid "error.support.execute.action.attempt_cli_custom_dir"
 msgstr ""
 
-#: hexagon/support/execute/action.py:79
+#: hexagon/support/execute/action.py:80
 msgid "error.support.execute.action.attempt_internal_tools"
 msgstr ""
 
-#: hexagon/support/execute/action.py:84
+#: hexagon/support/execute/action.py:85
 msgid "error.support.execute.action.attempt_known_script"
 msgstr ""
 
-#: hexagon/support/execute/action.py:88
+#: hexagon/support/execute/action.py:89
 msgid "error.support.execute.action.attempt_inline_command"
 msgstr ""
 
 #: hexagon/support/execute/action.py:123
+msgid "error.support.execute.action.invalid_input"
+msgstr ""
+
+#: hexagon/support/execute/action.py:130
+msgid "error.support.execute.action.invalid_argument"
+msgstr ""
+
+#: hexagon/support/execute/action.py:138
 msgid "error.support.execute.action.execute_tool_failed"
 msgstr ""
 
-#: hexagon/support/execute/action.py:142
+#: hexagon/support/execute/action.py:157
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 
-#: hexagon/support/execute/action.py:195
+#: hexagon/support/execute/action.py:210
 msgid "error.support.execute.action.python_dependency_error"
 msgstr ""
 

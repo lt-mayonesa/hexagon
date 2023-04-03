@@ -1,6 +1,6 @@
 from typing import Any, Optional
 
-from pydantic import Field
+from pydantic import Field, validator
 
 from hexagon.domain.args import ToolArgs, PositionalArg, OptionalArg
 from hexagon.domain.env import Env
@@ -8,6 +8,7 @@ from hexagon.domain.tool import ActionTool
 from hexagon.support.printer import log
 
 
+# noinspection PyMethodParameters
 class Args(ToolArgs):
     """
     command line arguments for the tool
@@ -22,6 +23,18 @@ class Args(ToolArgs):
     car_brand: OptionalArg[str] = Field("Ford", description="the car's brand")
     car_model: OptionalArg[str] = Field(None, description="the car's model")
     car_years: OptionalArg[list] = None
+
+    @validator("nationality")
+    def validate_nationality(cls, v):
+        if v == "USA":
+            raise ValueError("USA is not a valid nationality")
+        return v
+
+    @validator("car_brand")
+    def validate_car_brand(cls, v):
+        if v == "Chevrolet":
+            raise ValueError("we don't accept Chevrolet cars")
+        return v
 
 
 def main(
