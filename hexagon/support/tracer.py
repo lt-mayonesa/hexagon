@@ -40,6 +40,27 @@ class Tracer:
 
         return " ".join([_tool.alias or _tool.name] + aliases)
 
+    def print_run_again(
+        self,
+        cli_command: str,
+        tools: List[Union[ActionTool, GroupTool]],
+        envs: List[Env],
+        logger,
+    ):
+        command, aliases_command = self.trace(), self.aliases_trace(tools, envs)
+        if self.has_traced():
+            logger.extra(
+                _("msg.main.tracer.run_again").format(
+                    command=f"{cli_command} {command}"
+                )
+            )
+            if aliases_command and command != aliases_command:
+                logger.extra(
+                    _("msg.main.tracer.or").format(
+                        command=f"{cli_command} {aliases_command}"
+                    )
+                )
+
     def __collect_aliases(self, _tool, envs):
         _t = _tool
         aliases = []
