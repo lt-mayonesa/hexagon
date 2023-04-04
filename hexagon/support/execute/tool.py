@@ -1,6 +1,6 @@
 from typing import List, Tuple
 
-from hexagon.domain.singletons import envs
+from hexagon.domain.env import Env
 from hexagon.domain.tool import (
     FunctionTool,
     GroupTool,
@@ -17,6 +17,7 @@ from hexagon.support.wax import search_by_name_or_alias, select_env, select_tool
 
 def select_and_execute_tool(
     tools: List[Tool],
+    envs: List[Env],
     cli_args: CliArgs,
 ) -> List[str]:
     tool = search_by_name_or_alias(tools, cli_args.tool)
@@ -29,9 +30,10 @@ def select_and_execute_tool(
     env, tool_env_params = select_env(envs, tool.envs, env)
 
     if isinstance(tool, GroupTool):
-        previous = tools, cli_args
+        previous = tools, envs, cli_args
         return _execute_group_tool(
             tool,
+            envs,
             cli_args,
             # If the tool matched the tool argument, disable navigating back
             previous=previous
@@ -69,8 +71,9 @@ GO_BACK_TOOL = Tool(
 
 def _execute_group_tool(
     tool: GroupTool,
+    envs: List[Env],
     cli_args: CliArgs,
-    previous: Tuple[List[Tool], str, str, List[object], str] = None,
+    previous: Tuple = None,
 ) -> List[str]:
     tools = tool.tools
 
@@ -89,5 +92,6 @@ def _execute_group_tool(
 
     return select_and_execute_tool(
         tools,
+        envs,
         parse_cli_args([cli_args.env] + cli_args.raw_extra_args),
     )
