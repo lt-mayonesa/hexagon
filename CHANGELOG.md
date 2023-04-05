@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.38.0 (2023-04-05)
+### Feature
+* **execute:** When executing script pass tool & env as envvars ([`2c17a33`](https://github.com/lt-mayonesa/hexagon/commit/2c17a332215f1936de97549a450f36aac64cc86a))
+
 ## v0.37.0 (2023-04-03)
 ### Feature
 * **args:** Show validation error matching hexagon format ([`6027468`](https://github.com/lt-mayonesa/hexagon/commit/6027468e00b645c64b29f08f1313754033971774))
