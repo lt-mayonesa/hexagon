@@ -63,7 +63,7 @@ tools:
         - ghi
       qa:
         foo: foo
-        bar: bar
+        --bar: bar
 
   - name: single-file-python-module
     action: single_file_module

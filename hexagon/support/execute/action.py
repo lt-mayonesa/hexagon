@@ -20,6 +20,10 @@ from hexagon.support.execute.execution_hook import execution_hook
 from hexagon.support.parse_args import parse_cli_args
 from hexagon.support.tracer import tracer
 
+ENVVAR_EXECUTION_ENV = "HEXAGON_EXECUTION_ENV"
+
+ENVVAR_EXECUTION_TOOL = "HEXAGON_EXECUTION_TOOL"
+
 TOOL_ARGUMENTS_CLASS_NAME = "Args"
 
 _command_by_file_extension = {"js": "node", "sh": "sh"}
@@ -36,6 +40,7 @@ def execute_action(tool: ActionTool, env_args: Any, env: Env, cli_args: CliArgs)
             script_action_command,
             action_to_execute,
             env_args or [],
+            tool,
             env,
             cli_args.raw_extra_args,
         )
@@ -56,6 +61,8 @@ def execute_action(tool: ActionTool, env_args: Any, env: Env, cli_args: CliArgs)
             split_action[0],
             env_args,
             cli_args.raw_extra_args,
+            tool,
+            env,
             action_args=split_action[1:],
         )
 
@@ -116,21 +123,35 @@ def __parse_tool_args(cli_args, env, tool, tool_action_module):
 
 
 def _execute_command(
-    command: str, env_args, cli_args, env: Env = None, action_args: List[str] = None
+    command: str,
+    env_args,
+    cli_args,
+    tool: ActionTool,
+    env: Env = None,
+    action_args: List[str] = None,
 ):
     action_args = action_args if action_args else []
-    hexagon_args = __sanitize_args_for_command(env_args, env, *cli_args)
+    hexagon_args = __sanitize_args_for_command(env_args, *cli_args)
     cmd_as_string = " ".join([command] + action_args + hexagon_args)
 
-    return subprocess.call(cmd_as_string, shell=True), cmd_as_string
+    env_vars = {
+        ENVVAR_EXECUTION_TOOL: tool.json(),
+    }
+    if env:
+        env_vars[ENVVAR_EXECUTION_ENV] = env.json()
+
+    return (
+        subprocess.call(cmd_as_string, shell=True, env=env_vars),
+        cmd_as_string,
+    )
 
 
-def _execute_script(command: str, script: str, env_args, env: Env, cli_args):
+def _execute_script(
+    command: str, script: str, env_args, tool: ActionTool, env: Env, cli_args
+):
     # Script should be relative to the project path
     script_path = os.path.join(configuration.project_path, script)
-    if env and env.alias:
-        del env.alias
-    _execute_command(command, env_args, cli_args, env, [script_path])
+    _execute_command(command, env_args, cli_args, tool, env, [script_path])
 
 
 def __sanitize_args_for_command(*args: Union[List[any], Dict, Env]):
