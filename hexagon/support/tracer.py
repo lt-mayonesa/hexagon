@@ -47,8 +47,8 @@ class Tracer:
         envs: List[Env],
         logger,
     ):
-        command, aliases_command = self.trace(), self.aliases_trace(tools, envs)
         if self.has_traced():
+            command, aliases_command = self.trace(), self.aliases_trace(tools, envs)
             logger.extra(
                 _("msg.main.tracer.run_again").format(
                     command=f"{cli_command} {command}"
