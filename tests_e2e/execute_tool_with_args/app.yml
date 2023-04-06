@@ -30,3 +30,9 @@ tools:
     type: shell
     alias: na
     long_name: Python Module Script With No Args
+
+  - name: access-multiple-times
+    action: python_module_access_multiple_times
+    type: shell
+    alias: amt
+    long_name: Python Module Script With Multiple Arg Access
