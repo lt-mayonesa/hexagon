@@ -110,6 +110,7 @@ def __parse_tool_args(cli_args, env, tool, tool_action_module):
     args = (
         [cli_args.env] if not env and cli_args.env else []
     ) + cli_args.raw_extra_args
+    # noinspection PyProtectedMember
     return parse_cli_args(
         args,
         tool_action_module.Args
@@ -119,7 +120,7 @@ def __parse_tool_args(cli_args, env, tool, tool_action_module):
         description=tool.description or tool.long_name or "Hexagon tool",
         add_help=True,
         epilog=_("msg.support.execute.action.tool_help_epilog"),
-    ).with_tracer(tracer())
+    )._with_tracer(tracer())
 
 
 def _execute_command(

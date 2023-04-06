@@ -44,8 +44,8 @@ def main(
     cli_args: Args = None,
 ):
     log.result(f"name: {cli_args.name}")
-    log.result(f"age: {cli_args.age}")
-    log.result(f"nationality: {cli_args.nationality}")
-    log.result(f"car_brand: {cli_args.car_brand}")
-    log.result(f"car_model: {cli_args.car_model}")
-    log.result(f"car_years: {cli_args.car_years}")
+    log.result(f"name: {cli_args.name}")
+    log.result(f"name: {cli_args.name}")
+    log.result(f"name: {cli_args.name}")
+    log.result(f"name: {cli_args.name}")
+    log.result(f"name: {cli_args.name}")

@@ -52,6 +52,52 @@ def test_execute_python_tool_with_several_positional_arguments():
     )
 
 
+def test_should_only_trace_passed_arguments_and_not_defaults():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["p-m-args", "John", "31", "Argentinian", "--car-brand", "Ford"])
+        .then_output_should_be(
+            [
+                "name: John",
+                "age: 31",
+                "nationality: Argentinian",
+                "car_brand: Ford",
+                "car_model: None",
+                "car_years: None",
+            ]
+        )
+        .exit()
+    )
+    assert_file_has_contents(
+        __file__,
+        ".config/test/last-command.txt",
+        "hexagon-test p-m-args John 31 Argentinian --car-brand=Ford",
+    )
+
+
+def test_should_argument_should_be_traced_once():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["access-multiple-times", "John"])
+        .then_output_should_be(
+            [
+                "name: John",
+                "name: John",
+                "name: John",
+                "name: John",
+                "name: John",
+                "name: John",
+            ]
+        )
+        .exit()
+    )
+    assert_file_has_contents(
+        __file__,
+        ".config/test/last-command.txt",
+        "hexagon-test access-multiple-times John",
+    )
+
+
 @pytest.mark.parametrize(
     "args",
     [

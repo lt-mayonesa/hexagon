@@ -51,7 +51,7 @@ def parse_cli_args(args=None, model=CliArgs, **kwargs):
             "extra_args": extra_args if extra_args else None,
         }
     )
-    return model(**data)
+    return model(**{k: v for k, v in data.items() if v is not None})
 
 
 def init_arg_parser(
@@ -88,13 +88,12 @@ def __polyfill_extend_action(__p):
 def __add_parser_argument(parser, field: ModelField):
     reprs = field.type_.cli_repr(field)
     nargs, action = __config_base_on_type(field)
+    # type and default behavior is handled by pydantic
     parser.add_argument(
         *[x for x in reprs if x],
         nargs=nargs,
         action=action,
-        default=field.default,
-        type=str,  # type validation is handled by pydantic models
-        help=field.field_info.description or field.name,
+        help=f"{field.field_info.description or field.name} (default: {field.default})",
     )
 
 

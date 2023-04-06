@@ -91,6 +91,8 @@ class CliArgs(BaseModel):
 
 class ToolArgs(BaseModel):
     __tracer__ = None
+    __fields_traced__ = set()
+
     show_help: bool = False
     extra_args: Optional[Dict[str, Union[list, bool, int, str]]] = None
     raw_extra_args: Optional[List[str]] = None
@@ -107,7 +109,7 @@ class ToolArgs(BaseModel):
 
             field = self.__fields__.get(item)
             value_ = self.__getattribute__(item, skip_tracing=True)
-            if value_ != field.default:
+            if item not in self.__fields_traced__ and item in self.__fields_set__:
                 if field.type_ == PositionalArg:
                     self.__tracer__.tracing(value_)
                 elif field.type_ == OptionalArg:
@@ -115,10 +117,14 @@ class ToolArgs(BaseModel):
                         value_,
                         key=item.replace("_", "-"),
                     )
+                self.__fields_traced__.add(item)
 
         return super().__getattribute__(item)
 
-    def with_tracer(self, tracer):
+    def __setattr__(self, key, value):
+        super().__setattr__(key, value)
+
+    def _with_tracer(self, tracer):
         self.__tracer__ = tracer
         return self
 
