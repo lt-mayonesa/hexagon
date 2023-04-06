@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.38.1 (2023-04-06)
+### Fix
+* **args:** Trace all input args and one time only ([`8b69454`](https://github.com/lt-mayonesa/hexagon/commit/8b6945487dddf9d4bb31a916743689e1831ee13b))
+
 ## v0.38.0 (2023-04-05)
 ### Feature
 * **execute:** When executing script pass tool & env as envvars ([`2c17a33`](https://github.com/lt-mayonesa/hexagon/commit/2c17a332215f1936de97549a450f36aac64cc86a))
