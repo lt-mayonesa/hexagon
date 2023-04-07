@@ -4,7 +4,7 @@ import pytest
 from pydantic import ValidationError, BaseModel
 
 from hexagon.domain.args import PositionalArg, OptionalArg
-from hexagon.support.parse_args import parse_cli_args, __should_support_multiple_args
+from hexagon.support.parse_args import parse_cli_args, should_support_multiple_args
 
 
 def test_no_cli_args_passed():
@@ -187,11 +187,11 @@ def test_get_generic_type_hint():
 
     model = TestModel()
 
-    assert __should_support_multiple_args(model.__fields__["name"]) is False
-    assert __should_support_multiple_args(model.__fields__["last_names"]) is True
-    assert __should_support_multiple_args(model.__fields__["age"]) is False
-    assert __should_support_multiple_args(model.__fields__["friends"]) is True
-    assert __should_support_multiple_args(model.__fields__["enemies"]) is True
-    assert __should_support_multiple_args(model.__fields__["relatives"]) is True
-    assert __should_support_multiple_args(model.__fields__["parents"]) is True
-    assert __should_support_multiple_args(model.__fields__["grand_parents"]) is True
+    assert should_support_multiple_args(model.__fields__["name"]) is False
+    assert should_support_multiple_args(model.__fields__["last_names"]) is True
+    assert should_support_multiple_args(model.__fields__["age"]) is False
+    assert should_support_multiple_args(model.__fields__["friends"]) is True
+    assert should_support_multiple_args(model.__fields__["enemies"]) is True
+    assert should_support_multiple_args(model.__fields__["relatives"]) is True
+    assert should_support_multiple_args(model.__fields__["parents"]) is True
+    assert should_support_multiple_args(model.__fields__["grand_parents"]) is True

@@ -247,3 +247,179 @@ def test_show_tool_help_text_when_tool_has_no_args(help_arg):
         )
         .exit()
     )
+
+
+def test_tool_args_class_can_be_used_to_prompt():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt", "prompt_name_and_age"],
+            os_env_vars={"HEXAGON_THEME": "default"},
+        )
+        .then_output_should_be(
+            "input the person's name:", discard_until_first_match=True
+        )
+        .input("John")
+        .then_output_should_be(["name: John"], discard_until_first_match=True)
+        .input("24")
+        .then_output_should_be(
+            ["age: 24", "age type: int"], discard_until_first_match=True
+        )
+        .then_output_should_be(
+            [
+                "To run this tool again do:",
+                "hexagon-test prompt prompt_name_and_age --name=John --age=24",
+                "or:",
+                "hexagon-test p prompt_name_and_age -n=John -a=24",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )
+
+
+def test_prompt_shows_default_value():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt", "prompt_show_default_value"],
+            os_env_vars={"HEXAGON_THEME": "default"},
+        )
+        .then_output_should_be(["country: Argentina"], discard_until_first_match=True)
+        .enter()
+        .then_output_should_be(["country: Argentina"], discard_until_first_match=True)
+        .then_output_should_be(
+            [
+                "To run this tool again do:",
+                "hexagon-test prompt prompt_show_default_value --country=Argentina",
+                "or:",
+                "hexagon-test p prompt_show_default_value -c=Argentina",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )
+
+
+def test_prompt_shows_default_value_input_another():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt", "prompt_show_default_value"],
+            os_env_vars={"HEXAGON_THEME": "default"},
+        )
+        .then_output_should_be(["country: Argentina"], discard_until_first_match=True)
+        .erase("Argentina")
+        .input("Colombia")
+        .then_output_should_be(["country: Colombia"], discard_until_first_match=True)
+        .then_output_should_be(
+            [
+                "To run this tool again do:",
+                "hexagon-test prompt prompt_show_default_value --country=Colombia",
+                "or:",
+                "hexagon-test p prompt_show_default_value -c=Colombia",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )
+
+
+def test_prompt_list_value_using_multiline():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt", "prompt_list_value"],
+            os_env_vars={"HEXAGON_THEME": "default"},
+        )
+        .then_output_should_be(
+            ["likes: (each line represents a value) ESC + Enter to finish input"],
+            discard_until_first_match=True,
+        )
+        .input("pizza")
+        .input("pasta")
+        .input("sushi")
+        .esc()
+        .carriage_return()
+        .then_output_should_be(
+            ["likes: ['pizza', 'pasta', 'sushi']"], discard_until_first_match=True
+        )
+        .then_output_should_be(
+            [
+                "To run this tool again do:",
+                "hexagon-test prompt prompt_list_value --likes=pizza --likes=pasta --likes=sushi",
+                "or:",
+                "hexagon-test p prompt_list_value -l=pizza -l=pasta -l=sushi",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )
+
+
+def test_prompt_support_enum_arguments():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt", "prompt_enum_choices"],
+            os_env_vars={"HEXAGON_THEME": "default"},
+        )
+        .then_output_should_be(
+            ["tag", "A", "B", "C", "D", "E", "F"], discard_until_first_match=True
+        )
+        .arrow_up()  # default is C
+        .carriage_return()
+        .then_output_should_be(
+            ["tag: b", "tag type: Category"], discard_until_first_match=True
+        )
+        .then_output_should_be(
+            [
+                "To run this tool again do:",
+                "hexagon-test prompt prompt_enum_choices --tag=b",
+                "or:",
+                "hexagon-test p prompt_enum_choices -t=b",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )
+
+
+def test_prompt_support_list_of_enum_arguments():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt", "prompt_list_enum_choices"],
+            os_env_vars={"HEXAGON_THEME": "default"},
+        )
+        .then_output_should_be(
+            ["available_tags", "A", "⬢ B", "C", "D", "⬢ E", "F"],
+            discard_until_first_match=True,
+        )
+        .space_bar()
+        .arrow_down()
+        .arrow_down()
+        .arrow_down()
+        .space_bar()
+        .arrow_down()
+        .space_bar()
+        .arrow_down()
+        .space_bar()
+        .carriage_return()
+        .then_output_should_be(
+            [
+                "available_tags: [<Category.A: 'a'>, <Category.B: 'b'>, <Category.D: 'd'>, <Category.F: 'f'>]"
+            ],
+            discard_until_first_match=True,
+        )
+        .then_output_should_be(
+            [
+                "To run this tool again do:",
+                "hexagon-test prompt prompt_list_enum_choices --available-tags=a --available-tags=b --available-tags=d --available-tags=f",  # noqa: E501
+                "or:",
+                "hexagon-test p prompt_list_enum_choices -at=a -at=b -at=d -at=f",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )

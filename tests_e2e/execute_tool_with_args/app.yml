@@ -36,3 +36,9 @@ tools:
     type: shell
     alias: amt
     long_name: Python Module Script With Multiple Arg Access
+
+  - name: prompt
+    action: python_module_prompt
+    type: shell
+    alias: p
+    long_name: Python Module Script With Prompt

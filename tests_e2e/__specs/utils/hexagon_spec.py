@@ -1,13 +1,22 @@
 import time
 from subprocess import Popen
-from typing import Callable, Dict, List, Optional
+from typing import Callable, Dict, List, Optional, Union
 
 from tests_e2e.__specs.utils.assertions import (
     Expected_Process_Output,
     assert_process_output,
     assert_process_ended,
 )
-from tests_e2e.__specs.utils.cli import ARROW_DOWN_CHARACTER
+from tests_e2e.__specs.utils.cli import (
+    ARROW_DOWN_CHARACTER,
+    ARROW_UP_CHARACTER,
+    LINE_FEED_CHARACTER,
+    ESCAPE_CHARACTER,
+    CARRIAGE_RETURN_CHARACTER,
+    BACKSPACE_CHARACTER,
+    CONTROL_C_CHARACTER,
+    SPACE_BAR_CHARACTER,
+)
 from tests_e2e.__specs.utils.config import write_hexagon_config
 from tests_e2e.__specs.utils.run import (
     run_hexagon_e2e_test,
@@ -40,7 +49,7 @@ class HexagonSpec:
         self,
         command: List[str] = None,
         os_env_vars: Optional[Dict[str, str]] = None,
-        test_file_path_is_absoulte: bool = False,
+        test_file_path_is_absolute: bool = False,
         cwd: str = None,
     ):
         __tracebackhide__ = True
@@ -50,14 +59,14 @@ class HexagonSpec:
                 self.__file,
                 self.command,
                 os_env_vars=os_env_vars,
-                test_file_path_is_absoulte=test_file_path_is_absoulte,
+                test_file_path_is_absoulte=test_file_path_is_absolute,
                 cwd=cwd,
             )
         else:
             self.process = run_hexagon_e2e_test(
                 self.__file,
                 os_env_vars=os_env_vars,
-                test_file_path_is_absoulte=test_file_path_is_absoulte,
+                test_file_path_is_absoulte=test_file_path_is_absolute,
                 cwd=cwd,
             )
         return self
@@ -103,17 +112,40 @@ class HexagonSpec:
         write_to_process(self.process, ARROW_DOWN_CHARACTER)
         return self
 
+    def arrow_up(self):
+        __tracebackhide__ = True
+        write_to_process(self.process, ARROW_UP_CHARACTER)
+        return self
+
     def enter(self):
         __tracebackhide__ = True
-        return self.write("\n")
+        return self.write(LINE_FEED_CHARACTER)
+
+    def space_bar(self):
+        __tracebackhide__ = True
+        return self.write(SPACE_BAR_CHARACTER)
+
+    def esc(self):
+        __tracebackhide__ = True
+        return self.write(ESCAPE_CHARACTER)
 
     def carriage_return(self):
         __tracebackhide__ = True
-        return self.write("\r")
+        return self.write(CARRIAGE_RETURN_CHARACTER)
 
     def input(self, text: str):
         __tracebackhide__ = True
-        return self.write(f"{text}\n")
+        return self.write(f"{text}{LINE_FEED_CHARACTER}")
+
+    def erase(self, val: Union[str, int]):
+        __tracebackhide__ = True
+        if isinstance(val, int):
+            for _ in range(val):
+                self.write(BACKSPACE_CHARACTER)
+        else:
+            for _ in val:
+                self.write(BACKSPACE_CHARACTER)
+        return self
 
     def write(self, text: str):
         __tracebackhide__ = True
@@ -136,7 +168,7 @@ class HexagonSpec:
         return self
 
     def force_exit(self):
-        return self.write("^C")
+        return self.write(CONTROL_C_CHARACTER)
 
     def wait(self, seconds: int):
         time.sleep(seconds)
