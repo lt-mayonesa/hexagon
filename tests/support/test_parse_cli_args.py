@@ -133,6 +133,8 @@ def test_last_optional_arg_is_not_a_value():
 @pytest.mark.parametrize(
     "args,expected",
     [
+        ([], []),
+        (["some-tool"], ["some-tool"]),
         (["some-tool", "some-env"], ["some-tool", "some-env"]),
         (
             ["some-tool", "some-env", "--number=123"],

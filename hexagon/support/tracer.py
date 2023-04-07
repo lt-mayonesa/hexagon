@@ -1,54 +1,65 @@
-from typing import List, Union
+from dataclasses import dataclass
+from typing import List, Union, Optional
 
-from hexagon.domain.env import Env
-from hexagon.domain.tool import ToolType, ActionTool, GroupTool
 from hexagon.support.parse_args import CliArgs
+
+
+@dataclass
+class Trace:
+    value: str
+    value_alias: str
+    key: str
+    key_alias: str
+
+    def real(self):
+        if self.key:
+            return f"{self.key}={self.value}"
+        return str(self.value)
+
+    def alias(self):
+        if self.key_alias:
+            return f"{self.key_alias}={self.value}"
+        if self.key:
+            return f"{self.key}={self.value}"
+        return str(self.value_alias or self.value)
 
 
 class Tracer:
     def __init__(self, initial_cli_args: CliArgs):
         self._initial_args = initial_cli_args
-        # TODO: store PositionalArg and OptionalArg in trace instead of strings
-        self._trace = []
+        self._trace: List[Trace] = []
 
-    def tracing(self, arg: Union[str, list], key: str = None):
-        if arg:
+    def tracing(
+        self,
+        value: Union[str, list],
+        key: str = None,
+        value_alias: str = None,
+        key_alias: str = None,
+    ):
+        if value:
             if key:
-                for val in arg if isinstance(arg, list) else [arg]:
-                    self._trace.append(CliArgs.key_value_arg(key, val))
+                for val in value if isinstance(value, list) else [value]:
+                    self._trace.append(Trace(val, value_alias, key, key_alias))
             else:
-                self._trace.append(arg)
-        return arg
+                self._trace.append(Trace(value, value_alias, key, key_alias))
+        return value
 
     def remove_last(self):
         del self._trace[-1]
 
     def trace(self):
-        return " ".join([str(x) for x in self._trace])
+        return " ".join([x.real() for x in self._trace])
 
-    def aliases_trace(self, tools: List[Union[ActionTool, GroupTool]], envs: List[Env]):
-        if len(self._trace) < 1:
-            return ""
-
-        first_arg = self._trace[:1][0]
-
-        _tool = next((t for t in tools if t.name == first_arg), None)
-        if not _tool:
-            return None
-
-        aliases = self.__collect_aliases(_tool, envs)
-
-        return " ".join([_tool.alias or _tool.name] + aliases)
+    def aliases_trace(self):
+        return " ".join([x.alias() for x in self._trace])
 
     def print_run_again(
         self,
         cli_command: str,
-        tools: List[Union[ActionTool, GroupTool]],
-        envs: List[Env],
         logger,
     ):
         if self.has_traced():
-            command, aliases_command = self.trace(), self.aliases_trace(tools, envs)
+            command, aliases_command = self.trace(), self.aliases_trace()
             logger.extra(
                 _("msg.main.tracer.run_again").format(
                     command=f"{cli_command} {command}"
@@ -61,29 +72,33 @@ class Tracer:
                     )
                 )
 
-    def __collect_aliases(self, _tool, envs):
-        _t = _tool
-        aliases = []
-        for trace in self._trace[1:]:
-            _env_alias = next(([x.alias] for x in envs if x.name == trace), [])
-            if not _env_alias and _t.type == ToolType.group:
-                _t = next((x for x in _t.tools if x.name == trace), None)
-                if _t and _t.alias:
-                    _env_alias = [_t.alias]
-
-            aliases += _env_alias or [trace]
-        return [str(a) for a in aliases]
-
     def has_traced(self):
-        return (
-            len([x for x in self._trace if x not in self._initial_args.as_list()]) > 0
-        )
+        if len(self._trace) == 0:
+            return False
+
+        if len(self._trace) > self._initial_args.count():
+            return True
+
+        input_args = self._initial_args.as_str()
+        matches = []
+        for x in self._trace:
+            if x.real() in input_args:
+                matches.append(x.real())
+            elif x.alias() in input_args:
+                matches.append(x.alias())
+            elif (
+                x.real().replace("=", " ") in input_args
+                or x.alias().replace("=", " ") in input_args
+            ):
+                matches.append(x.alias().replace("=", ""))
+
+        return len(matches) > self._initial_args.count()
 
 
-_tracer = None
+_tracer: Optional[Tracer] = None
 
 
-def tracer():
+def tracer() -> Tracer:
     global _tracer
     if not _tracer:
         raise Exception("Tracer not initialized")
