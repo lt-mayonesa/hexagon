@@ -18,6 +18,7 @@ from hexagon.support.execute.errors import (
 )
 from hexagon.support.execute.execution_hook import execution_hook
 from hexagon.support.parse_args import parse_cli_args
+from hexagon.support.prompt import Prompt
 from hexagon.support.tracer import tracer
 
 ENVVAR_EXECUTION_ENV = "HEXAGON_EXECUTION_ENV"
@@ -111,16 +112,20 @@ def __parse_tool_args(cli_args, env, tool, tool_action_module):
         [cli_args.env] if not env and cli_args.env else []
     ) + cli_args.raw_extra_args
     # noinspection PyProtectedMember
-    return parse_cli_args(
-        args,
-        tool_action_module.Args
-        if hasattr(tool_action_module, TOOL_ARGUMENTS_CLASS_NAME)
-        else ToolArgs,
-        prog=tool.name,
-        description=tool.description or tool.long_name or "Hexagon tool",
-        add_help=True,
-        epilog=_("msg.support.execute.action.tool_help_epilog"),
-    )._with_tracer(tracer())
+    return (
+        parse_cli_args(
+            args,
+            tool_action_module.Args
+            if hasattr(tool_action_module, TOOL_ARGUMENTS_CLASS_NAME)
+            else ToolArgs,
+            prog=tool.name,
+            description=tool.description or tool.long_name or "Hexagon tool",
+            add_help=True,
+            epilog=_("msg.support.execute.action.tool_help_epilog"),
+        )
+        ._with_tracer(tracer())
+        ._with_prompt(Prompt())
+    )
 
 
 def _execute_command(

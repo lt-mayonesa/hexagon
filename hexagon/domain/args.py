@@ -1,7 +1,7 @@
 import re
-from typing import Optional, Dict, Union, List, TypeVar, Generic
+from typing import Optional, Dict, Union, List, TypeVar, Generic, Any
 
-from pydantic import BaseModel, validator, ValidationError
+from pydantic import BaseModel, validator, ValidationError, Field as PydanticField
 from pydantic.fields import ModelField
 
 ARGUMENT_KEY_PREFIX = "-"
@@ -63,6 +63,26 @@ class OptionalArg(Generic[T]):
         return str(self.value)
 
 
+# noinspection PyPep8Naming
+def Field(
+    default: Any = None,
+    *,
+    alias: Optional[str] = None,
+    title: Optional[str] = None,
+    description: Optional[str] = None,
+    prompt_message: Optional[str] = None,
+    **kwargs,
+):
+    return PydanticField(
+        default,
+        alias=alias,
+        title=title,
+        description=description,
+        prompt_message=prompt_message,
+        **kwargs,
+    )
+
+
 class CliArgs(BaseModel):
     show_help: bool = False
     tool: PositionalArg[Optional[str]] = None
@@ -98,24 +118,29 @@ class CliArgs(BaseModel):
 
 class ToolArgs(BaseModel):
     __tracer__ = None
+    __prompt__ = None
     __fields_traced__ = set()
 
     show_help: bool = False
     extra_args: Optional[Dict[str, Union[list, bool, int, str]]] = None
     raw_extra_args: Optional[List[str]] = None
 
-    def __getattribute__(self, item, skip_tracing=False):
+    def __getattribute__(self, item, skip_trace=False):
         if item == "__fields__":
             return super().__getattribute__(item)
         if item in self.__fields__:
-            if skip_tracing:
+            if skip_trace or not self.__config__.trace_on_access:
                 return super().__getattribute__(item)
 
             if not self.__tracer__:
                 raise Exception("Tracer not set")
 
-            field = self.__fields__.get(item)
-            value_ = self.__getattribute__(item, skip_tracing=True)
+            field = self.__fields__[item]
+            value_ = self.__getattribute__(item, skip_trace=True)
+
+            if value_ is None and self.__config__.prompt_on_access:
+                return self.prompt(field)
+
             if item not in self.__fields_traced__ and item in self.__fields_set__:
                 if field.type_ == PositionalArg:
                     self.__tracer__.tracing(value_)
@@ -126,12 +151,39 @@ class ToolArgs(BaseModel):
 
         return super().__getattribute__(item)
 
-    def __setattr__(self, key, value):
-        super().__setattr__(key, value)
+    def prompt(self, field: Union[ModelField, str], **kwargs):
+        if not self.__prompt__:
+            raise Exception("Prompt not set")
+
+        model_field = (
+            field if isinstance(field, ModelField) else self.__fields__.get(field)
+        )
+        if not model_field:
+            raise Exception(
+                f"argument field must be a field name or a ModelField instance, got {field}"
+            )
+
+        value_ = self.__prompt__.query_field(model_field, **kwargs)
+
+        self.__setattr__(model_field.name, value_)
+        return self.__getattribute__(
+            field, skip_trace=not self.__config__.trace_on_prompt
+        )
 
     def _with_tracer(self, tracer):
         self.__tracer__ = tracer
         return self
 
+    def _with_prompt(self, prompt):
+        self.__prompt__ = prompt
+        return self
+
     class Config:
+        # pydantic config
         underscore_attrs_are_private = True
+        validate_assignment = True
+
+        # hexagon config
+        trace_on_access = True
+        trace_on_prompt = True
+        prompt_on_access = False

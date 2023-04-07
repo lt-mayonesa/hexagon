@@ -60,7 +60,7 @@ def test_cli_not_updated_if_no_pending_changes():
 
     (
         as_a_user(local_repo_path)
-        .run_hexagon(["echo"], os_env_vars, test_file_path_is_absoulte=True)
+        .run_hexagon(["echo"], os_env_vars, test_file_path_is_absolute=True)
         .then_output_should_be(["echo"])
         .exit()
     )
@@ -94,7 +94,7 @@ def test_cli_updated_if_pending_changes():
                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
                 "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
             },
-            test_file_path_is_absoulte=True,
+            test_file_path_is_absolute=True,
         )
         .write("y")
         .then_output_should_be(
@@ -127,7 +127,7 @@ def test_cli_updates_fail_silently_if_not_in_a_git_repository():
 
     (
         as_a_user(tmp_dir)
-        .run_hexagon(["echo"], os_env_vars, test_file_path_is_absoulte=True)
+        .run_hexagon(["echo"], os_env_vars, test_file_path_is_absolute=True)
         .then_output_should_be(["echo"])
         .exit()
     )

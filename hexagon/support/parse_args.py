@@ -5,6 +5,7 @@ from typing import List
 from pydantic.fields import ModelField
 
 from hexagon.domain.args import CliArgs, ARGUMENT_KEY_PREFIX, OptionalArg, PositionalArg
+from hexagon.utils.typing import should_support_multiple_args
 
 
 # noinspection PyProtectedMember
@@ -111,19 +112,12 @@ def __config_base_on_type(field):
             "*",
             "extend",
         )
-        if field.type_ == OptionalArg and __should_support_multiple_args(field)
+        if field.type_ == OptionalArg and should_support_multiple_args(field)
         else (
             "?",
             "store",
         )
     )
-
-
-def __should_support_multiple_args(field):
-    type_ = field.sub_fields[0].outer_type_
-    if hasattr(type_, "__origin__"):
-        type_ = type_.__origin__
-    return type_ in [list, tuple, set]
 
 
 def __guess_optional_keys(extra: List[str]):
