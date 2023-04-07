@@ -12,15 +12,13 @@ T = TypeVar("T")
 
 def arg_validator(cls):
     def validate(v, field: ModelField):
-        if not isinstance(v, cls):
-            v = cls(v)
         if not field.sub_fields:
             # Generic parameters were not provided, ie: `name = PositionalArg`,
             # so we don't try to validate them and just return the value as is
             return v
         value = field.sub_fields[0]
 
-        valid_value, error = value.validate(v.value, {}, loc="")
+        valid_value, error = value.validate(v, {}, loc="")
         if error:
             raise ValidationError([error], model=cls)
         return valid_value
@@ -38,10 +36,10 @@ class PositionalArg(Generic[T]):
 
     @staticmethod
     def cli_repr(field: ModelField):
-        return (
-            field.name,
-            field.alias if field.alias and field.alias != field.name else None,
-        )
+        return field.name, None
+
+    def __repr__(self):
+        return str(self.value)
 
 
 class OptionalArg(Generic[T]):
@@ -61,6 +59,9 @@ class OptionalArg(Generic[T]):
             else f"{ARGUMENT_KEY_PREFIX}{''.join([w[0] for w in field.name.split('_')])}",
         )
 
+    def __repr__(self):
+        return str(self.value)
+
 
 class CliArgs(BaseModel):
     show_help: bool = False
@@ -69,11 +70,18 @@ class CliArgs(BaseModel):
 
     extra_args: Optional[Dict[str, Union[list, bool, int, str]]] = None
     raw_extra_args: Optional[List[str]] = None
+    total_args: int
 
     def as_list(self):
-        return [self.tool, self.env] + (
+        return [str(x) for x in [self.tool, self.env] if x] + (
             self.raw_extra_args if self.raw_extra_args else []
         )
+
+    def as_str(self):
+        return " ".join(self.as_list())
+
+    def count(self):
+        return self.total_args
 
     @validator("tool", "env")
     def validate(cls, v, field):
@@ -85,8 +93,7 @@ class CliArgs(BaseModel):
 
     @staticmethod
     def key_value_arg(key, arg):
-        prefix = ARGUMENT_KEY_PREFIX * (2 if len(key) > 2 else 1)
-        return f"{prefix}{key}={arg}"
+        return f"{key}={arg}"
 
 
 class ToolArgs(BaseModel):
@@ -113,10 +120,8 @@ class ToolArgs(BaseModel):
                 if field.type_ == PositionalArg:
                     self.__tracer__.tracing(value_)
                 elif field.type_ == OptionalArg:
-                    self.__tracer__.tracing(
-                        value_,
-                        key=item.replace("_", "-"),
-                    )
+                    n, a = OptionalArg.cli_repr(field)
+                    self.__tracer__.tracing(value_, key=n, key_alias=a)
                 self.__fields_traced__.add(item)
 
         return super().__getattribute__(item)

@@ -25,7 +25,7 @@ def select_and_execute_tool(
 
     tool = select_tool(tools, tool)
     if tool.traced:
-        tracer().tracing(tool.name)
+        tracer().tracing(tool.name, value_alias=tool.alias)
 
     env, tool_env_params = select_env(envs, tool.envs, env)
 
@@ -45,7 +45,7 @@ def select_and_execute_tool(
         return tool.function()
 
     if env:
-        tracer().tracing(env.name)
+        tracer().tracing(env.name, value_alias=env.alias)
 
     HexagonHooks.before_tool_executed.run(
         ToolExecutionParameters(

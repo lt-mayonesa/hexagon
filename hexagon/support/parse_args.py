@@ -41,14 +41,16 @@ def parse_cli_args(args=None, model=CliArgs, **kwargs):
     if all(not x for x in known_args.__dict__.values()) and any(
         [a in ["-h", "--help"] for a in args]
     ):
-        return model(show_help=True)
+        return model(show_help=True, total_args=0)
 
-    extra_args = __guess_optional_keys(extra)
+    count, extra_args = __guess_optional_keys(extra)
     data = vars(known_args)
     data.update(
         {
             "raw_extra_args": extra,
             "extra_args": extra_args if extra_args else None,
+            "total_args": len(list(x for x in known_args.__dict__.values() if x))
+            + count,
         }
     )
     return model(**{k: v for k, v in data.items() if v is not None})
@@ -134,10 +136,10 @@ def __guess_optional_keys(extra: List[str]):
     :return:
     """
     if not extra:
-        return None
+        return 0, None
 
     result = __args_to_key_vals(extra)
-    return __group_by_key_appending(result)
+    return len(result), __group_by_key_appending(result)
 
 
 def __args_to_key_vals(extra):

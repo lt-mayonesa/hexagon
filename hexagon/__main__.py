@@ -52,7 +52,7 @@ def main():
 
         log.finish()
 
-        tracer.print_run_again(cli.command, tools, envs, log)
+        tracer.print_run_again(cli.command, log)
         store_user_data(
             HexagonStorageKeys.last_command.value, f"{cli.command} {tracer.trace()}"
         )
