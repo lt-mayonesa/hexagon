@@ -1,11 +1,26 @@
 from InquirerPy import inquirer
+from prompt_toolkit.document import Document
+from prompt_toolkit.validation import ValidationError, Validator
 from pydantic.fields import ModelField
 
 from hexagon.utils.typing import field_info
 
 
+class PromptValidator(Validator):
+    def __init__(self, validators, cls):
+        self.validators = validators
+        self.cls = cls
+
+    def validate(self, document: Document) -> None:
+        try:
+            for validator in self.validators.values():
+                validator.func(self.cls, document.text)
+        except ValueError as e:
+            raise ValidationError(message=e.args[0], cursor_position=len(document.text))
+
+
 class Prompt:
-    def query_field(self, model_field: ModelField, **kwargs):
+    def query_field(self, model_field: ModelField, model_class, **kwargs):
         inq = self.text
         args = {
             "message": model_field.field_info.extra.get("prompt_message", None)
@@ -15,6 +30,11 @@ class Prompt:
             args["default"] = model_field.default
 
         type_, iterable, of_enum = field_info(model_field)
+
+        if model_field.class_validators:
+            args["validate"] = PromptValidator(
+                model_field.class_validators, model_class
+            )
 
         if iterable and of_enum:
             # TODO: use inquirerpy's Choice class (need to update inquirerpy version)

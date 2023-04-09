@@ -1,6 +1,8 @@
 from enum import Enum
 from typing import Any, Optional, List
 
+from pydantic import validator
+
 from hexagon.domain.args import ToolArgs, OptionalArg, PositionalArg, Field
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
@@ -29,6 +31,18 @@ class Args(ToolArgs):
     likes: OptionalArg[list] = None
     tag: OptionalArg[Category] = Category.C
     available_tags: OptionalArg[List[Category]] = [Category.B, Category.E]
+
+    @validator("age")
+    def validate_age(cls, value):
+        if not value or int(value) < 18:
+            raise ValueError("age must be greater than 18")
+        return value
+
+    @validator("age")
+    def validate_age_max(cls, value):
+        if not value or int(value) > 48:
+            raise ValueError("age must be less than 48")
+        return value
 
 
 def main(

@@ -163,7 +163,9 @@ class ToolArgs(BaseModel):
                 f"argument field must be a field name or a ModelField instance, got {field}"
             )
 
-        value_ = self.__prompt__.query_field(model_field, **kwargs)
+        value_ = self.__prompt__.query_field(
+            model_field, model_class=self.__class__, **kwargs
+        )
 
         self.__setattr__(model_field.name, value_)
         return self.__getattribute__(

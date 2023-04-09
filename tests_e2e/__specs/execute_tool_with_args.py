@@ -278,6 +278,36 @@ def test_tool_args_class_can_be_used_to_prompt():
     )
 
 
+def test_prompt_validates_input_correctly():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt", "prompt_validate_age"],
+            os_env_vars={"HEXAGON_THEME": "default"},
+        )
+        .input("2")
+        .erase()
+        .input("3")
+        .erase()
+        .input("58")
+        .erase()
+        .input("49")
+        .erase()
+        .input("36")
+        .then_output_should_be(["age: 36"], discard_until_first_match=True)
+        .then_output_should_be(
+            [
+                "To run this tool again do:",
+                "hexagon-test prompt prompt_validate_age --age=36",
+                "or:",
+                "hexagon-test p prompt_validate_age -a=36",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )
+
+
 def test_prompt_shows_default_value():
     (
         as_a_user(__file__)
