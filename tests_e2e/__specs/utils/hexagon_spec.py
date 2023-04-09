@@ -40,6 +40,7 @@ class HexagonSpec:
         self.process: Optional[Popen[str]] = None
         self.command = None
         self.lines_read: List[str] = []
+        self.last_input = None
 
     def given_a_cli_yaml(self, config: dict):
         write_hexagon_config(self.__file, config)
@@ -135,11 +136,16 @@ class HexagonSpec:
 
     def input(self, text: str):
         __tracebackhide__ = True
+        self.last_input = text
         return self.write(f"{text}{LINE_FEED_CHARACTER}")
 
-    def erase(self, val: Union[str, int]):
+    def erase(self, val: Optional[Union[str, int]] = None):
         __tracebackhide__ = True
-        if isinstance(val, int):
+        if not val and self.last_input:
+            for _ in self.last_input:
+                self.write(BACKSPACE_CHARACTER)
+            self.last_input = None
+        elif isinstance(val, int):
             for _ in range(val):
                 self.write(BACKSPACE_CHARACTER)
         else:
