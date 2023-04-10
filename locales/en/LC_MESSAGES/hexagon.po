@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-04-03 01:52-0300\n"
+"POT-Creation-Date: 2023-04-09 01:02-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,34 +22,6 @@ msgstr "This looks like your first time running hexagon."
 #: hexagon/__main__.py:40
 msgid "msg.main.first_time_tool"
 msgstr "You should probably run \"Install CLI\"."
-
-#: hexagon/__main__.py:58
-msgid "msg.main.tracer.run_again"
-msgstr ""
-"[cyan][dim]To run this tool again do:[/dim]\n"
-"  {command}[/cyan]"
-
-#: hexagon/__main__.py:65
-msgid "msg.main.tracer.or"
-msgstr ""
-"[cyan][dim] or:[/dim]\n"
-"  {command}[/cyan]"
-
-#: hexagon/actions/external/docker_registry.py:28
-msgid "action.actions.external.docker_registry.prompt_docker_image"
-msgstr "What docker image are you looking for?"
-
-#: hexagon/actions/external/docker_registry.py:38
-msgid "action.actions.external.docker_registry.prompt_tag"
-msgstr "Which tag?"
-
-#: hexagon/actions/external/docker_registry.py:47
-msgid "msg.actions.external.docker_registry.copied_to_clipboard"
-msgstr "[dim][u]{host}/{image}:{tag}[/u]"
-
-#: hexagon/actions/external/docker_registry.py:53
-msgid "action.actions.external.docker_registry.confirm_see_manifest"
-msgstr "Do you want to see the manifest?"
 
 #: hexagon/actions/external/open_link.py:8
 msgid "msg.actions.external.open_link.result"
@@ -196,7 +168,7 @@ msgstr ""
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Installing {runtime} dependencies at path: {path}"
 
-#: hexagon/support/execute/action.py:114
+#: hexagon/support/execute/action.py:124
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 "To support tool arguments either add a model extending\n"
@@ -247,15 +219,15 @@ msgstr "Your custom action seems to have a module dependency error"
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr "Execution of tool {action} failed"
 
-#: hexagon/support/execute/tool.py:62
+#: hexagon/support/execute/tool.py:64
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr "Go back"
 
-#: hexagon/support/execute/tool.py:64
+#: hexagon/support/execute/tool.py:66
 msgid "msg.support.execute.tool.go_back_description"
 msgstr "Go back to the previous menu"
 
-#: hexagon/support/execute/tool.py:65
+#: hexagon/support/execute/tool.py:67
 msgid "icon.global.go_back"
 msgstr "🠔"
 
@@ -279,15 +251,27 @@ msgstr "[bold][u]Tools:[/bold][/u]"
 msgid "error.support.hooks.hook.unknown_type"
 msgstr "Unknown HookSubscriptionType {subscription_type}"
 
-#: hexagon/support/update/cli.py:48
+#: hexagon/support/tracer.py:64
+msgid "msg.main.tracer.run_again"
+msgstr ""
+"[cyan][dim]To run this tool again do:[/dim]\n"
+"  {command}[/cyan]"
+
+#: hexagon/support/tracer.py:70
+msgid "msg.main.tracer.or"
+msgstr ""
+"[cyan][dim] or:[/dim]\n"
+"  {command}[/cyan]"
+
+#: hexagon/support/update/cli.py:49
 msgid "msg.support.update.cli.new_version_available"
 msgstr "New [cyan]{cli_name}[/cyan] version available"
 
-#: hexagon/support/update/cli.py:51
+#: hexagon/support/update/cli.py:52
 msgid "action.support.update.cli.confirm_update"
 msgstr "Would you like to update?"
 
-#: hexagon/support/update/cli.py:56
+#: hexagon/support/update/cli.py:57
 msgid "msg.support.update.cli.updated"
 msgstr "[green]✓[/green] [white]Updated to latest version[/white]"
 
@@ -320,19 +304,19 @@ msgstr "Updated to latest version"
 msgid "msg.support.update.hexagon.checking_new_versions"
 msgstr "Checking for new hexagon versions"
 
-#: hexagon/support/wax.py:58
+#: hexagon/support/wax.py:57
 msgid "action.support.wax.select_environment"
 msgstr "On which environment?"
 
-#: hexagon/support/wax.py:63
+#: hexagon/support/wax.py:62
 msgid "error.support.wax.invalid_environment"
 msgstr "Please select a valid environment"
 
-#: hexagon/support/wax.py:80
+#: hexagon/support/wax.py:79
 msgid "action.support.wax.select_tool"
 msgstr "Hi, which tool would you like to use today?"
 
-#: hexagon/support/wax.py:83
+#: hexagon/support/wax.py:82
 msgid "error.support.wax.invalid_tool"
 msgstr "Please select a valid tool"
 

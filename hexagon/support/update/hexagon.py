@@ -5,12 +5,12 @@ import sys
 from urllib.request import Request, urlopen
 
 import pkg_resources
-from InquirerPy import inquirer
 from packaging.version import parse as parse_version
 
 from hexagon.domain.singletons import options
 from hexagon.support.github import add_github_access_token
 from hexagon.support.printer import log
+from hexagon.support.prompt import prompt
 from hexagon.support.storage import HEXAGON_STORAGE_APP
 from hexagon.support.update import REPO_ORG, REPO_NAME
 from hexagon.support.update.changelog.fetch import fetch_changelog
@@ -57,9 +57,9 @@ def check_for_hexagon_updates():
         if len(entries) > CHANGELOG_MAX_PRINT_ENTRIES:
             log.info(_("msg.support.update.hexagon.and_much_more"))
 
-    if not inquirer.confirm(
+    if not prompt.confirm(
         _("action.support.update.hexagon.confirm_update"), default=True
-    ).execute():
+    ):
         return
 
     with log.status(_("msg.support.update.hexagon.updating")):

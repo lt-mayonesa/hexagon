@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-04-03 01:52-0300\n"
+"POT-Creation-Date: 2023-04-09 01:02-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,30 +21,6 @@ msgstr ""
 
 #: hexagon/__main__.py:40
 msgid "msg.main.first_time_tool"
-msgstr ""
-
-#: hexagon/__main__.py:58
-msgid "msg.main.tracer.run_again"
-msgstr ""
-
-#: hexagon/__main__.py:65
-msgid "msg.main.tracer.or"
-msgstr ""
-
-#: hexagon/actions/external/docker_registry.py:28
-msgid "action.actions.external.docker_registry.prompt_docker_image"
-msgstr ""
-
-#: hexagon/actions/external/docker_registry.py:38
-msgid "action.actions.external.docker_registry.prompt_tag"
-msgstr ""
-
-#: hexagon/actions/external/docker_registry.py:47
-msgid "msg.actions.external.docker_registry.copied_to_clipboard"
-msgstr ""
-
-#: hexagon/actions/external/docker_registry.py:53
-msgid "action.actions.external.docker_registry.confirm_see_manifest"
 msgstr ""
 
 #: hexagon/actions/external/open_link.py:8
@@ -180,7 +156,7 @@ msgstr ""
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr ""
 
-#: hexagon/support/execute/action.py:114
+#: hexagon/support/execute/action.py:124
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 
@@ -228,15 +204,15 @@ msgstr ""
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr ""
 
-#: hexagon/support/execute/tool.py:62
+#: hexagon/support/execute/tool.py:64
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr ""
 
-#: hexagon/support/execute/tool.py:64
+#: hexagon/support/execute/tool.py:66
 msgid "msg.support.execute.tool.go_back_description"
 msgstr ""
 
-#: hexagon/support/execute/tool.py:65
+#: hexagon/support/execute/tool.py:67
 msgid "icon.global.go_back"
 msgstr ""
 
@@ -260,15 +236,23 @@ msgstr ""
 msgid "error.support.hooks.hook.unknown_type"
 msgstr ""
 
-#: hexagon/support/update/cli.py:48
+#: hexagon/support/tracer.py:64
+msgid "msg.main.tracer.run_again"
+msgstr ""
+
+#: hexagon/support/tracer.py:70
+msgid "msg.main.tracer.or"
+msgstr ""
+
+#: hexagon/support/update/cli.py:49
 msgid "msg.support.update.cli.new_version_available"
 msgstr ""
 
-#: hexagon/support/update/cli.py:51
+#: hexagon/support/update/cli.py:52
 msgid "action.support.update.cli.confirm_update"
 msgstr ""
 
-#: hexagon/support/update/cli.py:56
+#: hexagon/support/update/cli.py:57
 msgid "msg.support.update.cli.updated"
 msgstr ""
 
@@ -300,19 +284,19 @@ msgstr ""
 msgid "msg.support.update.hexagon.checking_new_versions"
 msgstr ""
 
-#: hexagon/support/wax.py:58
+#: hexagon/support/wax.py:57
 msgid "action.support.wax.select_environment"
 msgstr ""
 
-#: hexagon/support/wax.py:63
+#: hexagon/support/wax.py:62
 msgid "error.support.wax.invalid_environment"
 msgstr ""
 
-#: hexagon/support/wax.py:80
+#: hexagon/support/wax.py:79
 msgid "action.support.wax.select_tool"
 msgstr ""
 
-#: hexagon/support/wax.py:83
+#: hexagon/support/wax.py:82
 msgid "error.support.wax.invalid_tool"
 msgstr ""
 

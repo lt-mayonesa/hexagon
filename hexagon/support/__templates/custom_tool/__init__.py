@@ -1,19 +1,31 @@
-from typing import Any, Optional, Dict
+from typing import Any, Optional
 
-from InquirerPy import inquirer
-from InquirerPy.validator import EmptyInputValidator
+from pydantic import validator
 
+from hexagon.domain.args import ToolArgs, Field, OptionalArg
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
 from hexagon.support.printer import log
-from hexagon.support.tracer import tracer
+
+
+class Args(ToolArgs):
+    last_name: OptionalArg[str] = Field(
+        None,
+        prompt_message="What's your last name?",
+    )
+
+    @validator("last_name")
+    def not_empty(cls, value):
+        if not value:
+            raise ValueError("Please enter your last name.")
+        return value
 
 
 def main(
     tool: ActionTool,
     env: Optional[Env] = None,
     env_args: Any = None,
-    cli_args: Dict[str, Any] = None,
+    cli_args: Args = None,
 ):
     """
     All hexagon tools must define a main function
@@ -25,18 +37,13 @@ def main(
     :return:
     """
 
-    # tracer().tracing is the way of letting hexagon know you asked the user for a parameter for your tool.
-    # this lets hexagon build the "To repeat this command" message correctly
-    name = tracer().tracing(
-        (cli_args and cli_args["last-name"])
-        or inquirer.text(
-            message="What's your last name?",
-            validate=EmptyInputValidator("Please enter your last name."),
-        ).execute()
-    )
+    # the ideal way of asking the user for input is to use cli_args.prompt
+    # this will make sure to trace the input accordingly
+    if not cli_args.last_name:
+        cli_args.prompt("last_name")
 
     log.info(f"selected tool: {tool.action}")
     log.info(f"selected env: {env}")
     log.info(f"values in tool.envs\\[env.name]: {env_args}")
     log.info(f"extra cli arguments: {cli_args}")
-    log.result(f"your last name is: {name}")
+    log.result(f"your last name is: {cli_args.last_name}")

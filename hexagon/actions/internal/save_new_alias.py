@@ -1,8 +1,8 @@
 import os
 
-from InquirerPy import inquirer
-from InquirerPy.validator import EmptyInputValidator
+from pydantic import validator
 
+from hexagon.domain.args import ToolArgs, Field, PositionalArg
 from hexagon.support.printer import log
 from hexagon.support.storage import (
     HexagonStorageKeys,
@@ -10,7 +10,22 @@ from hexagon.support.storage import (
 )
 
 
-def main(*__):
+class Args(ToolArgs):
+    alias_name: PositionalArg[str] = Field(
+        None,
+        prompt_message=_("action.actions.internal.save_new_alias.prompt_alias_name"),
+    )
+
+    @validator("alias_name")
+    def not_empty(cls, value):
+        if not value:
+            raise ValueError(
+                _("error.actions.internal.save_new_alias.insert_valid_alias")
+            )
+        return value
+
+
+def main(tool, env, env_args, cli_args: Args):
     last_command = load_user_data(HexagonStorageKeys.last_command.value)
 
     log.info(
@@ -19,14 +34,9 @@ def main(*__):
         )
     )
 
-    alias_name = inquirer.text(
-        message=_("action.actions.internal.save_new_alias.prompt_alias_name"),
-        validate=EmptyInputValidator(
-            _("error.actions.internal.save_new_alias.insert_valid_alias")
-        ),
-    ).execute()
+    cli_args.prompt("alias_name")
 
-    save_new_alias(alias_name, last_command)
+    save_new_alias(cli_args.alias_name, last_command)
 
 
 def save_new_alias(alias_name, command):

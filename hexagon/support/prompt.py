@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from InquirerPy import inquirer
 from prompt_toolkit.document import Document
 from prompt_toolkit.validation import ValidationError, Validator
@@ -12,6 +14,7 @@ class PromptValidator(Validator):
         self.cls = cls
 
     def validate(self, document: Document) -> None:
+        # FIXME: add validation based on field type's default validation
         try:
             for validator in self.validators.values():
                 validator.func(self.cls, document.text)
@@ -56,18 +59,40 @@ class Prompt:
         elif of_enum:
             args["choices"] = [{"name": x.name, "value": x} for x in type_]
             inq = self.select
+        elif "choices" in kwargs:
+            # TODO: add better logic for using fuzzy prompt
+            args["choices"] = kwargs["choices"]
+            inq = self.fuzzy
+        elif issubclass(type_, Path):
+            args["message"] = args["message"] + " (relative to project root)"
+            inq = self.path
 
         args.update(**kwargs)
         return inq(**args)
 
     @staticmethod
-    def text(**kwargs) -> str:
+    def text(**kwargs):
         return inquirer.text(**kwargs).execute()
 
     @staticmethod
-    def select(**kwargs) -> str:
+    def select(**kwargs):
         return inquirer.select(**kwargs).execute()
 
     @staticmethod
-    def checkbox(**kwargs) -> str:
+    def checkbox(**kwargs):
         return inquirer.checkbox(**kwargs).execute()
+
+    @staticmethod
+    def confirm(*args, **kwargs):
+        return inquirer.confirm(*args, **kwargs).execute()
+
+    @staticmethod
+    def fuzzy(**kwargs):
+        return inquirer.fuzzy(**kwargs).execute()
+
+    @staticmethod
+    def path(**kwargs):
+        return inquirer.filepath(**kwargs).execute()
+
+
+prompt = Prompt()

@@ -49,13 +49,12 @@ def _shared_assertions(spec: HexagonSpec):
                 "",
                 "",
                 "",
-                "docker_registry",
-                "",
                 "open_link",
                 "",
                 "new_action",
                 "",
                 "└──────────────────────────────────────────────────────────────────────────────",
+                "",
                 "",
             ]
         )
@@ -68,7 +67,6 @@ def test_create_new_open_link_tool():
         .given_a_cli_yaml(base_app_file)
         .run_hexagon()
         .with_shared_behavior(_shared_assertions)
-        .arrow_down()
         .enter()
         .then_output_should_be([["Choose the action of your tool:", "open_link"]])
         .then_output_should_be(["What type of tool is it?", "web", "shell"])
@@ -113,7 +111,6 @@ def test_create_new_python_module_tool():
         .given_a_cli_yaml(base_app_file)
         .run_hexagon()
         .with_shared_behavior(_shared_assertions)
-        .arrow_down()
         .arrow_down()
         .enter()
         .then_output_should_be([["Choose the action of your tool:", "new_action"]])
@@ -190,7 +187,6 @@ def test_create_tool_creates_custom_tools_dir():
         .given_a_cli_yaml(app_file)
         .run_hexagon()
         .with_shared_behavior(_shared_assertions)
-        .arrow_down()
         .arrow_down()
         .enter()
         .input("a-new-action")

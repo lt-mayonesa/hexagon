@@ -42,13 +42,11 @@ tools:
       qa: google.qa
     action: open_link
 
-  - name: docker-registry
-    alias: dr
-    long_name: Docker Registry
+  - name: hello-world
+    alias: hw
+    long_name: Greet the world
     type: shell
-    envs:
-      dev: my.custom.registry
-    action: docker_registry
+    action: echo "Hello World!"
 ```
 
 ### Install the CLI
