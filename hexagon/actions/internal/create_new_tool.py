@@ -1,82 +1,96 @@
 import os
 from shutil import copytree
 
-from InquirerPy import inquirer
-from InquirerPy.validator import PathValidator
+from pydantic import DirectoryPath
 
 from hexagon.actions import external
+from hexagon.domain.args import ToolArgs, PositionalArg, Field, OptionalArg
 from hexagon.domain.singletons import configuration
 from hexagon.domain.tool import ActionTool, ToolType
 from hexagon.support.printer import log
 
 
-def main(*__):
+class Args(ToolArgs):
+    action: PositionalArg[str] = Field(
+        None, prompt_message=_("action.actions.internal.create_new_tool.choose_action")
+    )
+    type: OptionalArg[ToolType] = Field(
+        None, prompt_message=_("action.actions.internal.create_new_tool.choose_type")
+    )
+    name: OptionalArg[str] = Field(
+        None, prompt_message=_("action.actions.internal.create_new_tool.input_name")
+    )
+    alias: OptionalArg[str] = Field(
+        None, prompt_message=_("action.actions.internal.create_new_tool.input_alias")
+    )
+    long_name: OptionalArg[str] = Field(
+        None,
+        prompt_message=_("action.actions.internal.create_new_tool.input_long_name"),
+    )
+    description: OptionalArg[str] = Field(
+        None,
+        prompt_message=_("action.actions.internal.create_new_tool.input_description"),
+    )
+    custom_tools_path: OptionalArg[DirectoryPath] = Field(
+        ".",
+        prompt_message=_(
+            "action.actions.internal.create_new_tool.input_custom_tools_path"
+        ),
+    )
+
+
+def main(tool, env, env_args, cli_args):
     create_action = False
     new_tool = ActionTool(
         name="invalid",
-        action=inquirer.fuzzy(
-            message=_("action.actions.internal.create_new_tool.choose_action"),
-            validate=lambda x: x,
-            choices=external.__all__ + ["new_action"],
-        ).execute(),
+        action=cli_args.prompt(
+            "action", choices=external.__all__ + ["new_action"], validate=lambda x: x
+        ),
     )
 
     if new_tool.action == "new_action":
         create_action = True
-        new_tool.action = inquirer.text(
+        new_tool.action = cli_args.prompt(
+            "action",
             message=_("action.actions.internal.create_new_tool.input_action"),
             validate=lambda x: x,
-        ).execute()
+        )
 
-    new_tool.type = inquirer.select(
-        message=_("action.actions.internal.create_new_tool.choose_type"),
+    new_tool.type = cli_args.prompt(
+        "type",
         choices=[
             {"value": ToolType.web, "name": ToolType.web.value},
             {"value": ToolType.shell, "name": ToolType.shell.value},
         ],
         default=ToolType.web if new_tool.action == "open_link" else ToolType.shell,
-    ).execute()
+    )
 
-    new_tool.name = inquirer.text(
-        message=_("action.actions.internal.create_new_tool.input_name"),
+    new_tool.name = cli_args.prompt(
+        "name",
         validate=lambda x: x,
         default=new_tool.action.replace("_", "-"),
-    ).execute()
+    )
 
-    new_tool.alias = inquirer.text(
-        message=_("action.actions.internal.create_new_tool.input_alias"),
+    new_tool.alias = cli_args.prompt(
+        "alias",
         default="".join([z[:1] for z in new_tool.name.split("-")]),
         filter=lambda r: r or None,
-    ).execute()
+    )
 
-    new_tool.long_name = inquirer.text(
-        message=_("action.actions.internal.create_new_tool.input_long_name"),
-        filter=lambda r: r or None,
-    ).execute()
+    new_tool.long_name = cli_args.prompt("long_name", filter=lambda r: r or None)
 
-    new_tool.description = inquirer.text(
-        message=_("action.actions.internal.create_new_tool.input_description"),
-        filter=lambda r: r or None,
-    ).execute()
+    new_tool.description = cli_args.prompt("description", filter=lambda r: r or None)
 
     cli, tools, envs = configuration.refresh()
 
     if create_action:
         if not configuration.custom_tools_path:
             log.info(_("msg.actions.internal.create_new_tool.custom_tools_dir_not_set"))
+            path_ = cli_args.prompt("custom_tools_path")
             configuration.update_custom_tools_path(
-                inquirer.filepath(
-                    message=_(
-                        "action.actions.internal.create_new_tool.input_custom_tools_path"
-                    ),
-                    default=".",
-                    validate=PathValidator(
-                        is_dir=True,
-                        message=_(
-                            "error.actions.internal.create_new_tool.insert_valid_directory"
-                        ),
-                    ),
-                ).execute(),
+                path_.resolve()
+                if path_.is_absolute()
+                else os.path.join(*path_.parents, path_.name),
                 comment=_(
                     "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
                 ),

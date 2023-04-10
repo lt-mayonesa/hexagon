@@ -1,23 +1,18 @@
 import pytest
-from InquirerPy import inquirer
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import Tool
 from hexagon.support import wax
+from hexagon.support.prompt import prompt
 
 
 def args_mock(ret):
-    class FuzzyMock:
-        @staticmethod
-        def execute():
-            return ret
-
     class TestArgs(object):
         def __call__(
             self, message: str, choices: list, validate: object, invalid_message: str
         ):
             self.args = list([message, choices, validate, invalid_message])
-            return FuzzyMock()
+            return ret
 
     return TestArgs()
 
@@ -70,7 +65,7 @@ def test_tool_is_selected_from_cmd(monkeypatch):
 
 
 def test_tool_is_selected_by_prompt(monkeypatch, tool_mock):
-    monkeypatch.setattr(inquirer, "fuzzy", tool_mock)
+    monkeypatch.setattr(prompt, "fuzzy", tool_mock)
 
     assert wax.select_tool(tools) == Tool(name="docker", alias="d", action="docker_run")
     assert tool_mock.args[0] == "action.support.wax.select_tool"
@@ -97,7 +92,7 @@ def test_env_is_selected_from_cmd(monkeypatch):
 
 def test_env_is_selected_by_prompt(monkeypatch, env_mock):
     tool_envs = {"dev": "env_1", "qa": "env_2"}
-    monkeypatch.setattr(inquirer, "fuzzy", env_mock)
+    monkeypatch.setattr(prompt, "fuzzy", env_mock)
 
     assert wax.select_env(envs, tool_envs) == (envs[0], "env_1")
     assert env_mock.args[0] == "action.support.wax.select_environment"

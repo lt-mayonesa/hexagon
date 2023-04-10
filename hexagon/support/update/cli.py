@@ -1,8 +1,6 @@
 import re
 import sys
 
-from InquirerPy import inquirer
-
 from hexagon.domain.singletons import cli, configuration, options
 from hexagon.support.cli.command import (
     execute_command_in_cli_project_path,
@@ -11,6 +9,7 @@ from hexagon.support.cli.command import (
 from hexagon.support.cli.git import load_cli_git_config
 from hexagon.support.dependencies import scan_and_install_dependencies
 from hexagon.support.printer import log
+from hexagon.support.prompt import prompt
 from hexagon.support.update.shared import already_checked_for_updates
 
 
@@ -32,6 +31,7 @@ def check_for_cli_updates():
     not_in_head_branch = current_git_branch != cli_git_config.head_branch
 
     if not_in_head_branch:
+        # noinspection PyBroadException
         try:
             execute_command_in_cli_project_path(
                 f"git checkout {cli_git_config.head_branch}"
@@ -47,9 +47,9 @@ def check_for_cli_updates():
         log.info(
             _("msg.support.update.cli.new_version_available").format(cli_name=cli.name)
         )
-        if not inquirer.confirm(
+        if not prompt.confirm(
             _("action.support.update.cli.confirm_update"), default=True
-        ).execute():
+        ):
             return
         execute_command_in_cli_project_path("git pull", show_stdout=True)
         scan_and_install_dependencies(configuration.custom_tools_path)
