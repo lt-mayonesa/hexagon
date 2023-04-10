@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.39.0 (2023-04-10)
+### Feature
+* **args:** Apply model validations when prompting ([`86bf096`](https://github.com/lt-mayonesa/hexagon/commit/86bf096817194810d0143bc98bfafad575435115))
+* **args:** Prompt for tool arguments from cli_args object ([`67d65ab`](https://github.com/lt-mayonesa/hexagon/commit/67d65ab9a4a20cc9b6d7438854cc480decdbbb07))
+
 ## v0.38.1 (2023-04-06)
 ### Fix
 * **args:** Trace all input args and one time only ([`8b69454`](https://github.com/lt-mayonesa/hexagon/commit/8b6945487dddf9d4bb31a916743689e1831ee13b))
