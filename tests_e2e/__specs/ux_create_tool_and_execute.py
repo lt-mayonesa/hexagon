@@ -52,7 +52,7 @@ def test_creates_a_python_tool_and_executes_it():
                 "│ selected tool: a_new_action",
                 "│ selected env: None",
                 "│ values in tool.envs[env.name]: None",
-                "│ extra cli arguments: show_help=False extra_args=None raw_extra_args=[] last_name='my-last-name'",
+                "│ extra cli arguments: show_help=False extra_args=None raw_extra_args=[] last_name=",
                 "├ your last name is: my-last-name",
                 "│",
                 "╰╼",

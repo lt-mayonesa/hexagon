@@ -15,10 +15,10 @@ class Args(ToolArgs):
     )
 
     @validator("last_name")
-    def not_empty(cls, value):
-        if not value:
+    def not_empty(cls, arg):
+        if not arg.value:
             raise ValueError("Please enter your last name.")
-        return value
+        return arg
 
 
 def main(

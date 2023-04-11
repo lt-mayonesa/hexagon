@@ -21,20 +21,20 @@ class Args(ToolArgs):
     )
 
     @validator("src_path")
-    def is_yaml(cls, value):
-        if isinstance(value, str):
-            if value.endswith(".yaml") or value.endswith(".yml"):
-                return value
+    def is_yaml(cls, arg):
+        if isinstance(arg, str):
+            if arg.endswith(".yaml") or arg.endswith(".yml"):
+                return arg
         else:
-            if value.suffix == ".yaml" or value.suffix == ".yml":
-                return value
+            if arg.value.suffix == ".yaml" or arg.value.suffix == ".yml":
+                return arg
         raise ValueError(_("error.actions.internal.install_cli.select_valid_file"))
 
 
 def main(tool, env, env_args, cli_args: Args):
     cli_args.prompt("src_path")
 
-    cli, tools, envs = configuration.init_config(cli_args.src_path.resolve())
+    cli, tools, envs = configuration.init_config(cli_args.src_path.value.resolve())
 
     bin_path = load_user_data(HexagonStorageKeys.cli_install_path.value)
 
@@ -47,7 +47,7 @@ def main(tool, env, env_args, cli_args: Args):
         command.write(
             "#!/bin/bash\n"
             "# file create by hexagon\n"
-            f"HEXAGON_CONFIG_FILE={cli_args.src_path.resolve()} hexagon $@"
+            f"HEXAGON_CONFIG_FILE={cli_args.src_path.value.resolve()} hexagon $@"
         )
 
     _make_executable(command_path)

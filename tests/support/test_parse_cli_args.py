@@ -24,7 +24,7 @@ def test_no_cli_args_passed():
 )
 def test_cli_args_only_tool_passed(args, expected):
     actual = parse_cli_args(args)
-    assert actual.tool == expected
+    assert actual.tool.value == expected
     assert actual.env is None
     assert actual.extra_args is None
 
@@ -53,15 +53,15 @@ def test_cli_args_handle_invalid_args(args):
 
 def test_cli_args_tool_is_first_argument_2():
     actual = parse_cli_args(["some-env", "some-tool"])
-    assert actual.tool == "some-env"
-    assert actual.env == "some-tool"
+    assert actual.tool.value == "some-env"
+    assert actual.env.value == "some-tool"
     assert actual.extra_args is None
 
 
 def test_cli_args_env_is_second_positional_argument():
     actual = parse_cli_args(["some-tool", "some-env"])
-    assert actual.tool == "some-tool"
-    assert actual.env == "some-env"
+    assert actual.tool.value == "some-tool"
+    assert actual.env.value == "some-env"
     assert actual.extra_args is None
 
 
@@ -118,15 +118,15 @@ def test_cli_args_env_is_second_positional_argument():
 )
 def test_cli_args_all_extra_arguments_mapping(optional_args, expected):
     actual = parse_cli_args(["some-tool", "some-env"] + optional_args)
-    assert actual.tool == "some-tool"
-    assert actual.env == "some-env"
+    assert actual.tool.value == "some-tool"
+    assert actual.env.value == "some-env"
     assert actual.extra_args == expected
 
 
 def test_last_optional_arg_is_not_a_value():
     actual = parse_cli_args(["some-tool", "some-env", "--number"])
-    assert actual.tool == "some-tool"
-    assert actual.env == "some-env"
+    assert actual.tool.value == "some-tool"
+    assert actual.env.value == "some-env"
     assert actual.extra_args == {"number": True}
 
 

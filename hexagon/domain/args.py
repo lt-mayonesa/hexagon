@@ -12,16 +12,18 @@ T = TypeVar("T")
 
 def arg_validator(cls):
     def validate(v, field: ModelField):
+        if not isinstance(v, cls):
+            v = cls(v)
         if not field.sub_fields:
             # Generic parameters were not provided, ie: `name = PositionalArg`,
             # so we don't try to validate them and just return the value as is
             return v
         value = field.sub_fields[0]
 
-        valid_value, error = value.validate(v, {}, loc="")
+        valid_value, error = value.validate(v.value, {}, loc="")
         if error:
             raise ValidationError([error], model=cls)
-        return valid_value
+        return cls(valid_value)
 
     return validate
 
@@ -38,7 +40,7 @@ class PositionalArg(Generic[T]):
     def cli_repr(field: ModelField):
         return field.name, None
 
-    def __repr__(self):
+    def __str__(self, **kwargs):
         return str(self.value)
 
 
@@ -59,7 +61,7 @@ class OptionalArg(Generic[T]):
             else f"{ARGUMENT_KEY_PREFIX}{''.join([w[0] for w in field.name.split('_')])}",
         )
 
-    def __repr__(self):
+    def __str__(self, **kwargs):
         return str(self.value)
 
 
@@ -105,7 +107,7 @@ class CliArgs(BaseModel):
 
     @validator("tool", "env")
     def validate(cls, v, field):
-        if v and not re.match("^[a-zA-Z0-9\\-_]+$", v):
+        if v and not re.match("^[a-zA-Z0-9\\-_]+$", v.value):
             raise ValueError(
                 f"{field.name} must be a string and not contain special characters"
             )
@@ -143,10 +145,10 @@ class ToolArgs(BaseModel):
 
             if item not in self.__fields_traced__ and item in self.__fields_set__:
                 if field.type_ == PositionalArg:
-                    self.__tracer__.tracing(value_)
+                    self.__tracer__.tracing(value_.value)
                 elif field.type_ == OptionalArg:
                     n, a = OptionalArg.cli_repr(field)
-                    self.__tracer__.tracing(value_, key=n, key_alias=a)
+                    self.__tracer__.tracing(value_.value, key=n, key_alias=a)
                 self.__fields_traced__.add(item)
 
         return super().__getattribute__(item)
@@ -168,9 +170,10 @@ class ToolArgs(BaseModel):
         )
 
         self.__setattr__(model_field.name, value_)
-        return self.__getattribute__(
+        getattribute__ = self.__getattribute__(
             field, skip_trace=not self.__config__.trace_on_prompt
         )
+        return getattribute__.value
 
     def _with_tracer(self, tracer):
         self.__tracer__ = tracer
