@@ -20,8 +20,8 @@ def select_and_execute_tool(
     envs: List[Env],
     cli_args: CliArgs,
 ) -> List[str]:
-    tool = search_by_name_or_alias(tools, cli_args.tool)
-    env = search_by_name_or_alias(envs, cli_args.env)
+    tool = search_by_name_or_alias(tools, cli_args.tool and cli_args.tool.value)
+    env = search_by_name_or_alias(envs, cli_args.env and cli_args.env.value)
 
     tool = select_tool(tools, tool)
     if tool.traced:
@@ -37,7 +37,10 @@ def select_and_execute_tool(
             cli_args,
             # If the tool matched the tool argument, disable navigating back
             previous=previous
-            if not next((t for t in tools if t.name == cli_args.tool), None)
+            if not next(
+                (t for t in tools if cli_args.tool and t.name == cli_args.tool.value),
+                None,
+            )
             else None,
         )
 
@@ -93,5 +96,7 @@ def _execute_group_tool(
     return select_and_execute_tool(
         tools,
         envs,
-        parse_cli_args([cli_args.env] + cli_args.raw_extra_args),
+        parse_cli_args(
+            ([cli_args.env.value] if cli_args.env else []) + cli_args.raw_extra_args
+        ),
     )

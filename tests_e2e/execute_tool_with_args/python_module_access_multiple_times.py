@@ -1,8 +1,6 @@
 from typing import Any, Optional
 
-from pydantic import Field, validator
-
-from hexagon.domain.args import ToolArgs, PositionalArg, OptionalArg
+from hexagon.domain.args import ToolArgs, PositionalArg
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
 from hexagon.support.printer import log
@@ -16,25 +14,6 @@ class Args(ToolArgs):
     """
 
     name: PositionalArg[str]
-    age: PositionalArg[Optional[int]] = Field(
-        None, description="the person's age, if provided must be greater than 18"
-    )
-    nationality: PositionalArg[Optional[str]] = "Argentinian"
-    car_brand: OptionalArg[str] = Field("Ford", description="the car's brand")
-    car_model: OptionalArg[str] = Field(None, description="the car's model")
-    car_years: OptionalArg[list] = None
-
-    @validator("nationality")
-    def validate_nationality(cls, v):
-        if v == "USA":
-            raise ValueError("USA is not a valid nationality")
-        return v
-
-    @validator("car_brand")
-    def validate_car_brand(cls, v):
-        if v == "Chevrolet":
-            raise ValueError("we don't accept Chevrolet cars")
-        return v
 
 
 def main(
@@ -43,9 +22,9 @@ def main(
     env_args: Any = None,
     cli_args: Args = None,
 ):
-    log.result(f"name: {cli_args.name}")
-    log.result(f"name: {cli_args.name}")
-    log.result(f"name: {cli_args.name}")
-    log.result(f"name: {cli_args.name}")
-    log.result(f"name: {cli_args.name}")
-    log.result(f"name: {cli_args.name}")
+    log.result(f"name: {cli_args.name.value}")
+    log.result(f"name: {cli_args.name.value}")
+    log.result(f"name: {cli_args.name.value}")
+    log.result(f"name: {cli_args.name.value}")
+    log.result(f"name: {cli_args.name.value}")
+    log.result(f"name: {cli_args.name.value}")

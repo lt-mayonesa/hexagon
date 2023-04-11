@@ -24,7 +24,7 @@ def main(
     env_args: Any = None,
     cli_args: Args = None,
 ):
-    log.result(f"name: {cli_args.name}")
-    log.result(f"age: {cli_args.age}")
-    log.result(f"country: {cli_args.country}")
-    log.result(f"likes: {cli_args.likes}")
+    log.result(f"name: {cli_args.name.value}")
+    log.result(f"age: {cli_args.age.value}")
+    log.result(f"country: {cli_args.country.value}")
+    log.result(f"likes: {cli_args.likes.value}")

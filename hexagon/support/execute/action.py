@@ -109,7 +109,7 @@ def _execute_python_module(
 
 def __parse_tool_args(cli_args, env, tool, tool_action_module):
     args = (
-        [cli_args.env] if not env and cli_args.env else []
+        [cli_args.env.value] if not env and cli_args.env else []
     ) + cli_args.raw_extra_args
     # noinspection PyProtectedMember
     return (
