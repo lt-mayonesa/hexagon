@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-inquirerpy = "==0.2.0"
+inquirerpy = "*"
 rich = "*"
 clipboard = "*"
 requests = "*"
@@ -23,6 +23,3 @@ pipenv-setup = "*"
 
 [requires]
 python_version = "3.8"
-
-[pipenv]
-allow_prereleases = true

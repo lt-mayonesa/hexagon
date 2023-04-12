@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from InquirerPy import inquirer
+from InquirerPy.base import Choice
 from prompt_toolkit.document import Document
 from prompt_toolkit.validation import ValidationError, Validator
 from pydantic.fields import ModelField
@@ -45,14 +46,12 @@ class Prompt:
             )
 
         if iterable and of_enum:
-            # TODO: use inquirerpy's Choice class (need to update inquirerpy version)
-            # noinspection PyTypedDict
             args["choices"] = [
-                {
-                    "name": x.name,
-                    "value": x,
-                    "enabled": ("default" in args and x in args["default"]),
-                }
+                Choice(
+                    name=x.name,
+                    value=x,
+                    enabled=("default" in args and x in args["default"]),
+                )
                 for x in type_.__args__[0]
             ]
             inq = self.checkbox
@@ -93,7 +92,7 @@ class Prompt:
 
     @staticmethod
     def fuzzy(**kwargs):
-        return inquirer.fuzzy(**kwargs).execute()
+        return inquirer.fuzzy(border=True, **kwargs).execute()
 
     @staticmethod
     def path(**kwargs):

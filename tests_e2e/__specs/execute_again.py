@@ -26,6 +26,9 @@ def test_command_with_alias_and_env_execute_again_is_shown():
         # select command-env-with-alias tool
         .arrow_down()
         .enter()
+        .then_output_should_be(
+            ["This is a command with env with"], discard_until_first_match=True
+        )
         # select first env
         .enter()
         .then_output_should_be(
@@ -109,6 +112,7 @@ def test_WHEN_group_tool_command_is_executed_THEN_execute_again_is_shown():
         .arrow_down()
         .arrow_down()
         .enter()
+        .then_output_should_be(["tool-group"], discard_until_first_match=True)
         .enter()
         .then_output_should_be(
             [

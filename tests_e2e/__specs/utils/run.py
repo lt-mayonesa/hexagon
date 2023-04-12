@@ -1,7 +1,5 @@
-import itertools
 import os
 import platform
-import signal
 import subprocess
 from typing import Dict, List, Optional
 
@@ -111,17 +109,6 @@ def write_to_process(process: subprocess.Popen, input: str):
     if written != len(input):
         raise Exception(f"Written {written} instead of {input}")
     process.stdin.flush()
-
-
-def discard_output(process: subprocess.Popen, length: int):
-    def timeout_handler(signum, frame):
-        raise Exception("Timeout reading from process")
-
-    for _ in itertools.repeat(None, length):
-        signal.signal(signal.SIGALRM, timeout_handler)
-        signal.alarm(3)
-        process.stdout.readline()
-        signal.alarm(0)
 
 
 def clean_hexagon_environment():

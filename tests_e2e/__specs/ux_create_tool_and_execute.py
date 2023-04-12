@@ -31,6 +31,10 @@ def test_creates_a_python_tool_and_executes_it():
         .arrow_down()
         .enter()
         .input("a_new_action")
+        .then_output_should_be(
+            [["What name would you like to give your new action?", "a_new_action"]],
+            discard_until_first_match=True,
+        )
         .carriage_return()
         .input("-command")
         .enter()

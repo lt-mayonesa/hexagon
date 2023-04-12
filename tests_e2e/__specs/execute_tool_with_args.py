@@ -423,7 +423,7 @@ def test_prompt_support_list_of_enum_arguments():
             os_env_vars={"HEXAGON_THEME": "default"},
         )
         .then_output_should_be(
-            ["available_tags", "A", "⬢ B", "C", "D", "⬢ E", "F"],
+            ["available_tags", "A", "◉ B", "C", "D", "◉ E", "F"],
             discard_until_first_match=True,
         )
         .space_bar()

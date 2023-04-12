@@ -7,6 +7,10 @@ def test_execute_tool_group_from_gui():
         .run_hexagon()
         .arrow_down()
         .enter()
+        .then_output_should_be(
+            [["Hi, which tool would you like to use today?", "A group of tools"]],
+            discard_until_first_match=True,
+        )
         .enter()
         .then_output_should_be(["executed python_module"], True)
         .exit()
@@ -20,6 +24,15 @@ def test_execute_tool_group_with_no_alias_from_gui():
         .arrow_down()
         .arrow_down()
         .enter()
+        .then_output_should_be(
+            [
+                [
+                    "Hi, which tool would you like to use today?",
+                    "A group of tools with a custom",
+                ]
+            ],
+            discard_until_first_match=True,
+        )
         .enter()
         .then_output_should_be(
             ["custom tools directory action"], discard_until_first_match=True
@@ -35,10 +48,15 @@ def test_execute_tool_from_ui_after_leaving_tool_group():
         # Select the first group
         .arrow_down()
         .enter()
+        .then_output_should_be(
+            [["Hi, which tool would you like to use today?", "A group of tools"]],
+            discard_until_first_match=True,
+        )
         # Go back to previous (root) menu
         .arrow_down()
         .arrow_down()
         .enter()
+        .then_output_should_be(["Go back"], discard_until_first_match=True)
         # Run an echo tool in the main app.yml file
         .arrow_down()
         .arrow_down()
@@ -104,10 +122,20 @@ def test_execute_tool_group_has_correct_trace():
         .run_hexagon(os_env_vars={"HEXAGON_THEME": "default"})
         .arrow_down()
         .enter()
+        .then_output_should_be(
+            [["Hi, which tool would you like to use today?", "A group of tools"]],
+            discard_until_first_match=True,
+        )
         .arrow_down()
         .enter()
+        .then_output_should_be(
+            [["Hi, which tool would you like to use today?", "Python Module Env Test"]],
+            discard_until_first_match=True,
+        )
         .enter()
-        .then_output_should_be(["hexagon-test group python-module-env dev"], True)
+        .then_output_should_be(
+            ["hexagon-test group python-module-env dev"], discard_until_first_match=True
+        )
         .exit()
     )
 

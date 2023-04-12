@@ -173,7 +173,7 @@ def test_create_new_python_module_tool():
 def test_create_tool_creates_custom_tools_dir():
     custom_tools_dir_name = "custom-tools-dir"
     app_file = base_app_file.copy()
-    app_file["cli"].pop("custom_tools_dir", None)
+    app_file["cli"].pop("custom_tools_dir")
 
     custom_tools_dir_path = os.path.join(
         e2e_test_folder_path(__file__), custom_tools_dir_name
@@ -190,6 +190,10 @@ def test_create_tool_creates_custom_tools_dir():
         .arrow_down()
         .enter()
         .input("a-new-action")
+        .then_output_should_be(
+            ["What name would you like to give your new action? a-new-action"],
+            discard_until_first_match=True,
+        )
         .carriage_return()
         .input("-command")
         .enter()
