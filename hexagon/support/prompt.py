@@ -5,6 +5,7 @@ from prompt_toolkit.document import Document
 from prompt_toolkit.validation import ValidationError, Validator
 from pydantic.fields import ModelField
 
+from hexagon.domain.args import HexagonArg
 from hexagon.utils.typing import field_info
 
 
@@ -30,7 +31,11 @@ class Prompt:
             or f"Enter {model_field.name}:",
         }
         if model_field.default:
-            args["default"] = model_field.default
+            args["default"] = (
+                model_field.default.value
+                if isinstance(model_field.default, HexagonArg)
+                else model_field.default
+            )
 
         type_, iterable, of_enum = field_info(model_field)
 
