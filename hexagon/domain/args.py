@@ -1,11 +1,9 @@
 import abc
-import re
 from inspect import isclass
 from typing import Optional, Dict, Union, List, TypeVar, Generic, Any
 
 from pydantic import (
     BaseModel,
-    validator as pydantic_validator,
     ValidationError,
     Field as PydanticField,
 )
@@ -109,14 +107,6 @@ class CliArgs(BaseModel):
     def count(self):
         return self.total_args
 
-    @pydantic_validator("tool", "env")
-    def validate(cls, v, field):
-        if v and not re.match("^[a-zA-Z0-9\\-_]+$", v.value):
-            raise ValueError(
-                f"{field.name} must be a string and not contain special characters"
-            )
-        return v
-
     @staticmethod
     def key_value_arg(key, arg):
         return f"{key}={arg}"
@@ -132,7 +122,7 @@ class ToolArgs(BaseModel):
     raw_extra_args: Optional[List[str]] = None
 
     def __init__(self, **data):
-        for k, v in self.__fields__.items():
+        for v in self.__fields__.values():
             if (isclass(v.type_) and issubclass(v.type_, HexagonArg)) and (
                 v.default is not None and not isinstance(v.default, HexagonArg)
             ):
