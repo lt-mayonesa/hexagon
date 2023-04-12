@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.40.0 (2023-04-12)
+### Feature
+* **args:** Do not validate special characters on args ([`e793175`](https://github.com/lt-mayonesa/hexagon/commit/e79317551d686021d50915c61e25de69d80bf29e))
+* **args:** Wrap default value in HexagonArg ([`7d5eae4`](https://github.com/lt-mayonesa/hexagon/commit/7d5eae4da5d56768664968dacab08a5ce64b706a))
+
 ## v0.39.0 (2023-04-10)
 ### Feature
 * **args:** Apply model validations when prompting ([`86bf096`](https://github.com/lt-mayonesa/hexagon/commit/86bf096817194810d0143bc98bfafad575435115))
