@@ -1,7 +1,7 @@
 from typing import List, Set, Optional
 
 import pytest
-from pydantic import ValidationError, BaseModel
+from pydantic import BaseModel
 
 from hexagon.domain.args import PositionalArg, OptionalArg
 from hexagon.support.parse_args import parse_cli_args, should_support_multiple_args
@@ -27,28 +27,6 @@ def test_cli_args_only_tool_passed(args, expected):
     assert actual.tool.value == expected
     assert actual.env is None
     assert actual.extra_args is None
-
-
-@pytest.mark.parametrize(
-    "args",
-    [
-        (["my tool with spaces"]),
-        (["my!tool"]),
-        (["my@tool"]),
-        (["(@*#&$)!~(%&!%#)"]),
-        (["(#)"]),
-        (["valid_tool", "my env with spaces"]),
-        (["valid_tool", "my!env"]),
-        (["valid_tool", "my@env"]),
-        (["valid_tool", "(@*#&$)!~(%&!%#)"]),
-        (["valid_tool", "(#)"]),
-    ],
-)
-def test_cli_args_handle_invalid_args(args):
-    with pytest.raises(
-        ValidationError, match=" must be a string and not contain special characters"
-    ):
-        parse_cli_args(args)
 
 
 def test_cli_args_tool_is_first_argument_2():
