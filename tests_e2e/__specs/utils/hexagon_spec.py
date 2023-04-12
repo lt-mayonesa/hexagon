@@ -1,4 +1,6 @@
+import inspect
 import time
+from functools import wraps
 from subprocess import Popen
 from typing import Callable, Dict, List, Optional, Union
 
@@ -25,6 +27,28 @@ from tests_e2e.__specs.utils.run import (
 )
 
 
+def log(func):
+    """
+    Decorator to print function call details.
+
+    This includes parameters names and effective values.
+    """
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        func_args = inspect.signature(func).bind(*args, **kwargs).arguments
+        func_args_str = ", ".join(
+            map(
+                "{0[0]} = {0[1]!r}".format,
+                {k: v for k, v in func_args.items() if k != "self"}.items(),
+            )
+        )
+        print(f"step -> {func.__name__} ( {func_args_str} )")
+        return func(*args, **kwargs)
+
+    return wrapper
+
+
 class HexagonSpec:
     HEXAGON_TEST_SHELL = "HEXAGON_TEST_SHELL"
     HEXAGON_THEME = "HEXAGON_THEME"
@@ -42,10 +66,12 @@ class HexagonSpec:
         self.lines_read: List[str] = []
         self.last_input = None
 
+    @log
     def given_a_cli_yaml(self, config: dict):
         write_hexagon_config(self.__file, config)
         return self
 
+    @log
     def run_hexagon(
         self,
         command: List[str] = None,
@@ -72,11 +98,13 @@ class HexagonSpec:
             )
         return self
 
+    @log
     def with_shared_behavior(self, func: Callable):
         __tracebackhide__ = True
         func(self)
         return self
 
+    @log
     def then_output_should_be(
         self,
         expected_output: List[Expected_Process_Output],
@@ -91,6 +119,7 @@ class HexagonSpec:
         self.lines_read.extend(lines_read)
         return self
 
+    @log
     def then_output_should_not_contain(
         self,
         output_to_match: List[Expected_Process_Output],
@@ -108,37 +137,45 @@ class HexagonSpec:
 
         return self
 
+    @log
     def arrow_down(self):
         __tracebackhide__ = True
         write_to_process(self.process, ARROW_DOWN_CHARACTER)
         return self
 
+    @log
     def arrow_up(self):
         __tracebackhide__ = True
         write_to_process(self.process, ARROW_UP_CHARACTER)
         return self
 
+    @log
     def enter(self):
         __tracebackhide__ = True
         return self.write(LINE_FEED_CHARACTER)
 
+    @log
     def space_bar(self):
         __tracebackhide__ = True
         return self.write(SPACE_BAR_CHARACTER)
 
+    @log
     def esc(self):
         __tracebackhide__ = True
         return self.write(ESCAPE_CHARACTER)
 
+    @log
     def carriage_return(self):
         __tracebackhide__ = True
         return self.write(CARRIAGE_RETURN_CHARACTER)
 
+    @log
     def input(self, text: str):
         __tracebackhide__ = True
         self.last_input = text
         return self.write(f"{text}{LINE_FEED_CHARACTER}")
 
+    @log
     def erase(self, val: Optional[Union[str, int]] = None):
         __tracebackhide__ = True
         if not val and self.last_input:
@@ -158,6 +195,7 @@ class HexagonSpec:
         write_to_process(self.process, text)
         return self
 
+    @log
     def exit(self, status: int = 0, timeout_in_seconds: int = 5):
         __tracebackhide__ = True
         assert_process_ended(
@@ -169,15 +207,16 @@ class HexagonSpec:
         clean_hexagon_environment()
         return self
 
-    @property
-    def _and_(self):
-        return self
-
+    @log
     def force_exit(self):
         return self.write(CONTROL_C_CHARACTER)
 
     def wait(self, seconds: int):
         time.sleep(seconds)
+        return self
+
+    @property
+    def _and_(self):
         return self
 
 

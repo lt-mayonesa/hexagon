@@ -88,7 +88,7 @@ def run_hexagon(
 
     command += args
     print(
-        f"\nrunning command:\n{' '.join([f'{k}={v}' for k,v in environment.items() if 'HEXAGON_' in k] + command)}"
+        f"\nrunning command:\n{' '.join([f'{k}={v}' for k,v in environment.items() if 'HEXAGON_' in k] + command)}\n"
     )
 
     environment["COLUMNS"] = "200"
