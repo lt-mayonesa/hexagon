@@ -2,7 +2,7 @@ import os
 
 from pydantic import validator
 
-from hexagon.domain.args import ToolArgs, Field, PositionalArg
+from hexagon.domain.args import ToolArgs, Arg, PositionalArg
 from hexagon.support.printer import log
 from hexagon.support.storage import (
     HexagonStorageKeys,
@@ -11,7 +11,7 @@ from hexagon.support.storage import (
 
 
 class Args(ToolArgs):
-    alias_name: PositionalArg[str] = Field(
+    alias_name: PositionalArg[str] = Arg(
         None,
         prompt_message=_("action.actions.internal.save_new_alias.prompt_alias_name"),
     )

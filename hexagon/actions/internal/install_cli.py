@@ -3,7 +3,7 @@ from pathlib import Path
 
 from pydantic import FilePath, validator, DirectoryPath
 
-from hexagon.domain.args import ToolArgs, Field, PositionalArg
+from hexagon.domain.args import ToolArgs, Arg, PositionalArg
 from hexagon.domain.singletons import configuration
 from hexagon.support.dependencies import scan_and_install_dependencies
 from hexagon.support.printer import log
@@ -11,11 +11,11 @@ from hexagon.support.storage import load_user_data, HexagonStorageKeys, store_us
 
 
 class Args(ToolArgs):
-    src_path: PositionalArg[FilePath] = Field(
+    src_path: PositionalArg[FilePath] = Arg(
         str(Path.cwd()),
         prompt_message=_("action.actions.internal.install_cli.config_file_location"),
     )
-    bin_path: PositionalArg[DirectoryPath] = Field(
+    bin_path: PositionalArg[DirectoryPath] = Arg(
         str(os.path.expanduser(os.path.join("~", "bin"))),
         prompt_message=_("action.actions.internal.install_cli.commands_path"),
     )

@@ -2,7 +2,7 @@ from typing import Any, Optional
 
 from pydantic import validator
 
-from hexagon.domain.args import ToolArgs, PositionalArg, OptionalArg, Field
+from hexagon.domain.args import ToolArgs, PositionalArg, OptionalArg, Arg
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
 from hexagon.support.printer import log
@@ -16,14 +16,14 @@ class Args(ToolArgs):
     """
 
     name: PositionalArg[str]
-    age: PositionalArg[Optional[int]] = Field(
+    age: PositionalArg[Optional[int]] = Arg(
         None, description="the person's age, if provided must be greater than 18"
     )
-    nationality: PositionalArg[Optional[str]] = Field(PositionalArg("Argentinian"))
-    car_brand: OptionalArg[str] = Field(
+    nationality: PositionalArg[Optional[str]] = Arg(PositionalArg("Argentinian"))
+    car_brand: OptionalArg[str] = Arg(
         OptionalArg("Ford"), description="the car's brand"
     )
-    car_model: OptionalArg[str] = Field(None, description="the car's model")
+    car_model: OptionalArg[str] = Arg(None, description="the car's model")
     car_years: OptionalArg[list] = None
 
     @validator("nationality")
