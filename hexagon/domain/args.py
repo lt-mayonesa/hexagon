@@ -1,4 +1,6 @@
+import abc
 import re
+from inspect import isclass
 from typing import Optional, Dict, Union, List, TypeVar, Generic, Any
 
 from pydantic import (
@@ -15,48 +17,48 @@ ARGUMENT_KEY_PREFIX = "-"
 T = TypeVar("T")
 
 
-def arg_validator(cls):
-    def validate(v, field: ModelField):
-        if not isinstance(v, cls):
-            v = cls(v)
-        if not field.sub_fields:
-            # Generic parameters were not provided, ie: `name = PositionalArg`,
-            # so we don't try to validate them and just return the value as is
-            return v
-        value = field.sub_fields[0]
-
-        valid_value, error = value.validate(v.value, {}, loc="")
-        if error:
-            raise ValidationError([error], model=cls)
-        return cls(valid_value)
-
-    return validate
-
-
-class PositionalArg(Generic[T]):
+class HexagonArg(Generic[T]):
     def __init__(self, value: T):
         self.value = value
 
     @classmethod
     def __get_validators__(cls):
-        yield arg_validator(cls)
-
-    @staticmethod
-    def cli_repr(field: ModelField):
-        return field.name, None
+        yield cls.arg_validator(cls)
 
     def __str__(self, **kwargs):
         return str(self.value)
 
+    @staticmethod
+    @abc.abstractmethod
+    def cli_repr(field: ModelField):
+        return
 
-class OptionalArg(Generic[T]):
-    def __init__(self, value: T):
-        self.value = value
+    @staticmethod
+    def arg_validator(cls):
+        def validate(v, field: ModelField):
+            if not isinstance(v, cls):
+                v = cls(v)
+            if not field.sub_fields:
+                # Generic parameters were not provided, ie: `name = PositionalArg`,
+                # so we don't try to validate them and just return the value as is
+                return v
+            value = field.sub_fields[0]
 
-    @classmethod
-    def __get_validators__(cls):
-        yield arg_validator(cls)
+            valid_value, error = value.validate(v.value, {}, loc="")
+            if error:
+                raise ValidationError([error], model=cls)
+            return cls(valid_value)
 
+        return validate
+
+
+class PositionalArg(HexagonArg[T]):
+    @staticmethod
+    def cli_repr(field: ModelField):
+        return field.name, None
+
+
+class OptionalArg(HexagonArg[T]):
     @staticmethod
     def cli_repr(field: ModelField):
         return (
@@ -65,9 +67,6 @@ class OptionalArg(Generic[T]):
             if field.alias and field.alias != field.name
             else f"{ARGUMENT_KEY_PREFIX}{''.join([w[0] for w in field.name.split('_')])}",
         )
-
-    def __str__(self, **kwargs):
-        return str(self.value)
 
 
 # noinspection PyPep8Naming
@@ -131,6 +130,18 @@ class ToolArgs(BaseModel):
     show_help: bool = False
     extra_args: Optional[Dict[str, Union[list, bool, int, str]]] = None
     raw_extra_args: Optional[List[str]] = None
+
+    def __init__(self, **data):
+        for k, v in self.__fields__.items():
+            if (isclass(v.type_) and issubclass(v.type_, HexagonArg)) and (
+                v.default is not None and not isinstance(v.default, HexagonArg)
+            ):
+                v.default = (
+                    PositionalArg(v.default)
+                    if v.type_ == PositionalArg
+                    else OptionalArg(v.default)
+                )
+        super().__init__(**data)
 
     def __getattribute__(self, item, skip_trace=False):
         if item == "__fields__":

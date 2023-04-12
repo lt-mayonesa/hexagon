@@ -19,10 +19,8 @@ class Args(ToolArgs):
     age: PositionalArg[Optional[int]] = Arg(
         None, description="the person's age, if provided must be greater than 18"
     )
-    nationality: PositionalArg[Optional[str]] = Arg(PositionalArg("Argentinian"))
-    car_brand: OptionalArg[str] = Arg(
-        OptionalArg("Ford"), description="the car's brand"
-    )
+    nationality: PositionalArg[Optional[str]] = Arg("Argentinian")
+    car_brand: OptionalArg[str] = Arg("Ford", description="the car's brand")
     car_model: OptionalArg[str] = Arg(None, description="the car's model")
     car_years: OptionalArg[list] = None
 
