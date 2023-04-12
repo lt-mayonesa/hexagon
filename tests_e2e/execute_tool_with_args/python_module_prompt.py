@@ -3,7 +3,7 @@ from typing import Any, Optional, List
 
 from pydantic import validator
 
-from hexagon.domain.args import ToolArgs, OptionalArg, PositionalArg, Field
+from hexagon.domain.args import ToolArgs, OptionalArg, PositionalArg, Arg
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
 from hexagon.support.printer import log
@@ -25,7 +25,7 @@ class Args(ToolArgs):
     """
 
     test: PositionalArg[str]
-    name: OptionalArg[str] = Field(None, prompt_message="input the person's name:")
+    name: OptionalArg[str] = Arg(None, prompt_message="input the person's name:")
     age: OptionalArg[int] = None
     country: OptionalArg[str] = "Argentina"
     likes: OptionalArg[list] = None

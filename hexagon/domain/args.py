@@ -1,7 +1,12 @@
 import re
 from typing import Optional, Dict, Union, List, TypeVar, Generic, Any
 
-from pydantic import BaseModel, validator, ValidationError, Field as PydanticField
+from pydantic import (
+    BaseModel,
+    validator as pydantic_validator,
+    ValidationError,
+    Field as PydanticField,
+)
 from pydantic.fields import ModelField
 
 ARGUMENT_KEY_PREFIX = "-"
@@ -66,7 +71,7 @@ class OptionalArg(Generic[T]):
 
 
 # noinspection PyPep8Naming
-def Field(
+def Arg(
     default: Any = None,
     *,
     alias: Optional[str] = None,
@@ -105,7 +110,7 @@ class CliArgs(BaseModel):
     def count(self):
         return self.total_args
 
-    @validator("tool", "env")
+    @pydantic_validator("tool", "env")
     def validate(cls, v, field):
         if v and not re.match("^[a-zA-Z0-9\\-_]+$", v.value):
             raise ValueError(

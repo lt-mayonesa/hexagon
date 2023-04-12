@@ -4,34 +4,34 @@ from shutil import copytree
 from pydantic import DirectoryPath
 
 from hexagon.actions import external
-from hexagon.domain.args import ToolArgs, PositionalArg, Field, OptionalArg
+from hexagon.domain.args import ToolArgs, PositionalArg, Arg, OptionalArg
 from hexagon.domain.singletons import configuration
 from hexagon.domain.tool import ActionTool, ToolType
 from hexagon.support.printer import log
 
 
 class Args(ToolArgs):
-    action: PositionalArg[str] = Field(
+    action: PositionalArg[str] = Arg(
         None, prompt_message=_("action.actions.internal.create_new_tool.choose_action")
     )
-    type: OptionalArg[ToolType] = Field(
+    type: OptionalArg[ToolType] = Arg(
         None, prompt_message=_("action.actions.internal.create_new_tool.choose_type")
     )
-    name: OptionalArg[str] = Field(
+    name: OptionalArg[str] = Arg(
         None, prompt_message=_("action.actions.internal.create_new_tool.input_name")
     )
-    alias: OptionalArg[str] = Field(
+    alias: OptionalArg[str] = Arg(
         None, prompt_message=_("action.actions.internal.create_new_tool.input_alias")
     )
-    long_name: OptionalArg[str] = Field(
+    long_name: OptionalArg[str] = Arg(
         None,
         prompt_message=_("action.actions.internal.create_new_tool.input_long_name"),
     )
-    description: OptionalArg[str] = Field(
+    description: OptionalArg[str] = Arg(
         None,
         prompt_message=_("action.actions.internal.create_new_tool.input_description"),
     )
-    custom_tools_path: OptionalArg[DirectoryPath] = Field(
+    custom_tools_path: OptionalArg[DirectoryPath] = Arg(
         ".",
         prompt_message=_(
             "action.actions.internal.create_new_tool.input_custom_tools_path"

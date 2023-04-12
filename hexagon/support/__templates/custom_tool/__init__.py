@@ -2,14 +2,14 @@ from typing import Any, Optional
 
 from pydantic import validator
 
-from hexagon.domain.args import ToolArgs, Field, OptionalArg
+from hexagon.domain.args import ToolArgs, Arg, OptionalArg
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
 from hexagon.support.printer import log
 
 
 class Args(ToolArgs):
-    last_name: OptionalArg[str] = Field(
+    last_name: OptionalArg[str] = Arg(
         None,
         prompt_message="What's your last name?",
     )
