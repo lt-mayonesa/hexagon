@@ -31,6 +31,7 @@ class Args(ToolArgs):
     likes: OptionalArg[list] = None
     tag: OptionalArg[Category] = Category.C
     available_tags: OptionalArg[List[Category]] = [Category.B, Category.E]
+    total_amount: OptionalArg[float] = None
 
     @validator("age")
     def validate_age(cls, arg):
@@ -70,3 +71,6 @@ def main(
         log.result(f"tag type: {type(cli_args.tag.value).__name__}")
     elif cli_args.test.value == "prompt_list_enum_choices":
         log.result(f"available_tags: {cli_args.prompt('available_tags')}")
+    elif cli_args.test.value == "prompt_validate_type":
+        log.result(f"total_amount: {cli_args.prompt('total_amount')}")
+        log.result(f"total_amount type: {type(cli_args.total_amount.value).__name__}")

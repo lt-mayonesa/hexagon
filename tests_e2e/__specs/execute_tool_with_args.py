@@ -456,3 +456,31 @@ def test_prompt_support_list_of_enum_arguments():
         )
         .exit()
     )
+
+
+def test_should_validate_type():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt", "prompt_validate_type"],
+            os_env_vars={"HEXAGON_THEME": "default"},
+        )
+        .input("asdf")
+        .erase()
+        .input("hello world")
+        .erase()
+        .input("*()&UAS*(")
+        .erase()
+        .input("23.34")
+        .then_output_should_be(["total_amount: 23.34"], discard_until_first_match=True)
+        .then_output_should_be(
+            [
+                "To run this tool again do:",
+                "hexagon-test prompt prompt_validate_type --total-amount=23.34",
+                "or:",
+                "hexagon-test p prompt_validate_type -ta=23.34",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )

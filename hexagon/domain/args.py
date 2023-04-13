@@ -168,7 +168,7 @@ class ToolArgs(BaseModel):
         )
         if not model_field:
             raise Exception(
-                f"argument field must be a field name or a ModelField instance, got {field}"
+                f"field [{field}] not found, must be a field name or a ModelField instance"
             )
 
         value_ = self.__prompt__.query_field(

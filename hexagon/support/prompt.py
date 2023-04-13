@@ -1,10 +1,12 @@
 from pathlib import Path
+from typing import Callable, Any
 
 from InquirerPy import inquirer
 from InquirerPy.base import Choice
 from prompt_toolkit.document import Document
 from prompt_toolkit.validation import ValidationError, Validator
-from pydantic.fields import ModelField
+from pydantic import ValidationError as PydanticValidationError
+from pydantic.fields import ModelField, Validator as PydanticValidator
 
 from hexagon.domain.args import HexagonArg
 from hexagon.support.printer import log
@@ -17,12 +19,30 @@ class PromptValidator(Validator):
         self.cls = cls
 
     def validate(self, document: Document) -> None:
-        # FIXME: add validation based on field type's default validation
         try:
             for validator in self.validators.values():
                 validator.func(self.cls, document.text)
+        except PydanticValidationError as e:
+            raise ValidationError(
+                message=" / ".join([x["msg"] for x in e.errors()]),
+                cursor_position=len(document.text),
+            )
         except ValueError as e:
             raise ValidationError(message=e.args[0], cursor_position=len(document.text))
+
+
+def default_validator(model_field: ModelField, mapper=lambda x: x):
+    def func(cls, value):
+        value, error = model_field.sub_fields[0].validate(mapper(value), {}, loc="")
+        if error:
+            raise PydanticValidationError([error], model=cls)
+        return value
+
+    return func
+
+
+def list_mapper(v):
+    return v.strip().split("\n")
 
 
 class Prompt:
@@ -41,10 +61,7 @@ class Prompt:
 
         type_, iterable, of_enum = field_info(model_field)
 
-        if model_field.class_validators:
-            args["validate"] = PromptValidator(
-                model_field.class_validators, model_class
-            )
+        mapper: Callable[[Any], Any] = lambda x: x
 
         if iterable and of_enum:
             args["choices"] = [
@@ -57,7 +74,8 @@ class Prompt:
             ]
             inq = self.checkbox
         elif iterable:
-            args["filter"] = lambda x: x.strip().split("\n")
+            mapper = list_mapper
+            args["filter"] = mapper
             args["message"] = args["message"] + " (each line represents a value)"
             args["multiline"] = True
             inq = self.text
@@ -71,6 +89,23 @@ class Prompt:
         elif issubclass(type_, Path):
             args["message"] = args["message"] + " (relative to project root)"
             inq = self.path
+
+        if model_field.sub_fields:
+            validators_ = {
+                "default": PydanticValidator(
+                    default_validator(model_field, mapper=mapper), check_fields=True
+                )
+            }
+            if model_field.class_validators:
+                validators_.update(
+                    {
+                        **model_field.class_validators,
+                    }
+                )
+            args["validate"] = PromptValidator(
+                validators_,
+                model_class,
+            )
 
         args.update(**kwargs)
         return inq(**args)
