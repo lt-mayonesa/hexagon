@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.41.1 (2023-04-13)
+### Fix
+* **args:** Apply default type validation when prompting ([`f97911f`](https://github.com/lt-mayonesa/hexagon/commit/f97911faee9d4437d2f92344276a8c69af346270))
+
 ## v0.41.0 (2023-04-13)
 ### Feature
 * **theme:** Add no_border prompt theme ([`bb39265`](https://github.com/lt-mayonesa/hexagon/commit/bb39265274507eeac3c47605d41bc0b21d317de1))
