@@ -1,7 +1,7 @@
 # hexagon
 Make your team's knowledge truly accessible, truly shared, and truly empowering by creating your own CLI.
 
-[![build](https://github.com/lt-mayonesa/hexagon/actions/workflows/python-package.yml/badge.svg)](https://github.com/lt-mayonesa/hexagon/actions/workflows/python-package.yml)
+[![01_ci-cd](https://github.com/lt-mayonesa/hexagon/actions/workflows/01-python-package.yml/badge.svg)](https://github.com/lt-mayonesa/hexagon/actions/workflows/01-python-package.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 [![hexagon setup example](https://user-images.githubusercontent.com/11464844/141402773-2fa1e859-cbe7-43a2-87e8-81620307167f.gif)](https://asciinema.org/a/Mk8of7EC0grfsSgWYrEdGCjdF)

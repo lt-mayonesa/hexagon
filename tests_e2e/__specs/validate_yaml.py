@@ -34,7 +34,8 @@ def test_show_errors_when_invalid_yaml():
                 "17     type: web",
                 "",
                 "✗ tools.2.action -> none is not an allowed value",
-            ]
+            ],
+            ignore_blank_lines=False,
         )
         .exit(status=1)
     )

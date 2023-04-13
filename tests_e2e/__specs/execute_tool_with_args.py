@@ -143,7 +143,8 @@ def test_arguments_type_matters():
                 "✗ nationality -> USA is not a valid nationality",
                 "",
                 "✗ car_brand -> we don't accept Chevrolet cars",
-            ]
+            ],
+            ignore_blank_lines=False,
         )
         .exit(status=1)
     )
@@ -214,7 +215,8 @@ def test_show_tool_help_text_when_tool_has_args(help_arg):
                 "To support tool arguments either add a model extending",
                 "hexagon.domain.args.ToolArgs class to your script,",
                 "or a args property in the tool YAML definition.",
-            ]
+            ],
+            ignore_blank_lines=False,
         )
         .exit()
     )
@@ -243,7 +245,8 @@ def test_show_tool_help_text_when_tool_has_no_args(help_arg):
                 "To support tool arguments either add a model extending",
                 "hexagon.domain.args.ToolArgs class to your script,",
                 "or a args property in the tool YAML definition.",
-            ]
+            ],
+            ignore_blank_lines=False,
         )
         .exit()
     )

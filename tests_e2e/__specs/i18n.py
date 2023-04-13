@@ -13,7 +13,6 @@ def test_default_locale_is_english():
                 "ƒ Python i18n Test",
                 "⬡ Save Last Command as Shell Alias",
                 "⬡ Create A New Tool",
-                "",
             ]
         )
         .arrow_down()
@@ -40,7 +39,6 @@ def test_fallback_locale_is_english():
                 "ƒ Python i18n Test",
                 "⬡ Save Last Command as Shell Alias",
                 "⬡ Create A New Tool",
-                "",
             ]
         )
         .arrow_down()
@@ -67,7 +65,6 @@ def test_locale_is_set_to_english():
                 "ƒ Python i18n Test",
                 "⬡ Save Last Command as Shell Alias",
                 "⬡ Create A New Tool",
-                "",
             ]
         )
         .arrow_down()
@@ -94,7 +91,6 @@ def test_locale_is_set_to_spanish():
                 "ƒ Python i18n Test",
                 "⬡ Guardar el último comando ejecutado como shell alias",
                 "⬡ Crear una nueva herramienta",
-                "",
             ]
         )
         .arrow_down()

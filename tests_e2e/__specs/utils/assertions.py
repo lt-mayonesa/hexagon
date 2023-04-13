@@ -192,6 +192,7 @@ def assert_process_output(
     process: subprocess.Popen,
     expected_output: List[Expected_Process_Output],
     discard_until_first_match=False,
+    ignore_blank_lines=True,
 ):
     """
     Assert the output of a CLI process
@@ -204,6 +205,7 @@ def assert_process_output(
     :param process: The process, usually instantiated using `tests_e2e.test.utils.run.run_hexagon_e2e_test`
     :param expected_output: Expected lines to be compared with the actual output lines.
     :param discard_until_first_match: Discard lines until the first expected line is found
+    :param ignore_blank_lines: If line is blank ("\n"), ignore it
     :return:
     """
     __tracebackhide__ = True
@@ -216,6 +218,9 @@ def assert_process_output(
     ):
         line: str = _read_next_line(process, lines_read)
         expected = expected_output[line_index]
+
+        if ignore_blank_lines and line == "\n":
+            continue
 
         if _assert_process_output_line(
             process, line, expected, lines_read, discard_until_first_match

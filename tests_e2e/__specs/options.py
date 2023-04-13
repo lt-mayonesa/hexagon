@@ -131,7 +131,8 @@ def test_invalid_local_options():
                 "There were 1 error(s) in your YAML",
                 "",
                 "✗ update_time_between_checks -> invalid duration format",
-            ]
+            ],
+            ignore_blank_lines=False,
         )
         .exit(1)
     )

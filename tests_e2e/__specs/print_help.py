@@ -82,7 +82,8 @@ def test_print_help_using_yaml_contents(command):
                 "hexagon:",
                 "  save-alias                                                  Save Last Command as Shell Alias",
                 "  create-tool                                                 Create A New Tool",
-            ]
+            ],
+            ignore_blank_lines=False,
         )
         .exit()
     )
@@ -115,7 +116,8 @@ def test_print_help_using_yaml_contents_no_tools(command):
                 "Tools:",
                 "",
                 "",
-            ]
+            ],
+            ignore_blank_lines=False,
         )
         .exit()
     )

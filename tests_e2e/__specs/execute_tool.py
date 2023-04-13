@@ -63,9 +63,6 @@ def test_execute_python_module_with_env_by_gui():
                 "2/2",
                 "dev",
                 "qa",
-                "",
-                "",
-                "",
             ]
         )
         .enter()
@@ -105,7 +102,8 @@ def test_execute_python_module_with_env_asterisk_by_gui():
                 "executed python_module",
                 "Env args:",
                 "all_envs",
-            ]
+            ],
+            ignore_blank_lines=False,
         )
         .exit()
     )
