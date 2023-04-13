@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.41.0 (2023-04-13)
+### Feature
+* **theme:** Add no_border prompt theme ([`bb39265`](https://github.com/lt-mayonesa/hexagon/commit/bb39265274507eeac3c47605d41bc0b21d317de1))
+
 ## v0.40.0 (2023-04-12)
 ### Feature
 * **args:** Do not validate special characters on args ([`e793175`](https://github.com/lt-mayonesa/hexagon/commit/e79317551d686021d50915c61e25de69d80bf29e))
