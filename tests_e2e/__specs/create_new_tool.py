@@ -22,40 +22,25 @@ def _shared_assertions(spec: HexagonSpec):
         spec.then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "┌──────────────────────────────────────────────────────────────────────────────",
-                "",
-                "",
-                "",
+                "3/3",
                 "⦾ Google",
-                "",
                 "⬡ Save Last Command as Shell Alias",
-                "",
                 "⬡ Create A New Tool",
-                "",
-                "└──────────────────────────────────────────────────────────────────────────────",
-                "",
             ],
         )
         .arrow_down()
         .arrow_down()
         .enter()
         .then_output_should_be(
-            [["Hi, which tool would you like to use today?", "⬡ Create A New Tool"]]
+            [["Hi, which tool would you like to use today?", "Create A New Tool"]],
+            discard_until_first_match=True,
         )
         .then_output_should_be(
             [
                 "Choose the action of your tool:",
-                "┌──────────────────────────────────────────────────────────────────────────────",
-                "",
-                "",
-                "",
+                "2/2",
                 "open_link",
-                "",
                 "new_action",
-                "",
-                "└──────────────────────────────────────────────────────────────────────────────",
-                "",
-                "",
             ]
         )
     )
@@ -68,7 +53,9 @@ def test_create_new_open_link_tool():
         .run_hexagon()
         .with_shared_behavior(_shared_assertions)
         .enter()
-        .then_output_should_be([["Choose the action of your tool:", "open_link"]])
+        .then_output_should_be(
+            ["", "", "", ["Choose the action of your tool:", "open_link"]]
+        )
         .then_output_should_be(["What type of tool is it?", "web", "shell"])
         .carriage_return()
         .then_output_should_be(
@@ -113,7 +100,9 @@ def test_create_new_python_module_tool():
         .with_shared_behavior(_shared_assertions)
         .arrow_down()
         .enter()
-        .then_output_should_be([["Choose the action of your tool:", "new_action"]])
+        .then_output_should_be(
+            ["", "", "", ["Choose the action of your tool:", "new_action"]]
+        )
         .input("a-new-action")
         .then_output_should_be(
             [["What name would you like to give your new action?", "a-new-action"]],

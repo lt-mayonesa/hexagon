@@ -11,6 +11,13 @@ envs:
     alias: l
 
 tools:
+  - name: github
+    alias: gh
+    long_name: Open Github Repo
+    type: web
+    action: open_link
+    envs:
+      '*': https://github.com/lt-mayonesa/hexagon
 
   - name: build-i18n
     alias: b18

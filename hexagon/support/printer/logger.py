@@ -82,3 +82,6 @@ class Logger:
         self.__console = console or Console(
             color_system="auto" if self.__decorations.show_colors else None
         )
+
+    def use_borders(self):
+        return self.__decorations.prompt_border

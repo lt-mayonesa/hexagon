@@ -25,6 +25,7 @@ class PromptsTheme:
 class LoggingTheme:
     show_colors: bool = True
     result_only: bool = False
+    prompt_border: bool = True
     start: str = ""
     border: str = ""
     border_result: str = ""
@@ -53,8 +54,19 @@ def load_theme(theme: str):
             process_in="┆",
             finish="╰╼ ",
         ),
-        "disabled": LoggingTheme(show_colors=False),
-        "result_only": LoggingTheme(result_only=True, show_colors=False),
+        "no_border": LoggingTheme(
+            prompt_border=False,
+            start="╭╼ ",
+            border="│ ",
+            border_result="├ ",
+            process_out="┆",
+            process_in="┆",
+            finish="╰╼ ",
+        ),
+        "disabled": LoggingTheme(show_colors=False, prompt_border=False),
+        "result_only": LoggingTheme(
+            result_only=True, show_colors=False, prompt_border=False
+        ),
     }
 
     t = __themes[theme]

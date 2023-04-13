@@ -8,21 +8,13 @@ def test_default_locale_is_english():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "┌──────────────────────────────────────────────────────────────────────────────",
-                "",
-                "",
-                "",
+                "4/4",
                 "⦾ Google",
-                "",
                 "ƒ Python i18n Test",
-            ]
-        )
-        .then_output_should_be(
-            [
-                "└──────────────────────────────────────────────────────────────────────────────",
+                "⬡ Save Last Command as Shell Alias",
+                "⬡ Create A New Tool",
                 "",
-            ],
-            True,
+            ]
         )
         .arrow_down()
         .enter()
@@ -43,21 +35,13 @@ def test_fallback_locale_is_english():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "┌──────────────────────────────────────────────────────────────────────────────",
-                "",
-                "",
-                "",
+                "4/4",
                 "⦾ Google",
-                "",
                 "ƒ Python i18n Test",
-            ]
-        )
-        .then_output_should_be(
-            [
-                "└──────────────────────────────────────────────────────────────────────────────",
+                "⬡ Save Last Command as Shell Alias",
+                "⬡ Create A New Tool",
                 "",
-            ],
-            True,
+            ]
         )
         .arrow_down()
         .enter()
@@ -78,21 +62,13 @@ def test_locale_is_set_to_english():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "┌──────────────────────────────────────────────────────────────────────────────",
-                "",
-                "",
-                "",
+                "4/4",
                 "⦾ Google",
-                "",
                 "ƒ Python i18n Test",
-            ]
-        )
-        .then_output_should_be(
-            [
-                "└──────────────────────────────────────────────────────────────────────────────",
+                "⬡ Save Last Command as Shell Alias",
+                "⬡ Create A New Tool",
                 "",
-            ],
-            True,
+            ]
         )
         .arrow_down()
         .enter()
@@ -113,21 +89,13 @@ def test_locale_is_set_to_spanish():
         .then_output_should_be(
             [
                 "Hola ¿qué herramienta te gustaría usar hoy?",
-                "┌──────────────────────────────────────────────────────────────────────────────",
-                "",
-                "",
-                "",
+                "4/4",
                 "⦾ Google",
-                "",
                 "ƒ Python i18n Test",
-            ]
-        )
-        .then_output_should_be(
-            [
-                "└──────────────────────────────────────────────────────────────────────────────",
+                "⬡ Guardar el último comando ejecutado como shell alias",
+                "⬡ Crear una nueva herramienta",
                 "",
-            ],
-            True,
+            ]
         )
         .arrow_down()
         .enter()

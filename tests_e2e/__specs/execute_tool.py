@@ -7,28 +7,16 @@ def _shared_assertions(spec: HexagonSpec):
         spec.then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "┌──────────────────────────────────────────────────────────────────────────────",
-                "",
-                "",
-                "",
+                "9/9",
                 "⦾ Google",
-                "",
                 "ƒ Python Module Test",
-                "",
                 "ƒ Python Module Env Test",
-                "",
                 "ƒ Python Module Asterisk Env Test",
-                "",
                 "ƒ Node Module Test",
-                "",
                 "ƒ Node Module Env Test",
+                "ƒ Python Module Single File Test",
+                "⬡ Save Last Command as Shell Alias",
             ]
-        ).then_output_should_be(
-            [
-                "└──────────────────────────────────────────────────────────────────────────────",
-                "",
-            ],
-            True,
         )
     )
 
@@ -70,12 +58,19 @@ def test_execute_python_module_with_env_by_gui():
             ]
         )
         .then_output_should_be(
-            ["On which environment?", "", "", "", "", "dev", "", "qa", "", "", ""]
+            [
+                "On which environment?",
+                "2/2",
+                "dev",
+                "qa",
+                "",
+                "",
+                "",
+            ]
         )
         .enter()
         .then_output_should_be(
             [
-                "",
                 ["On which environment?", "dev"],
                 "executed python_module",
                 "Env:",

@@ -7,6 +7,7 @@ from prompt_toolkit.validation import ValidationError, Validator
 from pydantic.fields import ModelField
 
 from hexagon.domain.args import HexagonArg
+from hexagon.support.printer import log
 from hexagon.utils.typing import field_info
 
 
@@ -92,7 +93,7 @@ class Prompt:
 
     @staticmethod
     def fuzzy(**kwargs):
-        return inquirer.fuzzy(border=True, **kwargs).execute()
+        return inquirer.fuzzy(border=log.use_borders(), **kwargs).execute()
 
     @staticmethod
     def path(**kwargs):

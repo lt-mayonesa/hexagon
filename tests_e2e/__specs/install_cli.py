@@ -47,14 +47,8 @@ def test_install_cli():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "┌──────────────────────────────────────────────────────────────────────────────",
-                "",
                 "❯",
-                "",
                 "Install CLI                                               Install a custom",
-                "",
-                "└──────────────────────────────────────────────────────────────────────────────",
-                "",
             ]
         )
         .enter()
