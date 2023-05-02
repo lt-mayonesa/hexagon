@@ -57,20 +57,20 @@ def main(
     cli_args: Args = None,
 ):
     if cli_args.test.value == "prompt_name_and_age":
-        log.result(f"name: {cli_args.prompt('name')}")
-        log.result(f"age: {cli_args.prompt('age')}")
+        log.result(f"name: {cli_args.name.prompt()}")
+        log.result(f"age: {cli_args.age.prompt()}")
         log.result(f"age type: {type(cli_args.age.value).__name__}")
     elif cli_args.test.value == "prompt_validate_age":
-        log.result(f"age: {cli_args.prompt('age')}")
+        log.result(f"age: {cli_args.age.prompt()}")
     elif cli_args.test.value == "prompt_show_default_value":
-        log.result(f"country: {cli_args.prompt('country')}")
+        log.result(f"country: {cli_args.country.prompt()}")
     elif cli_args.test.value == "prompt_list_value":
-        log.result(f"likes: {cli_args.prompt('likes')}")
+        log.result(f"likes: {cli_args.likes.prompt()}")
     elif cli_args.test.value == "prompt_enum_choices":
-        log.result(f"tag: {cli_args.prompt('tag')}")
+        log.result(f"tag: {cli_args.tag.prompt()}")
         log.result(f"tag type: {type(cli_args.tag.value).__name__}")
     elif cli_args.test.value == "prompt_list_enum_choices":
-        log.result(f"available_tags: {cli_args.prompt('available_tags')}")
+        log.result(f"available_tags: {cli_args.available_tags.prompt()}")
     elif cli_args.test.value == "prompt_validate_type":
-        log.result(f"total_amount: {cli_args.prompt('total_amount')}")
+        log.result(f"total_amount: {cli_args.total_amount.prompt()}")
         log.result(f"total_amount type: {type(cli_args.total_amount.value).__name__}")

@@ -32,14 +32,14 @@ class Args(ToolArgs):
 
 
 def main(tool, env, env_args, cli_args: Args):
-    cli_args.prompt("src_path")
+    cli_args.src_path.prompt()
 
     cli, tools, envs = configuration.init_config(cli_args.src_path.value.resolve())
 
     bin_path = load_user_data(HexagonStorageKeys.cli_install_path.value)
 
     if not bin_path:
-        bin_path = cli_args.prompt("bin_path").resolve()
+        bin_path = cli_args.bin_path.prompt().resolve()
         store_user_data(HexagonStorageKeys.cli_install_path.value, bin_path)
 
     command_path = os.path.join(bin_path, cli.command)

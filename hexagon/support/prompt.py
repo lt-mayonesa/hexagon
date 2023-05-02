@@ -53,11 +53,13 @@ class Prompt:
             or f"Enter {model_field.name}:",
         }
         if model_field.default:
-            args["default"] = (
+            default = (
                 model_field.default.value
                 if isinstance(model_field.default, HexagonArg)
                 else model_field.default
             )
+            if default is not None:
+                args["default"] = default
 
         type_, iterable, of_enum = field_info(model_field)
 

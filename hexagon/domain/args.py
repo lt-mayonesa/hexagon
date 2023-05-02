@@ -16,20 +16,43 @@ T = TypeVar("T")
 
 
 class HexagonArg(Generic[T]):
+    __traced__ = False
+    __model__ = None
+    __field__ = None
+
     def __init__(self, value: T):
-        self.value = value
+        self.__value__ = value
 
     @classmethod
     def __get_validators__(cls):
         yield cls.arg_validator(cls)
 
-    def __str__(self, **kwargs):
-        return str(self.value)
+    @property
+    def value(self):
+        if self.__model__ and not self.__traced__:
+            self.__model__.trace(self.__field__)
+            self.__traced__ = True
+        return self.__value__
+
+    def prompt(self, **kwargs):
+        if not self.__model__:
+            raise ValueError(
+                "Cannot prompt for a value when model reference is not initialized. "
+                "Probably _init_refs was not called."
+            )
+        return self.__model__.prompt(self.__field__, **kwargs)
+
+    def _init_refs(self, model, field):
+        self.__field__ = field
+        self.__model__ = model
 
     @staticmethod
     @abc.abstractmethod
     def cli_repr(field: ModelField):
         return
+
+    def __str__(self, **kwargs):
+        return str(self.__value__)
 
     @staticmethod
     def arg_validator(cls):
@@ -42,7 +65,7 @@ class HexagonArg(Generic[T]):
                 return v
             value = field.sub_fields[0]
 
-            valid_value, error = value.validate(v.value, {}, loc="")
+            valid_value, error = value.validate(v.__value__, {}, loc="")
             if error:
                 raise ValidationError([error], model=cls)
             return cls(valid_value)
@@ -77,6 +100,20 @@ def Arg(
     prompt_message: Optional[str] = None,
     **kwargs,
 ):
+    """
+    Used to provide extra information about an argument, either for the model schema or complex validation.
+    Some arguments apply only to number fields (``int``, ``float``, ``Decimal``) and some apply only to ``str``.
+
+    TODO: add support for `validators` kwarg
+
+    :param default:
+    :param alias:
+    :param title:
+    :param description:
+    :param prompt_message:
+    :param kwargs:
+    :return:
+    """
     return PydanticField(
         default,
         alias=alias,
@@ -123,9 +160,9 @@ class ToolArgs(BaseModel):
 
     def __init__(self, **data):
         for v in self.__fields__.values():
-            if (isclass(v.type_) and issubclass(v.type_, HexagonArg)) and (
-                v.default is not None and not isinstance(v.default, HexagonArg)
-            ):
+            if (
+                isclass(v.type_) and issubclass(v.type_, HexagonArg)
+            ) and not isinstance(v.default, HexagonArg):
                 v.default = (
                     PositionalArg(v.default)
                     if v.type_ == PositionalArg
@@ -133,41 +170,62 @@ class ToolArgs(BaseModel):
                 )
         super().__init__(**data)
 
-    def __getattribute__(self, item, skip_trace=False):
+    def __getattribute__(self, item, skip_trace=False, just_get=False):
+        if just_get:
+            return super().__getattribute__(item)
         if item == "__fields__":
             return super().__getattribute__(item)
         if item in self.__fields__:
-            if skip_trace or not self.__config__.trace_on_access:
-                return super().__getattribute__(item)
-
-            if not self.__tracer__:
-                raise Exception("Tracer not set")
-
             field = self.__fields__[item]
-            value_ = self.__getattribute__(item, skip_trace=True)
+            value_ = self.__getattribute__(item, just_get=True)
 
-            if value_ is None and self.__config__.prompt_on_access:
-                return self.prompt(field)
-
-            if item not in self.__fields_traced__ and item in self.__fields_set__:
-                if field.type_ == PositionalArg:
-                    self.__tracer__.tracing(value_.value)
-                elif field.type_ == OptionalArg:
-                    n, a = OptionalArg.cli_repr(field)
-                    self.__tracer__.tracing(value_.value, key=n, key_alias=a)
-                self.__fields_traced__.add(item)
+            if (
+                hasattr(value_, "__value__")
+                and value_.__value__ is None
+                and self.__config__.prompt_on_access
+            ):
+                self.prompt(field)
+                return self.__getattribute__(item, just_get=True)
 
         return super().__getattribute__(item)
 
-    def prompt(self, field: Union[ModelField, str], **kwargs):
-        if not self.__prompt__:
-            raise Exception("Prompt not set")
+    def trace(self, field: Union[ModelField, str]):
+        if not self.__tracer__:
+            raise ValueError("Tracer not initialized. Did _with_tracer() get called?")
 
         model_field = (
             field if isinstance(field, ModelField) else self.__fields__.get(field)
         )
         if not model_field:
-            raise Exception(
+            raise ValueError(
+                f"field [{field}] not found, must be a field name or a ModelField instance"
+            )
+
+        if not self.__config__.trace_on_access:
+            return
+
+        value_ = self.__getattribute__(model_field.name, just_get=True)
+
+        if (
+            model_field.name not in self.__fields_traced__
+            and model_field.name in self.__fields_set__
+        ):
+            if field.type_ == PositionalArg:
+                self.__tracer__.tracing(value_.__value__)
+            elif field.type_ == OptionalArg:
+                n, a = OptionalArg.cli_repr(field)
+                self.__tracer__.tracing(value_.__value__, key=n, key_alias=a)
+            self.__fields_traced__.add(model_field.name)
+
+    def prompt(self, field: Union[ModelField, str], skip_trace=False, **kwargs):
+        if not self.__prompt__:
+            raise ValueError("prompt not initialized. Did _with_prompt() get called?")
+
+        model_field = (
+            field if isinstance(field, ModelField) else self.__fields__.get(field)
+        )
+        if not model_field:
+            raise ValueError(
                 f"field [{field}] not found, must be a field name or a ModelField instance"
             )
 
@@ -176,17 +234,29 @@ class ToolArgs(BaseModel):
         )
 
         self.__setattr__(model_field.name, value_)
-        getattribute__ = self.__getattribute__(
-            field, skip_trace=not self.__config__.trace_on_prompt
-        )
-        return getattribute__.value
+        getattribute__ = self.__getattribute__(model_field.name)
+
+        if not skip_trace and self.__config__.trace_on_prompt:
+            self.trace(model_field)
+
+        return getattribute__.__value__
 
     def _with_tracer(self, tracer):
         self.__tracer__ = tracer
+        for k, field in self.__fields__.items():
+            arg = self.__getattribute__(k, just_get=True)
+            if isinstance(arg, HexagonArg):
+                # noinspection PyProtectedMember
+                arg._init_refs(self, field)
         return self
 
     def _with_prompt(self, prompt):
         self.__prompt__ = prompt
+        for k, field in self.__fields__.items():
+            arg = self.__getattribute__(k, just_get=True)
+            if isinstance(arg, HexagonArg):
+                # noinspection PyProtectedMember
+                arg._init_refs(self, field)
         return self
 
     class Config:

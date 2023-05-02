@@ -40,7 +40,7 @@ def main(
     # the ideal way of asking the user for input is to use cli_args.prompt
     # this will make sure to trace the input accordingly
     if not cli_args.last_name:
-        cli_args.prompt("last_name")
+        cli_args.last_name.prompt()
 
     log.info(f"selected tool: {tool.action}")
     log.info(f"selected env: {env}")

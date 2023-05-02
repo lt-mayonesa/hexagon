@@ -34,9 +34,9 @@ def main(tool, env, env_args, cli_args: Args):
         )
     )
 
-    cli_args.prompt("alias_name")
+    cli_args.alias_name.prompt()
 
-    save_new_alias(cli_args.alias_name, last_command)
+    save_new_alias(cli_args.alias_name.value, last_command)
 
 
 def save_new_alias(alias_name, command):

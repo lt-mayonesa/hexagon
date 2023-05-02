@@ -77,16 +77,16 @@ def main(tool, env, env_args, cli_args):
         filter=lambda r: r or None,
     )
 
-    new_tool.long_name = cli_args.prompt("long_name", filter=lambda r: r or None)
+    new_tool.long_name = cli_args.long_name.prompt(filter=lambda r: r or None)
 
-    new_tool.description = cli_args.prompt("description", filter=lambda r: r or None)
+    new_tool.description = cli_args.description.prompt(filter=lambda r: r or None)
 
     cli, tools, envs = configuration.refresh()
 
     if create_action:
         if not configuration.custom_tools_path:
             log.info(_("msg.actions.internal.create_new_tool.custom_tools_dir_not_set"))
-            path_ = cli_args.prompt("custom_tools_path")
+            path_ = cli_args.custom_tools_path.prompt()
             configuration.update_custom_tools_path(
                 path_.resolve()
                 if path_.is_absolute()
