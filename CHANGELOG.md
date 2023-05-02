@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.42.0 (2023-05-02)
+### Feature
+* **args:** Add prompt API to hexagon args ([`6cfb88f`](https://github.com/lt-mayonesa/hexagon/commit/6cfb88fc309a303ee234821754b061ae4606404f))
+
 ## v0.41.1 (2023-04-13)
 ### Fix
 * **args:** Apply default type validation when prompting ([`f97911f`](https://github.com/lt-mayonesa/hexagon/commit/f97911faee9d4437d2f92344276a8c69af346270))
