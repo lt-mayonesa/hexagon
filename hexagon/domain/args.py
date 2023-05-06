@@ -16,7 +16,6 @@ T = TypeVar("T")
 
 
 class HexagonArg(Generic[T]):
-    __traced__ = False
     __model__ = None
     __field__ = None
 
@@ -29,9 +28,8 @@ class HexagonArg(Generic[T]):
 
     @property
     def value(self):
-        if self.__model__ and not self.__traced__:
+        if self.__model__:
             self.__model__.trace(self.__field__)
-            self.__traced__ = True
         return self.__value__
 
     def prompt(self, **kwargs):
@@ -210,10 +208,10 @@ class ToolArgs(BaseModel):
             model_field.name not in self.__fields_traced__
             and model_field.name in self.__fields_set__
         ):
-            if field.type_ == PositionalArg:
+            if model_field.type_ == PositionalArg:
                 self.__tracer__.tracing(value_.__value__)
-            elif field.type_ == OptionalArg:
-                n, a = OptionalArg.cli_repr(field)
+            elif model_field.type_ == OptionalArg:
+                n, a = OptionalArg.cli_repr(model_field)
                 self.__tracer__.tracing(value_.__value__, key=n, key_alias=a)
             self.__fields_traced__.add(model_field.name)
 
