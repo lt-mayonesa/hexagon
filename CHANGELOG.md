@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.42.1 (2023-05-06)
+### Fix
+* **args:** Use correct value when tracing ([`f00dac8`](https://github.com/lt-mayonesa/hexagon/commit/f00dac85f2e10621826a9312f5d2eab02271606a))
+
 ## v0.42.0 (2023-05-02)
 ### Feature
 * **args:** Add prompt API to hexagon args ([`6cfb88f`](https://github.com/lt-mayonesa/hexagon/commit/6cfb88fc309a303ee234821754b061ae4606404f))

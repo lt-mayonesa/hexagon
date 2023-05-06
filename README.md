@@ -12,7 +12,7 @@ Make your team's knowledge truly accessible, truly shared, and truly empowering 
 
 ### Install hexagon
 ```bash
-python3 -m pip install https://github.com/lt-mayonesa/hexagon/releases/download/v0.42.0/hexagon-0.42.0.tar.gz
+python3 -m pip install https://github.com/lt-mayonesa/hexagon/releases/download/v0.42.1/hexagon-0.42.1.tar.gz
 ```
 
 ### Create your teams CLI
