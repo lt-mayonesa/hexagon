@@ -19,13 +19,14 @@ def select_and_execute_tool(
     tools: List[Tool],
     envs: List[Env],
     cli_args: CliArgs,
+    group_ref=0,
 ) -> List[str]:
     tool = search_by_name_or_alias(tools, cli_args.tool and cli_args.tool.value)
     env = search_by_name_or_alias(envs, cli_args.env and cli_args.env.value)
 
     tool = select_tool(tools, tool)
     if tool.traced:
-        tracer().tracing(tool.name, value_alias=tool.alias)
+        tracer().tracing(f"tool_{group_ref}", tool.name, value_alias=tool.alias)
 
     env, tool_env_params = select_env(envs, tool.envs, env)
 
@@ -35,6 +36,7 @@ def select_and_execute_tool(
             tool,
             envs,
             cli_args,
+            ref=group_ref + 1,
             # If the tool matched the tool argument, disable navigating back
             previous=previous
             if not next(
@@ -48,7 +50,7 @@ def select_and_execute_tool(
         return tool.function()
 
     if env:
-        tracer().tracing(env.name, value_alias=env.alias)
+        tracer().tracing(f"env_{group_ref}", env.name, value_alias=env.alias)
 
     HexagonHooks.before_tool_executed.run(
         ToolExecutionParameters(
@@ -76,6 +78,7 @@ def _execute_group_tool(
     tool: GroupTool,
     envs: List[Env],
     cli_args: CliArgs,
+    ref,
     previous: Tuple = None,
 ) -> List[str]:
     tools = tool.tools
@@ -99,4 +102,5 @@ def _execute_group_tool(
         parse_cli_args(
             ([cli_args.env.value] if cli_args.env else []) + cli_args.raw_extra_args
         ),
+        group_ref=ref,
     )

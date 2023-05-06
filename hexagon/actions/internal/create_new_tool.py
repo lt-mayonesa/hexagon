@@ -43,21 +43,19 @@ def main(tool, env, env_args, cli_args):
     create_action = False
     new_tool = ActionTool(
         name="invalid",
-        action=cli_args.prompt(
-            "action", choices=external.__all__ + ["new_action"], validate=lambda x: x
+        action=cli_args.action.prompt(
+            choices=external.__all__ + ["new_action"], validate=lambda x: x
         ),
     )
 
     if new_tool.action == "new_action":
         create_action = True
-        new_tool.action = cli_args.prompt(
-            "action",
+        new_tool.action = cli_args.action.prompt(
             message=_("action.actions.internal.create_new_tool.input_action"),
             validate=lambda x: x,
         )
 
-    new_tool.type = cli_args.prompt(
-        "type",
+    new_tool.type = cli_args.type.prompt(
         choices=[
             {"value": ToolType.web, "name": ToolType.web.value},
             {"value": ToolType.shell, "name": ToolType.shell.value},
@@ -65,14 +63,12 @@ def main(tool, env, env_args, cli_args):
         default=ToolType.web if new_tool.action == "open_link" else ToolType.shell,
     )
 
-    new_tool.name = cli_args.prompt(
-        "name",
+    new_tool.name = cli_args.name.prompt(
         validate=lambda x: x,
         default=new_tool.action.replace("_", "-"),
     )
 
-    new_tool.alias = cli_args.prompt(
-        "alias",
+    new_tool.alias = cli_args.alias.prompt(
         default="".join([z[:1] for z in new_tool.name.split("-")]),
         filter=lambda r: r or None,
     )

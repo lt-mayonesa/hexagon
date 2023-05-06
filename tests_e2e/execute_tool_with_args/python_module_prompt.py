@@ -24,7 +24,7 @@ class Args(ToolArgs):
     they get parsed loaded automatically by hexagon
     """
 
-    test: PositionalArg[str]
+    test: PositionalArg[str] = Arg(None)
     name: OptionalArg[str] = Arg(None, prompt_message="input the person's name:")
     age: OptionalArg[int] = None
     country: OptionalArg[str] = "Argentina"
@@ -74,3 +74,13 @@ def main(
     elif cli_args.test.value == "prompt_validate_type":
         log.result(f"total_amount: {cli_args.total_amount.prompt()}")
         log.result(f"total_amount type: {type(cli_args.total_amount.value).__name__}")
+    elif cli_args.test.value == "prompt_multiple_times":
+        log.result(f"name: {cli_args.name.prompt()}")
+        log.result(f"name: {cli_args.name.prompt()}")
+        log.result(f"name: {cli_args.name.prompt()}")
+        log.result(f"name: {cli_args.name.prompt()}")
+    else:
+        log.result(f"test: {cli_args.test.prompt()}")
+        log.result(f"test: {cli_args.test.prompt()}")
+        log.result(f"test: {cli_args.test.prompt()}")
+        log.result(f"test: {cli_args.test.prompt()}")

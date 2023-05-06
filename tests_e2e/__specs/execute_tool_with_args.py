@@ -484,3 +484,59 @@ def test_should_validate_type():
         )
         .exit()
     )
+
+
+def test_should_prompt_same_arg_multiple_times_successfully():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt", "prompt_multiple_times"],
+            os_env_vars={"HEXAGON_THEME": "default"},
+        )
+        .input("John")
+        .then_output_should_be(["name: John"], discard_until_first_match=True)
+        .input("Richard")
+        .then_output_should_be(["name: Richard"], discard_until_first_match=True)
+        .input("Jose")
+        .then_output_should_be(["name: Jose"], discard_until_first_match=True)
+        .input("Carlos")
+        .then_output_should_be(["name: Carlos"], discard_until_first_match=True)
+        .then_output_should_be(
+            [
+                "To run this tool again do:",
+                "hexagon-test prompt prompt_multiple_times --name=Carlos",
+                "or:",
+                "hexagon-test p prompt_multiple_times -n=Carlos",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )
+
+
+def test_should_prompt_same_positional_arg_multiple_times_successfully():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt"],
+            os_env_vars={"HEXAGON_THEME": "default"},
+        )
+        .input("one")
+        .then_output_should_be(["test: one"], discard_until_first_match=True)
+        .input("two")
+        .then_output_should_be(["test: two"], discard_until_first_match=True)
+        .input("three")
+        .then_output_should_be(["test: three"], discard_until_first_match=True)
+        .input("four")
+        .then_output_should_be(["test: four"], discard_until_first_match=True)
+        .then_output_should_be(
+            [
+                "To run this tool again do:",
+                "hexagon-test prompt four",
+                "or:",
+                "hexagon-test p four",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )

@@ -187,7 +187,14 @@ class ToolArgs(BaseModel):
 
         return super().__getattribute__(item)
 
-    def trace(self, field: Union[ModelField, str]):
+    def __setattr__(self, key, value):
+        super().__setattr__(key, value)
+        arg = self.__getattribute__(key, just_get=True)
+        if isinstance(arg, HexagonArg):
+            # noinspection PyProtectedMember
+            arg._init_refs(self, self.__fields__.get(key))
+
+    def trace(self, field: Union[ModelField, str], retrace=False):
         if not self.__tracer__:
             raise ValueError("Tracer not initialized. Did _with_tracer() get called?")
 
@@ -205,14 +212,15 @@ class ToolArgs(BaseModel):
         value_ = self.__getattribute__(model_field.name, just_get=True)
 
         if (
-            model_field.name not in self.__fields_traced__
-            and model_field.name in self.__fields_set__
-        ):
+            retrace or model_field.name not in self.__fields_traced__
+        ) and model_field.name in self.__fields_set__:
             if model_field.type_ == PositionalArg:
-                self.__tracer__.tracing(value_.__value__)
+                self.__tracer__.tracing(f"arg_{model_field.name}", value_.__value__)
             elif model_field.type_ == OptionalArg:
                 n, a = OptionalArg.cli_repr(model_field)
-                self.__tracer__.tracing(value_.__value__, key=n, key_alias=a)
+                self.__tracer__.tracing(
+                    f"arg_{model_field.name}", value_.__value__, key=n, key_alias=a
+                )
             self.__fields_traced__.add(model_field.name)
 
     def prompt(self, field: Union[ModelField, str], skip_trace=False, **kwargs):
@@ -235,7 +243,7 @@ class ToolArgs(BaseModel):
         getattribute__ = self.__getattribute__(model_field.name)
 
         if not skip_trace and self.__config__.trace_on_prompt:
-            self.trace(model_field)
+            self.trace(model_field, retrace=not skip_trace)
 
         return getattribute__.__value__
 

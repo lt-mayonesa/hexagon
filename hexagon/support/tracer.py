@@ -6,6 +6,7 @@ from hexagon.support.parse_args import CliArgs
 
 @dataclass
 class Trace:
+    ref: str
     value: str
     value_alias: str
     key: str
@@ -31,17 +32,28 @@ class Tracer:
 
     def tracing(
         self,
+        ref: str,
         value: Union[str, list],
         key: str = None,
         value_alias: str = None,
         key_alias: str = None,
     ):
-        if value:
-            if key:
-                for val in value if isinstance(value, list) else [value]:
-                    self._trace.append(Trace(val, value_alias, key, key_alias))
-            else:
-                self._trace.append(Trace(value, value_alias, key, key_alias))
+        if not value:
+            pass
+
+        for t in self._trace:
+            if t.ref == ref:
+                self._trace.remove(t)
+
+        if not key:
+            self._trace.append(Trace(ref, value, value_alias, key, key_alias))
+            return value
+
+        if isinstance(value, list):
+            for val in value:
+                self._trace.append(Trace(ref, val, value_alias, key, key_alias))
+        else:
+            self._trace.append(Trace(ref, value, value_alias, key, key_alias))
         return value
 
     def remove_last(self):

@@ -24,14 +24,14 @@ def test_build_command_from_initial_trace(initial, expected_trace):
         (parse_cli_args([]), [], False, "", ""),
         (
             parse_cli_args(["docker"]),
-            [("docker", None, "d", None)],
+            [("tool", "docker", None, "d", None)],
             False,
             "docker",
             "d",
         ),
         (
             parse_cli_args([]),
-            [("no-alias", None, None, None)],
+            [("tool", "no-alias", None, None, None)],
             True,
             "no-alias",
             "no-alias",
@@ -39,9 +39,9 @@ def test_build_command_from_initial_trace(initial, expected_trace):
         (
             parse_cli_args(["docker", "dev"]),
             [
-                ("docker", None, "d", None),
-                ("dev", None, "d", None),
-                ("something", None, None, None),
+                ("tool", "docker", None, "d", None),
+                ("env", "dev", None, "d", None),
+                ("arg1", "something", None, None, None),
             ],
             True,
             "docker dev something",
@@ -50,9 +50,9 @@ def test_build_command_from_initial_trace(initial, expected_trace):
         (
             parse_cli_args(["docker", "dev", "--foo", "bar"]),
             [
-                ("docker", None, "d", None),
-                ("dev", None, "d", None),
-                ("bar", "--foo", None, None),
+                ("tool", "docker", None, "d", None),
+                ("env", "dev", None, "d", None),
+                ("foo", "bar", "--foo", None, None),
             ],
             False,
             "docker dev --foo=bar",
@@ -61,9 +61,9 @@ def test_build_command_from_initial_trace(initial, expected_trace):
         (
             parse_cli_args(["docker", "dev", "--foo=bar", "--foo=baz"]),
             [
-                ("docker", None, "d", None),
-                ("dev", None, "d", None),
-                (["bar", "baz"], "--foo", None, None),
+                ("tool", "docker", None, "d", None),
+                ("env", "dev", None, "d", None),
+                ("foo", ["bar", "baz"], "--foo", None, None),
             ],
             False,
             "docker dev --foo=bar --foo=baz",
@@ -72,11 +72,11 @@ def test_build_command_from_initial_trace(initial, expected_trace):
         (
             parse_cli_args(["docker", "dev", "--foo=bar", "--bar=baz", "my-value"]),
             [
-                ("docker", None, "d", None),
-                ("dev", None, "d", None),
-                ("bar", "--foo", None, "-f"),
-                ("baz", "--bar", None, "-f"),
-                ("my-value", None, None, None),
+                ("tool", "docker", None, "d", None),
+                ("env", "dev", None, "d", None),
+                ("foo", "bar", "--foo", None, "-f"),
+                ("bar", "baz", "--bar", None, "-f"),
+                ("arg1", "my-value", None, None, None),
             ],
             False,
             "docker dev --foo=bar --bar=baz my-value",
@@ -87,11 +87,11 @@ def test_build_command_from_initial_trace(initial, expected_trace):
                 ["docker", "dev", "--foo", "bar", "--bar", "baz", "my-value"]
             ),
             [
-                ("docker", None, "d", None),
-                ("dev", None, "d", None),
-                ("bar", "--foo", None, "-f"),
-                ("baz", "--bar", None, "-f"),
-                ("my-value", None, None, None),
+                ("tool", "docker", None, "d", None),
+                ("env", "dev", None, "d", None),
+                ("foo", "bar", "--foo", None, "-f"),
+                ("bar", "baz", "--bar", None, "-f"),
+                ("arg1", "my-value", None, None, None),
             ],
             False,
             "docker dev --foo=bar --bar=baz my-value",
@@ -100,8 +100,8 @@ def test_build_command_from_initial_trace(initial, expected_trace):
         (
             parse_cli_args(["tool-group", "one"]),
             [
-                ("tool-group", None, "tg", None),
-                ("one", None, "o", None),
+                ("tool", "tool-group", None, "tg", None),
+                ("env", "one", None, "o", None),
             ],
             False,
             "tool-group one",
@@ -110,8 +110,8 @@ def test_build_command_from_initial_trace(initial, expected_trace):
         (
             parse_cli_args([]),
             [
-                ("tool-group", None, "tg", None),
-                ("one", None, "o", None),
+                ("tool", "tool-group", None, "tg", None),
+                ("env", "one", None, "o", None),
             ],
             True,
             "tool-group one",
@@ -120,9 +120,9 @@ def test_build_command_from_initial_trace(initial, expected_trace):
         (
             parse_cli_args([]),
             [
-                ("tool-group-envs", None, "tge", None),
-                ("dev", None, "d", None),
-                ("one", None, "o", None),
+                ("tool", "tool-group-envs", None, "tge", None),
+                ("env", "dev", None, "d", None),
+                ("group1", "one", None, "o", None),
             ],
             True,
             "tool-group-envs dev one",
@@ -131,11 +131,11 @@ def test_build_command_from_initial_trace(initial, expected_trace):
         (
             parse_cli_args(["docker", "dev", "-f", "bar", "-b", "baz", "my-value"]),
             [
-                ("docker", None, "d", None),
-                ("dev", None, "d", None),
-                ("bar", "--foo", None, "-f"),
-                ("baz", "--bar", None, "-f"),
-                ("my-value", None, None, None),
+                ("tool", "docker", None, "d", None),
+                ("env", "dev", None, "d", None),
+                ("foo", "bar", "--foo", None, "-f"),
+                ("bar", "baz", "--bar", None, "-f"),
+                ("arg1", "my-value", None, None, None),
             ],
             False,
             "docker dev --foo=bar --bar=baz my-value",
@@ -152,3 +152,14 @@ def test_build_command_from_traced(
     assert tracer.trace() == expected_trace
     assert tracer.aliases_trace() == expected_alias
     assert tracer.has_traced() == has_traced
+
+
+def test_trace_same_key_multiple_times():
+    tracer = Tracer(parse_cli_args([]))
+    tracer.tracing("name", "John", key="--name", key_alias="-n")
+    tracer.tracing("name", "Charles", key="--name", key_alias="-n")
+    tracer.tracing("name", "Richard", key="--name", key_alias="-n")
+    tracer.tracing("name", "Bob", key="--name", key_alias="-n")
+    assert tracer.trace() == "--name=Bob"
+    assert tracer.aliases_trace() == "-n=Bob"
+    assert tracer.has_traced() is True
