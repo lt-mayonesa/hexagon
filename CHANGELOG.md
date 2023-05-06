@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.43.0 (2023-05-06)
+### Feature
+* **args:** Prompt same arg multiple times and trace ([`7a96e23`](https://github.com/lt-mayonesa/hexagon/commit/7a96e23cc8e2c69b6f2e07558bd37041af927830))
+
 ## v0.42.1 (2023-05-06)
 ### Fix
 * **args:** Use correct value when tracing ([`f00dac8`](https://github.com/lt-mayonesa/hexagon/commit/f00dac85f2e10621826a9312f5d2eab02271606a))
