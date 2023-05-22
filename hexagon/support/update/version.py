@@ -8,8 +8,8 @@ from hexagon.support.github import add_github_access_token
 from hexagon.support.update import REPO_NAME, REPO_ORG
 
 
-def local():
-    return parse_version(_local_version())
+def local(override=None):
+    return parse_version(override or _local_version())
 
 
 def _local_version():

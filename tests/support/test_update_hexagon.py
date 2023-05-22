@@ -23,7 +23,7 @@ def _confirm_mock(_, default=None):
     return ConfirmMock()
 
 
-def _local_version_mock():
+def _local_version_mock(override=None):
     return Version("0.1.0")
 
 
