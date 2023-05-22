@@ -257,7 +257,7 @@ def test_tool_args_class_can_be_used_to_prompt():
         as_a_user(__file__)
         .run_hexagon(
             ["prompt", "prompt_name_and_age"],
-            os_env_vars={"HEXAGON_THEME": "default"},
+            os_env_vars={"HEXAGON_THEME": "no_border"},
         )
         .then_output_should_be(
             "input the person's name:", discard_until_first_match=True
@@ -286,7 +286,7 @@ def test_prompt_validates_input_correctly():
         as_a_user(__file__)
         .run_hexagon(
             ["prompt", "prompt_validate_age"],
-            os_env_vars={"HEXAGON_THEME": "default"},
+            os_env_vars={"HEXAGON_THEME": "no_border"},
         )
         .input("2")
         .erase()
@@ -316,7 +316,7 @@ def test_prompt_shows_default_value():
         as_a_user(__file__)
         .run_hexagon(
             ["prompt", "prompt_show_default_value"],
-            os_env_vars={"HEXAGON_THEME": "default"},
+            os_env_vars={"HEXAGON_THEME": "no_border"},
         )
         .then_output_should_be(["country: Argentina"], discard_until_first_match=True)
         .enter()
@@ -339,7 +339,7 @@ def test_prompt_shows_default_value_input_another():
         as_a_user(__file__)
         .run_hexagon(
             ["prompt", "prompt_show_default_value"],
-            os_env_vars={"HEXAGON_THEME": "default"},
+            os_env_vars={"HEXAGON_THEME": "no_border"},
         )
         .then_output_should_be(["country: Argentina"], discard_until_first_match=True)
         .erase("Argentina")
@@ -363,7 +363,7 @@ def test_prompt_list_value_using_multiline():
         as_a_user(__file__)
         .run_hexagon(
             ["prompt", "prompt_list_value"],
-            os_env_vars={"HEXAGON_THEME": "default"},
+            os_env_vars={"HEXAGON_THEME": "no_border"},
         )
         .then_output_should_be(
             ["likes: (each line represents a value) ESC + Enter to finish input"],
@@ -395,7 +395,7 @@ def test_prompt_support_enum_arguments():
         as_a_user(__file__)
         .run_hexagon(
             ["prompt", "prompt_enum_choices"],
-            os_env_vars={"HEXAGON_THEME": "default"},
+            os_env_vars={"HEXAGON_THEME": "no_border"},
         )
         .then_output_should_be(
             ["tag", "A", "B", "C", "D", "E", "F"], discard_until_first_match=True
@@ -423,7 +423,7 @@ def test_prompt_support_list_of_enum_arguments():
         as_a_user(__file__)
         .run_hexagon(
             ["prompt", "prompt_list_enum_choices"],
-            os_env_vars={"HEXAGON_THEME": "default"},
+            os_env_vars={"HEXAGON_THEME": "no_border"},
         )
         .then_output_should_be(
             ["available_tags", "A", "◉ B", "C", "D", "◉ E", "F"],
@@ -463,7 +463,7 @@ def test_should_validate_type():
         as_a_user(__file__)
         .run_hexagon(
             ["prompt", "prompt_validate_type"],
-            os_env_vars={"HEXAGON_THEME": "default"},
+            os_env_vars={"HEXAGON_THEME": "no_border"},
         )
         .input("asdf")
         .erase()
@@ -491,7 +491,7 @@ def test_should_prompt_same_arg_multiple_times_successfully():
         as_a_user(__file__)
         .run_hexagon(
             ["prompt", "prompt_multiple_times"],
-            os_env_vars={"HEXAGON_THEME": "default"},
+            os_env_vars={"HEXAGON_THEME": "no_border"},
         )
         .input("John")
         .then_output_should_be(["name: John"], discard_until_first_match=True)
@@ -519,7 +519,7 @@ def test_should_prompt_same_positional_arg_multiple_times_successfully():
         as_a_user(__file__)
         .run_hexagon(
             ["prompt"],
-            os_env_vars={"HEXAGON_THEME": "default"},
+            os_env_vars={"HEXAGON_THEME": "no_border"},
         )
         .input("one")
         .then_output_should_be(["test: one"], discard_until_first_match=True)

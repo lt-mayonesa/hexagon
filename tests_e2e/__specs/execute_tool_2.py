@@ -172,7 +172,7 @@ def test_execute_multiline_command_with_input_as_list():
 def test_execute_failing_command():
     (
         as_a_user(__file__)
-        .run_hexagon(["failing-command"], {"HEXAGON_THEME": "default"})
+        .run_hexagon(["failing-command"], {"HEXAGON_THEME": "no_border"})
         .then_output_should_be(
             [
                 "i-dont-exist returned code: 127",

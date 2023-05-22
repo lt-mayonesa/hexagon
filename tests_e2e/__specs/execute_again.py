@@ -4,7 +4,7 @@ from tests_e2e.__specs.utils.hexagon_spec import as_a_user
 def test_command_with_alias_execute_again_is_shown():
     (
         as_a_user(__file__)
-        .run_hexagon(os_env_vars={"HEXAGON_THEME": "default"})
+        .run_hexagon(os_env_vars={"HEXAGON_THEME": "no_border"})
         .enter()
         .then_output_should_be(
             [
@@ -22,7 +22,7 @@ def test_command_with_alias_execute_again_is_shown():
 def test_command_with_alias_and_env_execute_again_is_shown():
     (
         as_a_user(__file__)
-        .run_hexagon(os_env_vars={"HEXAGON_THEME": "default"})
+        .run_hexagon(os_env_vars={"HEXAGON_THEME": "no_border"})
         # select command-env-with-alias tool
         .arrow_down()
         .enter()
@@ -52,7 +52,7 @@ def test_with_input_command_with_alias_and_env_execute_again_is_shown():
     (
         as_a_user(__file__)
         .run_hexagon(
-            ["command-env-with-alias"], os_env_vars={"HEXAGON_THEME": "default"}
+            ["command-env-with-alias"], os_env_vars={"HEXAGON_THEME": "no_border"}
         )
         # select first env
         .enter()
@@ -74,7 +74,8 @@ def test_WHEN_no_prompts_are_shown_THEN_execute_again_is_hidden():
     (
         as_a_user(__file__)
         .run_hexagon(
-            ["command-env-with-alias", "dev"], os_env_vars={"HEXAGON_THEME": "default"}
+            ["command-env-with-alias", "dev"],
+            os_env_vars={"HEXAGON_THEME": "no_border"},
         )
         .then_output_should_not_contain(
             [
@@ -92,7 +93,7 @@ def test_WHEN_no_prompts_are_shown_THEN_execute_again_is_hidden():
 def test_WHEN_command_with_no_alias_THEN_execute_again_is_shown_partially():
     (
         as_a_user(__file__)
-        .run_hexagon(os_env_vars={"HEXAGON_THEME": "default"})
+        .run_hexagon(os_env_vars={"HEXAGON_THEME": "no_border"})
         # select command-no-alias tool
         .arrow_down()
         .arrow_down()
@@ -110,7 +111,7 @@ def test_WHEN_command_with_no_alias_THEN_execute_again_is_shown_partially():
 def test_WHEN_group_tool_command_is_executed_THEN_execute_again_is_shown():
     (
         as_a_user(__file__)
-        .run_hexagon(os_env_vars={"HEXAGON_THEME": "default"})
+        .run_hexagon(os_env_vars={"HEXAGON_THEME": "no_border"})
         # select command-no-alias tool
         .arrow_down()
         .arrow_down()

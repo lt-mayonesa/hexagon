@@ -44,7 +44,7 @@ def test_execute_tool_group_with_no_alias_from_gui():
 def test_execute_tool_from_ui_after_leaving_tool_group():
     (
         as_a_user(__file__)
-        .run_hexagon(os_env_vars={"HEXAGON_THEME": "default"})
+        .run_hexagon(os_env_vars={"HEXAGON_THEME": "no_border"})
         # Select the first group
         .arrow_down()
         .enter()
@@ -119,7 +119,7 @@ def test_execute_tool_group_in_different_directory_with_default_custom_tools_dir
 def test_execute_tool_group_has_correct_trace():
     (
         as_a_user(__file__)
-        .run_hexagon(os_env_vars={"HEXAGON_THEME": "default"})
+        .run_hexagon(os_env_vars={"HEXAGON_THEME": "no_border"})
         .arrow_down()
         .enter()
         .then_output_should_be(
