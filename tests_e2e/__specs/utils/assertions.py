@@ -193,6 +193,7 @@ def assert_process_output(
     expected_output: List[Expected_Process_Output],
     discard_until_first_match=False,
     ignore_blank_lines=True,
+    lines_read: List[str] = None,
 ):
     """
     Assert the output of a CLI process
@@ -206,11 +207,12 @@ def assert_process_output(
     :param expected_output: Expected lines to be compared with the actual output lines.
     :param discard_until_first_match: Discard lines until the first expected line is found
     :param ignore_blank_lines: If line is blank ("\n"), ignore it
+    :param lines_read: List to accumulate the lines read from the process
     :return:
     """
     __tracebackhide__ = True
     line_index = 0
-    lines_read = []
+    lines_read = lines_read or []
     attempts = 0
     # Read from stdout until assertion fails or all expected lines are reads
     while line_index < (

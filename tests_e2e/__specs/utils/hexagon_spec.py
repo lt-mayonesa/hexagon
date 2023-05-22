@@ -112,13 +112,13 @@ class HexagonSpec:
         ignore_blank_lines=True,
     ):
         __tracebackhide__ = True
-        lines_read = assert_process_output(
+        self.lines_read = assert_process_output(
             self.process,
             expected_output,
             discard_until_first_match=discard_until_first_match,
             ignore_blank_lines=ignore_blank_lines,
+            lines_read=self.lines_read,
         )
-        self.lines_read.extend(lines_read)
         return self
 
     @log
