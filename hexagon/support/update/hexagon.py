@@ -21,7 +21,11 @@ def check_for_hexagon_updates():
     if already_checked_for_updates(HEXAGON_STORAGE_APP):
         return
 
-    current_version = version.local()
+    current_version = (
+        os.getenv("HEXAGON_TEST_VERSION_OVERRIDE")
+        if "HEXAGON_TEST_VERSION_OVERRIDE" in os.environ
+        else version.local()
+    )
     with log.status(_("msg.support.update.hexagon.checking_new_versions")):
         latest_version = version.latest()
 
