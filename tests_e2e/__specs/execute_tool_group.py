@@ -62,6 +62,10 @@ def test_execute_tool_from_ui_after_leaving_tool_group():
         .arrow_down()
         .arrow_down()
         .arrow_down()
+        .then_output_should_be(
+            ["Hi, which tool would you like to use today?"],
+            discard_until_first_match=True,
+        )
         .enter()
         .then_output_should_be(["top level echo"], True)
         .then_output_should_be(["hexagon-test top-level-echo"], True)
