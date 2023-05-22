@@ -29,6 +29,9 @@ def test_command_with_alias_and_env_execute_again_is_shown():
         .then_output_should_be(
             ["This is a command with env with"], discard_until_first_match=True
         )
+        .then_output_should_be(
+            ["On which environment?"], discard_until_first_match=True
+        )
         # select first env
         .enter()
         .then_output_should_be(["dev"], discard_until_first_match=True)
