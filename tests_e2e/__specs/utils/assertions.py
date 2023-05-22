@@ -105,7 +105,7 @@ def _read_next_line(process: subprocess.Popen, lines_read: List[str]):
     signal.signal(signal.SIGALRM, timeout_handler)
 
     if not debugger_is_active():
-        signal.alarm(5)
+        signal.alarm(10)
     line: str = process.stdout.readline()
     signal.alarm(0)
 
