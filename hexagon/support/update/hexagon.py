@@ -1,18 +1,12 @@
-import json
 import os
 import subprocess
 import sys
-from urllib.request import Request, urlopen
-
-import pkg_resources
-from packaging.version import parse as parse_version
 
 from hexagon.domain.singletons import options
-from hexagon.support.github import add_github_access_token
 from hexagon.support.printer import log
 from hexagon.support.prompt import prompt
 from hexagon.support.storage import HEXAGON_STORAGE_APP
-from hexagon.support.update import REPO_ORG, REPO_NAME
+from hexagon.support.update import REPO_ORG, REPO_NAME, version
 from hexagon.support.update.changelog.fetch import fetch_changelog
 from hexagon.support.update.changelog.format import format_entries
 from hexagon.support.update.changelog.parse import parse_changelog
@@ -27,19 +21,16 @@ def check_for_hexagon_updates():
     if already_checked_for_updates(HEXAGON_STORAGE_APP):
         return
 
-    current_version = parse_version(
-        os.getenv("HEXAGON_TEST_VERSION_OVERRIDE")
-        if "HEXAGON_TEST_VERSION_OVERRIDE" in os.environ
-        else pkg_resources.require("hexagon")[0].version
-    )
-    latest_github_release_version = _latest_github_release()
+    current_version = version.local()
+    with log.status(_("msg.support.update.hexagon.checking_new_versions")):
+        latest_version = version.latest()
 
-    if current_version >= parse_version(latest_github_release_version):
+    if current_version >= latest_version:
         return
 
     log.info(
         _("msg.support.update.hexagon.new_version_available").format(
-            latest_version=latest_github_release_version
+            latest_version=latest_version
         )
     )
 
@@ -64,7 +55,7 @@ def check_for_hexagon_updates():
 
     with log.status(_("msg.support.update.hexagon.updating")):
         subprocess.check_call(
-            f"{sys.executable} -m pip --disable-pip-version-check install https://github.com/{REPO_ORG}/{REPO_NAME}/releases/download/v{latest_github_release_version}/hexagon-{latest_github_release_version}.tar.gz",
+            f"{sys.executable} -m pip --disable-pip-version-check install https://github.com/{REPO_ORG}/{REPO_NAME}/releases/download/v{latest_version}/hexagon-{latest_version}.tar.gz",
             shell=True,
             stdout=subprocess.DEVNULL,
         )
@@ -72,13 +63,3 @@ def check_for_hexagon_updates():
     log.info(_("msg.support.update.hexagon.updated"))
     log.finish()
     sys.exit(1)
-
-
-def _latest_github_release():
-    with log.status(_("msg.support.update.hexagon.checking_new_versions")):
-        latest_release_request = Request(
-            f"https://api.github.com/repos/{REPO_ORG}/{REPO_NAME}/releases/latest"
-        )
-        add_github_access_token(latest_release_request)
-        latest_github_release = json.load(urlopen(latest_release_request))
-        return latest_github_release["name"].replace("v", "")

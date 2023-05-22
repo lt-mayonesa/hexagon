@@ -2,7 +2,7 @@ import subprocess
 import sys
 from unittest import mock
 
-import pkg_resources
+from packaging.version import Version
 
 from hexagon.support.prompt import prompt
 from hexagon.support.storage import (
@@ -10,6 +10,7 @@ from hexagon.support.storage import (
     HexagonStorageKeys,
     delete_user_data,
 )
+from hexagon.support.update import version
 from hexagon.support.update.hexagon import check_for_hexagon_updates
 
 
@@ -22,17 +23,19 @@ def _confirm_mock(_, default=None):
     return ConfirmMock()
 
 
-def _require_mock(_, default=None):
-    class PackageMock:
-        version = "0.1.0"
+def _local_version_mock():
+    return Version("0.1.0")
 
-    return [PackageMock()]
+
+def _latest_version_mock():
+    return Version("0.2.0")
 
 
 def test_hexagon_updates_itself(monkeypatch):
     monkeypatch.setenv("HEXAGON_TEST_VERSION_OVERRIDE", "0.1.0")
     monkeypatch.setattr(prompt, "confirm", _confirm_mock)
-    monkeypatch.setattr(pkg_resources, "require", _require_mock)
+    monkeypatch.setattr(version, "local", _local_version_mock)
+    monkeypatch.setattr(version, "latest", _latest_version_mock)
 
     delete_user_data(HEXAGON_STORAGE_APP, HexagonStorageKeys.last_update_check.value)
     with mock.patch.object(
