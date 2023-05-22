@@ -169,7 +169,7 @@ def test_execute_python_module_with_other_env():
                 "Env:",
                 "alias='q' long_name='qa' description=None",
                 "Env args:",
-                "ordereddict([('foo', 'foo'), ('bar', 'bar')])",
+                "{'foo': 'foo', 'bar': 'bar'}",
             ]
         )
         .exit()

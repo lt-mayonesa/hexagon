@@ -19,7 +19,6 @@ flake8 = "*"
 pytest = "*"
 black = "*"
 flake8-bugbear = "*"
-pipenv-setup = "*"
 
 [requires]
 python_version = "3.8"
