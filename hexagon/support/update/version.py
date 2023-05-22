@@ -1,8 +1,10 @@
+import importlib.metadata as importlib_metadata
 import json
 import os
 import sys
 from urllib.request import Request, urlopen
 
+import pkg_resources
 from packaging.version import parse as parse_version
 
 from hexagon.support.github import add_github_access_token
@@ -19,12 +21,8 @@ def local():
 
 def _local_version():
     if sys.version_info >= (3, 8):
-        import importlib.metadata as importlib_metadata
-
         return importlib_metadata.version("hexagon")
     else:
-        import pkg_resources
-
         return pkg_resources.require("hexagon")[0].version
 
 
