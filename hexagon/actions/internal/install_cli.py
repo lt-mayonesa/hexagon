@@ -40,7 +40,7 @@ def main(tool, env, env_args, cli_args: Args):
 
     if not bin_path:
         bin_path = cli_args.bin_path.prompt().resolve()
-        store_user_data(HexagonStorageKeys.cli_install_path.value, bin_path)
+        store_user_data(HexagonStorageKeys.cli_install_path.value, str(bin_path))
 
     command_path = os.path.join(bin_path, cli.command)
     with open(command_path, "w") as command:
