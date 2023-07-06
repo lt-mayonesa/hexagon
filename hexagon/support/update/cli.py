@@ -11,8 +11,10 @@ from hexagon.support.dependencies import scan_and_install_dependencies
 from hexagon.support.printer import log
 from hexagon.support.prompt import prompt
 from hexagon.support.update.shared import already_checked_for_updates
+from hexagon.utils.silent_fail import silent_fail
 
 
+@silent_fail()
 def check_for_cli_updates():
     if options.cli_update_disabled:
         return
