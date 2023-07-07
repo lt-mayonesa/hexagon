@@ -10,7 +10,7 @@ def silent_fail():
             # noinspection PyBroadException
             try:
                 return func()
-            except Exception as e:
+            except Exception:
                 return
 
         return wrapper
