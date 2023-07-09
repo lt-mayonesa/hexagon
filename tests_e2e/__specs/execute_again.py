@@ -118,6 +118,10 @@ def test_WHEN_group_tool_command_is_executed_THEN_execute_again_is_shown():
         .arrow_down()
         .enter()
         .then_output_should_be(["tool-group"], discard_until_first_match=True)
+        .then_output_should_be(
+            ["Hi, which tool would you like to use today?"],
+            discard_until_first_match=True,
+        )
         .enter()
         .then_output_should_be(["group-command-first"], discard_until_first_match=True)
         .then_output_should_be(
