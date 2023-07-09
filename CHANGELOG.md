@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.43.1 (2023-07-09)
+
+### Fix
+
+* **update:** Ignore errors when updating ([`2a40c98`](https://github.com/lt-mayonesa/hexagon/commit/2a40c98cb2154123ba4e2d7428b733afdaae8993))
+* **install:** Use string instead of posixpath ([`f645906`](https://github.com/lt-mayonesa/hexagon/commit/f64590691f3e7c7d5c1e7bfa073b01c9806c1821))
+
 ## v0.43.0 (2023-05-06)
 ### Feature
 * **args:** Prompt same arg multiple times and trace ([`7a96e23`](https://github.com/lt-mayonesa/hexagon/commit/7a96e23cc8e2c69b6f2e07558bd37041af927830))
