@@ -2,6 +2,17 @@
 
 
 
+## v0.43.4 (2023-07-24)
+
+### Ci
+
+* ci(release): migrate to v8 of semantic release ([`ec9a531`](https://github.com/lt-mayonesa/hexagon/commit/ec9a5315abfa8a6f07982d2a6edba87064bf75ee))
+
+### Fix
+
+* fix(release): empty change to trigger new release ([`f4d7492`](https://github.com/lt-mayonesa/hexagon/commit/f4d7492263672d3816f2f9e5fae9ae85cf7c2669))
+
+
 ## v0.43.3 (2023-07-24)
 
 ### Fix
