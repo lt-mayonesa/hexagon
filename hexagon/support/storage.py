@@ -119,7 +119,6 @@ def _get_app(app: str = None):
 
 def store_user_data(key: str, data: InputDataType, append=False, app: str = None):
     app = _get_app(app)
-
     value_type, sanitized_data = _storage_value_type_by_data_type(data)
     extension = _extension_by_value_type[value_type]
     dir_path, file_name = _resolve_storage_path(app, key)
