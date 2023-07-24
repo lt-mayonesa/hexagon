@@ -20,6 +20,14 @@ def __reducer(acc: List[ChangelogEntry], version: ChangelogVersionEntry):
 
 
 def format_entries(entries: List[ChangelogVersionEntry]):
-    entries = reduce(__reducer, entries, [])
+    entries = [
+        entry
+        for entry in reduce(
+            __reducer,
+            entries,
+            [],
+        )
+        if entry.type in CHANGELOG_ENTRY_TYPE_ORDER_MAP.keys()
+    ]
     entries.sort(key=lambda e: CHANGELOG_ENTRY_TYPE_ORDER_MAP[e.type], reverse=True)
     return entries
