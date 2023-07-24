@@ -65,10 +65,14 @@ class HexagonSpec:
         self.command = None
         self.lines_read: List[str] = []
         self.last_input = None
+        self.yaml_file_name = "app.yml"
 
     @log
-    def given_a_cli_yaml(self, config: dict):
-        write_hexagon_config(self.__file, config)
+    def given_a_cli_yaml(self, config: Union[str, Dict]):
+        if isinstance(config, str):
+            self.yaml_file_name = config
+        else:
+            write_hexagon_config(self.__file, config)
         return self
 
     @log
@@ -85,6 +89,7 @@ class HexagonSpec:
             self.process = run_hexagon_e2e_test(
                 self.__file,
                 self.command,
+                yaml_file_name=self.yaml_file_name,
                 os_env_vars=os_env_vars,
                 test_file_path_is_absolute=test_file_path_is_absolute,
                 cwd=cwd,
@@ -92,6 +97,7 @@ class HexagonSpec:
         else:
             self.process = run_hexagon_e2e_test(
                 self.__file,
+                yaml_file_name=self.yaml_file_name,
                 os_env_vars=os_env_vars,
                 test_file_path_is_absolute=test_file_path_is_absolute,
                 cwd=cwd,

@@ -18,6 +18,7 @@ HEXAGON_COMMAND_DARWIN: List[str] = ["python3", "-m", "hexagon"]
 def run_hexagon_e2e_test(
     test_file: str,
     args: List[str] = tuple(),
+    yaml_file_name: str = "app.yml",
     os_env_vars: Optional[Dict[str, str]] = None,
     test_file_path_is_absolute: bool = False,
     cwd: str = None,
@@ -61,9 +62,7 @@ def run_hexagon_e2e_test(
         os.getenv("HEXAGON_STORAGE_PATH", os.path.join(test_folder_path, ".config")),
     )
 
-    app_config_path = os_env_vars.get("HEXAGON_CONFIG_FILE") or os.path.join(
-        test_folder_path, "app.yml"
-    )
+    app_config_path = os.path.join(test_folder_path, yaml_file_name)
     if os.path.isfile(app_config_path):
         os_env_vars["HEXAGON_CONFIG_FILE"] = app_config_path
 
