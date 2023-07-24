@@ -2,6 +2,17 @@
 
 
 
+## v0.43.3 (2023-07-24)
+
+### Fix
+
+* fix(update): ignore versions entries with chore types ([`5e063c4`](https://github.com/lt-mayonesa/hexagon/commit/5e063c4d431f7fdde91c6242bccd1c500cb44dbe))
+
+### Refactor
+
+* refactor(dependencies): dry up code ([`b8a843e`](https://github.com/lt-mayonesa/hexagon/commit/b8a843e46fab26953f6949697fa5d772dc2bb229))
+
+
 ## v0.43.2 (2023-07-24)
 
 ### Chore
