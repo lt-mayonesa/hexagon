@@ -1,4 +1,4 @@
-from typing import Callable, List, Optional
+from typing import Callable, List, Optional, Dict
 
 import os
 import subprocess
@@ -53,3 +53,19 @@ def crawl_directory(
                 ignore_dirs_ignored_by_git=ignore_dirs_ignored_by_git,
                 in_git_repo=in_git_repo,
             )
+
+
+def declarations_found(path: str, dependency_files: List[str]):
+    declarations_found: Dict[Path, List[str]] = {}
+
+    def add_declaration(key: Path, file: str):
+        if key not in declarations_found:
+            declarations_found[key] = []
+        declarations_found[key].append(file)
+
+    def crawler(file: Path):
+        if file.name in dependency_files:
+            add_declaration(file.parent, file.name)
+
+    crawl_directory(path, crawler)
+    return declarations_found.items()

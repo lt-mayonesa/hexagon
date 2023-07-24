@@ -1,9 +1,8 @@
-import sys
 import subprocess
-from typing import Dict, List, Optional
-from pathlib import Path
+import sys
+from typing import Optional
 
-from hexagon.utils.fs import crawl_directory
+from hexagon.utils.fs import declarations_found
 
 PACKAGE_JSON_FILE_NAME = "package.json"
 PACKAGE_JSON_LOCK_FILE_NAME = "package-lock.json"
@@ -16,20 +15,7 @@ NODEJS_DECLARATION_FILES = [
 
 
 def scan_and_install_node_dependencies(path: str, mocked=False):
-    declarations: Dict[str, List[str]] = {}
-
-    def add_declaration(key: str, file: str):
-        if key not in declarations:
-            declarations[key] = []
-        declarations[key].append(file)
-
-    def crawler(file: Path):
-        if file.name in NODEJS_DECLARATION_FILES:
-            add_declaration(file.parent, file.name)
-
-    crawl_directory(path, crawler)
-
-    for directory, files in declarations.items():
+    for directory, files in declarations_found(path, NODEJS_DECLARATION_FILES):
         command: Optional[str] = None
         if PACKAGE_JSON_FILE_NAME in files:
             if YARN_LOCK_FILE_NAME in files and PACKAGE_JSON_LOCK_FILE_NAME in files:
