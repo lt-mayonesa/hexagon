@@ -19,14 +19,14 @@ def run_hexagon_e2e_test(
     test_file: str,
     args: List[str] = tuple(),
     os_env_vars: Optional[Dict[str, str]] = None,
-    test_file_path_is_absoulte: bool = False,
+    test_file_path_is_absolute: bool = False,
     cwd: str = None,
 ):
     if os_env_vars is None:
         os_env_vars = {}
 
     test_folder_path = (
-        test_file if test_file_path_is_absoulte else e2e_test_folder_path(test_file)
+        test_file if test_file_path_is_absolute else e2e_test_folder_path(test_file)
     )
 
     os_env_vars["HEXAGON_TEST_SHELL"] = (
@@ -61,10 +61,11 @@ def run_hexagon_e2e_test(
         os.getenv("HEXAGON_STORAGE_PATH", os.path.join(test_folder_path, ".config")),
     )
 
-    if "HEXAGON_CONFIG_FILE" not in os_env_vars:
-        app_config_path = os.path.join(test_folder_path, "app.yml")
-        if os.path.isfile(app_config_path):
-            os_env_vars["HEXAGON_CONFIG_FILE"] = app_config_path
+    app_config_path = os_env_vars.get("HEXAGON_CONFIG_FILE") or os.path.join(
+        test_folder_path, "app.yml"
+    )
+    if os.path.isfile(app_config_path):
+        os_env_vars["HEXAGON_CONFIG_FILE"] = app_config_path
 
     os_env_vars["PYTHONPATH"] = hexagon_path
 

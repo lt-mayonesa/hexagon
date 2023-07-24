@@ -159,7 +159,7 @@ def test_warn_install_dir_not_PATH():
 
 
 # noinspection PyPep8Naming
-def test_do_not_warn_install_dir_not_PATH_when_it_is():
+def test_do_not_warn_install_dir_not_in_PATH_when_it_is():
     (
         as_a_user(__file__)
         .run_hexagon(
@@ -194,5 +194,41 @@ def test_do_not_warn_install_dir_not_PATH_when_it_is():
         .then_output_should_be(["would have ran npm install --only=production"])
         .then_output_should_be(["$ hexagon-test"], discard_until_first_match=True)
         .then_output_should_not_contain([f"{commands_dir_path} is not in your $PATH"])
+        .exit()
+    )
+
+
+def test_do_not_install_dependencies_when_no_custom_tools_dir_present():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            os_env_vars={
+                HexagonSpec.HEXAGON_STORAGE_PATH: storage_path,
+                "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
+                "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
+                "HEXAGON_THEME": "default",
+                "PATH": f"{os.getenv('PATH')}:{commands_dir_path}",
+            }
+        )
+        .then_output_should_be(
+            [
+                "Hi, which tool would you like to use today?",
+                "┌──────────────────────────────────────────────────────────────────────────────",
+                "",
+                "❯",
+                "",
+                "Install CLI                                               Install a custom",
+                "",
+                "└──────────────────────────────────────────────────────────────────────────────",
+                "",
+            ],
+            discard_until_first_match=True,
+        )
+        .enter()
+        .input("/config_no_custom_tools_dir.yml")
+        .enter()
+        .then_output_should_not_contain(
+            ["would have ran npm install --only=production"]
+        )
         .exit()
     )

@@ -10,7 +10,10 @@ HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED_ENVIRONMENT_VARIABLE = (
 )
 
 
-def scan_and_install_dependencies(path: str):
+def scan_and_install_dependencies(path: str = None):
+    if path is None:
+        return
+
     if options.disable_dependency_scan:
         return
 
