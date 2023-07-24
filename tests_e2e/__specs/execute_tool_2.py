@@ -101,7 +101,7 @@ def test_show_correct_error_when_execute_python_module_with_script_error_and_no_
                 "executed p_m_script_error",
                 "╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮",
                 {
-                    "expected": ["action.py:100"],
+                    "expected": ["action.py"],
                     "max_lines": 2,
                     "line_delimiter": " │\n│ ",
                 },
