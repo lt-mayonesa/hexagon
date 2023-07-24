@@ -1,5 +1,8 @@
+import os
+
 from tests_e2e.__specs.utils.assertions import assert_file_has_contents
 from tests_e2e.__specs.utils.hexagon_spec import as_a_user
+from tests_e2e.__specs.utils.path import e2e_test_folder_path
 
 shared_prompt_output = [
     "Hi, which tool would you like to use today?",
@@ -86,6 +89,32 @@ def test_show_correct_error_when_execute_python_module_with_script_error():
                 "Execution of tool p_m_script_error failed",
             ],
             discard_until_first_match=True,
+        )
+        .exit(status=1)
+    )
+
+
+def test_show_correct_error_when_execute_python_module_with_script_error_and_no_custom_tools_dir():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["p-m-script-error"],
+            os_env_vars={
+                "HEXAGON_CONFIG_FILE": os.path.join(
+                    e2e_test_folder_path(__file__), "app_no_custom_tools_dir.yml"
+                )
+            },
+        )
+        .then_output_should_be(
+            [
+                "executed p_m_script_error",
+                "╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮",
+                {
+                    "expected": ["action.py:100"],
+                    "max_lines": 2,
+                    "line_delimiter": " │\n│ ",
+                },
+            ]
         )
         .exit(status=1)
     )

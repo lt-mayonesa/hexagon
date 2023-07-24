@@ -1,0 +1,18 @@
+cli:
+  name: Test
+  command: hexagon-test
+
+envs:
+  - name: dev
+    alias: d
+    long_name: dev
+  - name: qa
+    alias: q
+    long_name: qa
+
+tools:
+  - name: p-m-script-error
+    action: p_m_script_error
+    type: shell
+    alias: pmse
+    long_name: Python Module Script Error Test

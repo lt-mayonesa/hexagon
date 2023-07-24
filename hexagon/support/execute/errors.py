@@ -2,6 +2,7 @@ import os
 import sys
 import traceback
 from pathlib import Path
+from typing import Optional
 
 from pydantic import ValidationError
 from rich import traceback as rich_traceback
@@ -64,7 +65,7 @@ class ActionInputError(ListHexagonError):
 
 
 class WithTracebackError(HexagonError):
-    def __init__(self, action_id, custom_tools_path) -> None:
+    def __init__(self, action_id: str, custom_tools_path: Optional[str] = None) -> None:
         tb, execution = self.__pretty_print_external_error(action_id, custom_tools_path)
         self.traceback = tb
         self.execution = execution
@@ -80,10 +81,16 @@ class WithTracebackError(HexagonError):
         logger.error(self.error)
 
     @classmethod
-    def __pretty_print_external_error(cls, action_id, custom_tools_path) -> (str, str):
+    def __pretty_print_external_error(
+        cls, action_id: str, custom_tools_path: Optional[str]
+    ) -> (str, str):
         exc_type, exc_value, tb = sys.exc_info()
 
-        trace = cls.__find_python_module_in_traceback(action_id, tb, custom_tools_path)
+        trace = (
+            cls.__find_python_module_in_traceback(action_id, tb, custom_tools_path)
+            if custom_tools_path
+            else tb
+        )
 
         return (
             rich_traceback.Traceback.from_exception(exc_type, exc_value, trace),
@@ -91,7 +98,9 @@ class WithTracebackError(HexagonError):
         )
 
     @classmethod
-    def __find_python_module_in_traceback(cls, action_id, tb, custom_tools_path):
+    def __find_python_module_in_traceback(
+        cls, action_id: str, tb, custom_tools_path: str
+    ):
         return next(
             (
                 t

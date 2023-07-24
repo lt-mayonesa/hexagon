@@ -61,9 +61,10 @@ def run_hexagon_e2e_test(
         os.getenv("HEXAGON_STORAGE_PATH", os.path.join(test_folder_path, ".config")),
     )
 
-    app_config_path = os.path.join(test_folder_path, "app.yml")
-    if os.path.isfile(app_config_path):
-        os_env_vars["HEXAGON_CONFIG_FILE"] = app_config_path
+    if "HEXAGON_CONFIG_FILE" not in os_env_vars:
+        app_config_path = os.path.join(test_folder_path, "app.yml")
+        if os.path.isfile(app_config_path):
+            os_env_vars["HEXAGON_CONFIG_FILE"] = app_config_path
 
     os_env_vars["PYTHONPATH"] = hexagon_path
 

@@ -2,7 +2,7 @@ import importlib
 import os
 import subprocess
 import sys
-from typing import List, Union, Dict, Any
+from typing import List, Union, Dict, Any, Optional
 
 from pydantic import ValidationError
 
@@ -80,7 +80,12 @@ def __script_action_command(action_to_execute):
 
 
 def _execute_python_module(
-    action_id: str, tool: ActionTool, env: Env, env_args, cli_args, custom_tools_path
+    action_id: str,
+    tool: ActionTool,
+    env: Env,
+    env_args,
+    cli_args,
+    custom_tools_path: Optional[str],
 ):
     tool_action_module = _load_action_module(
         action_id, custom_tools_path
