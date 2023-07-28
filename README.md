@@ -85,7 +85,7 @@ pip install pipenv
 # start a shell
 pipenv shell
 # install hexagon dependencies
-pipenv install
+pipenv install --dev
 # run it
 python -m hexagon
 ```
@@ -99,5 +99,8 @@ pytest -svv tests/
 ### E2E Tests:
 
 ```bash
+# first generate the transalation files
+.github/scripts/i18n/build.sh
+# run tests
 pytest -svv tests_e2e/
 ```
