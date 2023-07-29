@@ -15,11 +15,18 @@ build-backend = "setuptools.build_meta"
 [tool.semantic_release]
 # ver https://python-semantic-release.readthedocs.io/en/latest/configuration.html
 branch = "main"
-version_variable = [
-    'setup.py:__version__'
-]
-version_pattern = [
-    'README.md:{version}'
+version_variables = [
+    'setup.py:__version__',
+    'README.md:\{version}\',
 ]
 upload_to_pypi = false
 commit_subject = "chore(release): {version}"
+
+[tool.semantic_release.branches.main]
+match = "(main)"
+prerelease = false
+
+[tool.semantic_release.branches."New Features"]
+match = "(feat/.*|fix/.*)"
+prerelease = true
+prerelease_token = "alpha"

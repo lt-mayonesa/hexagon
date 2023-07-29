@@ -4,7 +4,8 @@ from os.path import dirname
 
 import setuptools
 
-# this updates automatically https://python-semantic-release.readthedocs.io/en/latest/index.html
+# this updates automatically see:
+# https://python-semantic-release.readthedocs.io/en/latest/index.html#setting-up-version-numbering
 __version__ = "0.45.0"
 
 

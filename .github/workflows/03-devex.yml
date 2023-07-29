@@ -8,14 +8,19 @@ on:
 jobs:
   todos:
     runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+
     steps:
       - uses: actions/checkout@master
         with:
-          token: ${{ secrets.USER_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Sync TODOs with Issues
         uses: ribtoks/tdg-github-action@master
         with:
-          TOKEN: ${{ secrets.USER_TOKEN }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           SHA: ${{ github.sha }}
           REF: ${{ github.ref }}
