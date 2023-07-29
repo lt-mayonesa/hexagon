@@ -12,7 +12,7 @@ from hexagon.support.storage import load_user_data, HexagonStorageKeys, store_us
 
 class Args(ToolArgs):
     src_path: PositionalArg[FilePath] = Arg(
-        str(Path.cwd()),
+        None,
         prompt_message=_("action.actions.internal.install_cli.config_file_location"),
     )
     bin_path: PositionalArg[DirectoryPath] = Arg(
@@ -32,7 +32,8 @@ class Args(ToolArgs):
 
 
 def main(tool, env, env_args, cli_args: Args):
-    cli_args.src_path.prompt()
+    if not cli_args.src_path.value:
+        cli_args.src_path.prompt(default=str(Path.cwd()))
 
     cli, tools, envs = configuration.init_config(cli_args.src_path.value.resolve())
 
@@ -51,7 +52,7 @@ def main(tool, env, env_args, cli_args: Args):
         )
 
     _make_executable(command_path)
-    scan_and_install_dependencies(cli.custom_tools_dir)
+    scan_and_install_dependencies(configuration.custom_tools_path)
 
     log.info(
         _("msg.actions.internal.install_cli.success"),
