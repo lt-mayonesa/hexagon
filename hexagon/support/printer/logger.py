@@ -1,4 +1,5 @@
-from typing import Optional, Union
+from types import TracebackType
+from typing import Optional, Union, Type
 
 from rich.console import Console
 from rich.syntax import Syntax
@@ -12,6 +13,7 @@ class Logger:
     ) -> None:
         self.__console = None
         self.__decorations = None
+        self.__live_status = None
         if isinstance(theme, str):
             self.load_theme(theme)
         else:
@@ -73,7 +75,11 @@ class Logger:
             self.__console.print(f"{self.__decorations.finish}{message or ''}")
 
     def status(self, message: str = None):
-        return self.__console.status(message)
+        if self.__live_status:
+            self.__live_status.update(message)
+        else:
+            self.__live_status = NestableStatus(self.__console.status(message))
+        return self.__live_status
 
     def load_theme(self, theme: Union[str, LoggingTheme], console: Console = None):
         self.__decorations = (
@@ -85,3 +91,75 @@ class Logger:
 
     def use_borders(self):
         return self.__decorations.prompt_border
+
+    def status_aware(self, decorated):
+        """
+        Decorator that stops the status bar while the decorated function is running.
+
+        :param decorated: the function to be decorated
+        :return: the decorated function
+        """
+
+        def decorator(cls, *args, **kwargs):
+            if self.__live_status:
+                self.__live_status.stop()
+            res = decorated(*args, **kwargs)
+            if self.__live_status:
+                self.__live_status.start()
+            return res
+
+        return decorator
+
+
+class NestableStatus:
+    """
+    A wrapper for rich's Status class that allows nesting status calls.
+
+    ie.:
+    with log.status("foo"):
+        # status should show "foo"
+        with log.status("bar"):
+            # status should show "bar"
+        # status should show "foo"
+    # status should be hidden
+
+    """
+
+    def __init__(self, status):
+        self.__status = status
+        self.__levels = 1
+
+    @property
+    def renderable(self):
+        return self.__status.renderable
+
+    @property
+    def console(self):
+        return self.__status.console
+
+    def update(self, *args, **kwargs):
+        self.__levels += 1
+        self.__status.update(*args, **kwargs)
+
+    def start(self):
+        self.__status.start()
+
+    def stop(self) -> None:
+        self.__status.stop()
+
+    def __rich__(self):
+        return self.__status.renderable
+
+    def __enter__(self):
+        self.__status.start()
+        return self
+
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_val: Optional[BaseException],
+        exc_tb: Optional[TracebackType],
+    ):
+        self.__levels -= 1
+        if self.__levels == 0:
+            self.stop()

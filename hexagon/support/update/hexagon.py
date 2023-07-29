@@ -11,7 +11,7 @@ from hexagon.support.update.changelog.fetch import fetch_changelog
 from hexagon.support.update.changelog.format import format_entries
 from hexagon.support.update.changelog.parse import parse_changelog
 from hexagon.support.update.shared import already_checked_for_updates
-from hexagon.utils.silent_fail import silent_fail
+from hexagon.utils.decorators import silent_fail
 
 CHANGELOG_MAX_PRINT_ENTRIES = 10
 

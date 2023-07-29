@@ -11,7 +11,7 @@ from hexagon.support.dependencies import scan_and_install_dependencies
 from hexagon.support.printer import log
 from hexagon.support.prompt import prompt
 from hexagon.support.update.shared import already_checked_for_updates
-from hexagon.utils.silent_fail import silent_fail
+from hexagon.utils.decorators import silent_fail
 
 
 @silent_fail()
