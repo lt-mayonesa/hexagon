@@ -225,7 +225,7 @@ msgstr "Volver al menú anterior"
 
 #: hexagon/support/execute/tool.py:72
 msgid "icon.global.go_back"
-msgstr "🠔"
+msgstr "↩"
 
 #: hexagon/support/help.py:21
 msgid "msg.support.help.no_install"
