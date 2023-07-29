@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 translations_template="locales/hexagon.pot"
 (
   cat "$translations_template"
