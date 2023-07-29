@@ -1,0 +1,13 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+
+tools:
+  - name: status
+    action: status
+    type: shell
+    alias: s
+    long_name: Show different statuses
+
+envs: []

@@ -45,9 +45,6 @@ def run_hexagon_e2e_test(
     if "HEXAGON_CLI_UPDATE_DISABLED" not in os_env_vars:
         os_env_vars["HEXAGON_CLI_UPDATE_DISABLED"] = "1"
 
-    if "HEXAGON_DISABLE_SPINNER" not in os_env_vars:
-        os_env_vars["HEXAGON_DISABLE_SPINNER"] = "1"
-
     if "HEXAGON_SEND_TELEMETRY" not in os_env_vars:
         os_env_vars["HEXAGON_SEND_TELEMETRY"] = "0"
 

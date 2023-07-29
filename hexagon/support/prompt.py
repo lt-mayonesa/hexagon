@@ -10,6 +10,7 @@ from pydantic.fields import ModelField, Validator as PydanticValidator
 
 from hexagon.domain.args import HexagonArg
 from hexagon.support.printer import log
+from hexagon.utils.decorators import for_all_methods
 from hexagon.utils.typing import field_info
 
 
@@ -60,6 +61,7 @@ def set_default(options, model_field: ModelField):
     return {}
 
 
+@for_all_methods(log.status_aware, exclude=["query_field"])
 class Prompt:
     def query_field(self, model_field: ModelField, model_class, **kwargs):
         inq = self.text
