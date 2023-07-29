@@ -45,6 +45,21 @@ def list_mapper(v):
     return v.strip().split("\n")
 
 
+def set_default(options, model_field: ModelField):
+    if "default" in options:
+        return {"default": options["default"]}
+    elif model_field.default:
+        default = (
+            model_field.default.value
+            if isinstance(model_field.default, HexagonArg)
+            else model_field.default
+        )
+        if default is not None:
+            return {"default": default}
+
+    return {}
+
+
 class Prompt:
     def query_field(self, model_field: ModelField, model_class, **kwargs):
         inq = self.text
@@ -52,14 +67,7 @@ class Prompt:
             "message": model_field.field_info.extra.get("prompt_message", None)
             or f"Enter {model_field.name}:",
         }
-        if model_field.default:
-            default = (
-                model_field.default.value
-                if isinstance(model_field.default, HexagonArg)
-                else model_field.default
-            )
-            if default is not None:
-                args["default"] = default
+        args.update(set_default(kwargs, model_field))
 
         type_, iterable, of_enum = field_info(model_field)
 
