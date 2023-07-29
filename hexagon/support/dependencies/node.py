@@ -2,6 +2,7 @@ import subprocess
 import sys
 from typing import Optional
 
+from hexagon.support.printer import log
 from hexagon.utils.fs import declarations_found
 
 PACKAGE_JSON_FILE_NAME = "package.json"
@@ -16,22 +17,30 @@ NODEJS_DECLARATION_FILES = [
 
 def scan_and_install_node_dependencies(path: str, mocked=False):
     for directory, files in declarations_found(path, NODEJS_DECLARATION_FILES):
-        command: Optional[str] = None
-        if PACKAGE_JSON_FILE_NAME in files:
-            if YARN_LOCK_FILE_NAME in files and PACKAGE_JSON_LOCK_FILE_NAME in files:
-                command = "npm install --only=production"
-            elif YARN_LOCK_FILE_NAME in files:
-                command = "yarn --production"
-            else:
-                command = "npm install --only=production"
-
-        if mocked:
-            print(f"would have ran {command}")
-        else:
-            subprocess.check_call(
-                command,
-                shell=True,
-                cwd=directory,
-                stdout=sys.stdout,
-                stderr=subprocess.DEVNULL,
+        with log.status(
+            _("msg.support.dependencies.installing_dependencies").format(
+                runtime="node", path=path
             )
+        ):
+            command: Optional[str] = None
+            if PACKAGE_JSON_FILE_NAME in files:
+                if (
+                    YARN_LOCK_FILE_NAME in files
+                    and PACKAGE_JSON_LOCK_FILE_NAME in files
+                ):
+                    command = "npm install --only=production"
+                elif YARN_LOCK_FILE_NAME in files:
+                    command = "yarn --production"
+                else:
+                    command = "npm install --only=production"
+
+            if mocked:
+                print(f"would have ran {command}")
+            else:
+                subprocess.check_call(
+                    command,
+                    shell=True,
+                    cwd=directory,
+                    stdout=sys.stdout,
+                    stderr=subprocess.DEVNULL,
+                )
