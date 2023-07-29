@@ -2,6 +2,17 @@
 
 <!--next-version-placeholder-->
 
+## v0.45.0 (2023-07-29)
+
+### Feature
+
+* **status:** Allow to nest statuses and prompt inside ([`d6e194e`](https://github.com/lt-mayonesa/hexagon/commit/d6e194e4c4ee9e352d9f7e484a7ce4d08dc9bcc6))
+
+### Fix
+
+* **groups:** Display go back icon correctly ([`b214adc`](https://github.com/lt-mayonesa/hexagon/commit/b214adcf3d516472717b0a022ea9ca4199cda0bd))
+* **update:** Show status correctly when updating ([`169dc99`](https://github.com/lt-mayonesa/hexagon/commit/169dc998bdf4cfdfb006e776c7f83b683bd7e858))
+
 ## v0.44.0 (2023-07-29)
 
 ### Feature
