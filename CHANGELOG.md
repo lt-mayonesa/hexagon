@@ -2,6 +2,23 @@
 
 <!--next-version-placeholder-->
 
+## v0.44.0 (2023-07-29)
+
+### Feature
+
+* **args:** Allow to specify default in prompt ([`69303d3`](https://github.com/lt-mayonesa/hexagon/commit/69303d3ad38c110a0ff75807dcf580ef2af10fea))
+
+### Fix
+
+* **install:** Use correct path for dependency install ([`f792d01`](https://github.com/lt-mayonesa/hexagon/commit/f792d0121f1cc20f0e95eafe013bfedc325ce58f))
+* **dependencies:** Show progress by individual install ([`c0a0f2e`](https://github.com/lt-mayonesa/hexagon/commit/c0a0f2ed15fa186a4dd05c9d196e4467497f7394))
+* **dependencies:** Use faster tree search ([`493aa54`](https://github.com/lt-mayonesa/hexagon/commit/493aa542dfa703b08a553008eedeae2a7a616fe6))
+
+### Documentation
+
+* **setup:** Update local setup instractions ([`12a7da7`](https://github.com/lt-mayonesa/hexagon/commit/12a7da732aabb517e1be83487b5e624fa656dfc8))
+* Rollback changelog ([`eee2034`](https://github.com/lt-mayonesa/hexagon/commit/eee2034442be6b9410a2866a58b3f0b1d9261e88))
+
 ## v0.42.0 (2023-07-25)
 
 ### Fix
