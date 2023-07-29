@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 pygettext3 -d hexagon -o locales/hexagon.pot hexagon
 for locale in locales/**/LC_MESSAGES/hexagon.po; do
   l=$(echo "$locale" | cut -d/ -f2)
