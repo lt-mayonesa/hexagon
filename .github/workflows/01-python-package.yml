@@ -170,6 +170,6 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: ./.github/actions/nightly-link-pr
+      - uses: beni69/artifact-link@v1
+        with:
+          token: ${{ github.GITHUB_TOKEN }}
