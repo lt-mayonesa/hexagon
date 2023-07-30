@@ -56,7 +56,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: hexagon
+          name: hexagon-${{ github.sha }}
           path: dist/*.tar.gz
 
   test:
@@ -66,7 +66,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.7, 3.8, 3.9, '3.10']
+        python-version: [ 3.7, 3.8, 3.9, '3.10' ]
 
     steps:
       - uses: actions/checkout@v3
@@ -78,7 +78,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: hexagon
+          name: hexagon-${{ github.sha }}
           path: dist
 
       - uses: ./.github/actions/download-i18n
@@ -142,11 +142,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ build, test, i18n ]
 
+    permissions:
+      id-token: write
+      contents: write
+
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ secrets.USER_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: ./.github/actions/download-i18n
 
@@ -154,4 +158,26 @@ jobs:
         id: release
         uses: python-semantic-release/python-semantic-release@v7.34.6
         with:
-          github_token: ${{ secrets.USER_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  nightly:
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'pull_request_target' }}
+
+    runs-on: ubuntu-latest
+    needs: [ test ]
+
+    permissions:
+      pull-requests: write
+
+    steps:
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: nightly
+          message: |
+            ## Beta Available!
+            :rocket: see nightly build [details](https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}/hexagon-${{ github.sha }})
+            
+            Install locally with:
+            ```bash
+            python3 -m pip install https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}/hexagon-${{ github.sha }}.zip
+            ```
