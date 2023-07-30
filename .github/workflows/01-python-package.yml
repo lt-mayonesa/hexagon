@@ -56,7 +56,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: hexagon
+          name: hexagon-${{ github.sha }}
           path: dist/*.tar.gz
 
   test:
@@ -174,9 +174,10 @@ jobs:
         with:
           header: nightly
           message: |
-            Nightly build details at https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            ## Beta Available!
+            :rocket: see nightly build [details](https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}/hexagon-${{ github.sha }})
             
             Install locally with:
             ```bash
-            python3 -m pip install https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}/hexagon.zip
+            python3 -m pip install https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}/hexagon-${{ github.sha }}.zip
             ```
