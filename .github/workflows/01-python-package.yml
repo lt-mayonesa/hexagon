@@ -172,4 +172,4 @@ jobs:
     steps:
       - uses: beni69/artifact-link@v1
         with:
-          token: ${{ github.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
