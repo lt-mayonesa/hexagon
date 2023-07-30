@@ -78,7 +78,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: hexagon
+          name: hexagon-${{ github.sha }}
           path: dist
 
       - uses: ./.github/actions/download-i18n
