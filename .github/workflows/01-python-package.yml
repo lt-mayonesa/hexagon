@@ -168,9 +168,15 @@ jobs:
 
     permissions:
       pull-requests: write
-      actions: read
 
     steps:
-      - uses: beni69/artifact-link@v1
+      - uses: marocchino/sticky-pull-request-comment@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          header: nightly
+          message: |
+            Nightly build details at https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
+            Install locally with:
+            ```bash
+            python3 -m pip install https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}/hexagon.zip
+            ```
