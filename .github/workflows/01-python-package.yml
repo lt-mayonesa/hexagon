@@ -168,6 +168,7 @@ jobs:
 
     permissions:
       pull-requests: write
+      actions: read
 
     steps:
       - uses: beni69/artifact-link@v1
