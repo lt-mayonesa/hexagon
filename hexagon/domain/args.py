@@ -96,6 +96,7 @@ def Arg(
     title: Optional[str] = None,
     description: Optional[str] = None,
     prompt_message: Optional[str] = None,
+    prompt_instruction: Optional[str] = None,
     **kwargs,
 ):
     """
@@ -109,6 +110,7 @@ def Arg(
     :param title:
     :param description:
     :param prompt_message:
+    :param prompt_instruction:
     :param kwargs:
     :return:
     """
@@ -118,6 +120,7 @@ def Arg(
         title=title,
         description=description,
         prompt_message=prompt_message,
+        prompt_instruction=prompt_instruction,
         **kwargs,
     )
 

@@ -5,7 +5,7 @@ from InquirerPy import inquirer
 from InquirerPy.base import Choice
 from prompt_toolkit.document import Document
 from prompt_toolkit.validation import ValidationError, Validator
-from pydantic import ValidationError as PydanticValidationError
+from pydantic import ValidationError as PydanticValidationError, DirectoryPath
 from pydantic.fields import ModelField, Validator as PydanticValidator
 
 from hexagon.domain.args import HexagonArg
@@ -68,6 +68,7 @@ class Prompt:
         args = {
             "message": model_field.field_info.extra.get("prompt_message", None)
             or f"Enter {model_field.name}:",
+            "instruction": model_field.field_info.extra.get("prompt_instruction", None),
         }
         args.update(set_default(kwargs, model_field))
 
@@ -88,7 +89,10 @@ class Prompt:
         elif iterable:
             mapper = list_mapper
             args["filter"] = mapper
-            args["message"] = args["message"] + " (each line represents a value)"
+            args["instruction"] = (
+                args["instruction"]
+                or "(each line represents a value) ESC + Enter to finish input"
+            )
             args["multiline"] = True
             inq = self.text
         elif of_enum:
@@ -99,7 +103,11 @@ class Prompt:
             args["choices"] = kwargs["choices"]
             inq = self.fuzzy
         elif issubclass(type_, Path):
-            args["message"] = args["message"] + " (relative to project root)"
+            args["only_directories"] = (
+                args["only_directories"]
+                if "only_directories" in args
+                else issubclass(type_, DirectoryPath)
+            )
             inq = self.path
 
         if model_field.sub_fields:
