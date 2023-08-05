@@ -43,6 +43,7 @@ class Options(BaseSettings):
     update_disabled: Optional[bool] = False
     cli_update_disabled: Optional[bool] = False
     config_storage_path: Optional[DirectoryPath] = None
+    hints_disabled: Optional[bool] = False
 
     class Config:
         env_prefix = "HEXAGON_"

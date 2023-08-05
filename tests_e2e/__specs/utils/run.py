@@ -39,6 +39,9 @@ def run_hexagon_e2e_test(
     if "HEXAGON_THEME" not in os_env_vars:
         os_env_vars["HEXAGON_THEME"] = "result_only"
 
+    if "HEXAGON_HINTS_DISABLED" not in os_env_vars:
+        os_env_vars["HEXAGON_HINTS_DISABLED"] = "1"
+
     if "HEXAGON_UPDATE_DISABLED" not in os_env_vars:
         os_env_vars["HEXAGON_UPDATE_DISABLED"] = "1"
 

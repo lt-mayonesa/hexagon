@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-07-29 22:20+0000\n"
+"POT-Creation-Date: 2023-08-05 20:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -242,6 +242,62 @@ msgstr "[bold][u]Tools:[/bold][/u]"
 #: hexagon/support/hooks/hook.py:52
 msgid "error.support.hooks.hook.unknown_type"
 msgstr "Unknown HookSubscriptionType {subscription_type}"
+
+#: hexagon/support/prompt/hints.py:22
+msgid "msg.support.prompt.hints.confirm"
+msgstr "[ {keys} ] to confirm"
+
+#: hexagon/support/prompt/hints.py:23
+msgid "msg.support.prompt.hints.cancel"
+msgstr "[ {keys} ] to cancel"
+
+#: hexagon/support/prompt/hints.py:24
+msgid "msg.support.prompt.hints.skip"
+msgstr "[ {keys} ] to skip"
+
+#: hexagon/support/prompt/hints.py:32
+msgid "msg.support.prompt.hints.autocomplete"
+msgstr "[ {keys} ] to autocomplete (if available)"
+
+#: hexagon/support/prompt/hints.py:41
+msgid "msg.support.prompt.hints.toggle"
+msgstr "[ {keys} ] to toggle"
+
+#: hexagon/support/prompt/hints.py:42
+msgid "msg.support.prompt.hints.toggle_move_down"
+msgstr "[ {keys} ] to toggle and move down"
+
+#: hexagon/support/prompt/hints.py:43
+msgid "msg.support.prompt.hints.toggle_move_up"
+msgstr "[ {keys} ] to toggle and move up"
+
+#: hexagon/support/prompt/hints.py:44
+msgid "msg.support.prompt.hints.toggle_all"
+msgstr "[ {keys} ] to toggle all"
+
+#: hexagon/support/prompt/hints.py:46
+msgid "msg.support.prompt.hints.toggle_all_true"
+msgstr "[ {keys} ] to toggle all to true"
+
+#: hexagon/support/prompt/hints.py:55
+msgid "msg.support.prompt.hints.move_down"
+msgstr "[ {keys} ] to move down"
+
+#: hexagon/support/prompt/hints.py:56
+msgid "msg.support.prompt.hints.move_up"
+msgstr "[ {keys} ] to move up"
+
+#: hexagon/support/prompt/hints.py:63
+msgid "msg.support.prompt.hints.toggle_fuzzy_search"
+msgstr "[ {keys} ] to toggle fuzzy search"
+
+#: hexagon/support/prompt/hints.py:80
+msgid "error.support.prompt.hints.no_hints_on_builder"
+msgstr "HintsBuilder should have at least one hint"
+
+#: hexagon/support/prompt/hints.py:83
+msgid "msg.support.prompt.hints.help"
+msgstr "help:"
 
 #: hexagon/support/tracer.py:76
 msgid "msg.main.tracer.run_again"
