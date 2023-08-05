@@ -221,7 +221,7 @@ def assert_process_output(
         line: str = _read_next_line(process, lines_read)
         expected = expected_output[line_index]
 
-        if ignore_blank_lines and line == "\n":
+        if ignore_blank_lines and _is_linebreak(line):
             continue
 
         if _assert_process_output_line(
@@ -271,3 +271,14 @@ def assert_file_has_contents(test_file: str, file: str, contents: str):
 def assert_file_does_not_exist(test_file: str, file: str):
     test_dir = e2e_test_folder_path(test_file)
     assert os.path.isfile(os.path.join(test_dir, file)) is False
+
+
+def _is_linebreak(line):
+    """
+    Check if line is a linebreak.
+    A linebreak is a string containing a trailing linebreak character ("\n"),
+    and 0 or any number of leading whitespace characters
+    :param line:
+    :return:
+    """
+    return re.match(r"^\s*\n$", line)

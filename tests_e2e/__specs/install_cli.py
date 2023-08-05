@@ -53,7 +53,6 @@ def test_install_cli():
         )
         .enter()
         .input("/config.yml")
-        .enter()
         .then_output_should_be(
             ["would have ran python3 -m pip install -r requirements.txt"], True
         )
@@ -94,10 +93,8 @@ def test_install_cli_and_provide_bins_path():
         )
         .enter()
         .input("/config.yml")
-        .enter()
-        .erase("/home/joaco/bin")
+        .erase(str(os.path.expanduser(os.path.join("~", ".local", "bin"))))
         .input(commands_dir_path)
-        .enter()
         .then_output_should_be(
             ["would have ran python3 -m pip install -r requirements.txt"], True
         )
@@ -142,7 +139,6 @@ def test_warn_install_dir_not_PATH():
         )
         .enter()
         .input("/config.yml")
-        .enter()
         .then_output_should_be(
             ["would have ran python3 -m pip install -r requirements.txt"], True
         )
@@ -187,7 +183,6 @@ def test_do_not_warn_install_dir_not_in_PATH_when_it_is():
         )
         .enter()
         .input("/config.yml")
-        .enter()
         .then_output_should_be(
             ["would have ran python3 -m pip install -r requirements.txt"], True
         )
@@ -226,7 +221,6 @@ def test_do_not_install_dependencies_when_no_custom_tools_dir_present():
         )
         .enter()
         .input("/config_no_custom_tools_dir.yml")
-        .enter()
         .then_output_should_not_contain(
             ["would have ran npm install --only=production"]
         )

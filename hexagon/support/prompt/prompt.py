@@ -9,7 +9,9 @@ from pydantic import ValidationError as PydanticValidationError, DirectoryPath
 from pydantic.fields import ModelField, Validator as PydanticValidator
 
 from hexagon.domain.args import HexagonArg
+from hexagon.domain.singletons import options
 from hexagon.support.printer import log
+from hexagon.support.prompt.hints import HintsBuilder
 from hexagon.utils.decorators import for_all_methods
 from hexagon.utils.typing import field_info
 
@@ -76,6 +78,7 @@ class Prompt:
 
         mapper: Callable[[Any], Any] = lambda x: x
 
+        # TODO: add support for inquirer.secret and inquirer.number
         if iterable and of_enum:
             args["choices"] = [
                 Choice(
@@ -86,7 +89,7 @@ class Prompt:
                 for x in type_.__args__[0]
             ]
             inq = self.checkbox
-        elif iterable:
+        elif iterable and "choices" not in kwargs:
             mapper = list_mapper
             args["filter"] = mapper
             args["instruction"] = (
@@ -101,6 +104,8 @@ class Prompt:
         elif "choices" in kwargs:
             # TODO: add better logic for using fuzzy prompt
             args["choices"] = kwargs["choices"]
+            if iterable:
+                args["multiselect"] = True
             inq = self.fuzzy
         elif issubclass(type_, Path):
             args["only_directories"] = (
@@ -127,32 +132,68 @@ class Prompt:
                 model_class,
             )
 
+        # FIXME: this is working by chance, it's not the best way to do it
         args.update(**kwargs)
         return inq(**args)
 
     @staticmethod
     def text(**kwargs):
+        if not options.hints_disabled:
+            kwargs["long_instruction"] = (
+                HintsBuilder().with_enter_cancel_skip().with_autocomplete().build()
+            )
         return inquirer.text(**kwargs).execute()
 
     @staticmethod
     def select(**kwargs):
+        if not options.hints_disabled:
+            kwargs["long_instruction"] = (
+                HintsBuilder().with_enter_cancel_skip().with_vertical_movement().build()
+            )
         return inquirer.select(**kwargs).execute()
 
     @staticmethod
     def checkbox(**kwargs):
+        if not options.hints_disabled:
+            kwargs["long_instruction"] = (
+                HintsBuilder()
+                .with_enter_cancel_skip()
+                .with_vertical_movement()
+                .with_select_toggles()
+                .build()
+            )
         return inquirer.checkbox(**kwargs).execute()
 
     @staticmethod
     def confirm(*args, **kwargs):
+        if not options.hints_disabled:
+            # not adding confirm_letter and reject_letter as hints because it seems redundant
+            kwargs["long_instruction"] = HintsBuilder().with_enter_cancel_skip().build()
         return inquirer.confirm(*args, **kwargs).execute()
 
     @staticmethod
     def fuzzy(**kwargs):
+        kwargs["keybindings"] = {
+            "toggle-exact": [
+                {"key": "c-f"}
+            ]  # toggle string matching algorithm between fuzzy or exact
+        }
+        if not options.hints_disabled:
+            builder = (
+                HintsBuilder()
+                .with_enter_cancel_skip()
+                .with_vertical_movement()
+                .with_fuzzy_toggle()
+            )
+            if "multiselect" in kwargs:
+                builder.with_select_toggles()
+            kwargs["long_instruction"] = builder.build()
         return inquirer.fuzzy(border=log.use_borders(), **kwargs).execute()
 
     @staticmethod
     def path(**kwargs):
+        if not options.hints_disabled:
+            kwargs["long_instruction"] = (
+                HintsBuilder().with_enter_cancel_skip().with_autocomplete().build()
+            )
         return inquirer.filepath(**kwargs).execute()
-
-
-prompt = Prompt()
