@@ -158,7 +158,7 @@ jobs:
         id: release
         uses: python-semantic-release/python-semantic-release@v7.34.6
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.USER_TOKEN }}
 
   nightly:
     if: ${{ github.event_name == 'pull_request' || github.event_name == 'pull_request_target' }}
