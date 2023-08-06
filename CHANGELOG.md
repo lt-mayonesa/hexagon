@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.46.0 (2023-08-06)
+
+### Feature
+
+* **prompt:** Show help texts for prompts ([`0c4ec1f`](https://github.com/lt-mayonesa/hexagon/commit/0c4ec1f96028ae45f262c6bcb3d6728149d2d387))
+* **args:** Allow to set prompt instruction message ([#36](https://github.com/lt-mayonesa/hexagon/issues/36)) ([`b79ee9a`](https://github.com/lt-mayonesa/hexagon/commit/b79ee9affc456d94e3df07e01880d08f31899c5f))
+
 ## v0.45.0 (2023-07-29)
 
 ### Feature
