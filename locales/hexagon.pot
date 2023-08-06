@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-08-05 20:54+0000\n"
+"POT-Creation-Date: 2023-08-06 11:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -296,15 +296,19 @@ msgstr ""
 msgid "msg.support.update.cli.checking_for_cli_updates"
 msgstr ""
 
-#: hexagon/support/update/cli.py:53
+#: hexagon/support/update/cli.py:31
+msgid "msg.support.update.cli.checking_for_cli_updates_on_branch"
+msgstr ""
+
+#: hexagon/support/update/cli.py:38
 msgid "msg.support.update.cli.new_version_available"
 msgstr ""
 
-#: hexagon/support/update/cli.py:58
+#: hexagon/support/update/cli.py:43
 msgid "action.support.update.cli.confirm_update"
 msgstr ""
 
-#: hexagon/support/update/cli.py:63
+#: hexagon/support/update/cli.py:50
 msgid "msg.support.update.cli.updated"
 msgstr ""
 
