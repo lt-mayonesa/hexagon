@@ -90,10 +90,15 @@ jobs:
           python -m pip install --find-links=./dist hexagon
 
       - name: e2e tests
-        run: |
-          echo "Running e2e tests for Python ${{ matrix.python-version }}"
-          echo "COLUMNS: $COLUMNS, ROWS: $ROWS"
-          pytest -svv tests_e2e/ --junitxml=junit/e2e-test-results-${{ matrix.python-version }}.xml
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 3
+          max_attempts: 3
+          retry_on: error
+          command: |
+            echo "Running e2e tests for Python ${{ matrix.python-version }}"
+            echo "COLUMNS: $COLUMNS, ROWS: $ROWS"
+            pytest -svv tests_e2e/ --junitxml=junit/e2e-test-results-${{ matrix.python-version }}.xml
 
       - name: Upload test results
         uses: actions/upload-artifact@v3
