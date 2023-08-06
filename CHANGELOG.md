@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.46.2 (2023-08-06)
+
+### Fix
+
+* **update:** Update current git branch ([`7417c4d`](https://github.com/lt-mayonesa/hexagon/commit/7417c4dc50a05caaf109696363407d78746fa90f))
+
 ## v0.46.1 (2023-08-06)
 
 ### Fix
