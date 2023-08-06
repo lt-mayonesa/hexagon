@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.46.1 (2023-08-06)
+
+### Fix
+
+* **logger:** Check status level on status_aware ([`d893dcb`](https://github.com/lt-mayonesa/hexagon/commit/d893dcbc9f437efdf12ef758ae4dd84afd32071a))
+
 ## v0.46.0 (2023-08-06)
 
 ### Feature
