@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-08-05 20:49+0000\n"
+"POT-Creation-Date: 2023-08-06 11:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -319,17 +319,21 @@ msgstr ""
 msgid "msg.support.update.cli.checking_for_cli_updates"
 msgstr "Verificando si existen actualizaciones de CLI"
 
-#: hexagon/support/update/cli.py:53
+#: hexagon/support/update/cli.py:31
+msgid "msg.support.update.cli.checking_for_cli_updates_on_branch"
+msgstr "Verificando si existen actualizaciones de CLI, en la rama {branch}"
+
+#: hexagon/support/update/cli.py:38
 msgid "msg.support.update.cli.new_version_available"
 msgstr "Hay una nueva versión disponible de [cyan]{cli_name}[/cyan]"
 
-#: hexagon/support/update/cli.py:58
+#: hexagon/support/update/cli.py:43
 msgid "action.support.update.cli.confirm_update"
 msgstr "¿Te gustaría actualizar?"
 
-#: hexagon/support/update/cli.py:63
+#: hexagon/support/update/cli.py:50
 msgid "msg.support.update.cli.updated"
-msgstr "Se actualizó a la última versión"
+msgstr "[green]✓[/green] [white]Se actualizó a la última versión[/white]"
 
 #: hexagon/support/update/hexagon.py:26
 msgid "msg.support.update.hexagon.checking_new_versions"
