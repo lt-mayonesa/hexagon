@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import List, Union, Optional
 
-from hexagon.support.parse_args import CliArgs
+from hexagon.runtime.parse_args import CliArgs
 
 
 @dataclass

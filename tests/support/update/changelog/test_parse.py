@@ -1,8 +1,8 @@
 from packaging.version import Version
 
-from hexagon.support.update.changelog import ChangelogVersionEntry, ChangelogEntry
-from hexagon.support.update.changelog.fetch import ChangelogFile
-from hexagon.support.update.changelog.parse import parse_changelog
+from hexagon.runtime.update.changelog import ChangelogVersionEntry, ChangelogEntry
+from hexagon.runtime.update.changelog.fetch import ChangelogFile
+from hexagon.runtime.update.changelog.parse import parse_changelog
 
 
 class MockChangelogFile(ChangelogFile):

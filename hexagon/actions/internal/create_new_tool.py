@@ -4,10 +4,10 @@ from shutil import copytree
 from pydantic import DirectoryPath
 
 from hexagon.actions import external
-from hexagon.domain.args import ToolArgs, PositionalArg, Arg, OptionalArg
-from hexagon.domain.singletons import configuration
 from hexagon.domain.tool import ActionTool, ToolType
-from hexagon.support.printer import log
+from hexagon.runtime.singletons import configuration
+from hexagon.support.input.args import ToolArgs, PositionalArg, Arg, OptionalArg
+from hexagon.support.output.printer import log
 
 
 class Args(ToolArgs):
@@ -98,7 +98,7 @@ def main(tool, env, env_args, cli_args):
                     os.path.dirname(__file__),
                     "..",
                     "..",
-                    "support",
+                    "actions",
                     "__templates",
                     "custom_tool",
                 )

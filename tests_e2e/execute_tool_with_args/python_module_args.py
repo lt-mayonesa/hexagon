@@ -2,10 +2,10 @@ from typing import Any, Optional
 
 from pydantic import validator
 
-from hexagon.domain.args import ToolArgs, PositionalArg, OptionalArg, Arg
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
-from hexagon.support.printer import log
+from hexagon.support.input.args import ToolArgs, PositionalArg, OptionalArg, Arg
+from hexagon.support.output.printer import log
 
 
 # noinspection PyMethodParameters

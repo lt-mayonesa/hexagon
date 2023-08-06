@@ -1,8 +1,8 @@
 from datetime import timedelta
 from typing import Any, Dict
 
-from hexagon.domain.singletons import options
-from hexagon.support.printer import log
+from hexagon.runtime.singletons import options
+from hexagon.support.output.printer import log
 
 
 def _print_dict_indented(dictionary: Dict[str, Any], indent_level=0):

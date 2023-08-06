@@ -1,8 +1,8 @@
-from hexagon.support.hooks.hook import Hook
-from hexagon.domain.tool import Tool
 from hexagon.domain.env import Env
-from hexagon.domain.wax import Selection
-from hexagon.domain.tool.execution import ToolExecutionParameters, ToolExecutionData
+from hexagon.domain.hooks.execution import ToolExecutionParameters, ToolExecutionData
+from hexagon.domain.hooks.wax import Selection
+from hexagon.domain.tool import Tool
+from hexagon.support.hooks.hook import Hook
 
 
 class HexagonHooks:

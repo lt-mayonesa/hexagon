@@ -1,7 +1,7 @@
 import sys
 
-from hexagon.plugins import collect_plugins
-from hexagon.support.printer import log
+from hexagon.runtime.plugins import collect_plugins
+from hexagon.support.output.printer import log
 from hexagon.support.storage import (
     HexagonStorageKeys,
     store_user_data,
@@ -10,14 +10,14 @@ from hexagon.support.storage import (
 
 def main():
     try:
-        from hexagon.domain.singletons import cli, tools, envs, options, configuration
-        from hexagon.support.execute.tool import select_and_execute_tool
-        from hexagon.support.help import print_help
+        from hexagon.runtime.singletons import cli, tools, envs, options, configuration
+        from hexagon.runtime.execute.tool import select_and_execute_tool
+        from hexagon.runtime.update.cli import check_for_cli_updates
+        from hexagon.runtime.update.hexagon import check_for_hexagon_updates
+        from hexagon.runtime.help import print_help
         from hexagon.support.hooks import HexagonHooks
-        from hexagon.support.parse_args import parse_cli_args
+        from hexagon.runtime.parse_args import parse_cli_args
         from hexagon.support.tracer import init_tracer
-        from hexagon.support.update.cli import check_for_cli_updates
-        from hexagon.support.update.hexagon import check_for_hexagon_updates
 
         log.load_theme(options.theme)
 

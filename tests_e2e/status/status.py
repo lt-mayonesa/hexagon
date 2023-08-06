@@ -1,7 +1,7 @@
 import time
 
-from hexagon.support.printer import log
-from hexagon.support.prompt import prompt
+from hexagon.support.input.prompt import prompt
+from hexagon.support.output.printer import log
 
 
 def main(*_):
