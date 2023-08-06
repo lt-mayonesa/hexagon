@@ -101,10 +101,14 @@ class Logger:
         """
 
         def decorator(cls, *args, **kwargs):
-            if self.__live_status:
+            stopped = False
+            if self.__live_status and self.__live_status.active:
                 self.__live_status.stop()
+                stopped = True
+
             res = decorated(*args, **kwargs)
-            if self.__live_status:
+
+            if stopped:
                 self.__live_status.start()
             return res
 
@@ -148,7 +152,7 @@ class NestableStatus:
         self.__status.stop()
 
     def __rich__(self):
-        return self.__status.renderable
+        return self.__status.__rich__()
 
     def __enter__(self):
         self.__status.start()
@@ -161,5 +165,9 @@ class NestableStatus:
         exc_tb: Optional[TracebackType],
     ):
         self.__levels -= 1
-        if self.__levels == 0:
-            self.stop()
+        if self.__levels <= 1:
+            self.__status.__exit__(exc_type, exc_val, exc_tb)
+
+    @property
+    def active(self):
+        return self.__levels > 1
