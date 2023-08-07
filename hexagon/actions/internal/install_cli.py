@@ -3,11 +3,15 @@ from pathlib import Path
 
 from pydantic import FilePath, validator, DirectoryPath
 
-from hexagon.domain.args import ToolArgs, Arg, PositionalArg
-from hexagon.domain.singletons import configuration
-from hexagon.support.dependencies import scan_and_install_dependencies
-from hexagon.support.printer import log
-from hexagon.support.storage import load_user_data, HexagonStorageKeys, store_user_data
+from hexagon.runtime.dependencies import scan_and_install_dependencies
+from hexagon.runtime.singletons import configuration
+from hexagon.support.input.args import ToolArgs, Arg, PositionalArg
+from hexagon.support.output.printer import log
+from hexagon.support.storage import (
+    load_user_data,
+    HexagonStorageKeys,
+    store_user_data,
+)
 
 
 class Args(ToolArgs):

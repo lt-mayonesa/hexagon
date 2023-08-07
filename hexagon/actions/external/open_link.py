@@ -1,6 +1,6 @@
 import webbrowser
 
-from hexagon.support.printer import log
+from hexagon.support.output.printer import log
 
 
 def main(tool, env, env_args, cli_args):

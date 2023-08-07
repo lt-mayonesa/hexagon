@@ -5,18 +5,14 @@ from pydantic.fields import ModelField
 
 
 def should_support_multiple_args(field: Union[ModelField, Any]):
-    type_ = field_type(field) if isinstance(field, ModelField) else field
+    type_ = _field_type(field) if isinstance(field, ModelField) else field
     if hasattr(type_, "__origin__"):
         type_ = type_.__origin__
     return type_ in [list, tuple, set]
 
 
-def field_type(field: ModelField):
-    return field.sub_fields[0].outer_type_
-
-
 def field_info(field: ModelField):
-    type_ = field_type(field)
+    type_ = _field_type(field)
     iterable = should_support_multiple_args(field)
     if iterable and hasattr(type_, "__args__") and len(type_.__args__):
         of_enum = _is_enumerable(type_.__args__[0])
@@ -24,6 +20,10 @@ def field_info(field: ModelField):
         of_enum = _is_enumerable(type_)
 
     return type_, iterable, of_enum
+
+
+def _field_type(field: ModelField):
+    return field.sub_fields[0].outer_type_
 
 
 def _is_enumerable(type_):

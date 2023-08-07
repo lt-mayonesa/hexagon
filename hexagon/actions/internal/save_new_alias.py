@@ -2,8 +2,8 @@ import os
 
 from pydantic import validator
 
-from hexagon.domain.args import ToolArgs, Arg, PositionalArg
-from hexagon.support.printer import log
+from hexagon.support.input.args import ToolArgs, Arg, PositionalArg
+from hexagon.support.output.printer import log
 from hexagon.support.storage import (
     HexagonStorageKeys,
     load_user_data,

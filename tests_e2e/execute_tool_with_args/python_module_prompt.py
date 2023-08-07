@@ -3,10 +3,10 @@ from typing import Any, Optional, List
 
 from pydantic import validator
 
-from hexagon.domain.args import ToolArgs, OptionalArg, PositionalArg, Arg
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
-from hexagon.support.printer import log
+from hexagon.support.input.args import ToolArgs, OptionalArg, PositionalArg, Arg
+from hexagon.support.output.printer import log
 
 
 class Category(str, Enum):

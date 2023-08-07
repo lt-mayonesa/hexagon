@@ -1,6 +1,6 @@
 import pytest
 
-from hexagon.support.parse_args import parse_cli_args
+from hexagon.runtime.parse_args import parse_cli_args
 from hexagon.support.tracer import Tracer
 
 

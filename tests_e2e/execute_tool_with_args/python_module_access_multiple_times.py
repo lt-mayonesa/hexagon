@@ -1,9 +1,9 @@
 from typing import Any, Optional
 
-from hexagon.domain.args import ToolArgs, PositionalArg
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
-from hexagon.support.printer import log
+from hexagon.support.input.args import ToolArgs, PositionalArg
+from hexagon.support.output.printer import log
 
 
 # noinspection PyMethodParameters

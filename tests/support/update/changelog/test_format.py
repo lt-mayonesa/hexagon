@@ -1,5 +1,5 @@
-from hexagon.support.update.changelog import ChangelogVersionEntry, ChangelogEntry
-from hexagon.support.update.changelog.format import format_entries
+from hexagon.runtime.update.changelog import ChangelogVersionEntry, ChangelogEntry
+from hexagon.runtime.update.changelog.format import format_entries
 
 
 def test_format_empty_entries_list():

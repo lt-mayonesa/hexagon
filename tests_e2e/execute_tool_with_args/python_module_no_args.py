@@ -2,7 +2,7 @@ from typing import Any, Optional
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
-from hexagon.support.printer import log
+from hexagon.support.output.printer import log
 
 
 def main(

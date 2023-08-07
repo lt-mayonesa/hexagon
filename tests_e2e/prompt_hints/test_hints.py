@@ -3,11 +3,11 @@ from typing import Any, Optional, List
 
 from pydantic import FilePath
 
-from hexagon.domain.args import ToolArgs, OptionalArg, PositionalArg
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
-from hexagon.support.printer import log
-from hexagon.support.prompt import prompt
+from hexagon.support.input.args import ToolArgs, OptionalArg, PositionalArg
+from hexagon.support.input.prompt import prompt
+from hexagon.support.output.printer import log
 
 
 class Category(str, Enum):
