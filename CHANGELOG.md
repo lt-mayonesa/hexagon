@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.47.0 (2023-08-07)
+
+### Feature
+
+* Re-organized packages ([#44](https://github.com/lt-mayonesa/hexagon/issues/44)) ([`f90bd8e`](https://github.com/lt-mayonesa/hexagon/commit/f90bd8e8e02de987ccaf6c91003c509cd89ba873))
+
 ## v0.46.2 (2023-08-06)
 
 ### Fix
