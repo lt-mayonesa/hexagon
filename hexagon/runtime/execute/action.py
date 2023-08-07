@@ -2,6 +2,7 @@ import importlib
 import os
 import subprocess
 import sys
+from pathlib import Path
 from typing import List, Union, Dict, Any, Optional
 
 from pydantic import ValidationError
@@ -74,7 +75,11 @@ def execute_action(tool: ActionTool, env_args: Any, env: Env, cli_args: CliArgs)
 
 
 def __script_action_command(action_to_execute):
-    ext = action_to_execute.split(".")[-1]
+    f = Path(action_to_execute)
+    if not f.is_file():
+        return None
+
+    ext = f.suffix[1:]
     script_action_command = _command_by_file_extension.get(ext)
     return script_action_command
 
@@ -145,9 +150,8 @@ def _execute_command(
     hexagon_args = __sanitize_args_for_command(env_args, *cli_args)
     cmd_as_string = " ".join([command] + action_args + hexagon_args)
 
-    env_vars = {
-        ENVVAR_EXECUTION_TOOL: tool.json(),
-    }
+    env_vars = os.environ.copy()
+    env_vars[ENVVAR_EXECUTION_TOOL] = tool.json()
     if env:
         env_vars[ENVVAR_EXECUTION_ENV] = env.json()
 

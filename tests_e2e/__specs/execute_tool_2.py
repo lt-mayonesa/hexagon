@@ -1,3 +1,5 @@
+import os
+
 from tests_e2e.__specs.utils.assertions import assert_file_has_contents
 from tests_e2e.__specs.utils.hexagon_spec import as_a_user
 
@@ -186,6 +188,21 @@ def test_execute_multiline_command_with_input_as_list():
         __file__,
         ".config/test/last-command.txt",
         "hexagon-test multiline-command-as-list",
+    )
+
+
+def test_execute_inline_command_with_path():
+    path = os.environ["PATH"]
+    (
+        as_a_user(__file__)
+        .run_hexagon(["inline-command-with-PATH"])
+        .then_output_should_be([path])
+        .exit()
+    )
+    assert_file_has_contents(
+        __file__,
+        ".config/test/last-command.txt",
+        "hexagon-test inline-command-with-PATH",
     )
 
 

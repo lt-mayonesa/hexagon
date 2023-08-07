@@ -48,6 +48,12 @@ tools:
     alias: mcal
     long_name: A multiline command as list
 
+  - name: inline-command-with-PATH
+    action: 'echo "$PATH"'
+    type: shell
+    alias: icwp
+    long_name: An inline command with PATH access
+
   - name: failing-command
     action: i-dont-exist
     type: shell
