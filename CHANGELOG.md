@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.47.1 (2023-08-07)
+
+### Fix
+
+* **execute:** Pass user PATH to scripts execution ([`6c6157c`](https://github.com/lt-mayonesa/hexagon/commit/6c6157c667563584281dbd553ed9eae8a1904add))
+
 ## v0.47.0 (2023-08-07)
 
 ### Feature
