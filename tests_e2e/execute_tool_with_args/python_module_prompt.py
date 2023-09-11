@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Any, Optional, List
 
-from pydantic import validator
+from pydantic import validator, FilePath
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
@@ -32,6 +32,12 @@ class Args(ToolArgs):
     tag: OptionalArg[Category] = Category.C
     available_tags: OptionalArg[List[Category]] = [Category.B, Category.E]
     total_amount: OptionalArg[float] = None
+    fuzzy_input: OptionalArg[str] = Arg(
+        None,
+        searchable=True,
+        choices=["a sentence to match", "a sentence not to match", "something else"],
+    )
+    fuzzy_file_input: OptionalArg[FilePath] = Arg(None, searchable=True, glob="*.txt")
 
     @validator("age")
     def validate_age(cls, arg):
@@ -56,31 +62,74 @@ def main(
     env_args: Any = None,
     cli_args: Args = None,
 ):
-    if cli_args.test.value == "prompt_name_and_age":
-        log.result(f"name: {cli_args.name.prompt()}")
-        log.result(f"age: {cli_args.age.prompt()}")
-        log.result(f"age type: {type(cli_args.age.value).__name__}")
-    elif cli_args.test.value == "prompt_validate_age":
-        log.result(f"age: {cli_args.age.prompt()}")
-    elif cli_args.test.value == "prompt_show_default_value":
-        log.result(f"country: {cli_args.country.prompt()}")
-    elif cli_args.test.value == "prompt_list_value":
-        log.result(f"likes: {cli_args.likes.prompt()}")
-    elif cli_args.test.value == "prompt_enum_choices":
-        log.result(f"tag: {cli_args.tag.prompt()}")
-        log.result(f"tag type: {type(cli_args.tag.value).__name__}")
-    elif cli_args.test.value == "prompt_list_enum_choices":
-        log.result(f"available_tags: {cli_args.available_tags.prompt()}")
-    elif cli_args.test.value == "prompt_validate_type":
-        log.result(f"total_amount: {cli_args.total_amount.prompt()}")
-        log.result(f"total_amount type: {type(cli_args.total_amount.value).__name__}")
-    elif cli_args.test.value == "prompt_multiple_times":
-        log.result(f"name: {cli_args.name.prompt()}")
-        log.result(f"name: {cli_args.name.prompt()}")
-        log.result(f"name: {cli_args.name.prompt()}")
-        log.result(f"name: {cli_args.name.prompt()}")
-    else:
-        log.result(f"test: {cli_args.test.prompt()}")
-        log.result(f"test: {cli_args.test.prompt()}")
-        log.result(f"test: {cli_args.test.prompt()}")
-        log.result(f"test: {cli_args.test.prompt()}")
+    cases = {
+        "prompt_name_and_age": prompt_name_and_age,
+        "prompt_validate_age": prompt_validate_age,
+        "prompt_show_default_value": prompt_show_default_value,
+        "prompt_list_value": prompt_list_value,
+        "prompt_enum_choices": prompt_enum_choices,
+        "prompt_list_enum_choices": prompt_list_enum_choices,
+        "prompt_validate_type": prompt_validate_type,
+        "prompt_fuzzy_search": prompt_fuzzy_search,
+        "prompt_fuzzy_file": prompt_fuzzy_file,
+        "prompt_multiple_times": prompt_multiple_times,
+    }
+
+    cases.get(cli_args.test.value, default)(cli_args)
+
+
+def prompt_name_and_age(cli_args):
+    log.result(f"name: {cli_args.name.prompt()}")
+    log.result(f"age: {cli_args.age.prompt()}")
+    log.result(f"age type: {type(cli_args.age.value).__name__}")
+
+
+def prompt_validate_age(cli_args):
+    log.result(f"age: {cli_args.age.prompt()}")
+
+
+def prompt_show_default_value(cli_args):
+    log.result(f"country: {cli_args.country.prompt()}")
+
+
+def prompt_list_value(cli_args):
+    log.result(f"likes: {cli_args.likes.prompt()}")
+
+
+def prompt_enum_choices(cli_args):
+    log.result(f"tag: {cli_args.tag.prompt()}")
+    log.result(f"tag type: {type(cli_args.tag.value).__name__}")
+
+
+def prompt_list_enum_choices(cli_args):
+    log.result(f"available_tags: {cli_args.available_tags.prompt()}")
+
+
+def prompt_validate_type(cli_args):
+    log.result(f"total_amount: {cli_args.total_amount.prompt()}")
+    log.result(f"total_amount type: {type(cli_args.total_amount.value).__name__}")
+
+
+def prompt_fuzzy_search(cli_args):
+    log.result(f"fuzzy_input: {cli_args.fuzzy_input.prompt()}")
+    log.result(
+        f"fuzzy_input: {cli_args.fuzzy_input.prompt(choices=['another sentence to match', 'something else'])}"
+    )
+
+
+def prompt_fuzzy_file(cli_args):
+    log.result(f"fuzzy_file_input: {cli_args.fuzzy_file_input.prompt()}")
+
+
+def prompt_multiple_times(cli_args):
+    log.result(f"name: {cli_args.name.prompt()}")
+    log.result(f"name: {cli_args.name.prompt()}")
+    log.result(f"name: {cli_args.name.prompt()}")
+    log.result(f"name: {cli_args.name.prompt()}")
+
+
+def default(cli_args):
+    log.result(f"test: {cli_args.test.prompt()}")
+    log.result(f"test: {cli_args.test.prompt()}")
+    log.result(f"test: {cli_args.test.prompt()}")
+    log.result(f"test: {cli_args.test.prompt()}")

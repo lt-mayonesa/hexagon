@@ -15,6 +15,8 @@ class HintsBuilder:
         self.__has_select_toggles = False
         self.__has_vertical_movement = False
         self.__has_fuzzy_toggle = False
+        self.__has_number_controls = False
+        self.__has_floating_point = False
 
     def with_enter_cancel_skip(self) -> "HintsBuilder":
         if not self.__has_enter_cancel_skip:
@@ -64,6 +66,32 @@ class HintsBuilder:
                 + self.__top_hints
             )
             self.__has_fuzzy_toggle = True
+        return self
+
+    def with_number_controls(self) -> "HintsBuilder":
+        if not self.__has_number_controls:
+            self.__top_hints += (
+                _fmt(
+                    _("msg.support.prompt.hints.number_decrement"),
+                    ["↓", "CTRL+N"],
+                )
+                + _fmt(_("msg.support.prompt.hints.number_increment"), ["↑", "CTRL+P"])
+                + _fmt(_("msg.support.prompt.hints.number_left"), ["←", "CTRL+B"])
+                + _fmt(_("msg.support.prompt.hints.number_right"), ["→", "CTRL+F"])
+            )
+            self.__middle_hints = (
+                _fmt("msg.support.prompt.hints.toggle_negative", ["-"])
+                + self.__middle_hints
+            )
+            self.__has_number_controls = True
+        return self
+
+    def with_floating_point(self) -> "HintsBuilder":
+        if not self.__has_floating_point:
+            self.__middle_hints += _fmt(
+                "msg.support.prompt.hints.number_dot", ["."]
+            ) + _fmt("msg.support.prompt.hints.alt_part_focus", ["CTRL+I", "SHIFT+TAB"])
+            self.__has_floating_point = True
         return self
 
     def with_all(self) -> "HintsBuilder":

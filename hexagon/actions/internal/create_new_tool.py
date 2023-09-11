@@ -44,7 +44,9 @@ def main(tool, env, env_args, cli_args):
     new_tool = ActionTool(
         name="invalid",
         action=cli_args.action.prompt(
-            choices=external.__all__ + ["new_action"], validate=lambda x: x
+            searchable=True,
+            choices=external.__all__ + ["new_action"],
+            validate=lambda x: x,
         ),
     )
 
