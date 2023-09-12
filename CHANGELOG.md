@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.48.1 (2023-09-12)
+
+### Fix
+
+* **prompt:** Dont set default on inquiry type Enum ([`c604507`](https://github.com/lt-mayonesa/hexagon/commit/c604507fe43320430685527117fb911f51381834))
+
 ## v0.48.0 (2023-09-12)
 
 ### Feature
