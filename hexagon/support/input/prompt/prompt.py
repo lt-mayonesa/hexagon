@@ -163,7 +163,9 @@ def setup_searchable_list(self, args, extras, inquiry_type, type_):
 def setup_path(self, args, extras, inquiry_type, type_):
     if inquiry_type == InquiryType.PATH_SEARCHABLE:
         if "glob" in extras:
-            args["choices"] = Path(extras.get("cwd", ".")).rglob(extras["glob"])
+            args["choices"] = sorted(
+                Path(extras.get("cwd", ".")).rglob(extras["glob"]), key=lambda x: x.name
+            )
         elif "choices" in extras:
             args["choices"] = extras["choices"]
         else:
