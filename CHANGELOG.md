@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.48.0 (2023-09-12)
+
+### Feature
+
+* **prompt:** Support ints, floats, paths globs, secrets ([#46](https://github.com/lt-mayonesa/hexagon/issues/46)) ([`60e39fc`](https://github.com/lt-mayonesa/hexagon/commit/60e39fc200fcd197e96e44960ba7b45d448a358a))
+
 ## v0.47.1 (2023-08-07)
 
 ### Fix
