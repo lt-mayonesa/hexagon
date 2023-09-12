@@ -1,5 +1,6 @@
+from copy import copy
+from enum import Enum, auto
 from pathlib import Path
-from typing import Callable, Any
 
 from InquirerPy import inquirer
 from InquirerPy.base import Choice
@@ -63,57 +64,176 @@ def set_default(options, model_field: ModelField):
     return {}
 
 
+class InquiryType(Enum):
+    STRING = auto()
+    STRING_SEARCHABLE = auto()
+    STRING_LIST = auto()
+    STRING_LIST_SEARCHABLE = auto()
+    ENUM = auto()
+    ENUM_SEARCHABLE = auto()
+    ENUM_LIST = auto()
+    ENUM_LIST_SEARCHABLE = auto()
+    PATH = auto()
+    PATH_SEARCHABLE = auto()
+    INT = auto()
+    FLOAT = auto()
+    SECRET = auto()
+
+
+def _determine_expected_inquiry(
+    iterable, of_enum, type_, declaration_extras, invocation_extras
+) -> (InquiryType, dict):
+    """
+    TODO: move this to a separate module and unit test it
+    """
+    extras = {**declaration_extras, **invocation_extras}
+    searchable = extras.get("searchable", False)
+
+    query = InquiryType.STRING if not searchable else InquiryType.STRING_SEARCHABLE
+    if iterable and of_enum:
+        query = (
+            InquiryType.ENUM_LIST
+            if not searchable
+            else InquiryType.ENUM_LIST_SEARCHABLE
+        )
+    elif iterable:
+        query = (
+            InquiryType.STRING_LIST
+            if not searchable
+            else InquiryType.STRING_LIST_SEARCHABLE
+        )
+    elif of_enum:
+        query = InquiryType.ENUM if not searchable else InquiryType.ENUM_SEARCHABLE
+    elif issubclass(type_, Path):
+        query = InquiryType.PATH if not searchable else InquiryType.PATH_SEARCHABLE
+    elif issubclass(type_, int):
+        query = InquiryType.INT
+    elif issubclass(type_, float):
+        query = InquiryType.FLOAT
+    elif extras.get("secret", False):
+        query = InquiryType.SECRET
+
+    return query, extras
+
+
+def setup_enum_list(self, args, extras, inquiry_type, type_):
+    args["choices"] = [
+        Choice(
+            name=x.name,
+            value=x,
+            enabled=("default" in args and x in args["default"]),
+        )
+        for x in type_.__args__[0]
+    ]
+    if inquiry_type == InquiryType.ENUM_LIST_SEARCHABLE:
+        args["multiselect"] = True
+        return self.fuzzy, lambda x: x
+    else:
+        return self.checkbox, lambda x: x
+
+
+def setup_string_list(self, args, extras, inquiry_type, type_):
+    mapper = list_mapper
+    args["filter"] = mapper
+    args["instruction"] = (
+        args["instruction"]
+        or "(each line represents a value) ESC + Enter to finish input"
+    )
+    args["multiline"] = True
+    return self.text, mapper
+
+
+def setup_enum(self, args, extras, inquiry_type, type_):
+    args["choices"] = [{"name": x.name, "value": x} for x in type_]
+    if inquiry_type == InquiryType.ENUM_SEARCHABLE:
+        args["default"] = args["default"].value
+        return self.fuzzy, lambda x: x
+    else:
+        args["default"] = args["default"]
+        return self.select, lambda x: x
+
+
+def setup_searchable_list(self, args, extras, inquiry_type, type_):
+    args["choices"] = extras["choices"]
+    if inquiry_type == InquiryType.STRING_LIST_SEARCHABLE:
+        args["multiselect"] = True
+    return self.fuzzy, lambda x: x
+
+
+def setup_path(self, args, extras, inquiry_type, type_):
+    if inquiry_type == InquiryType.PATH_SEARCHABLE:
+        if "glob" in extras:
+            args["choices"] = sorted(
+                Path(extras.get("cwd", ".")).rglob(extras["glob"]), key=lambda x: x.name
+            )
+        elif "choices" in extras:
+            args["choices"] = extras["choices"]
+        else:
+            raise ValueError("searchable path must have either glob or choices defined")
+        return self.fuzzy, lambda x: x
+    else:
+        args["only_directories"] = (
+            args["only_directories"]
+            if "only_directories" in args
+            else issubclass(type_, DirectoryPath)
+        )
+        return self.path, lambda x: x
+
+
+def setup_int(self, args, extras, inquiry_type, type_):
+    return self.number, lambda x: x
+
+
+def setup_float(self, args, extras, inquiry_type, type_):
+    args["float_allowed"] = True
+    return self.number, lambda x: x
+
+
+def setup_secret(self, args, extras, inquiry_type, type_):
+    return self.secret, lambda x: x
+
+
+def setup_string(self, args, extras, inquiry_type, type_):
+    return self.text, lambda x: x
+
+
 @for_all_methods(log.status_aware, exclude=["query_field"])
 class Prompt:
     def query_field(self, model_field: ModelField, model_class, **kwargs):
-        inq = self.text
+        # TODO: this method is a mess, refactor it
+        declaration_extras = copy(model_field.field_info.extra)
+        invocation_extras = copy(kwargs)
         args = {
-            "message": model_field.field_info.extra.get("prompt_message", None)
+            "message": declaration_extras.get("prompt_message", None)
             or f"Enter {model_field.name}:",
-            "instruction": model_field.field_info.extra.get("prompt_instruction", None),
+            "instruction": declaration_extras.get("prompt_instruction", None),
         }
-        args.update(set_default(kwargs, model_field))
+        args.update(set_default(invocation_extras, model_field))
 
         type_, iterable, of_enum = field_info(model_field)
 
-        mapper: Callable[[Any], Any] = lambda x: x
+        inquiry_type, extras = _determine_expected_inquiry(
+            iterable, of_enum, type_, declaration_extras, invocation_extras
+        )
 
-        # TODO: add support for inquirer.secret and inquirer.number
-        if iterable and of_enum:
-            args["choices"] = [
-                Choice(
-                    name=x.name,
-                    value=x,
-                    enabled=("default" in args and x in args["default"]),
-                )
-                for x in type_.__args__[0]
-            ]
-            inq = self.checkbox
-        elif iterable and "choices" not in kwargs:
-            mapper = list_mapper
-            args["filter"] = mapper
-            args["instruction"] = (
-                args["instruction"]
-                or "(each line represents a value) ESC + Enter to finish input"
-            )
-            args["multiline"] = True
-            inq = self.text
-        elif of_enum:
-            args["choices"] = [{"name": x.name, "value": x} for x in type_]
-            inq = self.select
-        elif "choices" in kwargs:
-            # TODO: add better logic for using fuzzy prompt
-            args["choices"] = kwargs["choices"]
-            if iterable:
-                args["multiselect"] = True
-            inq = self.fuzzy
-        elif issubclass(type_, Path):
-            args["only_directories"] = (
-                args["only_directories"]
-                if "only_directories" in args
-                else issubclass(type_, DirectoryPath)
-            )
-            inq = self.path
+        setups = {
+            InquiryType.ENUM_LIST: setup_enum_list,
+            InquiryType.ENUM_LIST_SEARCHABLE: setup_enum_list,
+            InquiryType.STRING_LIST: setup_string_list,
+            InquiryType.STRING_LIST_SEARCHABLE: setup_searchable_list,
+            InquiryType.ENUM: setup_enum,
+            InquiryType.ENUM_SEARCHABLE: setup_enum,
+            InquiryType.STRING_SEARCHABLE: setup_searchable_list,
+            InquiryType.PATH: setup_path,
+            InquiryType.PATH_SEARCHABLE: setup_path,
+            InquiryType.INT: setup_int,
+            InquiryType.FLOAT: setup_float,
+            InquiryType.SECRET: setup_secret,
+        }
+
+        inq, mapper = setups.get(inquiry_type, setup_string)(
+            self, args, extras, inquiry_type, type_
+        )
 
         if model_field.sub_fields:
             validators_ = {
@@ -133,7 +253,9 @@ class Prompt:
             )
 
         # FIXME: this is working by chance, it's not the best way to do it
-        args.update(**kwargs)
+        if "searchable" in invocation_extras:
+            del invocation_extras["searchable"]
+        args.update(**invocation_extras)
         return inq(**args)
 
     @staticmethod
@@ -197,3 +319,18 @@ class Prompt:
                 HintsBuilder().with_enter_cancel_skip().with_autocomplete().build()
             )
         return inquirer.filepath(**kwargs).execute()
+
+    @staticmethod
+    def number(**kwargs):
+        if not options.hints_disabled:
+            builder = HintsBuilder().with_enter_cancel_skip().with_number_controls()
+            if "float_allowed" in kwargs:
+                builder.with_floating_point()
+            kwargs["long_instruction"] = builder.build()
+        return inquirer.number(**kwargs).execute()
+
+    @staticmethod
+    def secret(**kwargs):
+        if not options.hints_disabled:
+            kwargs["long_instruction"] = HintsBuilder().with_enter_cancel_skip().build()
+        return inquirer.secret(**kwargs).execute()

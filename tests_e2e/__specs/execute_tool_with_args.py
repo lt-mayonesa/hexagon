@@ -465,20 +465,17 @@ def test_should_validate_type():
             ["prompt", "prompt_validate_type"],
             os_env_vars={"HEXAGON_THEME": "no_border"},
         )
-        .input("asdf")
-        .erase()
-        .input("hello world")
-        .erase()
-        .input("*()&UAS*(")
-        .erase()
-        .input("23.34")
-        .then_output_should_be(["total_amount: 23.34"], discard_until_first_match=True)
+        .write("23")
+        .write(".")
+        .write("5")
+        .enter()
+        .then_output_should_be(["total_amount: 23.05"], discard_until_first_match=True)
         .then_output_should_be(
             [
                 "To run this tool again do:",
-                "hexagon-test prompt prompt_validate_type --total-amount=23.34",
+                "hexagon-test prompt prompt_validate_type --total-amount=23.05",
                 "or:",
-                "hexagon-test p prompt_validate_type -ta=23.34",
+                "hexagon-test p prompt_validate_type -ta=23.05",
             ],
             discard_until_first_match=True,
         )
@@ -538,5 +535,56 @@ def test_should_prompt_same_positional_arg_multiple_times_successfully():
             ],
             discard_until_first_match=True,
         )
+        .exit()
+    )
+
+
+def test_should_prompt_fuzzy_search():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt", "prompt_fuzzy_search"],
+            os_env_vars={"HEXAGON_THEME": "no_border"},
+        )
+        .input("astm")
+        .then_output_should_be(
+            ["fuzzy_input: a sentence to match"], discard_until_first_match=True
+        )
+        .input("astm")
+        .then_output_should_be(
+            ["fuzzy_input: another sentence to match"], discard_until_first_match=True
+        )
+        .then_output_should_be(
+            [
+                "To run this tool again do:",
+                "hexagon-test prompt prompt_fuzzy_search --fuzzy-input=another sentence to match",
+                "or:",
+                "hexagon-test p prompt_fuzzy_search -fi=another sentence to match",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )
+
+
+def test_should_prompt_fuzzy_file_search():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt", "prompt_fuzzy_file"],
+            os_env_vars={"HEXAGON_THEME": "no_border"},
+        )
+        .then_output_should_be(
+            [
+                "",
+                "",
+                "Enter fuzzy_file_input",
+                "4/4",
+                "01_file.txt",
+                "02_file.txt",
+                "03_file.txt",
+            ],
+        )
+        .input("file_c")
         .exit()
     )

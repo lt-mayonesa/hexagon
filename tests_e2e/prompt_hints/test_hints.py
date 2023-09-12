@@ -5,7 +5,7 @@ from pydantic import FilePath
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
-from hexagon.support.input.args import ToolArgs, OptionalArg, PositionalArg
+from hexagon.support.input.args import ToolArgs, OptionalArg, PositionalArg, Arg
 from hexagon.support.input.prompt import prompt
 from hexagon.support.output.printer import log
 
@@ -39,8 +39,16 @@ class Args(ToolArgs):
     prompt_text_multiline: OptionalArg[list] = None
     prompt_select: OptionalArg[Category] = Category.C
     prompt_checkbox: OptionalArg[List[Category]] = [Category.B, Category.A]
-    prompt_fuzzy: OptionalArg[str] = None
-    prompt_fuzzy_multiselect: OptionalArg[List[str]] = None
+    prompt_fuzzy: OptionalArg[str] = Arg(
+        None,
+        searchable=True,
+        choices=["a", "b", "c", "d", "e", "f"],
+    )
+    prompt_fuzzy_multiselect: OptionalArg[List[str]] = Arg(
+        None,
+        searchable=True,
+        choices=["a", "b", "c", "d", "e", "f"],
+    )
     prompt_path: OptionalArg[FilePath] = None
 
 
@@ -61,14 +69,10 @@ def main(
     elif cli_args.test.value == Test.HINTS_CONFIRM:
         log.result(f"result: {prompt.confirm('Are you sure?', default=True)}")
     elif cli_args.test.value == Test.HINTS_FUZZY:
-        fuzzy_prompt = cli_args.prompt_fuzzy.prompt(
-            choices=["a", "b", "c", "d", "e", "f"]
-        )
+        fuzzy_prompt = cli_args.prompt_fuzzy.prompt()
         log.result(f"result: {fuzzy_prompt}")
     elif cli_args.test.value == Test.HINTS_FUZZY_MULTISELECT:
-        multiselect_prompt = cli_args.prompt_fuzzy_multiselect.prompt(
-            choices=["a", "b", "c", "d", "e", "f"]
-        )
+        multiselect_prompt = cli_args.prompt_fuzzy_multiselect.prompt()
         log.result(f"result: {multiselect_prompt}")
     elif cli_args.test.value == Test.HINTS_PATH:
         log.result(f"result: {cli_args.prompt_path.prompt()}")
