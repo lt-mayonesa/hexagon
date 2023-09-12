@@ -1,5 +1,5 @@
 import os
-from dataclasses import dataclass, fields
+from dataclasses import dataclass, fields, field
 
 
 @dataclass
@@ -33,7 +33,7 @@ class LoggingTheme:
     process_out: str = ""
     process_in: str = ""
     finish: str = ""
-    prompts: PromptsTheme = PromptsTheme()
+    prompts: PromptsTheme = field(default_factory=PromptsTheme)
 
     def __getitem__(self, item: str):
         if item.startswith("prompts."):
