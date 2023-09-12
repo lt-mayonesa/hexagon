@@ -149,7 +149,6 @@ def setup_enum(self, args, extras, inquiry_type, type_):
         args["default"] = args["default"].value
         return self.fuzzy, lambda x: x
     else:
-        args["default"] = args["default"]
         return self.select, lambda x: x
 
 
