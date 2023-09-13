@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.48.2 (2023-09-13)
+
+### Fix
+
+* **tracer:** Store Enum value ([#49](https://github.com/lt-mayonesa/hexagon/issues/49)) ([`2b283d2`](https://github.com/lt-mayonesa/hexagon/commit/2b283d2838521f2bb96239f6070b73d9d063026e))
+
 ## v0.48.1 (2023-09-12)
 
 ### Fix
