@@ -97,7 +97,7 @@ def prompt_list_value(cli_args):
 
 
 def prompt_enum_choices(cli_args):
-    log.result(f"tag: {cli_args.tag.prompt()}")
+    log.result(f"tag: {cli_args.tag.prompt().value}")
     log.result(f"tag type: {type(cli_args.tag.value).__name__}")
 
 

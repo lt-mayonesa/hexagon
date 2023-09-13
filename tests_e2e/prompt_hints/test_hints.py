@@ -63,7 +63,7 @@ def main(
     elif cli_args.test.value == Test.HINTS_TEXT_MULTILINE:
         log.result(f"result: {cli_args.prompt_text_multiline.prompt()}")
     elif cli_args.test.value == Test.HINTS_SELECT:
-        log.result(f"result: {cli_args.prompt_select.prompt()}")
+        log.result(f"result: {cli_args.prompt_select.prompt().value}")
     elif cli_args.test.value == Test.HINTS_CHECKBOX:
         log.result(f"result: {cli_args.prompt_checkbox.prompt()}")
     elif cli_args.test.value == Test.HINTS_CONFIRM:

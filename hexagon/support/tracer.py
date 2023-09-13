@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from enum import Enum
 from typing import List, Union, Optional
 
 from hexagon.runtime.parse_args import CliArgs
@@ -33,7 +34,7 @@ class Tracer:
     def tracing(
         self,
         ref: str,
-        value: Union[str, list],
+        value: Union[str, Enum, list],
         key: str = None,
         value_alias: str = None,
         key_alias: str = None,
@@ -49,11 +50,16 @@ class Tracer:
             self._trace.append(Trace(ref, value, value_alias, key, key_alias))
             return value
 
+        def to_str(v):
+            if isinstance(v, Enum):
+                return v.value
+            return str(v)
+
         if isinstance(value, list):
             for val in value:
-                self._trace.append(Trace(ref, val, value_alias, key, key_alias))
+                self._trace.append(Trace(ref, to_str(val), value_alias, key, key_alias))
         else:
-            self._trace.append(Trace(ref, value, value_alias, key, key_alias))
+            self._trace.append(Trace(ref, to_str(value), value_alias, key, key_alias))
         return value
 
     def remove_last(self):
