@@ -8,6 +8,7 @@ from tests_e2e.__specs.utils.assertions import (
     Expected_Process_Output,
     assert_process_output,
     assert_process_ended,
+    assert_execution_time,
 )
 from tests_e2e.__specs.utils.cli import (
     ARROW_DOWN_CHARACTER,
@@ -65,6 +66,7 @@ class HexagonSpec:
         self.lines_read: List[str] = []
         self.last_input = None
         self.yaml_file_name = "app.yml"
+        self._execution_time_start = None
 
     @log
     def given_a_cli_yaml(self, config: Union[str, Dict]):
@@ -83,6 +85,7 @@ class HexagonSpec:
         cwd: str = None,
     ):
         __tracebackhide__ = True
+        self._execution_time_start = time.time()
         if command:
             self.command = command
             self.process = run_hexagon_e2e_test(
@@ -203,7 +206,9 @@ class HexagonSpec:
         return self
 
     @log
-    def exit(self, status: int = 0, timeout_in_seconds: int = 5):
+    def exit(
+        self, status: int = 0, timeout_in_seconds: int = 5, execution_time: int = None
+    ):
         __tracebackhide__ = True
         assert_process_ended(
             self.process,
@@ -211,6 +216,10 @@ class HexagonSpec:
             timeout_in_seconds=timeout_in_seconds,
             lines_read=self.lines_read,
         )
+        if execution_time:
+            assert_execution_time(
+                time.time() - self._execution_time_start, execution_time
+            )
         clean_hexagon_environment()
         return self
 
