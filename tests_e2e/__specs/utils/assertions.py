@@ -261,6 +261,13 @@ def assert_process_ended(
     _check_process_return_code(process, exit_status)
 
 
+def assert_execution_time(elapsed: int, expected: int):
+    __tracebackhide__ = True
+    assert (
+        elapsed <= expected
+    ), f"Execution time {elapsed}ms is greater than expected {expected}ms"
+
+
 def assert_file_has_contents(test_file: str, file: str, contents: str):
     test_dir = e2e_test_folder_path(test_file)
 

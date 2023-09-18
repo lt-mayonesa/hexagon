@@ -45,6 +45,7 @@ class Hook(Generic[T]):
                     name=f"{self.name}:{subscription.name}",
                     kwargs={"data": data},
                 )
+                thread.daemon = True
                 thread.start()
             else:
                 # Unknown HookSubscriptionType {subscription_type}

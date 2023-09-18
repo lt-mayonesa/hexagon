@@ -14,6 +14,10 @@ tools:
       qa:
         foo: foo
         bar: bar
+  - name: error
+    action: raise_error_after_1_second
+    type: shell
+
 envs:
   - name: dev
     alias: d
