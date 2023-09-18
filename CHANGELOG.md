@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.48.3 (2023-09-18)
+
+### Fix
+
+* **hooks:** Terminate background hooks ([#50](https://github.com/lt-mayonesa/hexagon/issues/50)) ([`f7f762f`](https://github.com/lt-mayonesa/hexagon/commit/f7f762f4558b5633d348d2a370a8f2941e8e4dde))
+
 ## v0.48.2 (2023-09-13)
 
 ### Fix
