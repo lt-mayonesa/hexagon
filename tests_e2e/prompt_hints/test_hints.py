@@ -26,6 +26,8 @@ class Test(Enum):
     HINTS_FUZZY_MULTISELECT = "hints_fuzzy_multiselect"
     HINTS_PATH = "hints_path"
     HINTS_NUMBER = "hints_number"
+    HINTS_NUMBER_FLOAT = "hints_number_float"
+    HINTS_SECRET = "hints_secret"
 
 
 class Args(ToolArgs):
@@ -50,6 +52,12 @@ class Args(ToolArgs):
         choices=["a", "b", "c", "d", "e", "f"],
     )
     prompt_path: OptionalArg[FilePath] = None
+    prompt_number: OptionalArg[int] = None
+    prompt_number_float: OptionalArg[float] = None
+    prompt_text_secret: OptionalArg[str] = Arg(
+        None,
+        secret=True,
+    )
 
 
 def main(
@@ -76,5 +84,11 @@ def main(
         log.result(f"result: {multiselect_prompt}")
     elif cli_args.test.value == Test.HINTS_PATH:
         log.result(f"result: {cli_args.prompt_path.prompt()}")
+    elif cli_args.test.value == Test.HINTS_NUMBER:
+        log.result(f"result: {cli_args.prompt_number.prompt()}")
+    elif cli_args.test.value == Test.HINTS_NUMBER_FLOAT:
+        log.result(f"result: {cli_args.prompt_number_float.prompt()}")
+    elif cli_args.test.value == Test.HINTS_SECRET:
+        log.result(f"result: {cli_args.prompt_text_secret.prompt()}")
     else:
         log.error(f"Unknown test: {cli_args.test.value}")

@@ -225,3 +225,78 @@ def test_hints_for_path_prompt_are_generated_correctly():
         )
         .exit()
     )
+
+
+def test_hints_for_number_prompt_are_generated_correctly():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["hints", "hints_number"],
+            os_env_vars={"HEXAGON_HINTS_DISABLED": "0"},
+        )
+        .input("1")
+        .then_output_should_be(
+            [
+                "Enter prompt_number",
+                "help:",
+                "[ ↓ | CTRL+N ] to decrement / [ ↑ | CTRL+P ] to increment / [ ← | CTRL+B ] to s",
+                "e",
+                "lect number left / " "[ → | CTRL+F ] to select number right",
+                "[ - ] to toggle negative",
+                "[ ENTER ] to confirm / [ CTRL+C ] to cancel / [ CTRL+Z ] to skip",
+                "result: 1",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )
+
+
+def test_hints_for_floating_number_prompt_are_generated_correctly():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["hints", "hints_number_float"],
+            os_env_vars={"HEXAGON_HINTS_DISABLED": "0"},
+        )
+        .input("1.23")
+        .then_output_should_be(
+            [
+                "Enter prompt_number_float",
+                "help:",
+                "[ ↓ | CTRL+N ] to decrement / [ ↑ | CTRL+P ] to increment / [ ← | CTRL+B ] to s",
+                "e",
+                "lect number left / " "[ → | CTRL+F ] to select number right",
+                "[ - ] to toggle negative / [ . ] to select decimal part / [ CTRL+I | SHIFT+TAB",
+                "]",
+                "to alternate focused part",
+                "[ ENTER ] to confirm / [ CTRL+C ] to cancel / [ CTRL+Z ] to skip",
+                "result: 1.023",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )
+
+
+def test_hints_for_secret_prompt_are_generated_correctly():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["hints", "hints_secret"],
+            os_env_vars={"HEXAGON_HINTS_DISABLED": "0"},
+        )
+        .input("foo")
+        .then_output_should_be(
+            [
+                "Enter prompt_text_secret",
+                "help:",
+                [
+                    "[ ENTER ] to confirm / [ CTRL+C ] to cancel / [ CTRL+Z ] to skip",
+                    "Enter prompt_text_secret: ***",
+                ],
+                "result: foo",
+            ]
+        )
+        .exit()
+    )
