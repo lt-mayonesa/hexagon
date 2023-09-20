@@ -66,29 +66,18 @@ def main(
     env_args: Any = None,
     cli_args: Args = None,
 ):
-    if cli_args.test.value == Test.HINTS_TEXT:
-        log.result(f"result: {cli_args.prompt_text.prompt()}")
-    elif cli_args.test.value == Test.HINTS_TEXT_MULTILINE:
-        log.result(f"result: {cli_args.prompt_text_multiline.prompt()}")
-    elif cli_args.test.value == Test.HINTS_SELECT:
-        log.result(f"result: {cli_args.prompt_select.prompt().value}")
-    elif cli_args.test.value == Test.HINTS_CHECKBOX:
-        log.result(f"result: {cli_args.prompt_checkbox.prompt()}")
-    elif cli_args.test.value == Test.HINTS_CONFIRM:
-        log.result(f"result: {prompt.confirm('Are you sure?', default=True)}")
-    elif cli_args.test.value == Test.HINTS_FUZZY:
-        fuzzy_prompt = cli_args.prompt_fuzzy.prompt()
-        log.result(f"result: {fuzzy_prompt}")
-    elif cli_args.test.value == Test.HINTS_FUZZY_MULTISELECT:
-        multiselect_prompt = cli_args.prompt_fuzzy_multiselect.prompt()
-        log.result(f"result: {multiselect_prompt}")
-    elif cli_args.test.value == Test.HINTS_PATH:
-        log.result(f"result: {cli_args.prompt_path.prompt()}")
-    elif cli_args.test.value == Test.HINTS_NUMBER:
-        log.result(f"result: {cli_args.prompt_number.prompt()}")
-    elif cli_args.test.value == Test.HINTS_NUMBER_FLOAT:
-        log.result(f"result: {cli_args.prompt_number_float.prompt()}")
-    elif cli_args.test.value == Test.HINTS_SECRET:
-        log.result(f"result: {cli_args.prompt_text_secret.prompt()}")
-    else:
-        log.error(f"Unknown test: {cli_args.test.value}")
+    scenarios = {
+        Test.HINTS_TEXT: lambda: cli_args.prompt_text.prompt(),
+        Test.HINTS_TEXT_MULTILINE: lambda: cli_args.prompt_text_multiline.prompt(),
+        Test.HINTS_SELECT: lambda: cli_args.prompt_select.prompt().value,
+        Test.HINTS_CHECKBOX: lambda: cli_args.prompt_checkbox.prompt(),
+        Test.HINTS_CONFIRM: lambda: prompt.confirm("Are you sure?", default=True),
+        Test.HINTS_FUZZY: lambda: cli_args.prompt_fuzzy.prompt(),
+        Test.HINTS_FUZZY_MULTISELECT: lambda: cli_args.prompt_fuzzy_multiselect.prompt(),
+        Test.HINTS_PATH: lambda: cli_args.prompt_path.prompt(),
+        Test.HINTS_NUMBER: lambda: cli_args.prompt_number.prompt(),
+        Test.HINTS_NUMBER_FLOAT: lambda: cli_args.prompt_number_float.prompt(),
+        Test.HINTS_SECRET: lambda: cli_args.prompt_text_secret.prompt(),
+    }
+
+    log.result(f"result: {scenarios[cli_args.test.value]()}")
