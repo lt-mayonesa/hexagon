@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-08-06 11:18+0000\n"
+"POT-Creation-Date: 2023-09-18 21:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,39 +61,39 @@ msgstr ""
 "¿Donde te gustaría que se encuentre? (puede ser un directorio relativo al "
 "YAML - ej: ./tools o . - o absoluto)"
 
-#: hexagon/actions/internal/create_new_tool.py:54
+#: hexagon/actions/internal/create_new_tool.py:56
 msgid "action.actions.internal.create_new_tool.input_action"
 msgstr "¿Qué nombre va a tener tu acción?"
 
-#: hexagon/actions/internal/create_new_tool.py:84
+#: hexagon/actions/internal/create_new_tool.py:86
 msgid "msg.actions.internal.create_new_tool.custom_tools_dir_not_set"
 msgstr ""
 "[magenta]Tu CLI no tiene un directorio de herramientas (cli."
 "custom_tools_dir).[/magenta]"
 
-#: hexagon/actions/internal/create_new_tool.py:90
+#: hexagon/actions/internal/create_new_tool.py:92
 msgid "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
 msgstr "relativo a este archivo"
 
-#: hexagon/actions/internal/install_cli.py:16
+#: hexagon/actions/internal/install_cli.py:20
 msgid "action.actions.internal.install_cli.config_file_location"
 msgstr "¿Dónde está el YAML de configuración de tu CLI? (*.yml o *.yaml)"
 
-#: hexagon/actions/internal/install_cli.py:20
+#: hexagon/actions/internal/install_cli.py:24
 msgid "action.actions.internal.install_cli.commands_path"
 msgstr ""
 "¿En qué directorio te gustaría que se guarden los comandos de CLI? Debería "
 "estar en el PATH de tu SO."
 
-#: hexagon/actions/internal/install_cli.py:31
+#: hexagon/actions/internal/install_cli.py:35
 msgid "error.actions.internal.install_cli.select_valid_file"
 msgstr "Por favor, selecciona un YAML valido (*.yaml o *.yml)"
 
-#: hexagon/actions/internal/install_cli.py:58
+#: hexagon/actions/internal/install_cli.py:62
 msgid "msg.actions.internal.install_cli.success"
 msgstr "¡Listo! Ahora podes ejecutar tu CLI de la siguiente manera:"
 
-#: hexagon/actions/internal/install_cli.py:68
+#: hexagon/actions/internal/install_cli.py:72
 msgid "msg.actions.internal.install_cli.not_in_path"
 msgstr "[yellow]⚠ {dir} no está en tu $PATH[/yellow]"
 
@@ -131,260 +131,288 @@ msgstr ""
 msgid "msg.actions.internal.save_new_alias.added_to_file"
 msgstr "Se agrego el alias al archivo {file}"
 
-#: hexagon/domain/configuration.py:30
+#: hexagon/runtime/configuration.py:30
 msgid "error.domain.configuration.group_tool_file_not_found"
 msgstr "No se encontró el archivo {config_file_path}"
 
-#: hexagon/domain/configuration.py:41
-msgid "msg.domain.configuration.save_alias_long_name"
-msgstr "Guardar el último comando ejecutado como shell alias"
-
-#: hexagon/domain/configuration.py:47
-msgid "msg.domain.configuration.create_tool_long_name"
-msgstr "Crear una nueva herramienta"
-
-#: hexagon/domain/configuration.py:134
+#: hexagon/runtime/configuration.py:118
 msgid "msg.domain.configuration.install_cli_long_name"
 msgstr "Instalar CLI"
 
-#: hexagon/domain/configuration.py:135
+#: hexagon/runtime/configuration.py:119
 msgid "msg.domain.configuration.install_cli_description"
 msgstr "Instalar una CLI desde un archivo YAML de configuración."
 
-#: hexagon/support/cli/git.py:32
-msgid "error.support.cli.git.failed_to_get_remote"
-msgstr ""
-"Hubo un error de git accediendo al remote del repositorio de tu CLI, hay "
-"varias opciones y origin no está presente."
+#: hexagon/runtime/configuration.py:136
+msgid "msg.domain.configuration.save_alias_long_name"
+msgstr "Guardar el último comando ejecutado como shell alias"
 
-#: hexagon/support/dependencies/node.py:21
-#: hexagon/support/dependencies/python.py:16
+#: hexagon/runtime/configuration.py:142
+msgid "msg.domain.configuration.create_tool_long_name"
+msgstr "Crear una nueva herramienta"
+
+#: hexagon/runtime/dependencies/node.py:21
+#: hexagon/runtime/dependencies/python.py:16
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Instalando dependencias de {runtime} en directorio {path}"
 
-#: hexagon/support/execute/action.py:129
+#: hexagon/runtime/execute/action.py:134
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 "Para usar argumentos de CLI agregar a tu script\n"
 "un modelo extendiendo hexagon.domain.args.ToolArgs,\n"
 "o una propiedad `args` a la definición de la tool en el YAML."
 
-#: hexagon/support/execute/errors.py:19
+#: hexagon/runtime/execute/errors.py:19
 msgid "error.support.execute.errors.command_result_code"
 msgstr "{executed_command} retornó código: {return_code}"
 
-#: hexagon/support/execute/errors.py:26
+#: hexagon/runtime/execute/errors.py:26
 msgid "error.support.execute.errors.could_not_execute"
 msgstr "No fue posible ejecutar la acción: [bold]{action}[/bold]"
 
-#: hexagon/support/execute/errors.py:30
+#: hexagon/runtime/execute/errors.py:30
 msgid "error.support.execute.errors.we_tried"
 msgstr "Intentamos lo siguiente:"
 
-#: hexagon/support/execute/errors.py:32
+#: hexagon/runtime/execute/errors.py:32
 msgid "error.support.execute.errors.attempt_cli_custom_dir"
 msgstr ""
 "  - Buscar la acción en tu directorio de herramientas (custom_tools_dir) "
 "[bold]{path}[/bold]"
 
-#: hexagon/support/execute/errors.py:37
+#: hexagon/runtime/execute/errors.py:37
 msgid "error.support.execute.errors.attempt_internal_tools"
 msgstr "  - Buscar en el registro interno de acciones de hexagon ({package})"
 
-#: hexagon/support/execute/errors.py:42
+#: hexagon/runtime/execute/errors.py:42
 msgid "error.support.execute.errors.attempt_known_script"
 msgstr "  - Ejecutar según extensiones conocidas de archivos ({extensions})"
 
-#: hexagon/support/execute/errors.py:46
+#: hexagon/runtime/execute/errors.py:46
 msgid "error.support.execute.errors.attempt_inline_command"
 msgstr "  - Ejecutando la acción como un comando directamente"
 
-#: hexagon/support/execute/errors.py:53
+#: hexagon/runtime/execute/errors.py:53
 msgid "error.support.execute.errors.invalid_input"
 msgstr "Hay {count} errores en el input para la herramienta {tool}"
 
-#: hexagon/support/execute/errors.py:60
+#: hexagon/runtime/execute/errors.py:60
 msgid "error.support.execute.errors.invalid_argument"
 msgstr "✗ [bold]{loc}[/bold] -> {message}"
 
-#: hexagon/support/execute/errors.py:132
+#: hexagon/runtime/execute/errors.py:132
 msgid "error.support.execute.errors.python_dependency_error"
 msgstr "Tu acción parece tener un error de dependencias de módulos"
 
-#: hexagon/support/execute/errors.py:138
+#: hexagon/runtime/execute/errors.py:138
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr "La ejecución de {action} falló"
 
-#: hexagon/support/execute/tool.py:69
+#: hexagon/runtime/execute/tool.py:69
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr "Atrás"
 
-#: hexagon/support/execute/tool.py:71
+#: hexagon/runtime/execute/tool.py:71
 msgid "msg.support.execute.tool.go_back_description"
 msgstr "Volver al menú anterior"
 
-#: hexagon/support/execute/tool.py:72
+#: hexagon/runtime/execute/tool.py:72
 msgid "icon.global.go_back"
 msgstr "↩"
 
-#: hexagon/support/help.py:21
+#: hexagon/runtime/help.py:21
 msgid "msg.support.help.no_install"
 msgstr "Se está ejecutando hexagon directamente."
 
-#: hexagon/support/help.py:22
+#: hexagon/runtime/help.py:22
 msgid "msg.support.help.get_started"
 msgstr "El primer paso suele ser ejecutar la acción \"Instalar CLI\"."
 
-#: hexagon/support/help.py:32
+#: hexagon/runtime/help.py:32
 msgid "msg.support.help.envs"
 msgstr "[bold][u]Entornos:[/bold][/u]"
 
-#: hexagon/support/help.py:45
+#: hexagon/runtime/help.py:45
 msgid "msg.support.help.tools"
 msgstr "[bold][u]Herramientas:[/bold][/u]"
 
-#: hexagon/support/hooks/hook.py:52
-msgid "error.support.hooks.hook.unknown_type"
-msgstr "HookSubscriptionType desconocido {subscription_type}"
-
-#: hexagon/support/prompt/hints.py:22
-msgid "msg.support.prompt.hints.confirm"
-msgstr "[ {keys} ] para confirmar"
-
-#: hexagon/support/prompt/hints.py:23
-msgid "msg.support.prompt.hints.cancel"
-msgstr "[ {keys} ] para cancelar"
-
-#: hexagon/support/prompt/hints.py:24
-msgid "msg.support.prompt.hints.skip"
-msgstr "[ {keys} ] para saltear"
-
-#: hexagon/support/prompt/hints.py:32
-msgid "msg.support.prompt.hints.autocomplete"
-msgstr "[ {keys} ] para autocompletar (de ser posible)"
-
-#: hexagon/support/prompt/hints.py:41
-msgid "msg.support.prompt.hints.toggle"
-msgstr "[ {keys} ] para alternar selección"
-
-#: hexagon/support/prompt/hints.py:42
-msgid "msg.support.prompt.hints.toggle_move_down"
-msgstr "[ {keys} ] para alternar y mover hacia abajo"
-
-#: hexagon/support/prompt/hints.py:43
-msgid "msg.support.prompt.hints.toggle_move_up"
-msgstr "[ {keys} ] para alternar y mover hacia arriba"
-
-#: hexagon/support/prompt/hints.py:44
-msgid "msg.support.prompt.hints.toggle_all"
-msgstr "[ {keys} ] para alternar todo"
-
-#: hexagon/support/prompt/hints.py:46
-msgid "msg.support.prompt.hints.toggle_all_true"
-msgstr "[ {keys} ] para seleccionar todo"
-
-#: hexagon/support/prompt/hints.py:55
-msgid "msg.support.prompt.hints.move_down"
-msgstr "[ {keys} ] para mover hacia abajo"
-
-#: hexagon/support/prompt/hints.py:56
-msgid "msg.support.prompt.hints.move_up"
-msgstr "[ {keys} ] para mover hacia arriba"
-
-#: hexagon/support/prompt/hints.py:63
-msgid "msg.support.prompt.hints.toggle_fuzzy_search"
-msgstr "[ {keys} ] para alternar búsqueda difusa"
-
-#: hexagon/support/prompt/hints.py:80
-msgid "error.support.prompt.hints.no_hints_on_builder"
-msgstr "No se configuró HintsBuilder correctamente."
-
-#: hexagon/support/prompt/hints.py:83
-msgid "msg.support.prompt.hints.help"
-msgstr "ayuda:"
-
-#: hexagon/support/tracer.py:76
-msgid "msg.main.tracer.run_again"
-msgstr ""
-"[cyan][dim]Para ejecutar nuevamente:[/dim]\n"
-"  {command}[/cyan]"
-
-#: hexagon/support/tracer.py:82
-msgid "msg.main.tracer.or"
-msgstr ""
-"[cyan][dim] o:[/dim]\n"
-"  {command}[/cyan]"
-
-#: hexagon/support/update/cli.py:24
+#: hexagon/runtime/update/cli/__init__.py:24
 msgid "msg.support.update.cli.checking_for_cli_updates"
 msgstr "Verificando si existen actualizaciones de CLI"
 
-#: hexagon/support/update/cli.py:31
+#: hexagon/runtime/update/cli/__init__.py:30
 msgid "msg.support.update.cli.checking_for_cli_updates_on_branch"
 msgstr "Verificando si existen actualizaciones de CLI, en la rama {branch}"
 
-#: hexagon/support/update/cli.py:38
+#: hexagon/runtime/update/cli/__init__.py:37
 msgid "msg.support.update.cli.new_version_available"
 msgstr "Hay una nueva versión disponible de [cyan]{cli_name}[/cyan]"
 
-#: hexagon/support/update/cli.py:43
+#: hexagon/runtime/update/cli/__init__.py:42
 msgid "action.support.update.cli.confirm_update"
 msgstr "¿Te gustaría actualizar?"
 
-#: hexagon/support/update/cli.py:50
+#: hexagon/runtime/update/cli/__init__.py:49
 msgid "msg.support.update.cli.updated"
 msgstr "[green]✓[/green] [white]Se actualizó a la última versión[/white]"
 
-#: hexagon/support/update/hexagon.py:26
+#: hexagon/runtime/update/cli/git.py:32
+msgid "error.support.cli.git.failed_to_get_remote"
+msgstr ""
+"Hubo un error de git accediendo al remote del repositorio de tu CLI, hay "
+"varias opciones y origin no está presente."
+
+#: hexagon/runtime/update/hexagon.py:27
 msgid "msg.support.update.hexagon.checking_new_versions"
 msgstr "Verificando si existen nuevas versión de hexagon"
 
-#: hexagon/support/update/hexagon.py:36
+#: hexagon/runtime/update/hexagon.py:37
 msgid "msg.support.update.hexagon.new_version_available"
 msgstr ""
 "¡Existe una nueva versión {version_start}{latest_version}{version_end} de "
 "{hexagon_start}hexagon{hexagon_end}!"
 
-#: hexagon/support/update/hexagon.py:42
+#: hexagon/runtime/update/hexagon.py:43
 msgid "msg.support.update.hexagon.fetching_changelog"
 msgstr "Descargando información de cambios"
 
-#: hexagon/support/update/hexagon.py:53
+#: hexagon/runtime/update/hexagon.py:54
 msgid "msg.support.update.hexagon.and_much_more"
 msgstr "¡y mucho más!"
 
-#: hexagon/support/update/hexagon.py:56
+#: hexagon/runtime/update/hexagon.py:57
 msgid "action.support.update.hexagon.confirm_update"
 msgstr "¿Te gustaría actualizar?"
 
-#: hexagon/support/update/hexagon.py:60
+#: hexagon/runtime/update/hexagon.py:61
 msgid "msg.support.update.hexagon.updating"
 msgstr "Actualizando"
 
-#: hexagon/support/update/hexagon.py:67
+#: hexagon/runtime/update/hexagon.py:68
 msgid "msg.support.update.hexagon.updated"
 msgstr "[green]🗸[/green] Se actualizó a la última versión"
 
-#: hexagon/support/wax.py:57
+#: hexagon/runtime/wax.py:57
 msgid "action.support.wax.select_environment"
 msgstr "¿Para qué entorno?"
 
-#: hexagon/support/wax.py:62
+#: hexagon/runtime/wax.py:62
 msgid "error.support.wax.invalid_environment"
 msgstr "Por favor, selecciona un entorno valido"
 
-#: hexagon/support/wax.py:79
+#: hexagon/runtime/wax.py:79
 msgid "action.support.wax.select_tool"
 msgstr "Hola ¿qué herramienta te gustaría usar hoy?"
 
-#: hexagon/support/wax.py:82
+#: hexagon/runtime/wax.py:82
 msgid "error.support.wax.invalid_tool"
 msgstr "Por favor, selecciona una herramienta valida"
 
-#: hexagon/support/yaml/__init__.py:42
+#: hexagon/runtime/yaml.py:42
 msgid "error.support.yaml.invalid_yaml"
 msgstr "Hay {errors_length} errores en el YAML: {yaml_path}"
 
-#: hexagon/support/yaml/__init__.py:49
+#: hexagon/runtime/yaml.py:49
 msgid "error.support.yaml.error_at"
 msgstr "✗ [u][bold]{loc}[/bold] -> {message}[/u]"
+
+#: hexagon/support/hooks/hook.py:53
+msgid "error.support.hooks.hook.unknown_type"
+msgstr "HookSubscriptionType desconocido {subscription_type}"
+
+#: hexagon/support/input/prompt/hints.py:24
+msgid "msg.support.prompt.hints.confirm"
+msgstr "[ {keys} ] para confirmar"
+
+#: hexagon/support/input/prompt/hints.py:25
+msgid "msg.support.prompt.hints.cancel"
+msgstr "[ {keys} ] para cancelar"
+
+#: hexagon/support/input/prompt/hints.py:26
+msgid "msg.support.prompt.hints.skip"
+msgstr "[ {keys} ] para saltear"
+
+#: hexagon/support/input/prompt/hints.py:34
+msgid "msg.support.prompt.hints.autocomplete"
+msgstr "[ {keys} ] para autocompletar (de ser posible)"
+
+#: hexagon/support/input/prompt/hints.py:43
+msgid "msg.support.prompt.hints.toggle"
+msgstr "[ {keys} ] para alternar selección"
+
+#: hexagon/support/input/prompt/hints.py:44
+msgid "msg.support.prompt.hints.toggle_move_down"
+msgstr "[ {keys} ] para alternar y mover hacia abajo"
+
+#: hexagon/support/input/prompt/hints.py:45
+msgid "msg.support.prompt.hints.toggle_move_up"
+msgstr "[ {keys} ] para alternar y mover hacia arriba"
+
+#: hexagon/support/input/prompt/hints.py:46
+msgid "msg.support.prompt.hints.toggle_all"
+msgstr "[ {keys} ] para alternar todo"
+
+#: hexagon/support/input/prompt/hints.py:48
+msgid "msg.support.prompt.hints.toggle_all_true"
+msgstr "[ {keys} ] para seleccionar todo"
+
+#: hexagon/support/input/prompt/hints.py:57
+msgid "msg.support.prompt.hints.move_down"
+msgstr "[ {keys} ] para mover hacia abajo"
+
+#: hexagon/support/input/prompt/hints.py:58
+msgid "msg.support.prompt.hints.move_up"
+msgstr "[ {keys} ] para mover hacia arriba"
+
+#: hexagon/support/input/prompt/hints.py:65
+msgid "msg.support.prompt.hints.toggle_fuzzy_search"
+msgstr "[ {keys} ] para alternar búsqueda difusa"
+
+#: hexagon/support/input/prompt/hints.py:75
+msgid "msg.support.prompt.hints.number_decrement"
+msgstr "[ {keys} ] para decrementar"
+
+#: hexagon/support/input/prompt/hints.py:78
+msgid "msg.support.prompt.hints.number_increment"
+msgstr "[ {keys} ] para incrementar"
+
+#: hexagon/support/input/prompt/hints.py:79
+msgid "msg.support.prompt.hints.number_left"
+msgstr "[ {keys} ] para número a la izquierda"
+
+#: hexagon/support/input/prompt/hints.py:80
+msgid "msg.support.prompt.hints.number_right"
+msgstr "[ {keys} ] para número a la derecha"
+
+#: hexagon/support/input/prompt/hints.py:83
+msgid "msg.support.prompt.hints.toggle_negative"
+msgstr "[ {keys} ] para alternar positividad"
+
+#: hexagon/support/input/prompt/hints.py:92
+msgid "msg.support.prompt.hints.number_dot"
+msgstr "[ {keys} ] para editar decimal"
+
+#: hexagon/support/input/prompt/hints.py:94
+msgid "msg.support.prompt.hints.alt_part_focus"
+msgstr "[ {keys} ] para enfocar parte alternativa"
+
+#: hexagon/support/input/prompt/hints.py:110
+msgid "error.support.prompt.hints.no_hints_on_builder"
+msgstr "No se configuró HintsBuilder correctamente."
+
+#: hexagon/support/input/prompt/hints.py:113
+msgid "msg.support.prompt.hints.help"
+msgstr "ayuda:"
+
+#: hexagon/support/tracer.py:82
+msgid "msg.main.tracer.run_again"
+msgstr ""
+"[cyan][dim]Para ejecutar nuevamente:[/dim]\n"
+"  {command}[/cyan]"
+
+#: hexagon/support/tracer.py:88
+msgid "msg.main.tracer.or"
+msgstr ""
+"[cyan][dim] o:[/dim]\n"
+"  {command}[/cyan]"

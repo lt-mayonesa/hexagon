@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-08-06 11:22+0000\n"
+"POT-Creation-Date: 2023-09-18 21:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,35 +55,35 @@ msgstr ""
 msgid "action.actions.internal.create_new_tool.input_custom_tools_path"
 msgstr ""
 
-#: hexagon/actions/internal/create_new_tool.py:54
+#: hexagon/actions/internal/create_new_tool.py:56
 msgid "action.actions.internal.create_new_tool.input_action"
 msgstr ""
 
-#: hexagon/actions/internal/create_new_tool.py:84
+#: hexagon/actions/internal/create_new_tool.py:86
 msgid "msg.actions.internal.create_new_tool.custom_tools_dir_not_set"
 msgstr ""
 
-#: hexagon/actions/internal/create_new_tool.py:90
+#: hexagon/actions/internal/create_new_tool.py:92
 msgid "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
 msgstr ""
 
-#: hexagon/actions/internal/install_cli.py:16
+#: hexagon/actions/internal/install_cli.py:20
 msgid "action.actions.internal.install_cli.config_file_location"
 msgstr ""
 
-#: hexagon/actions/internal/install_cli.py:20
+#: hexagon/actions/internal/install_cli.py:24
 msgid "action.actions.internal.install_cli.commands_path"
 msgstr ""
 
-#: hexagon/actions/internal/install_cli.py:31
+#: hexagon/actions/internal/install_cli.py:35
 msgid "error.actions.internal.install_cli.select_valid_file"
 msgstr ""
 
-#: hexagon/actions/internal/install_cli.py:58
+#: hexagon/actions/internal/install_cli.py:62
 msgid "msg.actions.internal.install_cli.success"
 msgstr ""
 
-#: hexagon/actions/internal/install_cli.py:68
+#: hexagon/actions/internal/install_cli.py:72
 msgid "msg.actions.internal.install_cli.not_in_path"
 msgstr ""
 
@@ -119,248 +119,276 @@ msgstr ""
 msgid "msg.actions.internal.save_new_alias.added_to_file"
 msgstr ""
 
-#: hexagon/domain/configuration.py:30
+#: hexagon/runtime/configuration.py:30
 msgid "error.domain.configuration.group_tool_file_not_found"
 msgstr ""
 
-#: hexagon/domain/configuration.py:41
-msgid "msg.domain.configuration.save_alias_long_name"
-msgstr ""
-
-#: hexagon/domain/configuration.py:47
-msgid "msg.domain.configuration.create_tool_long_name"
-msgstr ""
-
-#: hexagon/domain/configuration.py:134
+#: hexagon/runtime/configuration.py:118
 msgid "msg.domain.configuration.install_cli_long_name"
 msgstr ""
 
-#: hexagon/domain/configuration.py:135
+#: hexagon/runtime/configuration.py:119
 msgid "msg.domain.configuration.install_cli_description"
 msgstr ""
 
-#: hexagon/support/cli/git.py:32
-msgid "error.support.cli.git.failed_to_get_remote"
+#: hexagon/runtime/configuration.py:136
+msgid "msg.domain.configuration.save_alias_long_name"
 msgstr ""
 
-#: hexagon/support/dependencies/node.py:21
-#: hexagon/support/dependencies/python.py:16
+#: hexagon/runtime/configuration.py:142
+msgid "msg.domain.configuration.create_tool_long_name"
+msgstr ""
+
+#: hexagon/runtime/dependencies/node.py:21
+#: hexagon/runtime/dependencies/python.py:16
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr ""
 
-#: hexagon/support/execute/action.py:129
+#: hexagon/runtime/execute/action.py:134
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 
-#: hexagon/support/execute/errors.py:19
+#: hexagon/runtime/execute/errors.py:19
 msgid "error.support.execute.errors.command_result_code"
 msgstr ""
 
-#: hexagon/support/execute/errors.py:26
+#: hexagon/runtime/execute/errors.py:26
 msgid "error.support.execute.errors.could_not_execute"
 msgstr ""
 
-#: hexagon/support/execute/errors.py:30
+#: hexagon/runtime/execute/errors.py:30
 msgid "error.support.execute.errors.we_tried"
 msgstr ""
 
-#: hexagon/support/execute/errors.py:32
+#: hexagon/runtime/execute/errors.py:32
 msgid "error.support.execute.errors.attempt_cli_custom_dir"
 msgstr ""
 
-#: hexagon/support/execute/errors.py:37
+#: hexagon/runtime/execute/errors.py:37
 msgid "error.support.execute.errors.attempt_internal_tools"
 msgstr ""
 
-#: hexagon/support/execute/errors.py:42
+#: hexagon/runtime/execute/errors.py:42
 msgid "error.support.execute.errors.attempt_known_script"
 msgstr ""
 
-#: hexagon/support/execute/errors.py:46
+#: hexagon/runtime/execute/errors.py:46
 msgid "error.support.execute.errors.attempt_inline_command"
 msgstr ""
 
-#: hexagon/support/execute/errors.py:53
+#: hexagon/runtime/execute/errors.py:53
 msgid "error.support.execute.errors.invalid_input"
 msgstr ""
 
-#: hexagon/support/execute/errors.py:60
+#: hexagon/runtime/execute/errors.py:60
 msgid "error.support.execute.errors.invalid_argument"
 msgstr ""
 
-#: hexagon/support/execute/errors.py:132
+#: hexagon/runtime/execute/errors.py:132
 msgid "error.support.execute.errors.python_dependency_error"
 msgstr ""
 
-#: hexagon/support/execute/errors.py:138
+#: hexagon/runtime/execute/errors.py:138
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr ""
 
-#: hexagon/support/execute/tool.py:69
+#: hexagon/runtime/execute/tool.py:69
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr ""
 
-#: hexagon/support/execute/tool.py:71
+#: hexagon/runtime/execute/tool.py:71
 msgid "msg.support.execute.tool.go_back_description"
 msgstr ""
 
-#: hexagon/support/execute/tool.py:72
+#: hexagon/runtime/execute/tool.py:72
 msgid "icon.global.go_back"
 msgstr ""
 
-#: hexagon/support/help.py:21
+#: hexagon/runtime/help.py:21
 msgid "msg.support.help.no_install"
 msgstr ""
 
-#: hexagon/support/help.py:22
+#: hexagon/runtime/help.py:22
 msgid "msg.support.help.get_started"
 msgstr ""
 
-#: hexagon/support/help.py:32
+#: hexagon/runtime/help.py:32
 msgid "msg.support.help.envs"
 msgstr ""
 
-#: hexagon/support/help.py:45
+#: hexagon/runtime/help.py:45
 msgid "msg.support.help.tools"
 msgstr ""
 
-#: hexagon/support/hooks/hook.py:52
-msgid "error.support.hooks.hook.unknown_type"
-msgstr ""
-
-#: hexagon/support/prompt/hints.py:22
-msgid "msg.support.prompt.hints.confirm"
-msgstr ""
-
-#: hexagon/support/prompt/hints.py:23
-msgid "msg.support.prompt.hints.cancel"
-msgstr ""
-
-#: hexagon/support/prompt/hints.py:24
-msgid "msg.support.prompt.hints.skip"
-msgstr ""
-
-#: hexagon/support/prompt/hints.py:32
-msgid "msg.support.prompt.hints.autocomplete"
-msgstr ""
-
-#: hexagon/support/prompt/hints.py:41
-msgid "msg.support.prompt.hints.toggle"
-msgstr ""
-
-#: hexagon/support/prompt/hints.py:42
-msgid "msg.support.prompt.hints.toggle_move_down"
-msgstr ""
-
-#: hexagon/support/prompt/hints.py:43
-msgid "msg.support.prompt.hints.toggle_move_up"
-msgstr ""
-
-#: hexagon/support/prompt/hints.py:44
-msgid "msg.support.prompt.hints.toggle_all"
-msgstr ""
-
-#: hexagon/support/prompt/hints.py:46
-msgid "msg.support.prompt.hints.toggle_all_true"
-msgstr ""
-
-#: hexagon/support/prompt/hints.py:55
-msgid "msg.support.prompt.hints.move_down"
-msgstr ""
-
-#: hexagon/support/prompt/hints.py:56
-msgid "msg.support.prompt.hints.move_up"
-msgstr ""
-
-#: hexagon/support/prompt/hints.py:63
-msgid "msg.support.prompt.hints.toggle_fuzzy_search"
-msgstr ""
-
-#: hexagon/support/prompt/hints.py:80
-msgid "error.support.prompt.hints.no_hints_on_builder"
-msgstr ""
-
-#: hexagon/support/prompt/hints.py:83
-msgid "msg.support.prompt.hints.help"
-msgstr ""
-
-#: hexagon/support/tracer.py:76
-msgid "msg.main.tracer.run_again"
-msgstr ""
-
-#: hexagon/support/tracer.py:82
-msgid "msg.main.tracer.or"
-msgstr ""
-
-#: hexagon/support/update/cli.py:24
+#: hexagon/runtime/update/cli/__init__.py:24
 msgid "msg.support.update.cli.checking_for_cli_updates"
 msgstr ""
 
-#: hexagon/support/update/cli.py:31
+#: hexagon/runtime/update/cli/__init__.py:30
 msgid "msg.support.update.cli.checking_for_cli_updates_on_branch"
 msgstr ""
 
-#: hexagon/support/update/cli.py:38
+#: hexagon/runtime/update/cli/__init__.py:37
 msgid "msg.support.update.cli.new_version_available"
 msgstr ""
 
-#: hexagon/support/update/cli.py:43
+#: hexagon/runtime/update/cli/__init__.py:42
 msgid "action.support.update.cli.confirm_update"
 msgstr ""
 
-#: hexagon/support/update/cli.py:50
+#: hexagon/runtime/update/cli/__init__.py:49
 msgid "msg.support.update.cli.updated"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:26
+#: hexagon/runtime/update/cli/git.py:32
+msgid "error.support.cli.git.failed_to_get_remote"
+msgstr ""
+
+#: hexagon/runtime/update/hexagon.py:27
 msgid "msg.support.update.hexagon.checking_new_versions"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:36
+#: hexagon/runtime/update/hexagon.py:37
 msgid "msg.support.update.hexagon.new_version_available"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:42
+#: hexagon/runtime/update/hexagon.py:43
 msgid "msg.support.update.hexagon.fetching_changelog"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:53
+#: hexagon/runtime/update/hexagon.py:54
 msgid "msg.support.update.hexagon.and_much_more"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:56
+#: hexagon/runtime/update/hexagon.py:57
 msgid "action.support.update.hexagon.confirm_update"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:60
+#: hexagon/runtime/update/hexagon.py:61
 msgid "msg.support.update.hexagon.updating"
 msgstr ""
 
-#: hexagon/support/update/hexagon.py:67
+#: hexagon/runtime/update/hexagon.py:68
 msgid "msg.support.update.hexagon.updated"
 msgstr ""
 
-#: hexagon/support/wax.py:57
+#: hexagon/runtime/wax.py:57
 msgid "action.support.wax.select_environment"
 msgstr ""
 
-#: hexagon/support/wax.py:62
+#: hexagon/runtime/wax.py:62
 msgid "error.support.wax.invalid_environment"
 msgstr ""
 
-#: hexagon/support/wax.py:79
+#: hexagon/runtime/wax.py:79
 msgid "action.support.wax.select_tool"
 msgstr ""
 
-#: hexagon/support/wax.py:82
+#: hexagon/runtime/wax.py:82
 msgid "error.support.wax.invalid_tool"
 msgstr ""
 
-#: hexagon/support/yaml/__init__.py:42
+#: hexagon/runtime/yaml.py:42
 msgid "error.support.yaml.invalid_yaml"
 msgstr ""
 
-#: hexagon/support/yaml/__init__.py:49
+#: hexagon/runtime/yaml.py:49
 msgid "error.support.yaml.error_at"
+msgstr ""
+
+#: hexagon/support/hooks/hook.py:53
+msgid "error.support.hooks.hook.unknown_type"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:24
+msgid "msg.support.prompt.hints.confirm"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:25
+msgid "msg.support.prompt.hints.cancel"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:26
+msgid "msg.support.prompt.hints.skip"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:34
+msgid "msg.support.prompt.hints.autocomplete"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:43
+msgid "msg.support.prompt.hints.toggle"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:44
+msgid "msg.support.prompt.hints.toggle_move_down"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:45
+msgid "msg.support.prompt.hints.toggle_move_up"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:46
+msgid "msg.support.prompt.hints.toggle_all"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:48
+msgid "msg.support.prompt.hints.toggle_all_true"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:57
+msgid "msg.support.prompt.hints.move_down"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:58
+msgid "msg.support.prompt.hints.move_up"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:65
+msgid "msg.support.prompt.hints.toggle_fuzzy_search"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:75
+msgid "msg.support.prompt.hints.number_decrement"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:78
+msgid "msg.support.prompt.hints.number_increment"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:79
+msgid "msg.support.prompt.hints.number_left"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:80
+msgid "msg.support.prompt.hints.number_right"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:83
+msgid "msg.support.prompt.hints.toggle_negative"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:92
+msgid "msg.support.prompt.hints.number_dot"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:94
+msgid "msg.support.prompt.hints.alt_part_focus"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:110
+msgid "error.support.prompt.hints.no_hints_on_builder"
+msgstr ""
+
+#: hexagon/support/input/prompt/hints.py:113
+msgid "msg.support.prompt.hints.help"
+msgstr ""
+
+#: hexagon/support/tracer.py:82
+msgid "msg.main.tracer.run_again"
+msgstr ""
+
+#: hexagon/support/tracer.py:88
+msgid "msg.main.tracer.or"
 msgstr ""
 

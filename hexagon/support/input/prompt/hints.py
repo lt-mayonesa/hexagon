@@ -80,7 +80,7 @@ class HintsBuilder:
                 + _fmt(_("msg.support.prompt.hints.number_right"), ["→", "CTRL+F"])
             )
             self.__middle_hints = (
-                _fmt("msg.support.prompt.hints.toggle_negative", ["-"])
+                _fmt(_("msg.support.prompt.hints.toggle_negative"), ["-"])
                 + self.__middle_hints
             )
             self.__has_number_controls = True
@@ -89,8 +89,10 @@ class HintsBuilder:
     def with_floating_point(self) -> "HintsBuilder":
         if not self.__has_floating_point:
             self.__middle_hints += _fmt(
-                "msg.support.prompt.hints.number_dot", ["."]
-            ) + _fmt("msg.support.prompt.hints.alt_part_focus", ["CTRL+I", "SHIFT+TAB"])
+                _("msg.support.prompt.hints.number_dot"), ["."]
+            ) + _fmt(
+                _("msg.support.prompt.hints.alt_part_focus"), ["CTRL+I", "SHIFT+TAB"]
+            )
             self.__has_floating_point = True
         return self
 
