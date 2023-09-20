@@ -7,6 +7,10 @@ storage_path = os.path.join(e2e_test_folder_path(__file__), ".config", "test")
 
 
 def test_register_all_hooks_correctly():
+    if os.path.exists(storage_path):
+        for file in os.listdir(storage_path):
+            os.remove(os.path.join(storage_path, file))
+
     (as_a_user(__file__).run_hexagon(["echo", "dev"]).exit())
 
     with open(os.path.join(storage_path, "hook_start.txt"), "r") as file:
@@ -34,6 +38,50 @@ def test_register_all_hooks_correctly():
 
     with open(os.path.join(storage_path, "hook_end.txt"), "r") as file:
         assert file.read() == "1"
+
+
+def test_register_multiple_plugins_in_same_directory():
+    (
+        as_a_user(__file__)
+        .given_a_cli_yaml("app_multiple_plugins_in_same_dir.yml")
+        .run_hexagon(
+            ["echo"],
+            os_env_vars={
+                "HEXAGON_TEST_PLUGIN_TEST_NAME": "multiple_plugins_in_same_dir"
+            },
+        )
+        .then_output_should_be(
+            [
+                "plugin1",
+                "echo",
+                "plugin2",
+            ]
+        )
+        .exit()
+    )
+
+
+def test_register_multiple_plugins_in_different_directories():
+    (
+        as_a_user(__file__)
+        .given_a_cli_yaml("app_multiple_plugins_in_diff_dir.yml")
+        .run_hexagon(
+            ["echo"],
+            os_env_vars={
+                "HEXAGON_TEST_PLUGIN_TEST_NAME": "multiple_plugins_in_diff_dir"
+            },
+        )
+        .then_output_should_be(
+            [
+                "plugin1",
+                "plugin inside another action",
+                "echo",
+                "plugin2",
+                "plugin inside action",
+            ]
+        )
+        .exit()
+    )
 
 
 def test_hexagon_exists_early_even_when_long_running_background_plugin():
