@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.49.0 (2023-09-20)
+
+### Feature
+
+* **plugins:** Allow to register plugins from multiple sources ([#52](https://github.com/lt-mayonesa/hexagon/issues/52)) ([`2c42112`](https://github.com/lt-mayonesa/hexagon/commit/2c42112cb8df4aa9d3a7436439b6375179f5a777))
+
 ## v0.48.4 (2023-09-20)
 
 ### Fix
