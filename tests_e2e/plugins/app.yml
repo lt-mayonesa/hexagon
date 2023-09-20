@@ -2,7 +2,8 @@ cli:
   name: Test
   command: hexagon-test
   custom_tools_dir: .
-  plugins_dir: plugins
+  plugins:
+    - plugins
 tools:
   - name: echo
     action: echo "echo"

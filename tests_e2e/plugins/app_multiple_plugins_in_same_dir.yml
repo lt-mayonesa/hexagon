@@ -1,0 +1,13 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+  plugins:
+    - multiple_plugins
+tools:
+  - name: echo
+    action: echo "echo"
+    type: shell
+
+envs:
+  - name: dev

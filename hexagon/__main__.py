@@ -26,7 +26,7 @@ def main():
         if args.show_help:
             return print_help(cli, tools, envs)
 
-        collect_plugins(configuration.project_path, cli.plugins_dir)
+        collect_plugins(configuration.project_path, cli.plugins)
         tracer = init_tracer(args)
 
         HexagonHooks.start.run()
