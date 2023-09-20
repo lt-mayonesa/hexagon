@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.48.4 (2023-09-20)
+
+### Fix
+
+* **i18n:** Add messages for number & secret hints ([#51](https://github.com/lt-mayonesa/hexagon/issues/51)) ([`220fe6c`](https://github.com/lt-mayonesa/hexagon/commit/220fe6ce6142bb68914ea28a0edd4e704b535260))
+
 ## v0.48.3 (2023-09-18)
 
 ### Fix
