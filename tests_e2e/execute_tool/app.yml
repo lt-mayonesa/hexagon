@@ -70,3 +70,9 @@ tools:
     type: shell
     alias: sfpm
     long_name: Python Module Single File Test
+
+  - name: bash-module
+    action: bash_module.sh
+    type: shell
+    alias: bm
+    long_name: Bash Module Test

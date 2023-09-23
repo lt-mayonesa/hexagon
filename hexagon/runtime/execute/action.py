@@ -44,7 +44,7 @@ def execute_action(tool: ActionTool, env_args: Any, env: Env, cli_args: CliArgs)
             env_args or [],
             tool,
             env,
-            cli_args.raw_extra_args,
+            cli_args,
         )
     else:
         python_module_found = _execute_python_module(
@@ -62,7 +62,7 @@ def execute_action(tool: ActionTool, env_args: Any, env: Env, cli_args: CliArgs)
         return_code, executed_command = _execute_command(
             split_action[0],
             env_args,
-            cli_args.raw_extra_args,
+            cli_args,
             tool,
             env,
             action_args=split_action[1:],
@@ -118,9 +118,7 @@ def _execute_python_module(
 
 
 def __parse_tool_args(cli_args, env, tool, tool_action_module):
-    args = (
-        [cli_args.env.value] if not env and cli_args.env else []
-    ) + cli_args.raw_extra_args
+    args = __args_with_optional_env(cli_args, env)
     # noinspection PyProtectedMember
     return (
         parse_cli_args(
@@ -138,16 +136,24 @@ def __parse_tool_args(cli_args, env, tool, tool_action_module):
     )
 
 
+def __args_with_optional_env(cli_args: CliArgs, env: Optional[Env]):
+    return (
+        [cli_args.env.value] if not env and cli_args.env else []
+    ) + cli_args.raw_extra_args
+
+
 def _execute_command(
     command: str,
-    env_args,
-    cli_args,
+    env_args: Any,
+    cli_args: CliArgs,
     tool: ActionTool,
     env: Env = None,
     action_args: List[str] = None,
 ):
     action_args = action_args if action_args else []
-    hexagon_args = __sanitize_args_for_command(env_args, *cli_args)
+    hexagon_args = __sanitize_args_for_command(
+        env_args, *__args_with_optional_env(cli_args, env)
+    )
     cmd_as_string = " ".join([command] + action_args + hexagon_args)
 
     env_vars = os.environ.copy()
@@ -162,7 +168,7 @@ def _execute_command(
 
 
 def _execute_script(
-    command: str, script: str, env_args, tool: ActionTool, env: Env, cli_args
+    command: str, script: str, env_args, tool: ActionTool, env: Env, cli_args: CliArgs
 ):
     # Script should be relative to the project path
     script_path = os.path.join(configuration.project_path, script)

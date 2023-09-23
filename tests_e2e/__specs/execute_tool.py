@@ -7,7 +7,7 @@ def _shared_assertions(spec: HexagonSpec):
         spec.then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "9/9",
+                "10/10",
                 "⦾ Google",
                 "ƒ Python Module Test",
                 "ƒ Python Module Env Test",
@@ -15,6 +15,7 @@ def _shared_assertions(spec: HexagonSpec):
                 "ƒ Node Module Test",
                 "ƒ Node Module Env Test",
                 "ƒ Python Module Single File Test",
+                "ƒ Bash Module Test",
                 "⬡ Save Last Command as Shell Alias",
             ]
         )
@@ -179,7 +180,7 @@ def test_execute_python_module_with_other_env():
     )
 
 
-def test_execute_script_module_by_gui():
+def test_execute_node_script_module_by_gui():
     (
         as_a_user(__file__)
         .run_hexagon()
@@ -202,7 +203,7 @@ def test_execute_script_module_by_gui():
     )
 
 
-def test_execute_script_module_by_argument():
+def test_execute_node_script_module_by_argument():
     (
         as_a_user(__file__)
         .run_hexagon(["node-module"])
@@ -214,7 +215,7 @@ def test_execute_script_module_by_argument():
     )
 
 
-def test_execute_script_module_with_env_and_arguments():
+def test_execute_node_script_module_with_env_and_arguments():
     (
         as_a_user(__file__)
         .run_hexagon(["node-module-env", "dev", "arg1", "arg2"])
@@ -238,7 +239,7 @@ def test_execute_script_module_with_env_and_arguments():
     )
 
 
-def test_execute_script_module_with_other_env():
+def test_execute_node_script_module_with_other_env():
     (
         as_a_user(__file__)
         .run_hexagon(["node-module-env", "qa"])
@@ -287,4 +288,24 @@ def test_execute_single_file_python_module_by_gui():
         __file__,
         ".config/test/last-command.txt",
         "hexagon-test single-file-python-module",
+    )
+
+
+def test_execute_bash_script_module_by_argument():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["bash-module", "arg1", "arg2", '"hello world"'])
+        .then_output_should_be(
+            [
+                "Hello from bash module!",
+                "arguments:",
+                "arg1",
+                "arg2",
+                "hello world",
+            ]
+        )
+        .exit()
+    )
+    assert_file_has_contents(
+        __file__, ".config/test/last-command.txt", "hexagon-test bash-module"
     )
