@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.49.1 (2023-09-24)
+
+### Fix
+
+* **execute:** Handle script relative paths correctly ([`9399df5`](https://github.com/lt-mayonesa/hexagon/commit/9399df5070716d0b7642b915b82016a30c95d78a))
+* **execute:** Pass first arg to script when env not present ([`6cbf4c0`](https://github.com/lt-mayonesa/hexagon/commit/6cbf4c09c69b4b9894dd1ccbb979c54e11b822ca))
+
 ## v0.49.0 (2023-09-20)
 
 ### Feature
