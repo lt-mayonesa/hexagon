@@ -35,12 +35,12 @@ _command_by_file_extension = {"js": "node", "sh": "sh"}
 def execute_action(tool: ActionTool, env_args: Any, env: Env, cli_args: CliArgs):
     custom_tools_path = configuration.custom_tools_path
     action_to_execute: str = tool.executable_str
-    script_action_command = __script_action_command(action_to_execute)
+    script_interpreter, script_abs_path = __get_interpreter_and_path(action_to_execute)
 
-    if script_action_command:
+    if script_interpreter:
         _execute_script(
-            script_action_command,
-            action_to_execute,
+            script_interpreter,
+            script_abs_path,
             env_args or [],
             tool,
             env,
@@ -74,14 +74,16 @@ def execute_action(tool: ActionTool, env_args: Any, env: Env, cli_args: CliArgs)
             )
 
 
-def __script_action_command(action_to_execute):
-    f = Path(action_to_execute)
+def __get_interpreter_and_path(action_to_execute):
+    # Script should be relative to the project path
+    script_path = os.path.join(configuration.project_path, action_to_execute)
+    f = Path(script_path)
     if not f.is_file():
-        return None
+        return None, None
 
     ext = f.suffix[1:]
     script_action_command = _command_by_file_extension.get(ext)
-    return script_action_command
+    return script_action_command, script_path
 
 
 def _execute_python_module(
@@ -168,10 +170,13 @@ def _execute_command(
 
 
 def _execute_script(
-    command: str, script: str, env_args, tool: ActionTool, env: Env, cli_args: CliArgs
+    command: str,
+    script_path: str,
+    env_args,
+    tool: ActionTool,
+    env: Env,
+    cli_args: CliArgs,
 ):
-    # Script should be relative to the project path
-    script_path = os.path.join(configuration.project_path, script)
     _execute_command(command, env_args, cli_args, tool, env, [script_path])
 
 

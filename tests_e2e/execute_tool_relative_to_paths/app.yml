@@ -1,0 +1,14 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+
+envs:
+  - name: dev
+    alias: d
+    long_name: dev
+
+tools:
+  - name: bash-script
+    action: bash_module.sh
+    type: shell

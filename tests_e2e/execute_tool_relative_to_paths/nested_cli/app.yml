@@ -1,0 +1,34 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+
+envs:
+  - name: dev
+    alias: d
+    long_name: dev
+
+tools:
+  - name: bash-script
+    action: bash_module.sh
+    type: shell
+
+  - name: bash-script-parent
+    action: ../bash_module.sh
+    type: shell
+
+  - name: bash-script-nested-as-command
+    action: nested_dir/level_1/bash_module.sh
+    type: shell
+
+  - name: bash-script-nested-as-script
+    action: ../nested_dir/level_1/bash_module.sh
+    type: shell
+
+  - name: bash-script-dotted
+    action: ../.dotted_dir/level_1/bash_module.sh
+    type: shell
+
+  - name: bash-script-weird-path
+    action: ../.dotted_dir/level_1/../level_2/bash_module.sh
+    type: shell
