@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.49.2 (2023-09-27)
+
+### Fix
+
+* **prompt:** Handle enum default when searchable ([#56](https://github.com/lt-mayonesa/hexagon/issues/56)) ([`12e9987`](https://github.com/lt-mayonesa/hexagon/commit/12e9987739c74f2032d5e4251f49debf6d9cdcaf))
+
 ## v0.49.1 (2023-09-24)
 
 ### Fix
