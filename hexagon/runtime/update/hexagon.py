@@ -17,7 +17,7 @@ from hexagon.support.storage import HEXAGON_STORAGE_APP
 CHANGELOG_MAX_PRINT_ENTRIES = 10
 
 
-@silent_fail()
+@silent_fail
 def check_for_hexagon_updates():
     if options.update_disabled:
         return

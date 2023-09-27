@@ -14,7 +14,7 @@ from hexagon.support.input.prompt import prompt
 from hexagon.support.output.printer import log
 
 
-@silent_fail()
+@silent_fail
 def check_for_cli_updates():
     if options.cli_update_disabled:
         return

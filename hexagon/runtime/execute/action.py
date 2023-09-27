@@ -31,7 +31,7 @@ TOOL_ARGUMENTS_CLASS_NAME = "Args"
 _command_by_file_extension = {"js": "node", "sh": "sh"}
 
 
-@execution_hook()
+@execution_hook
 def execute_action(tool: ActionTool, env_args: Any, env: Env, cli_args: CliArgs):
     custom_tools_path = configuration.custom_tools_path
     action_to_execute: str = tool.executable_str
