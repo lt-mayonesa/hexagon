@@ -146,7 +146,7 @@ def setup_string_list(self, args, extras, inquiry_type, type_):
 def setup_enum(self, args, extras, inquiry_type, type_):
     args["choices"] = [{"name": x.name, "value": x} for x in type_]
     if inquiry_type == InquiryType.ENUM_SEARCHABLE:
-        args["default"] = args["default"].value
+        args["default"] = args["default"].value if "default" in args else None
         return self.fuzzy, lambda x: x
     else:
         return self.select, lambda x: x
