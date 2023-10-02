@@ -69,7 +69,7 @@ class HexagonSpec:
         self._execution_time_start = None
 
     @log
-    def given_a_cli_yaml(self, config: Union[str, Dict]):
+    def given_a_cli_yaml(self, config: Union[str, Dict]) -> "HexagonSpec":
         if isinstance(config, str):
             self.yaml_file_name = config
         else:
@@ -83,7 +83,7 @@ class HexagonSpec:
         os_env_vars: Optional[Dict[str, str]] = None,
         test_file_path_is_absolute: bool = False,
         cwd: str = None,
-    ):
+    ) -> "HexagonSpec":
         __tracebackhide__ = True
         self._execution_time_start = time.time()
         if command:
@@ -118,7 +118,7 @@ class HexagonSpec:
         expected_output: List[Expected_Process_Output],
         discard_until_first_match=False,
         ignore_blank_lines=True,
-    ):
+    ) -> "HexagonSpec":
         __tracebackhide__ = True
         self.lines_read = assert_process_output(
             self.process,
@@ -133,7 +133,7 @@ class HexagonSpec:
     def then_output_should_not_contain(
         self,
         output_to_match: List[Expected_Process_Output],
-    ):
+    ) -> "HexagonSpec":
         __tracebackhide__ = True
         # noinspection PyBroadException
         try:
@@ -148,45 +148,45 @@ class HexagonSpec:
         return self
 
     @log
-    def arrow_down(self):
+    def arrow_down(self) -> "HexagonSpec":
         __tracebackhide__ = True
         write_to_process(self.process, ARROW_DOWN_CHARACTER)
         return self
 
     @log
-    def arrow_up(self):
+    def arrow_up(self) -> "HexagonSpec":
         __tracebackhide__ = True
         write_to_process(self.process, ARROW_UP_CHARACTER)
         return self
 
     @log
-    def enter(self):
+    def enter(self) -> "HexagonSpec":
         __tracebackhide__ = True
         return self.write(LINE_FEED_CHARACTER)
 
     @log
-    def space_bar(self):
+    def space_bar(self) -> "HexagonSpec":
         __tracebackhide__ = True
         return self.write(SPACE_BAR_CHARACTER)
 
     @log
-    def esc(self):
+    def esc(self) -> "HexagonSpec":
         __tracebackhide__ = True
         return self.write(ESCAPE_CHARACTER)
 
     @log
-    def carriage_return(self):
+    def carriage_return(self) -> "HexagonSpec":
         __tracebackhide__ = True
         return self.write(CARRIAGE_RETURN_CHARACTER)
 
     @log
-    def input(self, text: str):
+    def input(self, text: str) -> "HexagonSpec":
         __tracebackhide__ = True
         self.last_input = text
         return self.write(f"{text}{LINE_FEED_CHARACTER}")
 
     @log
-    def erase(self, val: Optional[Union[str, int]] = None):
+    def erase(self, val: Optional[Union[str, int]] = None) -> "HexagonSpec":
         __tracebackhide__ = True
         if not val and self.last_input:
             for _ in self.last_input:
@@ -200,7 +200,7 @@ class HexagonSpec:
                 self.write(BACKSPACE_CHARACTER)
         return self
 
-    def write(self, text: str):
+    def write(self, text: str) -> "HexagonSpec":
         __tracebackhide__ = True
         write_to_process(self.process, text)
         return self
@@ -208,7 +208,7 @@ class HexagonSpec:
     @log
     def exit(
         self, status: int = 0, timeout_in_seconds: int = 5, execution_time: int = None
-    ):
+    ) -> "HexagonSpec":
         __tracebackhide__ = True
         assert_process_ended(
             self.process,
@@ -224,17 +224,17 @@ class HexagonSpec:
         return self
 
     @log
-    def force_exit(self):
+    def force_exit(self) -> "HexagonSpec":
         return self.write(CONTROL_C_CHARACTER)
 
-    def wait(self, seconds: int):
+    def wait(self, seconds: int) -> "HexagonSpec":
         time.sleep(seconds)
         return self
 
     @property
-    def _and_(self):
+    def _and_(self) -> "HexagonSpec":
         return self
 
 
-def as_a_user(test_file):
+def as_a_user(test_file) -> "HexagonSpec":
     return HexagonSpec(test_file)
