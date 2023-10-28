@@ -32,7 +32,9 @@ _command_by_file_extension = {"js": "node", "sh": "sh"}
 
 
 @execution_hook
-def execute_action(tool: ActionTool, env_args: Any, env: Env, cli_args: CliArgs):
+def execute_action(
+    tool: ActionTool, env_args: Any, env: Optional[Env], cli_args: CliArgs
+):
     custom_tools_path = configuration.custom_tools_path
     action_to_execute: str = tool.executable_str
     script_interpreter, script_abs_path = __get_interpreter_and_path(action_to_execute)
@@ -59,7 +61,7 @@ def execute_action(tool: ActionTool, env_args: Any, env: Env, cli_args: CliArgs)
             return
 
         split_action = action_to_execute.split(" ")
-        return_code, executed_command = _execute_command(
+        return_code, executed_command = _execute_inline_command(
             split_action[0],
             env_args,
             cli_args,
@@ -144,7 +146,7 @@ def __args_with_optional_env(cli_args: CliArgs, env: Optional[Env]):
     ) + cli_args.raw_extra_args
 
 
-def _execute_command(
+def _execute_inline_command(
     command: str,
     env_args: Any,
     cli_args: CliArgs,
@@ -153,20 +155,16 @@ def _execute_command(
     action_args: List[str] = None,
 ):
     action_args = action_args if action_args else []
-    hexagon_args = __sanitize_args_for_command(
-        env_args, *__args_with_optional_env(cli_args, env)
+    cmd_as_string = " ".join(
+        [command] + action_args + __args_with_optional_env(cli_args, env)
+    ).format(
+        tool=tool,
+        env=env,
+        env_args=env_args,
+        cli_args=cli_args.format_friendly_extra_args,  # TODO: make format_friendly_extra_args work here
     )
-    cmd_as_string = " ".join([command] + action_args + hexagon_args)
 
-    env_vars = os.environ.copy()
-    env_vars[ENVVAR_EXECUTION_TOOL] = tool.json()
-    if env:
-        env_vars[ENVVAR_EXECUTION_ENV] = env.json()
-
-    return (
-        subprocess.call(cmd_as_string, shell=True, env=env_vars),
-        cmd_as_string,
-    )
+    return __call_subprocess(cmd_as_string, env, tool)
 
 
 def _execute_script(
@@ -177,7 +175,17 @@ def _execute_script(
     env: Env,
     cli_args: CliArgs,
 ):
-    _execute_command(command, env_args, cli_args, tool, env, [script_path])
+    action_args = [script_path]
+    hexagon_args = __sanitize_args_for_command(
+        env_args, *__args_with_optional_env(cli_args, env)
+    )
+    cmd_as_string = " ".join([command] + action_args + hexagon_args).format(
+        tool=tool,
+        env=env,
+        env_args=env_args,
+        cli_args=cli_args.extra_args,
+    )
+    return __call_subprocess(cmd_as_string, env, tool)
 
 
 def __sanitize_args_for_command(*args: Union[List[any], Dict, Env]):
@@ -218,3 +226,14 @@ def __load_module(module: str):
         return sys.modules[module]
 
     return importlib.import_module(module)
+
+
+def __call_subprocess(command: str, env: Optional[Env], tool: ActionTool):
+    env_vars = os.environ.copy()
+    env_vars[ENVVAR_EXECUTION_TOOL] = tool.json()
+    if env:
+        env_vars[ENVVAR_EXECUTION_ENV] = env.json()
+    return (
+        subprocess.call(command, shell=True, env=env_vars),
+        command,
+    )

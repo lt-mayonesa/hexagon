@@ -36,7 +36,8 @@ class ActionTool(Tool):
     def executable_str(self):
         if isinstance(self.action, list):
             return "\n".join(self.action)
-        return self.action
+        cmd = str(self.action)
+        return cmd[:-1] if cmd.endswith("\n") else cmd
 
 
 class FunctionTool(Tool):

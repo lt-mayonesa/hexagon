@@ -191,6 +191,59 @@ def test_execute_multiline_command_with_input_as_list():
     )
 
 
+def test_execute_a_formatted_command_with_env_args():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["a-simple-formatted-command", "dev"])
+        .then_output_should_be(["environment: development, tool: A formatted command"])
+        .exit()
+    )
+    (
+        as_a_user(__file__)
+        .run_hexagon(["a-simple-formatted-command", "qa"])
+        .then_output_should_be(
+            ["environment: quality assurance, tool: A formatted command"]
+        )
+        .exit()
+    )
+
+
+def test_execute_a_formatted_command_with_object_env_args():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["a-complex-formatted-command", "dev"])
+        .then_output_should_be(["Hello John, you are 30 years old"])
+        .exit()
+    )
+    (
+        as_a_user(__file__)
+        .run_hexagon(["a-complex-formatted-command", "qa"])
+        .then_output_should_be(["Hello Jane, you are 40 years old"])
+        .exit()
+    )
+
+
+def test_execute_a_formatted_command_with_all_action_args():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            [
+                "all-tool-args-are-replaced",
+                "dev",
+                "cli_positional_value",
+                "--cli_optional='value'",
+            ]
+        )
+        .then_output_should_be(
+            [
+                "tool alias is ataar, selected env is dev",
+                "env_args is 32, cli_args are cli_positional_value and 'value'",
+            ]
+        )
+        .exit()
+    )
+
+
 def test_execute_inline_command_with_path():
     path = os.environ["PATH"]
     (

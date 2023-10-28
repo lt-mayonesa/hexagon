@@ -48,6 +48,39 @@ tools:
     alias: mcal
     long_name: A multiline command as list
 
+  - name: a-simple-formatted-command
+    alias: asfc
+    long_name: A formatted command
+    type: shell
+    envs:
+      dev: development
+      qa: quality assurance
+    action: 'echo "environment: {env_args}, tool: {tool.long_name}"'
+
+  - name: a-complex-formatted-command
+    alias: acfc
+    long_name: A formatted command
+    type: shell
+    envs:
+      dev:
+        name: 'John'
+        age: 30
+      qa:
+        name: 'Jane'
+        age: 40
+    action: 'echo "Hello {env_args[name]}, you are {env_args[age]} years old"'
+
+  - name: all-tool-args-are-replaced
+    alias: ataar
+    long_name: A formatted command
+    type: shell
+    envs:
+      dev: 32
+      qa: 123
+    action: |
+      echo "tool alias is {tool.alias}, selected env is {env.long_name}"
+      echo "env_args is {env_args}, cli_args are {cli_args[positional][0]} and {cli_args[optional][cli_optional]}"
+
   - name: inline-command-with-PATH
     action: 'echo "$PATH"'
     type: shell
