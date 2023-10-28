@@ -149,6 +149,21 @@ class CliArgs(BaseModel):
     def key_value_arg(key, arg):
         return f"{key}={arg}"
 
+    @property
+    def format_friendly_extra_args(self):
+        return (
+            {
+                "positional": sorted(
+                    [v for k, v in self.extra_args.items() if k.isdigit()]
+                ),
+                "optional": {
+                    k: v for k, v in self.extra_args.items() if not k.isdigit()
+                },
+            }
+            if self.extra_args
+            else {}
+        )
+
 
 class ToolArgs(BaseModel):
     __tracer__ = None

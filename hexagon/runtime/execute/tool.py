@@ -23,6 +23,7 @@ def select_and_execute_tool(
 ) -> List[str]:
     tool = search_by_name_or_alias(tools, cli_args.tool and cli_args.tool.value)
     env = search_by_name_or_alias(envs, cli_args.env and cli_args.env.value)
+    # FIXME: validate selected env: if tool has envs defined and env is None -> should fail
 
     tool = select_tool(tools, tool)
     if tool.traced:
