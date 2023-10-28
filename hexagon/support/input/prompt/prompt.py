@@ -1,6 +1,7 @@
 from copy import copy
 from enum import Enum, auto
 from pathlib import Path
+from typing import Any, Dict, Literal, Callable
 
 from InquirerPy import inquirer
 from InquirerPy.base import Choice
@@ -49,9 +50,9 @@ def list_mapper(v):
     return v.strip().split("\n")
 
 
-def set_default(options, model_field: ModelField):
-    if "default" in options:
-        return {"default": options["default"]}
+def set_default(invocation_extras, model_field: ModelField):
+    if "default" in invocation_extras:
+        return {"default": invocation_extras["default"]}
     elif model_field.default:
         default = (
             model_field.default.value
@@ -116,103 +117,23 @@ def _determine_expected_inquiry(
     return query, extras
 
 
-def setup_enum_list(self, args, extras, inquiry_type, type_):
-    args["choices"] = [
-        Choice(
-            name=x.name,
-            value=x,
-            enabled=("default" in args and x in args["default"]),
-        )
-        for x in type_.__args__[0]
-    ]
-    if inquiry_type == InquiryType.ENUM_LIST_SEARCHABLE:
-        args["multiselect"] = True
-        return self.fuzzy, lambda x: x
-    else:
-        return self.checkbox, lambda x: x
-
-
-def setup_string_list(self, args, extras, inquiry_type, type_):
-    mapper = list_mapper
-    args["filter"] = mapper
-    args["instruction"] = (
-        args["instruction"]
-        or "(each line represents a value) ESC + Enter to finish input"
-    )
-    args["multiline"] = True
-    return self.text, mapper
-
-
-def setup_enum(self, args, extras, inquiry_type, type_):
-    args["choices"] = [{"name": x.name, "value": x} for x in type_]
-    if inquiry_type == InquiryType.ENUM_SEARCHABLE:
-        args["default"] = args["default"].value if "default" in args else None
-        return self.fuzzy, lambda x: x
-    else:
-        return self.select, lambda x: x
-
-
-def setup_searchable_list(self, args, extras, inquiry_type, type_):
-    args["choices"] = extras["choices"]
-    if inquiry_type == InquiryType.STRING_LIST_SEARCHABLE:
-        args["multiselect"] = True
-    return self.fuzzy, lambda x: x
-
-
-def setup_path(self, args, extras, inquiry_type, type_):
-    if inquiry_type == InquiryType.PATH_SEARCHABLE:
-        if "glob" in extras:
-            args["choices"] = sorted(
-                Path(extras.get("cwd", ".")).rglob(extras["glob"]), key=lambda x: x.name
-            )
-        elif "choices" in extras:
-            args["choices"] = extras["choices"]
-        else:
-            raise ValueError("searchable path must have either glob or choices defined")
-        return self.fuzzy, lambda x: x
-    else:
-        args["only_directories"] = (
-            args["only_directories"]
-            if "only_directories" in args
-            else issubclass(type_, DirectoryPath)
-        )
-        return self.path, lambda x: x
-
-
-def setup_int(self, args, extras, inquiry_type, type_):
-    return self.number, lambda x: x
-
-
-def setup_float(self, args, extras, inquiry_type, type_):
-    args["float_allowed"] = True
-    return self.number, lambda x: x
-
-
-def setup_secret(self, args, extras, inquiry_type, type_):
-    return self.secret, lambda x: x
-
-
-def setup_string(self, args, extras, inquiry_type, type_):
-    return self.text, lambda x: x
-
-
 @for_all_methods(log.status_aware, exclude=["query_field"])
 class Prompt:
     def query_field(self, model_field: ModelField, model_class, **kwargs):
         # TODO: this method is a mess, refactor it
         declaration_extras = copy(model_field.field_info.extra)
         invocation_extras = copy(kwargs)
-        args = {
+        inquiry_args = {
             "message": declaration_extras.get("prompt_message", None)
             or f"Enter {model_field.name}:",
             "instruction": declaration_extras.get("prompt_instruction", None),
         }
-        args.update(set_default(invocation_extras, model_field))
+        inquiry_args.update(set_default(invocation_extras, model_field))
 
-        type_, iterable, of_enum = field_info(model_field)
+        field_type, iterable, of_enum = field_info(model_field)
 
         inquiry_type, extras = _determine_expected_inquiry(
-            iterable, of_enum, type_, declaration_extras, invocation_extras
+            iterable, of_enum, field_type, declaration_extras, invocation_extras
         )
 
         setups = {
@@ -231,7 +152,11 @@ class Prompt:
         }
 
         inq, mapper = setups.get(inquiry_type, setup_string)(
-            self, args, extras, inquiry_type, type_
+            self,
+            inquiry_args=inquiry_args,
+            inquiry_type=inquiry_type,
+            extras=extras,
+            field_type=field_type,
         )
 
         if model_field.sub_fields:
@@ -246,7 +171,7 @@ class Prompt:
                         **model_field.class_validators,
                     }
                 )
-            args["validate"] = PromptValidator(
+            inquiry_args["validate"] = PromptValidator(
                 validators_,
                 model_class,
             )
@@ -254,8 +179,8 @@ class Prompt:
         # FIXME: this is working by chance, it's not the best way to do it
         if "searchable" in invocation_extras:
             del invocation_extras["searchable"]
-        args.update(**invocation_extras)
-        return inq(**args)
+        inquiry_args.update(**invocation_extras)
+        return inq(**inquiry_args)
 
     @staticmethod
     def text(**kwargs):
@@ -333,3 +258,115 @@ class Prompt:
         if not options.hints_disabled:
             kwargs["long_instruction"] = HintsBuilder().with_enter_cancel_skip().build()
         return inquirer.secret(**kwargs).execute()
+
+
+def setup_enum_list(
+    self: Prompt,
+    inquiry_type: Literal[InquiryType.ENUM_LIST, InquiryType.ENUM_LIST_SEARCHABLE],
+    inquiry_args: Dict[str, Any],
+    field_type: Any,
+    **_,
+) -> (Callable, Callable):
+    inquiry_args["choices"] = [
+        Choice(
+            name=x.name,
+            value=x,
+            enabled=("default" in inquiry_args and x in inquiry_args["default"]),
+        )
+        for x in field_type.__args__[0]
+    ]
+    if inquiry_type == InquiryType.ENUM_LIST_SEARCHABLE:
+        inquiry_args["multiselect"] = True
+        return self.fuzzy, lambda x: x
+    else:
+        return self.checkbox, lambda x: x
+
+
+def setup_string_list(
+    self: Prompt, inquiry_args: Dict[str, Any], **_
+) -> (Callable, Callable):
+    mapper = list_mapper
+    inquiry_args["filter"] = mapper
+    inquiry_args["instruction"] = (
+        inquiry_args["instruction"]
+        or "(each line represents a value) ESC + Enter to finish input"
+    )
+    inquiry_args["multiline"] = True
+    return self.text, mapper
+
+
+def setup_enum(
+    self: Prompt,
+    inquiry_type: Literal[InquiryType.ENUM, InquiryType.ENUM_SEARCHABLE],
+    inquiry_args: Dict[str, Any],
+    field_type: Any,
+    **_,
+) -> (Callable, Callable):
+    inquiry_args["choices"] = [{"name": x.name, "value": x} for x in field_type]
+    if inquiry_type == InquiryType.ENUM_SEARCHABLE:
+        inquiry_args["default"] = (
+            inquiry_args["default"].value if "default" in inquiry_args else None
+        )
+        return self.fuzzy, lambda x: x
+    else:
+        return self.select, lambda x: x
+
+
+def setup_searchable_list(
+    self: Prompt,
+    inquiry_type: Literal[
+        InquiryType.STRING_SEARCHABLE, InquiryType.STRING_LIST_SEARCHABLE
+    ],
+    inquiry_args: Dict[str, Any],
+    extras: Dict[str, Any],
+    **_,
+) -> (Callable, Callable):
+    inquiry_args["choices"] = extras["choices"]
+    if inquiry_type == InquiryType.STRING_LIST_SEARCHABLE:
+        inquiry_args["multiselect"] = True
+    return self.fuzzy, lambda x: x
+
+
+def setup_path(
+    self: Prompt,
+    inquiry_type: Literal[InquiryType.PATH, InquiryType.PATH_SEARCHABLE],
+    inquiry_args: Dict[str, Any],
+    extras: Dict[str, Any],
+    field_type: Any,
+) -> (Callable, Callable):
+    if inquiry_type == InquiryType.PATH_SEARCHABLE:
+        if "glob" in extras:
+            inquiry_args["choices"] = sorted(
+                Path(extras.get("cwd", ".")).rglob(extras["glob"]), key=lambda x: x.name
+            )
+        elif "choices" in extras:
+            inquiry_args["choices"] = extras["choices"]
+        else:
+            raise ValueError("searchable path must have either glob or choices defined")
+        return self.fuzzy, lambda x: x
+    else:
+        inquiry_args["only_directories"] = (
+            inquiry_args["only_directories"]
+            if "only_directories" in inquiry_args
+            else issubclass(field_type, DirectoryPath)
+        )
+        return self.path, lambda x: x
+
+
+def setup_int(self: Prompt, **_) -> (Callable, Callable):
+    return self.number, lambda x: x
+
+
+def setup_float(
+    self: Prompt, inquiry_args: Dict[str, Any], **_
+) -> (Callable, Callable):
+    inquiry_args["float_allowed"] = True
+    return self.number, lambda x: x
+
+
+def setup_secret(self: Prompt, **_) -> (Callable, Callable):
+    return self.secret, lambda x: x
+
+
+def setup_string(self: Prompt, **_) -> (Callable, Callable):
+    return self.text, lambda x: x
