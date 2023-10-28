@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.50.0 (2023-10-28)
+
+### Feature
+
+* **execute:** Arg replacement ([`f459405`](https://github.com/lt-mayonesa/hexagon/commit/f459405d306847167b91d8f3257882d43de3a854))
+
 ## v0.49.2 (2023-09-27)
 
 ### Fix
