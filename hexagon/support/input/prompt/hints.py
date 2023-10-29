@@ -1,5 +1,8 @@
 from typing import List
 
+from hexagon.runtime.singletons import options
+from hexagon.support.input.prompt.key_bindings import to_readable_name
+
 
 def _fmt(msg: str, keys: List[str]) -> List[str]:
     return [msg.format(keys=" | ".join(keys))]
@@ -17,6 +20,7 @@ class HintsBuilder:
         self.__has_fuzzy_toggle = False
         self.__has_number_controls = False
         self.__has_floating_point = False
+        self.__has_path_support = False
 
     def with_enter_cancel_skip(self) -> "HintsBuilder":
         if not self.__has_enter_cancel_skip:
@@ -94,6 +98,15 @@ class HintsBuilder:
                 _("msg.support.prompt.hints.alt_part_focus"), ["CTRL+I", "SHIFT+TAB"]
             )
             self.__has_floating_point = True
+        return self
+
+    def with_path_support(self) -> "HintsBuilder":
+        if not self.__has_path_support:
+            self.__top_hints += _fmt(
+                _("msg.support.prompt.hints.create_path_at_location"),
+                [to_readable_name(options.keymap.create_dir)],
+            )
+            self.__has_path_support = True
         return self
 
     def with_all(self) -> "HintsBuilder":

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-09-18 21:51+0000\n"
+"POT-Creation-Date: 2023-10-29 21:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,7 +154,7 @@ msgstr "Create A New Tool"
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Installing {runtime} dependencies at path: {path}"
 
-#: hexagon/runtime/execute/action.py:134
+#: hexagon/runtime/execute/action.py:136
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 "To support tool arguments either add a model extending\n"
@@ -205,15 +205,15 @@ msgstr "Your custom action seems to have a module dependency error"
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr "Execution of tool {action} failed"
 
-#: hexagon/runtime/execute/tool.py:69
+#: hexagon/runtime/execute/tool.py:70
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr "Go back"
 
-#: hexagon/runtime/execute/tool.py:71
+#: hexagon/runtime/execute/tool.py:72
 msgid "msg.support.execute.tool.go_back_description"
 msgstr "Go back to the previous menu"
 
-#: hexagon/runtime/execute/tool.py:72
+#: hexagon/runtime/execute/tool.py:73
 msgid "icon.global.go_back"
 msgstr "↩"
 
@@ -316,97 +316,105 @@ msgstr "✗ [u][bold]{loc}[/bold] -> {message}[/u]"
 msgid "error.support.hooks.hook.unknown_type"
 msgstr "Unknown HookSubscriptionType {subscription_type}"
 
-#: hexagon/support/input/prompt/hints.py:24
+#: hexagon/support/input/prompt/hints.py:25
 msgid "msg.support.prompt.hints.confirm"
 msgstr "[ {keys} ] to confirm"
 
-#: hexagon/support/input/prompt/hints.py:25
+#: hexagon/support/input/prompt/hints.py:26
 msgid "msg.support.prompt.hints.cancel"
 msgstr "[ {keys} ] to cancel"
 
-#: hexagon/support/input/prompt/hints.py:26
+#: hexagon/support/input/prompt/hints.py:27
 msgid "msg.support.prompt.hints.skip"
 msgstr "[ {keys} ] to skip"
 
-#: hexagon/support/input/prompt/hints.py:34
+#: hexagon/support/input/prompt/hints.py:35
 msgid "msg.support.prompt.hints.autocomplete"
 msgstr "[ {keys} ] to autocomplete (if available)"
 
-#: hexagon/support/input/prompt/hints.py:43
+#: hexagon/support/input/prompt/hints.py:44
 msgid "msg.support.prompt.hints.toggle"
 msgstr "[ {keys} ] to toggle"
 
-#: hexagon/support/input/prompt/hints.py:44
+#: hexagon/support/input/prompt/hints.py:45
 msgid "msg.support.prompt.hints.toggle_move_down"
 msgstr "[ {keys} ] to toggle and move down"
 
-#: hexagon/support/input/prompt/hints.py:45
+#: hexagon/support/input/prompt/hints.py:46
 msgid "msg.support.prompt.hints.toggle_move_up"
 msgstr "[ {keys} ] to toggle and move up"
 
-#: hexagon/support/input/prompt/hints.py:46
+#: hexagon/support/input/prompt/hints.py:47
 msgid "msg.support.prompt.hints.toggle_all"
 msgstr "[ {keys} ] to toggle all"
 
-#: hexagon/support/input/prompt/hints.py:48
+#: hexagon/support/input/prompt/hints.py:49
 msgid "msg.support.prompt.hints.toggle_all_true"
 msgstr "[ {keys} ] to toggle all to true"
 
-#: hexagon/support/input/prompt/hints.py:57
+#: hexagon/support/input/prompt/hints.py:58
 msgid "msg.support.prompt.hints.move_down"
 msgstr "[ {keys} ] to move down"
 
-#: hexagon/support/input/prompt/hints.py:58
+#: hexagon/support/input/prompt/hints.py:59
 msgid "msg.support.prompt.hints.move_up"
 msgstr "[ {keys} ] to move up"
 
-#: hexagon/support/input/prompt/hints.py:65
+#: hexagon/support/input/prompt/hints.py:66
 msgid "msg.support.prompt.hints.toggle_fuzzy_search"
 msgstr "[ {keys} ] to toggle fuzzy search"
 
-#: hexagon/support/input/prompt/hints.py:75
+#: hexagon/support/input/prompt/hints.py:76
 msgid "msg.support.prompt.hints.number_decrement"
 msgstr "[ {keys} ] to decrement"
 
-#: hexagon/support/input/prompt/hints.py:78
+#: hexagon/support/input/prompt/hints.py:79
 msgid "msg.support.prompt.hints.number_increment"
 msgstr "[ {keys} ] to increment"
 
-#: hexagon/support/input/prompt/hints.py:79
+#: hexagon/support/input/prompt/hints.py:80
 msgid "msg.support.prompt.hints.number_left"
 msgstr "[ {keys} ] to select number left"
 
-#: hexagon/support/input/prompt/hints.py:80
+#: hexagon/support/input/prompt/hints.py:81
 msgid "msg.support.prompt.hints.number_right"
 msgstr "[ {keys} ] to select number right"
 
-#: hexagon/support/input/prompt/hints.py:83
+#: hexagon/support/input/prompt/hints.py:84
 msgid "msg.support.prompt.hints.toggle_negative"
 msgstr "[ {keys} ] to toggle negative"
 
-#: hexagon/support/input/prompt/hints.py:92
+#: hexagon/support/input/prompt/hints.py:93
 msgid "msg.support.prompt.hints.number_dot"
 msgstr "[ {keys} ] to select decimal part"
 
-#: hexagon/support/input/prompt/hints.py:94
+#: hexagon/support/input/prompt/hints.py:95
 msgid "msg.support.prompt.hints.alt_part_focus"
 msgstr "[ {keys} ] to alternate focused part"
 
-#: hexagon/support/input/prompt/hints.py:110
+#: hexagon/support/input/prompt/hints.py:103
+msgid "msg.support.prompt.hints.create_path_at_location"
+msgstr "[ {keys} ] to create directory at location"
+
+#: hexagon/support/input/prompt/hints.py:119
 msgid "error.support.prompt.hints.no_hints_on_builder"
 msgstr "HintsBuilder should have at least one hint"
 
-#: hexagon/support/input/prompt/hints.py:113
+#: hexagon/support/input/prompt/hints.py:122
 msgid "msg.support.prompt.hints.help"
 msgstr "help:"
 
-#: hexagon/support/tracer.py:82
+#: hexagon/support/input/prompt/prompt.py:258
+msgid "msg.support.prompt.prompt.directory_created"
+msgstr "📁 created directory: {path} [green]✓[/green]"
+
+#: hexagon/support/tracer.py:83
 msgid "msg.main.tracer.run_again"
 msgstr ""
 "[cyan][dim]To run this tool again do:[/dim]\n"
 "  {command}[/cyan]"
 
-#: hexagon/support/tracer.py:88
+#: hexagon/support/tracer.py:89
 msgid "msg.main.tracer.or"
 msgstr ""
 "[cyan][dim] or:[/dim]\n"

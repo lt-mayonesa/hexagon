@@ -204,23 +204,47 @@ def test_hints_for_fuzzy_multiselect_prompt_are_generated_correctly():
     )
 
 
-def test_hints_for_path_prompt_are_generated_correctly():
+def test_hints_for_file_path_prompt_are_generated_correctly():
     (
         as_a_user(__file__)
         .run_hexagon(
-            ["hints", "hints_path"],
+            ["hints", "hints_file_path"],
             os_env_vars={"HEXAGON_HINTS_DISABLED": "0"},
         )
         .then_output_should_be(
             [
-                "Enter prompt_path",
+                "Enter prompt_file_path",
                 "help:",
                 "[ CTRL+SPACE ] to autocomplete (if available) / [ ENTER ] to confirm / [ CTRL+C",
             ]
         )
         .input("app.yml")
         .then_output_should_be(
-            ["Enter prompt_path: app.yml", "result: app.yml"],
+            ["Enter prompt_file_path: app.yml", "result: app.yml"],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )
+
+
+def test_hints_for_directory_path_prompt_are_generated_correctly():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["hints", "hints_directory_path"],
+            os_env_vars={"HEXAGON_HINTS_DISABLED": "0"},
+        )
+        .then_output_should_be(
+            [
+                "Enter prompt_directory_path",
+                "help:",
+                "[ CTRL+P ] to create directory at location",
+                "[ CTRL+SPACE ] to autocomplete (if available) / [ ENTER ] to confirm / [ CTRL+C",
+            ]
+        )
+        .input(".config")
+        .then_output_should_be(
+            ["Enter prompt_directory_path: .config", "result: .config"],
             discard_until_first_match=True,
         )
         .exit()

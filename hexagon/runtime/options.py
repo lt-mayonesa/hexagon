@@ -33,6 +33,10 @@ def _save_settings_to_source(options):
     )
 
 
+class KeymapOptions(BaseSettings):
+    create_dir: str = "c-p"
+
+
 class Options(BaseSettings):
     theme: Optional[str] = "default"
     update_time_between_checks: Optional[datetime.timedelta] = datetime.timedelta(
@@ -44,6 +48,7 @@ class Options(BaseSettings):
     cli_update_disabled: Optional[bool] = False
     config_storage_path: Optional[DirectoryPath] = None
     hints_disabled: Optional[bool] = False
+    keymap: KeymapOptions = KeymapOptions()
 
     class Config:
         env_prefix = "HEXAGON_"
