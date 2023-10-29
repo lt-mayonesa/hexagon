@@ -38,7 +38,7 @@ class PromptValidator(Validator):
 
 def default_validator(model_field: ModelField, mapper=lambda x: x):
     def func(cls, value):
-        value, error = model_field.sub_fields[0].validate(mapper(value), {}, loc="")
+        value, error = model_field.validate(mapper(value), {}, loc="")
         if error:
             raise PydanticValidationError([error], model=cls)
         return value

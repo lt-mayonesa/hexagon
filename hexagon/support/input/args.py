@@ -1,4 +1,5 @@
 import abc
+from copy import copy
 from inspect import isclass
 from typing import Optional, Dict, Union, List, TypeVar, Generic, Any
 
@@ -63,6 +64,7 @@ class HexagonArg(Generic[T]):
                 return v
             value = field.sub_fields[0]
 
+            value.field_info.extra = copy(field.field_info.extra)
             valid_value, error = value.validate(v.__value__, {}, loc="")
             if error:
                 raise ValidationError([error], model=cls)
