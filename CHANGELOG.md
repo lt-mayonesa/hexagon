@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.51.0 (2023-10-29)
+
+### Feature
+
+* **prompt:** CTRL+P create directory if not exists ([#61](https://github.com/lt-mayonesa/hexagon/issues/61)) ([`05002ac`](https://github.com/lt-mayonesa/hexagon/commit/05002ac13c5f492004a8edc99d4a69df965c3ab5))
+
 ## v0.50.0 (2023-10-28)
 
 ### Feature
