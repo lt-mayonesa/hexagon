@@ -135,3 +135,23 @@ def test_WHEN_group_tool_command_is_executed_THEN_execute_again_is_shown():
         )
         .exit()
     )
+
+
+def test_enum_values_are_printed_not_names():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["test-enum-values"],
+            os_env_vars={"HEXAGON_THEME": "no_border"},
+        )
+        .carriage_return()
+        .then_output_should_be(
+            [
+                "test: Test.MY_ENUM",
+                "To run this tool again do:",
+                "hexagon-test test-enum-values this_should_be_printed",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )

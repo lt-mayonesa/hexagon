@@ -16,7 +16,7 @@ class Trace:
     def real(self):
         if self.key:
             return f"{self.key}={self.value}"
-        return str(self.value)
+        return str(self.value.value if isinstance(self.value, Enum) else self.value)
 
     def alias(self):
         if self.key_alias:

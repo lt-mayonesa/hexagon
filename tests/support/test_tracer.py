@@ -1,3 +1,5 @@
+from enum import Enum
+
 import pytest
 
 from hexagon.runtime.parse_args import parse_cli_args
@@ -16,6 +18,12 @@ def test_build_command_from_initial_trace(initial, expected_trace):
     tracer = Tracer(initial)
     assert tracer.trace() == expected_trace
     assert tracer.aliases_trace() == expected_trace
+
+
+class MyEnum(Enum):
+    A = "a"
+    B = "b"
+    C = "c"
 
 
 @pytest.mark.parametrize(
@@ -57,6 +65,17 @@ def test_build_command_from_initial_trace(initial, expected_trace):
             False,
             "docker dev --foo=bar",
             "d d --foo=bar",
+        ),
+        (
+            parse_cli_args([]),
+            [
+                ("tool", "docker", None, "d", None),
+                ("env", "dev", None, "d", None),
+                ("foo", MyEnum.B, "--foo", None, None),
+            ],
+            True,
+            "docker dev --foo=b",
+            "d d --foo=b",
         ),
         (
             parse_cli_args(["docker", "dev", "--foo=bar", "--foo=baz"]),

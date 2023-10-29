@@ -36,3 +36,7 @@ tools:
         alias: gcf
         action: echo "test"
         type: shell
+
+  - name: test-enum-values
+    type: shell
+    action: test_enum_values
