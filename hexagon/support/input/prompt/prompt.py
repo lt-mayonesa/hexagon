@@ -5,6 +5,8 @@ from typing import Any, Dict, Literal, Callable
 
 from InquirerPy import inquirer
 from InquirerPy.base import Choice
+from InquirerPy.utils import run_in_terminal
+from prompt_toolkit.buffer import ValidationState
 from prompt_toolkit.document import Document
 from prompt_toolkit.validation import ValidationError, Validator
 from pydantic import ValidationError as PydanticValidationError, DirectoryPath
@@ -14,6 +16,7 @@ from hexagon.runtime.singletons import options
 from hexagon.support.input.args import HexagonArg
 from hexagon.support.input.prompt.for_all_methods import for_all_methods
 from hexagon.support.input.prompt.hints import HintsBuilder
+from hexagon.support.input.types import path_validator
 from hexagon.support.output.printer import log
 from hexagon.utils.typing import field_info
 
@@ -238,11 +241,37 @@ class Prompt:
 
     @staticmethod
     def path(**kwargs):
+        is_dir = kwargs.get("only_directories", False)
         if not options.hints_disabled:
-            kwargs["long_instruction"] = (
-                HintsBuilder().with_enter_cancel_skip().with_autocomplete().build()
-            )
-        return inquirer.filepath(**kwargs).execute()
+            hints = HintsBuilder().with_enter_cancel_skip().with_autocomplete()
+            if is_dir:
+                hints.with_path_support()
+            kwargs["long_instruction"] = hints.build()
+        filepath_prompt = inquirer.filepath(**kwargs)
+
+        if is_dir:
+            # noinspection PyProtectedMember
+            @filepath_prompt.register_kb(options.keymap.create_dir)
+            def _create_dir(__):
+                path = path_validator(filepath_prompt._session.default_buffer.text)
+                if not path.exists():
+                    try:
+                        path.mkdir(parents=True)
+                        run_in_terminal(
+                            lambda: log.info(
+                                _("msg.support.prompt.prompt.directory_created").format(
+                                    path=path.absolute()
+                                )
+                            )
+                        )
+                        filepath_prompt._session.default_buffer.validation_state = (
+                            ValidationState.INVALID
+                        )
+                        filepath_prompt._session.default_buffer.validation_error = None
+                    except Exception as e:
+                        filepath_prompt._set_error(str(e))
+
+        return filepath_prompt.execute()
 
     @staticmethod
     def number(**kwargs):

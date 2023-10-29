@@ -1,12 +1,11 @@
 from enum import Enum
 from typing import Any, Optional, List
 
-from pydantic import FilePath
-
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
 from hexagon.support.input.args import ToolArgs, OptionalArg, PositionalArg, Arg
 from hexagon.support.input.prompt import prompt
+from hexagon.support.input.types import DirectoryPath, FilePath
 from hexagon.support.output.printer import log
 
 
@@ -24,7 +23,8 @@ class Test(Enum):
     HINTS_CONFIRM = "hints_confirm"
     HINTS_FUZZY = "hints_fuzzy"
     HINTS_FUZZY_MULTISELECT = "hints_fuzzy_multiselect"
-    HINTS_PATH = "hints_path"
+    HINTS_FILE_PATH = "hints_file_path"
+    HINTS_DIRECTORY_PATH = "hints_directory_path"
     HINTS_NUMBER = "hints_number"
     HINTS_NUMBER_FLOAT = "hints_number_float"
     HINTS_SECRET = "hints_secret"
@@ -51,7 +51,8 @@ class Args(ToolArgs):
         searchable=True,
         choices=["a", "b", "c", "d", "e", "f"],
     )
-    prompt_path: OptionalArg[FilePath] = None
+    prompt_file_path: OptionalArg[FilePath] = None
+    prompt_directory_path: OptionalArg[DirectoryPath] = None
     prompt_number: OptionalArg[int] = None
     prompt_number_float: OptionalArg[float] = None
     prompt_text_secret: OptionalArg[str] = Arg(
@@ -74,7 +75,8 @@ def main(
         Test.HINTS_CONFIRM: lambda: prompt.confirm("Are you sure?", default=True),
         Test.HINTS_FUZZY: lambda: cli_args.prompt_fuzzy.prompt(),
         Test.HINTS_FUZZY_MULTISELECT: lambda: cli_args.prompt_fuzzy_multiselect.prompt(),
-        Test.HINTS_PATH: lambda: cli_args.prompt_path.prompt(),
+        Test.HINTS_FILE_PATH: lambda: cli_args.prompt_file_path.prompt(),
+        Test.HINTS_DIRECTORY_PATH: lambda: cli_args.prompt_directory_path.prompt(),
         Test.HINTS_NUMBER: lambda: cli_args.prompt_number.prompt(),
         Test.HINTS_NUMBER_FLOAT: lambda: cli_args.prompt_number_float.prompt(),
         Test.HINTS_SECRET: lambda: cli_args.prompt_text_secret.prompt(),

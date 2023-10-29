@@ -76,6 +76,7 @@ class Tracer:
         cli_command: str,
         logger,
     ):
+        # TODO: review printing Enum values, sometimes they are printed as "Enum.value" instead of "value"
         if self.has_traced():
             command, aliases_command = self.trace(), self.aliases_trace()
             logger.extra(
