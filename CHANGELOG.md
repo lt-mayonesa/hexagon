@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.51.1 (2023-10-29)
+
+### Fix
+
+* **tracer:** Execute again display enum correctly ([`50d575a`](https://github.com/lt-mayonesa/hexagon/commit/50d575aed1d10516fc531e0f4946ab2655086e5c))
+
 ## v0.51.0 (2023-10-29)
 
 ### Feature
