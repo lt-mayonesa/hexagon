@@ -67,17 +67,6 @@ class MyEnum(Enum):
             "d d --foo=bar",
         ),
         (
-            parse_cli_args([]),
-            [
-                ("tool", "docker", None, "d", None),
-                ("env", "dev", None, "d", None),
-                ("foo", MyEnum.B, "--foo", None, None),
-            ],
-            True,
-            "docker dev --foo=b",
-            "d d --foo=b",
-        ),
-        (
             parse_cli_args(["docker", "dev", "--foo=bar", "--foo=baz"]),
             [
                 ("tool", "docker", None, "d", None),
@@ -181,4 +170,20 @@ def test_trace_same_key_multiple_times():
     tracer.tracing("name", "Bob", key="--name", key_alias="-n")
     assert tracer.trace() == "--name=Bob"
     assert tracer.aliases_trace() == "-n=Bob"
+    assert tracer.has_traced() is True
+
+
+def test_trace_enum_value():
+    tracer = Tracer(parse_cli_args([]))
+    tracer.tracing(ref="name", value=MyEnum.B)
+    assert tracer.trace() == "b"
+    assert tracer.aliases_trace() == "b"
+    assert tracer.has_traced() is True
+
+
+def test_trace_enum_value_with_key():
+    tracer = Tracer(parse_cli_args([]))
+    tracer.tracing("name", MyEnum.A, key="--name", key_alias="-n")
+    assert tracer.trace() == "--name=a"
+    assert tracer.aliases_trace() == "-n=a"
     assert tracer.has_traced() is True
