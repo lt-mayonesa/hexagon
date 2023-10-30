@@ -16,7 +16,7 @@ class Trace:
     def real(self):
         if self.key:
             return f"{self.key}={self.value}"
-        return str(self.value.value if isinstance(self.value, Enum) else self.value)
+        return str(self.value)
 
     def alias(self):
         if self.key_alias:
@@ -46,14 +46,14 @@ class Tracer:
             if t.ref == ref:
                 self._trace.remove(t)
 
-        if not key:
-            self._trace.append(Trace(ref, value, value_alias, key, key_alias))
-            return value
-
         def to_str(v):
             if isinstance(v, Enum):
-                return v.value
+                return str(v.value)
             return str(v)
+
+        if not key:
+            self._trace.append(Trace(ref, to_str(value), value_alias, key, key_alias))
+            return value
 
         if isinstance(value, list):
             for val in value:
@@ -76,7 +76,6 @@ class Tracer:
         cli_command: str,
         logger,
     ):
-        # TODO: review printing Enum values, sometimes they are printed as "Enum.value" instead of "value"
         if self.has_traced():
             command, aliases_command = self.trace(), self.aliases_trace()
             logger.extra(
