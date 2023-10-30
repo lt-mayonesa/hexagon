@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.51.2 (2023-10-30)
+
+### Fix
+
+* **tracer:** Trace enum values correctly ([#63](https://github.com/lt-mayonesa/hexagon/issues/63)) ([`38475bb`](https://github.com/lt-mayonesa/hexagon/commit/38475bbb50bf252285e6c62eaab2768c15e974da))
+
 ## v0.51.1 (2023-10-29)
 
 ### Fix
