@@ -13,3 +13,7 @@ runs:
       run: ls -R
       working-directory: locales
       shell: bash
+
+    - name: copy en to en.py
+      run: .github/scripts/i18n/build.sh fallback
+      shell: bash

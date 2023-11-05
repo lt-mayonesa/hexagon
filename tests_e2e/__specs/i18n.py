@@ -27,10 +27,36 @@ def test_default_locale_is_english():
     )
 
 
-def test_fallback_locale_is_english():
+def test_unknown_language_fallbacks_to_english():
     (
         as_a_user(__file__)
         .run_hexagon(os_env_vars={"LANGUAGE": "fr"})
+        .then_output_should_be(
+            [
+                "Hi, which tool would you like to use today?",
+                "4/4",
+                "⦾ Google",
+                "ƒ Python i18n Test",
+                "⬡ Save Last Command as Shell Alias",
+                "⬡ Create A New Tool",
+            ]
+        )
+        .arrow_down()
+        .enter()
+        .then_output_should_be(
+            [
+                ["Hi, which tool would you like to use today?", "ƒ Python i18n Test"],
+                "stub",
+            ]
+        )
+        .exit()
+    )
+
+
+def test_not_found_locales_fallbacks_to_english():
+    (
+        as_a_user(__file__)
+        .run_hexagon(os_env_vars={"HEXAGON_LOCALES_DIR": "/some/unknown/path"})
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
