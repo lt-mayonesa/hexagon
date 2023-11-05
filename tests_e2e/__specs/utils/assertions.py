@@ -5,6 +5,8 @@ import subprocess
 import sys
 from typing import Any, Callable, Dict, List
 
+from rich import print
+
 from tests_e2e.__specs.utils.path import e2e_test_folder_path
 
 last_output_file_path = os.path.realpath(
@@ -36,11 +38,11 @@ def _save_last_output_and_raise(
     if not timeout_reached:
         for line in process.stdout.readlines():
             lines.append(line)
-    print("command output:")
+    print("\n[u]command stdout:\n")
     for line in lines:
         print(line.rstrip())
 
-    print("command error:")
+    print("\n[u]command stderr:\n")
     for line in process.stderr.readlines():
         print(line.rstrip())
 

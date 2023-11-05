@@ -1,8 +1,9 @@
 import inspect
 import time
-from functools import wraps
 from subprocess import Popen
 from typing import Callable, Dict, List, Optional, Union
+
+from rich import print
 
 from tests_e2e.__specs.utils.assertions import (
     Expected_Process_Output,
@@ -28,26 +29,28 @@ from tests_e2e.__specs.utils.run import (
 )
 
 
-def log(func):
+def _log(func, *args, **kwargs):
     """
-    Decorator to print function call details.
+    Prints the hexagon step being executed.
 
-    This includes parameters names and effective values.
+    This was previously defined as a decorator, using ParamSpec to support type hints.
+    But it wasn't working correctly as decorated methods are part of a class. :shrug:
+
+    :param func: reference to the function being logged
+    :param args: function args
+    :param kwargs: function kwargs
+    :return: None
     """
-
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        func_args = inspect.signature(func).bind(*args, **kwargs).arguments
-        func_args_str = ", ".join(
-            map(
-                "{0[0]} = {0[1]!r}".format,
-                {k: v for k, v in func_args.items() if k != "self"}.items(),
-            )
-        )
-        print(f"step -> {func.__name__} ( {func_args_str} )")
-        return func(*args, **kwargs)
-
-    return wrapper
+    func_args = inspect.signature(func).bind(*args, **kwargs).arguments
+    func_args_str = map(
+        "{0[0]} = {0[1]!r}".format,
+        {k: v for k, v in func_args.items() if k != "self"}.items(),
+    )
+    print(f"[dim]step -> [/dim]{func.__name__} {'()' if not func_args else '('}")
+    for arg in func_args_str:
+        print(f"\t[dim]{arg}")
+    if func_args:
+        print(")")
 
 
 class HexagonSpec:
@@ -68,15 +71,14 @@ class HexagonSpec:
         self.yaml_file_name = "app.yml"
         self._execution_time_start = None
 
-    @log
     def given_a_cli_yaml(self, config: Union[str, Dict]) -> "HexagonSpec":
+        _log(self.given_a_cli_yaml, config=config)
         if isinstance(config, str):
             self.yaml_file_name = config
         else:
             write_hexagon_config(self.__file, config)
         return self
 
-    @log
     def run_hexagon(
         self,
         command: List[str] = None,
@@ -84,6 +86,14 @@ class HexagonSpec:
         test_file_path_is_absolute: bool = False,
         cwd: str = None,
     ) -> "HexagonSpec":
+        print(f"\n\n[dim]RUNNING SPEC -> [/dim][b]{inspect.stack()[1][3]}[/b]")
+        _log(
+            self.run_hexagon,
+            command=command,
+            os_env_vars=os_env_vars,
+            test_file_path_is_absolute=test_file_path_is_absolute,
+            cwd=cwd,
+        )
         __tracebackhide__ = True
         self._execution_time_start = time.time()
         if command:
@@ -106,19 +116,24 @@ class HexagonSpec:
             )
         return self
 
-    @log
     def with_shared_behavior(self, func: Callable):
+        _log(self.with_shared_behavior, func=func)
         __tracebackhide__ = True
         func(self)
         return self
 
-    @log
     def then_output_should_be(
         self,
         expected_output: List[Expected_Process_Output],
         discard_until_first_match=False,
         ignore_blank_lines=True,
     ) -> "HexagonSpec":
+        _log(
+            self.then_output_should_be,
+            expected_output=expected_output,
+            discard_until_first_match=discard_until_first_match,
+            ignore_blank_lines=ignore_blank_lines,
+        )
         __tracebackhide__ = True
         self.lines_read = assert_process_output(
             self.process,
@@ -129,11 +144,11 @@ class HexagonSpec:
         )
         return self
 
-    @log
     def then_output_should_not_contain(
         self,
         output_to_match: List[Expected_Process_Output],
     ) -> "HexagonSpec":
+        _log(self.then_output_should_not_contain, output_to_match=output_to_match)
         __tracebackhide__ = True
         # noinspection PyBroadException
         try:
@@ -147,46 +162,46 @@ class HexagonSpec:
 
         return self
 
-    @log
     def arrow_down(self) -> "HexagonSpec":
+        _log(self.arrow_down)
         __tracebackhide__ = True
         write_to_process(self.process, ARROW_DOWN_CHARACTER)
         return self
 
-    @log
     def arrow_up(self) -> "HexagonSpec":
+        _log(self.arrow_up)
         __tracebackhide__ = True
         write_to_process(self.process, ARROW_UP_CHARACTER)
         return self
 
-    @log
     def enter(self) -> "HexagonSpec":
+        _log(self.enter)
         __tracebackhide__ = True
         return self.write(LINE_FEED_CHARACTER)
 
-    @log
     def space_bar(self) -> "HexagonSpec":
+        _log(self.space_bar)
         __tracebackhide__ = True
         return self.write(SPACE_BAR_CHARACTER)
 
-    @log
     def esc(self) -> "HexagonSpec":
+        _log(self.esc)
         __tracebackhide__ = True
         return self.write(ESCAPE_CHARACTER)
 
-    @log
     def carriage_return(self) -> "HexagonSpec":
+        _log(self.carriage_return)
         __tracebackhide__ = True
         return self.write(CARRIAGE_RETURN_CHARACTER)
 
-    @log
     def input(self, text: str) -> "HexagonSpec":
+        _log(self.input, text=text)
         __tracebackhide__ = True
         self.last_input = text
         return self.write(f"{text}{LINE_FEED_CHARACTER}")
 
-    @log
     def erase(self, val: Optional[Union[str, int]] = None) -> "HexagonSpec":
+        _log(self.erase, val=val)
         __tracebackhide__ = True
         if not val and self.last_input:
             for _ in self.last_input:
@@ -205,10 +220,15 @@ class HexagonSpec:
         write_to_process(self.process, text)
         return self
 
-    @log
     def exit(
         self, status: int = 0, timeout_in_seconds: int = 5, execution_time: int = None
     ) -> "HexagonSpec":
+        _log(
+            self.exit,
+            status=status,
+            timeout_in_seconds=timeout_in_seconds,
+            execution_time=execution_time,
+        )
         __tracebackhide__ = True
         assert_process_ended(
             self.process,
@@ -223,11 +243,12 @@ class HexagonSpec:
         clean_hexagon_environment()
         return self
 
-    @log
     def force_exit(self) -> "HexagonSpec":
+        _log(self.force_exit)
         return self.write(CONTROL_C_CHARACTER)
 
     def wait(self, seconds: int) -> "HexagonSpec":
+        _log(self.wait, seconds=seconds)
         time.sleep(seconds)
         return self
 

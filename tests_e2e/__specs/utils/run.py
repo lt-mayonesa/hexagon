@@ -3,6 +3,8 @@ import platform
 import subprocess
 from typing import Dict, List, Optional
 
+from rich import print
+
 from tests_e2e.__specs.utils.path import e2e_test_folder_path
 
 hexagon_path = os.path.realpath(
@@ -89,7 +91,7 @@ def run_hexagon(
 
     command += args
     print(
-        f"\nrunning command:\n{' '.join([f'{k}={v}' for k,v in environment.items() if 'HEXAGON_' in k] + command)}\n"
+        f"\n[dim]executing command:[/dim]\n{' '.join([f'{k}={v}' for k, v in environment.items() if 'HEXAGON_' in k] + command)}\n"
     )
 
     environment["COLUMNS"] = "200"
