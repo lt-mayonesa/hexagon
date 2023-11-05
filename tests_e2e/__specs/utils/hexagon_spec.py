@@ -3,8 +3,6 @@ import time
 from subprocess import Popen
 from typing import Callable, Dict, List, Optional, Union
 
-from rich import print
-
 from tests_e2e.__specs.utils.assertions import (
     Expected_Process_Output,
     assert_process_output,
@@ -22,6 +20,7 @@ from tests_e2e.__specs.utils.cli import (
     SPACE_BAR_CHARACTER,
 )
 from tests_e2e.__specs.utils.config import write_hexagon_config
+from tests_e2e.__specs.utils.console import print
 from tests_e2e.__specs.utils.run import (
     run_hexagon_e2e_test,
     write_to_process,
@@ -29,24 +28,24 @@ from tests_e2e.__specs.utils.run import (
 )
 
 
-def _log(func, *args, **kwargs):
+def _log(f, *args, **kwargs):
     """
     Prints the hexagon step being executed.
 
     This was previously defined as a decorator, using ParamSpec to support type hints.
     But it wasn't working correctly as decorated methods are part of a class. :shrug:
 
-    :param func: reference to the function being logged
+    :param f: reference to the function being logged
     :param args: function args
     :param kwargs: function kwargs
     :return: None
     """
-    func_args = inspect.signature(func).bind(*args, **kwargs).arguments
+    func_args = inspect.signature(f).bind(*args, **kwargs).arguments
     func_args_str = map(
         "{0[0]} = {0[1]!r}".format,
         {k: v for k, v in func_args.items() if k != "self"}.items(),
     )
-    print(f"[dim]step -> [/dim]{func.__name__} {'()' if not func_args else '('}")
+    print(f"[dim]step -> [/dim]{f.__name__} {'()' if not func_args else '('}")
     for arg in func_args_str:
         print(f"\t[dim]{arg}")
     if func_args:
