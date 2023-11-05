@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.51.3 (2023-11-05)
+
+### Fix
+
+* **i18n:** Default to EN even if nothing found ([`685bdef`](https://github.com/lt-mayonesa/hexagon/commit/685bdefd14b159d39f2a5106e5d26723e4e867ed))
+
 ## v0.51.2 (2023-10-30)
 
 ### Fix
