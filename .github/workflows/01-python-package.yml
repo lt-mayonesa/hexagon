@@ -193,5 +193,5 @@ jobs:
             
             Install locally with:
             ```bash
-            python3 -m pip install https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}/hexagon-${{ github.sha }}.zip
+            wget https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}/hexagon-${{ github.sha }}.zip && unzip hexagon-${{ github.sha }}.zip && python3 -m pip install --find-links=. hexagon
             ```
