@@ -33,9 +33,7 @@ class Args(ToolArgs):
     scenario: PositionalArg[Scenario] = None
     name: PositionalArg[str] = Arg(None, prompt_default="John")
     age: PositionalArg[int] = Arg(23)
-    category: PositionalArg[Category] = Arg(
-        None, prompt_default=Category.insect, searchable=True
-    )
+    category: PositionalArg[Category] = Arg(None, prompt_default=Category.insect)
     brands: PositionalArg[List[Brand]] = Arg(
         None, prompt_default=[Brand.toyota, Brand.renault]
     )
