@@ -12,10 +12,11 @@ class Args(ToolArgs):
     they get parsed loaded automatically by hexagon
     """
 
-    name: OptionalArg[str]
-    age: OptionalArg[str]
-    country: OptionalArg[Union[str, int]]
-    likes: OptionalArg[List[str]]
+    name: OptionalArg[str] = None
+    age: OptionalArg[int] = None
+
+    class Config:
+        prompt_on_access = True
 
 
 def main(
@@ -24,7 +25,9 @@ def main(
     env_args: Any = None,
     cli_args: Args = None,
 ):
+    # if prompt_on_access is set to True, the prompt will be shown when accessing the value
     log.result(f"name: {cli_args.name}")
     log.result(f"age: {cli_args.age}")
-    log.result(f"country: {cli_args.country}")
-    log.result(f"likes: {cli_args.likes}")
+
+    # if arg has already been accessed, subsequent prompt should work as expected
+    log.result(f"age 2: {cli_args.age.prompt()}")

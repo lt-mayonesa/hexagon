@@ -42,3 +42,9 @@ tools:
     type: shell
     alias: p
     long_name: Python Module Script With Prompt
+
+  - name: prompt-on-access
+    action: python_module_prompt_on_access
+    type: shell
+    alias: poa
+    long_name: Python Module Script With Prompt On Access

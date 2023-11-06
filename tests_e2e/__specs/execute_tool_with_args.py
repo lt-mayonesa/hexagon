@@ -588,3 +588,47 @@ def test_should_prompt_fuzzy_file_search():
         .input("file_c")
         .exit()
     )
+
+
+def test_should_handle_prompt_on_access_true():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["prompt-on-access"])
+        .then_output_should_be(
+            [
+                "Enter name:",
+            ]
+        )
+        .input("John")
+        .then_output_should_be(
+            [
+                "Enter name: John",
+                "name: John",
+            ],
+        )
+        .then_output_should_be(
+            [
+                "Enter age:",
+            ]
+        )
+        .input("24")
+        .then_output_should_be(
+            [
+                "Enter age: 24",
+                "age: 24",
+            ]
+        )
+        .then_output_should_be(
+            [
+                "Enter age:",
+            ]
+        )
+        .input("45")
+        .then_output_should_be(
+            [
+                "Enter age: 45",
+                "age 2: 45",
+            ]
+        )
+        .exit()
+    )
