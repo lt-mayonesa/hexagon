@@ -54,6 +54,8 @@ def list_mapper(v):
 
 
 def set_default(invocation_extras, model_field: ModelField):
+    if model_field.field_info.extra.get("prompt_default"):
+        return {"default": model_field.field_info.extra["prompt_default"]}
     if "default" in invocation_extras:
         return {"default": invocation_extras["default"]}
     elif model_field.default:
@@ -304,6 +306,7 @@ def setup_enum_list(
         )
         for x in field_type.__args__[0]
     ]
+    inquiry_args["default"] = ""
     if inquiry_type == InquiryType.ENUM_LIST_SEARCHABLE:
         inquiry_args["multiselect"] = True
         return self.fuzzy, lambda x: x

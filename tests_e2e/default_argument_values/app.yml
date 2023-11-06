@@ -1,0 +1,19 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+
+envs:
+  - name: dev
+    alias: d
+    long_name: dev
+  - name: qa
+    alias: q
+    long_name: qa
+
+tools:
+
+  - name: default-arguments
+    action: default_arguments
+    type: shell
+    alias: da
