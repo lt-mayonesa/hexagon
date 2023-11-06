@@ -1,7 +1,7 @@
 import abc
 from copy import copy
 from inspect import isclass
-from typing import Optional, Dict, Union, List, TypeVar, Generic, Any
+from typing import Optional, Dict, Union, List, TypeVar, Generic, Any, Callable
 
 from pydantic import (
     BaseModel,
@@ -97,7 +97,8 @@ def Arg(
     alias: Optional[str] = None,
     title: Optional[str] = None,
     description: Optional[str] = None,
-    prompt_message: Optional[str] = None,
+    prompt_default: Optional[Union[Any, Callable[[Any], Any]]] = None,
+    prompt_message: Optional[Union[str, Callable[[Any], str]]] = None,
     prompt_instruction: Optional[str] = None,
     **kwargs,
 ):
@@ -111,6 +112,7 @@ def Arg(
     :param alias:
     :param title:
     :param description:
+    :param prompt_default:
     :param prompt_message:
     :param prompt_instruction:
     :param kwargs:
@@ -121,6 +123,7 @@ def Arg(
         alias=alias,
         title=title,
         description=description,
+        prompt_default=prompt_default,
         prompt_message=prompt_message,
         prompt_instruction=prompt_instruction,
         **kwargs,
