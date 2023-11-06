@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.52.0 (2023-11-06)
+
+### Feature
+
+* **prompt:** Allow defining prompt_default ([#66](https://github.com/lt-mayonesa/hexagon/issues/66)) ([`8266843`](https://github.com/lt-mayonesa/hexagon/commit/8266843ecf9766de20435c1cbcac713026113195))
+
 ## v0.51.3 (2023-11-05)
 
 ### Fix
