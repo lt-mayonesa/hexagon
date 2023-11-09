@@ -39,6 +39,9 @@ class Args(ToolArgs):
         choices=["a sentence to match", "a sentence not to match", "something else"],
     )
     fuzzy_file_input: OptionalArg[FilePath] = Arg(None, searchable=True, glob="*.txt")
+    proceed: OptionalArg[bool] = Arg(
+        None, prompt_default=True, prompt_message="Do you want to continue?"
+    )
 
     @validator("age")
     def validate_age(cls, arg):
@@ -74,6 +77,7 @@ def main(
         "prompt_fuzzy_search": prompt_fuzzy_search,
         "prompt_fuzzy_file": prompt_fuzzy_file,
         "prompt_multiple_times": prompt_multiple_times,
+        "prompt_boolean": prompt_boolean,
     }
 
     cases.get(cli_args.test.value, default)(cli_args)
@@ -127,6 +131,10 @@ def prompt_multiple_times(cli_args):
     log.result(f"name: {cli_args.name.prompt()}")
     log.result(f"name: {cli_args.name.prompt()}")
     log.result(f"name: {cli_args.name.prompt()}")
+
+
+def prompt_boolean(cli_args):
+    log.result(f"proceed: {cli_args.proceed.prompt()}")
 
 
 def default(cli_args):
