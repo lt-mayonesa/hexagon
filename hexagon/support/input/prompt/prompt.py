@@ -84,6 +84,7 @@ class InquiryType(Enum):
     INT = auto()
     FLOAT = auto()
     SECRET = auto()
+    BOOLEAN = auto()
 
 
 def _determine_expected_inquiry(
@@ -112,6 +113,8 @@ def _determine_expected_inquiry(
         query = InquiryType.ENUM if not searchable else InquiryType.ENUM_SEARCHABLE
     elif issubclass(type_, Path):
         query = InquiryType.PATH if not searchable else InquiryType.PATH_SEARCHABLE
+    elif issubclass(type_, bool):
+        query = InquiryType.BOOLEAN
     elif issubclass(type_, int):
         query = InquiryType.INT
     elif issubclass(type_, float):
@@ -154,6 +157,7 @@ class Prompt:
             InquiryType.INT: setup_int,
             InquiryType.FLOAT: setup_float,
             InquiryType.SECRET: setup_secret,
+            InquiryType.BOOLEAN: setup_bool,
         }
 
         inq, mapper = setups.get(inquiry_type, setup_string)(
@@ -220,6 +224,8 @@ class Prompt:
         if not options.hints_disabled:
             # not adding confirm_letter and reject_letter as hints because it seems redundant
             kwargs["long_instruction"] = HintsBuilder().with_enter_cancel_skip().build()
+        if "validate" in kwargs:
+            del kwargs["validate"]  # validate is not supported by confirm
         return inquirer.confirm(*args, **kwargs).execute()
 
     @staticmethod
@@ -402,3 +408,7 @@ def setup_secret(self: Prompt, **_) -> (Callable, Callable):
 
 def setup_string(self: Prompt, **_) -> (Callable, Callable):
     return self.text, lambda x: x
+
+
+def setup_bool(self: Prompt, **_) -> (Callable, Callable):
+    return self.confirm, lambda x: x

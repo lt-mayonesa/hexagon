@@ -260,7 +260,7 @@ def test_tool_args_class_can_be_used_to_prompt():
             os_env_vars={"HEXAGON_THEME": "no_border"},
         )
         .then_output_should_be(
-            "input the person's name:", discard_until_first_match=True
+            ["input the person's name:"], discard_until_first_match=True
         )
         .input("John")
         .then_output_should_be(["name: John"], discard_until_first_match=True)
@@ -586,6 +586,43 @@ def test_should_prompt_fuzzy_file_search():
             ],
         )
         .input("file_c")
+        .exit()
+    )
+
+
+def test_should_prompt_yes_no_confirmation():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt", "prompt_boolean"],
+        )
+        .then_output_should_be(
+            ["Do you want to continue? (Y/n)"],
+        )
+        .write("y")
+        .then_output_should_be(
+            [
+                "Do you want to continue? Yes",
+                "proceed: True",
+            ],
+        )
+        .exit()
+    )
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt", "prompt_boolean"],
+        )
+        .then_output_should_be(
+            ["Do you want to continue? (Y/n)"],
+        )
+        .write("n")
+        .then_output_should_be(
+            [
+                "Do you want to continue? No",
+                "proceed: False",
+            ],
+        )
         .exit()
     )
 
