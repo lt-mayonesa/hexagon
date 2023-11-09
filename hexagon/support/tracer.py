@@ -34,7 +34,7 @@ class Tracer:
     def tracing(
         self,
         ref: str,
-        value: Union[str, Enum, list],
+        value: Union[str, Enum, list, bool],
         key: str = None,
         value_alias: str = None,
         key_alias: str = None,
@@ -49,6 +49,8 @@ class Tracer:
         def to_str(v):
             if isinstance(v, Enum):
                 return str(v.value)
+            elif isinstance(v, bool):
+                return str(v).lower()
             return str(v)
 
         if not key:
