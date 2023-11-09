@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.52.1 (2023-11-09)
+
+### Fix
+
+* **tracer:** Lowercase traced bool ([`a19f109`](https://github.com/lt-mayonesa/hexagon/commit/a19f109e359623a6f8fe94315f1584dd03a63225))
+* **prompt:** Show correct confirm dialog ([`c36bbb1`](https://github.com/lt-mayonesa/hexagon/commit/c36bbb12b6a76ee14abc4989ea90c18ec1857a78))
+
 ## v0.52.0 (2023-11-06)
 
 ### Feature
