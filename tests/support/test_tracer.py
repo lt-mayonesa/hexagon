@@ -187,3 +187,11 @@ def test_trace_enum_value_with_key():
     assert tracer.trace() == "--name=a"
     assert tracer.aliases_trace() == "-n=a"
     assert tracer.has_traced() is True
+
+
+def test_trace_boolean_values():
+    tracer = Tracer(parse_cli_args([]))
+    tracer.tracing(ref="proceed", value=True)
+    assert tracer.trace() == "true"
+    assert tracer.aliases_trace() == "true"
+    assert tracer.has_traced() is True
