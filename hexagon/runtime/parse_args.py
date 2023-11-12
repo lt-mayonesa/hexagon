@@ -9,8 +9,9 @@ from hexagon.support.input.args import (
     ARGUMENT_KEY_PREFIX,
     OptionalArg,
     PositionalArg,
+    bool_negated_key,
 )
-from hexagon.utils.typing import should_support_multiple_args
+from hexagon.utils.typing import should_support_multiple_args, field_info
 
 
 # noinspection PyProtectedMember
@@ -95,14 +96,23 @@ def __polyfill_extend_action(__p):
 
 def __add_parser_argument(parser, field: ModelField):
     reprs = field.type_.cli_repr(field)
-    nargs, action = __config_base_on_type(field)
+    nargs, action, constant_default, is_bool = __config_base_on_type(field)
     # type and default behavior is handled by pydantic
     parser.add_argument(
-        *[x for x in reprs if x],
+        *[r for r in reprs if r],
         nargs=nargs,
         action=action,
+        const=constant_default,
         help=f"{field.field_info.description or field.name} (default: {field.default})",
     )
+    if is_bool:
+        parser.add_argument(
+            *[bool_negated_key(r.replace("-", "")) for r in reprs if r],
+            action="store_const",
+            dest=field.name,
+            const="false",
+            help=f"Disable {field.name}",
+        )
 
 
 def __config_base_on_type(field):
@@ -112,15 +122,22 @@ def __config_base_on_type(field):
     :param field:
     :return:
     """
+    field_type, _, __ = field_info(field)
+    is_bool = field_type == bool
+    constant_default = "true" if is_bool else None
     return (
         (
             "*",
             "extend",
+            constant_default,
+            is_bool,
         )
         if field.type_ == OptionalArg and should_support_multiple_args(field)
         else (
             "?",
             "store",
+            constant_default,
+            is_bool,
         )
     )
 

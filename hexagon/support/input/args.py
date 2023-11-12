@@ -16,6 +16,18 @@ ARGUMENT_KEY_PREFIX = "-"
 T = TypeVar("T")
 
 
+def name_key(name: str):
+    return f"{ARGUMENT_KEY_PREFIX * 2}{name}"
+
+
+def alias_key(alias: str):
+    return f"{ARGUMENT_KEY_PREFIX}{alias}"
+
+
+def bool_negated_key(name: str):
+    return f"{ARGUMENT_KEY_PREFIX * 2}no-{name}"
+
+
 class HexagonArg(Generic[T]):
     __model__ = None
     __field__ = None
@@ -82,11 +94,16 @@ class PositionalArg(HexagonArg[T]):
 class OptionalArg(HexagonArg[T]):
     @staticmethod
     def cli_repr(field: ModelField):
+        def initials_from(name: str):
+            return "".join([w[0] for w in name.split("_")])
+
         return (
-            f"{ARGUMENT_KEY_PREFIX*2}{field.name.replace('_', '-')}",
-            f"{ARGUMENT_KEY_PREFIX}{field.alias.replace('_', '-')}"
-            if field.alias and field.alias != field.name
-            else f"{ARGUMENT_KEY_PREFIX}{''.join([w[0] for w in field.name.split('_')])}",
+            name_key(field.name.replace("_", "-")),
+            alias_key(
+                field.alias.replace("_", "-")
+                if field.alias and field.alias != field.name
+                else initials_from(field.name)
+            ),
         )
 
 

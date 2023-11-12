@@ -4,7 +4,7 @@ import pytest
 from pydantic import BaseModel
 
 from hexagon.runtime.parse_args import parse_cli_args, should_support_multiple_args
-from hexagon.support.input.args import PositionalArg, OptionalArg
+from hexagon.support.input.args import PositionalArg, OptionalArg, ToolArgs
 
 
 def test_no_cli_args_passed():
@@ -92,6 +92,12 @@ def test_cli_args_env_is_second_positional_argument():
                 "bass": "",
             },
         ),
+        (
+            ["--foo"],
+            {
+                "foo": True,
+            },
+        ),
     ],
 )
 def test_cli_args_all_extra_arguments_mapping(optional_args, expected):
@@ -173,3 +179,65 @@ def test_get_generic_type_hint():
     assert should_support_multiple_args(model.__fields__["relatives"]) is True
     assert should_support_multiple_args(model.__fields__["parents"]) is True
     assert should_support_multiple_args(model.__fields__["grand_parents"]) is True
+
+
+bool_input_keys = [
+    "--proceed={val}",
+    "--proceed {val}",
+    "-p={val}",
+    "-p {val}",
+]
+
+bool_input_values = [
+    ("true", True),
+    ("True", True),
+    ("TRUE", True),
+    ("on", True),
+    ("On", True),
+    ("ON", True),
+    ("yes", True),
+    ("Yes", True),
+    ("YES", True),
+    ("y", True),
+    ("Y", True),
+    ("1", True),
+    ("false", False),
+    ("False", False),
+    ("FALSE", False),
+    ("off", False),
+    ("Off", False),
+    ("OFF", False),
+    ("no", False),
+    ("No", False),
+    ("NO", False),
+    ("n", False),
+    ("N", False),
+    ("0", False),
+]
+
+
+@pytest.mark.parametrize(
+    "cli_args,expected",
+    [
+        (["--proceed"], True),
+        (["-p"], True),
+        (["--no-proceed"], False),
+        (["--no-p"], False),
+    ]
+    + [
+        y
+        for y in [
+            (x.format(val=v).split(" "), e)
+            for x in bool_input_keys
+            for v, e in bool_input_values
+        ]
+    ],
+)
+def test_parse_tool_args_boolean(cli_args, expected):
+    class Args(ToolArgs):
+        proceed: OptionalArg[bool] = None
+
+    actual = parse_cli_args(cli_args, Args)
+
+    assert actual.proceed.value is expected
+    assert actual.extra_args is None
