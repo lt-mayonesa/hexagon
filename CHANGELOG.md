@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.53.0 (2023-11-12)
+
+### Feature
+
+* **args:** Allow passing boolean as key only ([#69](https://github.com/lt-mayonesa/hexagon/issues/69)) ([`2174082`](https://github.com/lt-mayonesa/hexagon/commit/2174082a4b2e0c5b210c6d2244d9eeea2775a31e))
+
 ## v0.52.1 (2023-11-09)
 
 ### Fix
