@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.53.1 (2023-11-12)
+
+### Fix
+
+* **help:** Don't print usage twice ([`603af0f`](https://github.com/lt-mayonesa/hexagon/commit/603af0fb1531bed4475b81c8d9175c1b53d4867e))
+
 ## v0.53.0 (2023-11-12)
 
 ### Feature
