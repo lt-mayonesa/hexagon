@@ -9,6 +9,8 @@ from pydantic import (
 )
 from pydantic.errors import _PathValueError
 
+GENERIC_CHOICE = "::generic::"
+
 
 class FileNotExistsError(_PathValueError):
     code = "path.not_exists"
@@ -30,6 +32,9 @@ class FilePath(PydanticFilePath):
     def validate(cls, value: Path, field) -> Path:
         declaration_extras = copy(field.field_info.extra)
 
+        if value.name == GENERIC_CHOICE:
+            return value
+
         if not declaration_extras.get("allow_nonexistent", False):
             if not value.exists():
                 raise FileNotExistsError(path=value)
@@ -49,6 +54,9 @@ class DirectoryPath(PydanticDirectoryPath):
     @classmethod
     def validate(cls, value: Path, field) -> Path:
         declaration_extras = copy(field.field_info.extra)
+
+        if value.name == GENERIC_CHOICE:
+            return value
 
         if not declaration_extras.get("allow_nonexistent", False):
             if not value.exists():

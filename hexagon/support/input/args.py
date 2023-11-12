@@ -10,6 +10,8 @@ from pydantic import (
 )
 from pydantic.fields import ModelField
 
+from hexagon.support.input.types import GENERIC_CHOICE
+
 ARGUMENT_KEY_PREFIX = "-"
 
 
@@ -117,6 +119,7 @@ def Arg(
     prompt_default: Optional[Union[Any, Callable[[Any], Any]]] = None,
     prompt_message: Optional[Union[str, Callable[[Any], str]]] = None,
     prompt_instruction: Optional[str] = None,
+    searchable: bool = False,
     **kwargs,
 ):
     """
@@ -124,16 +127,6 @@ def Arg(
     Some arguments apply only to number fields (``int``, ``float``, ``Decimal``) and some apply only to ``str``.
 
     TODO: add support for `validators` kwarg
-
-    :param default:
-    :param alias:
-    :param title:
-    :param description:
-    :param prompt_default:
-    :param prompt_message:
-    :param prompt_instruction:
-    :param kwargs:
-    :return:
     """
     return PydanticField(
         default,
@@ -143,6 +136,7 @@ def Arg(
         prompt_default=prompt_default,
         prompt_message=prompt_message,
         prompt_instruction=prompt_instruction,
+        searchable=searchable,
         **kwargs,
     )
 
@@ -278,6 +272,8 @@ class ToolArgs(BaseModel):
         value_ = self.__prompt__.query_field(
             model_field, model_class=self.__class__, **kwargs
         )
+        if str(value_) == GENERIC_CHOICE:
+            return str(value_)
 
         self.__setattr__(model_field.name, value_)
         getattribute__ = self.__getattribute__(model_field.name)

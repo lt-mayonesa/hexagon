@@ -1,7 +1,7 @@
 from copy import copy
 from enum import Enum, auto
 from pathlib import Path
-from typing import Any, Dict, Literal, Callable
+from typing import Any, Dict, Literal, Callable, List
 
 from InquirerPy import inquirer
 from InquirerPy.base import Choice
@@ -16,7 +16,7 @@ from hexagon.runtime.singletons import options
 from hexagon.support.input.args import HexagonArg
 from hexagon.support.input.prompt.for_all_methods import for_all_methods
 from hexagon.support.input.prompt.hints import HintsBuilder
-from hexagon.support.input.types import path_validator
+from hexagon.support.input.types import path_validator, GENERIC_CHOICE
 from hexagon.support.output.printer import log
 from hexagon.utils.typing import field_info
 
@@ -373,14 +373,29 @@ def setup_path(
     field_type: Any,
 ) -> (Callable, Callable):
     if inquiry_type == InquiryType.PATH_SEARCHABLE:
-        if "glob" in extras:
-            inquiry_args["choices"] = sorted(
-                Path(extras.get("cwd", ".")).rglob(extras["glob"]), key=lambda x: x.name
+        choices: List[Dict[str, Any] or Any] = []
+        if "generic_choice" in extras:
+            choice = extras["generic_choice"]
+            choices.append(
+                {
+                    "name": choice if isinstance(choice, str) else "All",
+                    "value": GENERIC_CHOICE,
+                }
             )
+
+        if "glob" in extras:
+            choices = choices + [
+                f
+                for f in sorted(
+                    Path(extras.get("cwd", ".")).rglob(extras["glob"]),
+                    key=lambda x: x.name,
+                )
+            ]
         elif "choices" in extras:
-            inquiry_args["choices"] = extras["choices"]
+            choices = choices + extras["choices"]
         else:
             raise ValueError("searchable path must have either glob or choices defined")
+        inquiry_args["choices"] = choices
         return self.fuzzy, lambda x: x
     else:
         inquiry_args["only_directories"] = (
