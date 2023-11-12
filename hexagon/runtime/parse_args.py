@@ -15,20 +15,8 @@ from hexagon.utils.typing import should_support_multiple_args, field_info
 
 
 # noinspection PyProtectedMember
-class HexagonFormatter(argparse.ArgumentDefaultsHelpFormatter):
-    """
-    Custom formatter that merges ArgumentDefaultsHelpFormatter and RawDescriptionHelpFormatter
-    """
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._extra_formatter = argparse.RawTextHelpFormatter(*args, **kwargs)
-
-    def _fill_text(self, text, width, indent):
-        return self._extra_formatter._fill_text(text, width, indent)
-
-    def _split_lines(self, text, width):
-        return self._extra_formatter._split_lines(text, width)
+class HexagonFormatter(argparse.RawDescriptionHelpFormatter):
+    pass
 
 
 def cli_arg(cli_arguments, index):
