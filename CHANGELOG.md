@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.53.2 (2023-11-13)
+
+### Fix
+
+* **i18n:** Validate existing paths ([`0b268e6`](https://github.com/lt-mayonesa/hexagon/commit/0b268e6a96e1886a1dd446b2f7fe483bdcc3adda))
+
 ## v0.53.1 (2023-11-12)
 
 ### Fix
