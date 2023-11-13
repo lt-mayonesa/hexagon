@@ -30,7 +30,7 @@ class FilePath(PydanticFilePath):
     def validate(cls, value: Path, field) -> Path:
         declaration_extras = copy(field.field_info.extra)
 
-        if declaration_extras.get("allow_nonexistent", True):
+        if not declaration_extras.get("allow_nonexistent", False):
             if not value.exists():
                 raise FileNotExistsError(path=value)
 
@@ -50,7 +50,7 @@ class DirectoryPath(PydanticDirectoryPath):
     def validate(cls, value: Path, field) -> Path:
         declaration_extras = copy(field.field_info.extra)
 
-        if declaration_extras.get("allow_nonexistent", True):
+        if not declaration_extras.get("allow_nonexistent", False):
             if not value.exists():
                 raise DirectoryNotExistsError(path=value)
 
