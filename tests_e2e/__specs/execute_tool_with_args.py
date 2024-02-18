@@ -611,7 +611,37 @@ def test_should_prompt_fuzzy_file_search_with_generic_choice_at_arg_level():
         )
         .carriage_return()
         .then_output_should_be(
-            ["fuzzy_file_input_generic: ::generic::"], discard_until_first_match=True
+            ["fuzzy_file_input_generic: Any"], discard_until_first_match=True
+        )
+        .exit()
+    )
+
+
+def test_should_prompt_fuzzy_file_search_with_multiple_generic_choice_at_arg_level():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["prompt", "prompt_fuzzy_file_generic_multiple"],
+            os_env_vars={"HEXAGON_THEME": "no_border"},
+        )
+        .then_output_should_be(
+            [
+                "",
+                "",
+                "Enter fuzzy_file_input",
+                "7/7",
+                "Any",
+                "All",
+                "None",
+                "01_file.txt",
+                "02_file.txt",
+                "03_file.txt",
+            ],
+        )
+        .arrow_down()
+        .carriage_return()
+        .then_output_should_be(
+            ["fuzzy_file_input_generic: *"], discard_until_first_match=True
         )
         .exit()
     )
@@ -621,26 +651,17 @@ def test_should_prompt_fuzzy_file_search_with_generic_choice_at_prompt_level():
     (
         as_a_user(__file__)
         .run_hexagon(
-            ["prompt", "prompt_fuzzy_file_generic_prompt"],
+            ["prompt", "prompt_fuzzy_file_invalid_extra"],
             os_env_vars={"HEXAGON_THEME": "no_border"},
         )
         .then_output_should_be(
             [
                 "",
                 "",
-                "Enter fuzzy_file_input",
-                "5/5",
-                "Any",
-                "01_file.txt",
-                "02_file.txt",
-                "03_file.txt",
+                "Config 'glob_extra_choices' is not supported for argument fuzzy_file_input",
             ],
         )
-        .carriage_return()
-        .then_output_should_be(
-            ["fuzzy_file_input_generic: ::generic::"], discard_until_first_match=True
-        )
-        .exit()
+        .exit(status=1)
     )
 
 
