@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2024-02-18 13:19+0100\n"
+"POT-Creation-Date: 2024-02-18 15:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,11 +143,19 @@ msgstr "Instalar CLI"
 msgid "msg.domain.configuration.install_cli_description"
 msgstr "Instalar una CLI desde un archivo YAML de configuración."
 
-#: hexagon/runtime/configuration.py:136
+#: hexagon/runtime/configuration.py:125
+msgid "msg.domain.configuration.get_json_schema_long_name"
+msgstr "Crear una nueva herramienta"
+
+#: hexagon/runtime/configuration.py:127
+msgid "msg.domain.configuration.get_json_schema_description"
+msgstr "Instalar una CLI desde un archivo YAML de configuración."
+
+#: hexagon/runtime/configuration.py:145
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr "Guardar el último comando ejecutado como shell alias"
 
-#: hexagon/runtime/configuration.py:142
+#: hexagon/runtime/configuration.py:151
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr "Crear una nueva herramienta"
 
@@ -409,11 +417,11 @@ msgstr "No se configuró HintsBuilder correctamente."
 msgid "msg.support.prompt.hints.help"
 msgstr "ayuda:"
 
-#: hexagon/support/input/prompt/prompt.py:29
+#: hexagon/support/input/prompt/prompt.py:30
 msgid "error.support.input.prompt.prompt.invalid_argument_setup"
 msgstr "Configuración {property} no es válida para argumento {argument}"
 
-#: hexagon/support/input/prompt/prompt.py:297
+#: hexagon/support/input/prompt/prompt.py:294
 msgid "msg.support.prompt.prompt.directory_created"
 msgstr "📁 directorio creado: {path} [green]✓[/green]"
 

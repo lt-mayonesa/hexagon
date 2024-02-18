@@ -25,9 +25,9 @@ def _save_settings_to_source(options):
     )
 
     options_dict = options.dict()
-    options_dict[
-        "update_time_between_checks"
-    ] = options.update_time_between_checks.total_seconds()
+    options_dict["update_time_between_checks"] = (
+        options.update_time_between_checks.total_seconds()
+    )
     store_user_data(
         HexagonStorageKeys.options.value, options_dict, app=HEXAGON_STORAGE_APP
     )

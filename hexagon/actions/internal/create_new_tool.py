@@ -86,9 +86,11 @@ def main(tool, env, env_args, cli_args):
             log.info(_("msg.actions.internal.create_new_tool.custom_tools_dir_not_set"))
             path_ = cli_args.custom_tools_path.prompt()
             configuration.update_custom_tools_path(
-                path_.resolve()
-                if path_.is_absolute()
-                else os.path.join(*path_.parents, path_.name),
+                (
+                    path_.resolve()
+                    if path_.is_absolute()
+                    else os.path.join(*path_.parents, path_.name)
+                ),
                 comment=_(
                     "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
                 ),

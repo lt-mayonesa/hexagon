@@ -1,11 +1,12 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR ORGANIZATION
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2024-02-18 13:52+0100\n"
+"POT-Creation-Date: 2024-02-18 15:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,7 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-
 
 #: hexagon/__main__.py:40
 msgid "msg.main.first_time_intro"
@@ -131,11 +131,19 @@ msgstr ""
 msgid "msg.domain.configuration.install_cli_description"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:136
+#: hexagon/runtime/configuration.py:125
+msgid "msg.domain.configuration.get_json_schema_long_name"
+msgstr ""
+
+#: hexagon/runtime/configuration.py:127
+msgid "msg.domain.configuration.get_json_schema_description"
+msgstr ""
+
+#: hexagon/runtime/configuration.py:145
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:142
+#: hexagon/runtime/configuration.py:151
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr ""
 
@@ -388,11 +396,11 @@ msgstr ""
 msgid "msg.support.prompt.hints.help"
 msgstr ""
 
-#: hexagon/support/input/prompt/prompt.py:29
+#: hexagon/support/input/prompt/prompt.py:30
 msgid "error.support.input.prompt.prompt.invalid_argument_setup"
 msgstr ""
 
-#: hexagon/support/input/prompt/prompt.py:297
+#: hexagon/support/input/prompt/prompt.py:294
 msgid "msg.support.prompt.prompt.directory_created"
 msgstr ""
 
