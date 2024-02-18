@@ -5,7 +5,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-18 15:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
@@ -145,12 +144,10 @@ msgid "msg.domain.configuration.install_cli_description"
 msgstr "Instalar una CLI desde un archivo YAML de configuración."
 
 #: hexagon/runtime/configuration.py:125
-#, fuzzy
 msgid "msg.domain.configuration.get_json_schema_long_name"
 msgstr "Crear una nueva herramienta"
 
 #: hexagon/runtime/configuration.py:127
-#, fuzzy
 msgid "msg.domain.configuration.get_json_schema_description"
 msgstr "Instalar una CLI desde un archivo YAML de configuración."
 
