@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.55.0 (2024-02-18)
+
+### Feature
+
+* **hexagon:** Added get-json-schema tool ([#73](https://github.com/lt-mayonesa/hexagon/issues/73)) ([`5377fbf`](https://github.com/lt-mayonesa/hexagon/commit/5377fbfaa1d4a82f16ae9d8a08cce740adb883b2))
+
 ## v0.54.0 (2024-02-18)
 
 ### Feature
