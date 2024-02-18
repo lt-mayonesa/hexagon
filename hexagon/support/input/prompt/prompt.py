@@ -12,13 +12,25 @@ from prompt_toolkit.validation import ValidationError, Validator
 from pydantic import ValidationError as PydanticValidationError, DirectoryPath
 from pydantic.fields import ModelField, Validator as PydanticValidator
 
+from hexagon.domain.hexagon_error import ListHexagonError
 from hexagon.runtime.singletons import options
 from hexagon.support.input.args import HexagonArg
 from hexagon.support.input.prompt.for_all_methods import for_all_methods
 from hexagon.support.input.prompt.hints import HintsBuilder
-from hexagon.support.input.types import path_validator, GENERIC_CHOICE
+from hexagon.support.input.types import path_validator
 from hexagon.support.output.printer import log
 from hexagon.utils.typing import field_info
+
+
+class HexagonArgumentSetupError(ListHexagonError):
+    def __init__(self, argument: str, prop: str):
+        super().__init__(
+            [
+                _("error.support.input.prompt.prompt.invalid_argument_setup").format(
+                    argument=argument, property=prop
+                ),
+            ]
+        )
 
 
 class PromptValidator(Validator):
@@ -188,8 +200,23 @@ class Prompt:
         # FIXME: this is working by chance, it's not the best way to do it
         if "searchable" in invocation_extras:
             del invocation_extras["searchable"]
+
         inquiry_args.update(**invocation_extras)
-        return inq(**inquiry_args)
+        try:
+            return inq(**inquiry_args)
+        except TypeError as e:
+            if "__init__() got an unexpected keyword argument" in e.args[0]:
+                err = HexagonArgumentSetupError(
+                    model_field.name,
+                    e.args[0]
+                    .replace("__init__() got an unexpected keyword argument", "")
+                    .strip(),
+                )
+            else:
+                raise e
+
+        if err:
+            raise err
 
     @staticmethod
     def text(**kwargs):
@@ -374,14 +401,17 @@ def setup_path(
 ) -> (Callable, Callable):
     if inquiry_type == InquiryType.PATH_SEARCHABLE:
         choices: List[Dict[str, Any] or Any] = []
-        if "generic_choice" in extras:
-            choice = extras["generic_choice"]
-            choices.append(
-                {
-                    "name": choice if isinstance(choice, str) else "All",
-                    "value": GENERIC_CHOICE,
-                }
-            )
+        if "glob_extra_choices" in extras:
+            extra_choices = extras["glob_extra_choices"]
+            for choice in extra_choices:
+                choices.append(
+                    choice
+                    if isinstance(choice, dict)
+                    else {
+                        "name": choice,
+                        "value": choice,
+                    }
+                )
 
         if "glob" in extras:
             choices = choices + [

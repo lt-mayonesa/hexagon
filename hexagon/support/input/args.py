@@ -10,8 +10,6 @@ from pydantic import (
 )
 from pydantic.fields import ModelField
 
-from hexagon.support.input.types import GENERIC_CHOICE
-
 ARGUMENT_KEY_PREFIX = "-"
 
 
@@ -272,8 +270,6 @@ class ToolArgs(BaseModel):
         value_ = self.__prompt__.query_field(
             model_field, model_class=self.__class__, **kwargs
         )
-        if str(value_) == GENERIC_CHOICE:
-            return str(value_)
 
         self.__setattr__(model_field.name, value_)
         getattribute__ = self.__getattribute__(model_field.name)
