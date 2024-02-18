@@ -8,6 +8,7 @@ from typing import List, Union, Dict, Any, Optional
 from pydantic import ValidationError
 
 from hexagon.domain.env import Env
+from hexagon.domain.hexagon_error import HexagonError
 from hexagon.domain.tool import ActionTool
 from hexagon.runtime.execute.errors import (
     ToolExecutionError,
@@ -117,6 +118,8 @@ def _execute_python_module(
         return True
     except ValidationError as e:
         raise ActionInputError(e, tool.name)
+    except HexagonError as e:
+        raise e
     except Exception:
         raise ActionExecuteError(action_id, custom_tools_path)
 

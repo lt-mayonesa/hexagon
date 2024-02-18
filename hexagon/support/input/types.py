@@ -30,6 +30,16 @@ class FilePath(PydanticFilePath):
     def validate(cls, value: Path, field) -> Path:
         declaration_extras = copy(field.field_info.extra)
 
+        extra_choices = declaration_extras.get("glob_extra_choices")
+        if extra_choices:
+            for extra_choice in extra_choices:
+                if (
+                    value.name == extra_choice
+                    if isinstance(extra_choice, str)
+                    else extra_choice["value"]
+                ):
+                    return value
+
         if not declaration_extras.get("allow_nonexistent", False):
             if not value.exists():
                 raise FileNotExistsError(path=value)
@@ -49,6 +59,16 @@ class DirectoryPath(PydanticDirectoryPath):
     @classmethod
     def validate(cls, value: Path, field) -> Path:
         declaration_extras = copy(field.field_info.extra)
+
+        extra_choices = declaration_extras.get("glob_extra_choices")
+        if extra_choices:
+            for extra_choice in extra_choices:
+                if (
+                    value.name == extra_choice
+                    if isinstance(extra_choice, str)
+                    else extra_choice["value"]
+                ):
+                    return value
 
         if not declaration_extras.get("allow_nonexistent", False):
             if not value.exists():

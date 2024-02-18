@@ -9,7 +9,7 @@ class HexagonError(Exception):
         self.exit_status = exit_status
         self.error_printer = error_printer
 
-    def print(self, logger):
+    def print_error(self, logger):
         self.error_printer(logger)
 
 

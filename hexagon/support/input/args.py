@@ -117,6 +117,7 @@ def Arg(
     prompt_default: Optional[Union[Any, Callable[[Any], Any]]] = None,
     prompt_message: Optional[Union[str, Callable[[Any], str]]] = None,
     prompt_instruction: Optional[str] = None,
+    searchable: bool = False,
     **kwargs,
 ):
     """
@@ -124,16 +125,6 @@ def Arg(
     Some arguments apply only to number fields (``int``, ``float``, ``Decimal``) and some apply only to ``str``.
 
     TODO: add support for `validators` kwarg
-
-    :param default:
-    :param alias:
-    :param title:
-    :param description:
-    :param prompt_default:
-    :param prompt_message:
-    :param prompt_instruction:
-    :param kwargs:
-    :return:
     """
     return PydanticField(
         default,
@@ -143,6 +134,7 @@ def Arg(
         prompt_default=prompt_default,
         prompt_message=prompt_message,
         prompt_instruction=prompt_instruction,
+        searchable=searchable,
         **kwargs,
     )
 

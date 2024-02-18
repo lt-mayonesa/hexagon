@@ -64,7 +64,7 @@ def main():
         from hexagon.domain.hexagon_error import HexagonError
 
         if isinstance(e, HexagonError):
-            e.print(log)
+            e.print_error(log)
             sys.exit(e.exit_status)
         else:
             raise e
