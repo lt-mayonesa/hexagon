@@ -52,3 +52,9 @@ tools:
     long_name: build hexagon
     type: shell
     action: pipenv run python setup.py sdist bdist_wheel
+
+  - name: upgrade-pipenv
+    alias: up
+    long_name: upgrade pipenv dependencies
+    type: shell
+    action: pipenv update
