@@ -25,6 +25,12 @@ tools:
     type: shell
     action: *i18n
 
+  - name: check-i18n
+    alias: c18
+    long_name: Check i18n translations
+    type: shell
+    action: ../.github/scripts/i18n/check.sh
+
   - name: unit-tests
     alias: ut
     long_name: run unit tests tests
