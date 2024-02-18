@@ -39,12 +39,18 @@ def select_and_execute_tool(
             cli_args,
             ref=group_ref + 1,
             # If the tool matched the tool argument, disable navigating back
-            previous=previous
-            if not next(
-                (t for t in tools if cli_args.tool and t.name == cli_args.tool.value),
-                None,
-            )
-            else None,
+            previous=(
+                previous
+                if not next(
+                    (
+                        t
+                        for t in tools
+                        if cli_args.tool and t.name == cli_args.tool.value
+                    ),
+                    None,
+                )
+                else None
+            ),
         )
 
     if isinstance(tool, FunctionTool):

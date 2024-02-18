@@ -111,9 +111,11 @@ def _execute_python_module(
             tool,
             env,
             env_args,
-            tool_args
-            if type(tool_args).__name__ == TOOL_ARGUMENTS_CLASS_NAME
-            else tool_args.extra_args,
+            (
+                tool_args
+                if type(tool_args).__name__ == TOOL_ARGUMENTS_CLASS_NAME
+                else tool_args.extra_args
+            ),
         )
         return True
     except ValidationError as e:
@@ -130,9 +132,11 @@ def __parse_tool_args(cli_args, env, tool, tool_action_module):
     return (
         parse_cli_args(
             args,
-            tool_action_module.Args
-            if hasattr(tool_action_module, TOOL_ARGUMENTS_CLASS_NAME)
-            else ToolArgs,
+            (
+                tool_action_module.Args
+                if hasattr(tool_action_module, TOOL_ARGUMENTS_CLASS_NAME)
+                else ToolArgs
+            ),
             prog=tool.name,
             description=tool.description or tool.long_name or "Hexagon tool",
             add_help=True,
