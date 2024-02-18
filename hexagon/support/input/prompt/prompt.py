@@ -1,3 +1,4 @@
+import re
 from copy import copy
 from enum import Enum, auto
 from pathlib import Path
@@ -206,12 +207,8 @@ class Prompt:
             return inq(**inquiry_args)
         except TypeError as e:
             if "__init__() got an unexpected keyword argument" in e.args[0]:
-                err = HexagonArgumentSetupError(
-                    model_field.name,
-                    e.args[0]
-                    .replace("__init__() got an unexpected keyword argument", "")
-                    .strip(),
-                )
+                prop = re.search(".*\s('\w+')$", e.args[0]).group(1).strip()
+                err = HexagonArgumentSetupError(model_field.name, prop)
             else:
                 raise e
 
