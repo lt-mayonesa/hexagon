@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.54.0 (2024-02-18)
+
+### Feature
+
+* **prompt:** Allow specifying glob_extra_choices for file glop prompts ([#71](https://github.com/lt-mayonesa/hexagon/issues/71)) ([`d2fc570`](https://github.com/lt-mayonesa/hexagon/commit/d2fc570c5b4a4f660c0eeb40f9dc8da00eb01ad5))
+
 ## v0.53.2 (2023-11-13)
 
 ### Fix
