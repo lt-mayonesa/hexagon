@@ -106,3 +106,61 @@ def test_replay_last_command_by_alias():
         )
         .exit()
     )
+
+
+def test_replay_last_command_with_spaced_arg():
+    (
+        as_a_user(__file__)
+        .run_hexagon()
+        .enter()
+        .input("john")
+        .input("10")
+        .input("The Netherlands")
+        .input("orange")
+        .esc()
+        .carriage_return()
+        .exit()
+    )
+
+    (
+        as_a_user(__file__)
+        .run_hexagon(["replay"])
+        .then_output_should_be(
+            [
+                "name: john",
+                "age: 10",
+                "country: The Netherlands",
+                "likes: ['orange']",
+            ]
+        )
+        .exit()
+    )
+
+
+def test_replay_last_command_with_complex_arg():
+    (
+        as_a_user(__file__)
+        .run_hexagon()
+        .enter()
+        .input("john")
+        .input("10")
+        .input('The "Netherlands"')
+        .input("orange")
+        .esc()
+        .carriage_return()
+        .exit()
+    )
+
+    (
+        as_a_user(__file__)
+        .run_hexagon(["replay"])
+        .then_output_should_be(
+            [
+                "name: john",
+                "age: 10",
+                'country: The "Netherlands"',
+                "likes: ['orange']",
+            ]
+        )
+        .exit()
+    )

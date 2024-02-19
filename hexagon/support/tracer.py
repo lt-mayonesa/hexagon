@@ -15,15 +15,28 @@ class Trace:
 
     def real(self):
         if self.key:
-            return f"{self.key}={self.value}"
-        return str(self.value)
+            return f"{self.key}={self.__safe_value}"
+        return str(self.__safe_value)
 
     def alias(self):
         if self.key_alias:
-            return f"{self.key_alias}={self.value}"
+            return f"{self.key_alias}={self.__safe_value}"
         if self.key:
-            return f"{self.key}={self.value}"
-        return str(self.value_alias or self.value)
+            return f"{self.key}={self.__safe_value}"
+        return str(self.value_alias or self.__safe_value)
+
+    @property
+    def __safe_value(self):
+        """
+        if value has spaces, wrap it in quotes to avoid parsing issues in the shell
+        if value has single or double quotes, use the opposite to wrap it
+        let's hope for the best
+        """
+        if " " in self.value:
+            if '"' in self.value:
+                return f"'{self.value}'"
+            return f'"{self.value}"'
+        return self.value
 
 
 class Tracer:

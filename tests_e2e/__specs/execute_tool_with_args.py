@@ -557,9 +557,9 @@ def test_should_prompt_fuzzy_search():
         .then_output_should_be(
             [
                 "To run this tool again do:",
-                "hexagon-test prompt prompt_fuzzy_search --fuzzy-input=another sentence to match",
+                'hexagon-test prompt prompt_fuzzy_search --fuzzy-input="another sentence to match"',
                 "or:",
-                "hexagon-test p prompt_fuzzy_search -fi=another sentence to match",
+                'hexagon-test p prompt_fuzzy_search -fi="another sentence to match"',
             ],
             discard_until_first_match=True,
         )
