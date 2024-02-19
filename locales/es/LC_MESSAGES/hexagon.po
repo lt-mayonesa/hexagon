@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2024-02-18 15:36+0100\n"
+"POT-Creation-Date: 2024-02-19 01:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,7 +71,7 @@ msgstr ""
 "[magenta]Tu CLI no tiene un directorio de herramientas (cli."
 "custom_tools_dir).[/magenta]"
 
-#: hexagon/actions/internal/create_new_tool.py:93
+#: hexagon/actions/internal/create_new_tool.py:95
 msgid "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
 msgstr "relativo a este archivo"
 
@@ -96,6 +96,10 @@ msgstr "¡Listo! Ahora podes ejecutar tu CLI de la siguiente manera:"
 #: hexagon/actions/internal/install_cli.py:72
 msgid "msg.actions.internal.install_cli.not_in_path"
 msgstr "[yellow]⚠ {dir} no está en tu $PATH[/yellow]"
+
+#: hexagon/actions/internal/replay.py:15
+msgid "msg.actions.internal.replay.last_command"
+msgstr "[dim]Repitiendo comando: {last_command}"
 
 #: hexagon/actions/internal/save_new_alias.py:16
 msgid "action.actions.internal.save_new_alias.prompt_alias_name"
@@ -155,7 +159,11 @@ msgstr "Instalar una CLI desde un archivo YAML de configuración."
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr "Guardar el último comando ejecutado como shell alias"
 
-#: hexagon/runtime/configuration.py:151
+#: hexagon/runtime/configuration.py:152
+msgid "msg.domain.configuration.replay_long_name"
+msgstr "Repetir el último comando ejecutado"
+
+#: hexagon/runtime/configuration.py:158
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr "Crear una nueva herramienta"
 
@@ -164,7 +172,7 @@ msgstr "Crear una nueva herramienta"
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Instalando dependencias de {runtime} en directorio {path}"
 
-#: hexagon/runtime/execute/action.py:139
+#: hexagon/runtime/execute/action.py:143
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 "Para usar argumentos de CLI agregar a tu script\n"
@@ -217,15 +225,15 @@ msgstr "Tu acción parece tener un error de dependencias de módulos"
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr "La ejecución de {action} falló"
 
-#: hexagon/runtime/execute/tool.py:70
+#: hexagon/runtime/execute/tool.py:76
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr "Atrás"
 
-#: hexagon/runtime/execute/tool.py:72
+#: hexagon/runtime/execute/tool.py:78
 msgid "msg.support.execute.tool.go_back_description"
 msgstr "Volver al menú anterior"
 
-#: hexagon/runtime/execute/tool.py:73
+#: hexagon/runtime/execute/tool.py:79
 msgid "icon.global.go_back"
 msgstr "↩"
 

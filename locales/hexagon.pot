@@ -6,14 +6,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2024-02-18 15:36+0100\n"
+"POT-Creation-Date: 2024-02-19 01:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: pygettext.py 1.5\n"
 
 #: hexagon/__main__.py:40
 msgid "msg.main.first_time_intro"
@@ -63,7 +62,7 @@ msgstr ""
 msgid "msg.actions.internal.create_new_tool.custom_tools_dir_not_set"
 msgstr ""
 
-#: hexagon/actions/internal/create_new_tool.py:93
+#: hexagon/actions/internal/create_new_tool.py:95
 msgid "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
 msgstr ""
 
@@ -85,6 +84,10 @@ msgstr ""
 
 #: hexagon/actions/internal/install_cli.py:72
 msgid "msg.actions.internal.install_cli.not_in_path"
+msgstr ""
+
+#: hexagon/actions/internal/replay.py:15
+msgid "msg.actions.internal.replay.last_command"
 msgstr ""
 
 #: hexagon/actions/internal/save_new_alias.py:16
@@ -143,7 +146,11 @@ msgstr ""
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:151
+#: hexagon/runtime/configuration.py:152
+msgid "msg.domain.configuration.replay_long_name"
+msgstr ""
+
+#: hexagon/runtime/configuration.py:158
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr ""
 
@@ -152,7 +159,7 @@ msgstr ""
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr ""
 
-#: hexagon/runtime/execute/action.py:139
+#: hexagon/runtime/execute/action.py:143
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 
@@ -200,15 +207,15 @@ msgstr ""
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr ""
 
-#: hexagon/runtime/execute/tool.py:70
+#: hexagon/runtime/execute/tool.py:76
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr ""
 
-#: hexagon/runtime/execute/tool.py:72
+#: hexagon/runtime/execute/tool.py:78
 msgid "msg.support.execute.tool.go_back_description"
 msgstr ""
 
-#: hexagon/runtime/execute/tool.py:73
+#: hexagon/runtime/execute/tool.py:79
 msgid "icon.global.go_back"
 msgstr ""
 

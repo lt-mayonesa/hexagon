@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2024-02-18 15:33+0100\n"
+"POT-Creation-Date: 2024-02-19 01:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,7 +69,7 @@ msgstr "What name would you like to give your new action?"
 msgid "msg.actions.internal.create_new_tool.custom_tools_dir_not_set"
 msgstr "[magenta]Your CLI does not have a custom tools dir.[/magenta]"
 
-#: hexagon/actions/internal/create_new_tool.py:93
+#: hexagon/actions/internal/create_new_tool.py:95
 msgid "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
 msgstr "relative to this file"
 
@@ -94,6 +94,10 @@ msgstr ""
 #: hexagon/actions/internal/install_cli.py:72
 msgid "msg.actions.internal.install_cli.not_in_path"
 msgstr "[yellow]⚠ {dir} is not in your $PATH[/yellow]"
+
+#: hexagon/actions/internal/replay.py:15
+msgid "msg.actions.internal.replay.last_command"
+msgstr "[dim]replaying command: {last_command}"
 
 #: hexagon/actions/internal/save_new_alias.py:16
 msgid "action.actions.internal.save_new_alias.prompt_alias_name"
@@ -147,13 +151,19 @@ msgstr "Get JSON Schema"
 
 #: hexagon/runtime/configuration.py:127
 msgid "msg.domain.configuration.get_json_schema_description"
-msgstr "Generate JSON Schema for hexagon config file (app.yml). Which can be imported in your IDE, or used for validation."
+msgstr ""
+"Generate JSON Schema for hexagon config file (app.yml). Which can be "
+"imported in your IDE, or used for validation."
 
 #: hexagon/runtime/configuration.py:145
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr "Save Last Command as Shell Alias"
 
-#: hexagon/runtime/configuration.py:151
+#: hexagon/runtime/configuration.py:152
+msgid "msg.domain.configuration.replay_long_name"
+msgstr "Replay Last Command"
+
+#: hexagon/runtime/configuration.py:158
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr "Create A New Tool"
 
@@ -162,7 +172,7 @@ msgstr "Create A New Tool"
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Installing {runtime} dependencies at path: {path}"
 
-#: hexagon/runtime/execute/action.py:139
+#: hexagon/runtime/execute/action.py:143
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 "To support tool arguments either add a model extending\n"
@@ -213,15 +223,15 @@ msgstr "Your custom action seems to have a module dependency error"
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr "Execution of tool {action} failed"
 
-#: hexagon/runtime/execute/tool.py:70
+#: hexagon/runtime/execute/tool.py:76
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr "Go back"
 
-#: hexagon/runtime/execute/tool.py:72
+#: hexagon/runtime/execute/tool.py:78
 msgid "msg.support.execute.tool.go_back_description"
 msgstr "Go back to the previous menu"
 
-#: hexagon/runtime/execute/tool.py:73
+#: hexagon/runtime/execute/tool.py:79
 msgid "icon.global.go_back"
 msgstr "↩"
 

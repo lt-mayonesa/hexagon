@@ -81,6 +81,7 @@ def test_print_help_using_yaml_contents(command):
                 "",
                 "hexagon:",
                 "  save-alias                                                  Save Last Command as Shell Alias",
+                "  replay (r)                                                  Replay Last Command",
                 "  create-tool                                                 Create A New Tool",
             ],
             ignore_blank_lines=False,

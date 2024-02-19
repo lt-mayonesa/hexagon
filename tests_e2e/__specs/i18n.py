@@ -8,10 +8,11 @@ def test_default_locale_is_english():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "4/4",
+                "5/5",
                 "⦾ Google",
                 "ƒ Python i18n Test",
                 "⬡ Save Last Command as Shell Alias",
+                "⬡ Replay Last Command",
                 "⬡ Create A New Tool",
             ]
         )
@@ -34,10 +35,11 @@ def test_unknown_language_fallbacks_to_english():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "4/4",
+                "5/5",
                 "⦾ Google",
                 "ƒ Python i18n Test",
                 "⬡ Save Last Command as Shell Alias",
+                "⬡ Replay Last Command",
                 "⬡ Create A New Tool",
             ]
         )
@@ -60,10 +62,11 @@ def test_not_found_locales_fallbacks_to_english():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "4/4",
+                "5/5",
                 "⦾ Google",
                 "ƒ Python i18n Test",
                 "⬡ Save Last Command as Shell Alias",
+                "⬡ Replay Last Command",
                 "⬡ Create A New Tool",
             ]
         )
@@ -86,10 +89,11 @@ def test_locale_is_set_to_english():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "4/4",
+                "5/5",
                 "⦾ Google",
                 "ƒ Python i18n Test",
                 "⬡ Save Last Command as Shell Alias",
+                "⬡ Replay Last Command",
                 "⬡ Create A New Tool",
             ]
         )
@@ -112,10 +116,11 @@ def test_locale_is_set_to_spanish():
         .then_output_should_be(
             [
                 "Hola ¿qué herramienta te gustaría usar hoy?",
-                "4/4",
+                "5/5",
                 "⦾ Google",
                 "ƒ Python i18n Test",
                 "⬡ Guardar el último comando ejecutado como shell alias",
+                "⬡ Repetir el último comando ejecutado",
                 "⬡ Crear una nueva herramienta",
             ]
         )
