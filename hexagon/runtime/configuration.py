@@ -147,6 +147,13 @@ class Configuration:
                 action="hexagon.actions.internal.save_new_alias",
             ),
             ActionTool(
+                name="replay",
+                alias="r",
+                long_name=_("msg.domain.configuration.replay_long_name"),
+                type=ToolType.hexagon,
+                action="hexagon.actions.internal.replay",
+            ),
+            ActionTool(
                 name="create-tool",
                 long_name=_("msg.domain.configuration.create_tool_long_name"),
                 type=ToolType.hexagon,
