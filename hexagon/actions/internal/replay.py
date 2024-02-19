@@ -12,7 +12,7 @@ def main(tool, env, env_args, cli_args):
     last_command = load_user_data(HexagonStorageKeys.last_command.value)
 
     log.info(
-        _(f"msg.actions.internal.replay.last_command").format(last_command=last_command)
+        _("msg.actions.internal.replay.last_command").format(last_command=last_command)
     )
 
     args = parse_cli_args(last_command.split(" ")[1:])

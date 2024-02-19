@@ -3,7 +3,6 @@ from typing import Any, List, Optional
 from hexagon.domain.env import Env
 from hexagon.domain.tool import Tool
 from hexagon.support.input.args import ToolArgs, OptionalArg, PositionalArg
-from hexagon.support.input.prompt import prompt
 from hexagon.support.output.printer import log
 
 
