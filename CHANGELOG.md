@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.56.0 (2024-02-19)
+
+### Feature
+
+* **replay:** Allow replaying last command executed ([#75](https://github.com/lt-mayonesa/hexagon/issues/75)) ([`7449404`](https://github.com/lt-mayonesa/hexagon/commit/7449404463ae7287989240b447eede6094ccd6ef))
+
 ## v0.55.0 (2024-02-18)
 
 ### Feature
