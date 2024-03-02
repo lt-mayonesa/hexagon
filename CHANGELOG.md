@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.57.0 (2024-03-02)
+
+### Feature
+
+* **prompt:** Allow passing callable to skip_trace ([`608d5dd`](https://github.com/lt-mayonesa/hexagon/commit/608d5dd99ee059bdf11528a661b501e70d186a48))
+
 ## v0.56.0 (2024-02-19)
 
 ### Feature
