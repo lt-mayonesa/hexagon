@@ -165,9 +165,13 @@ def prompt_fuzzy_file_invalid_extra(cli_args):
 
 def prompt_multiple_times(cli_args):
     log.result(f"name: {cli_args.name.prompt()}")
+    log.result(f"name.value: {cli_args.name.value}")
     log.result(f"name: {cli_args.name.prompt()}")
+    log.result(f"name.value: {cli_args.name.value}")
     log.result(f"name: {cli_args.name.prompt()}")
+    log.result(f"name.value: {cli_args.name.value}")
     log.result(f"name: {cli_args.name.prompt()}")
+    log.result(f"name.value: {cli_args.name.value}")
 
 
 def prompt_boolean(cli_args):

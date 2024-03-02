@@ -492,12 +492,16 @@ def test_should_prompt_same_arg_multiple_times_successfully():
         )
         .input("John")
         .then_output_should_be(["name: John"], discard_until_first_match=True)
+        .then_output_should_be(["name.value: John"], discard_until_first_match=True)
         .input("Richard")
         .then_output_should_be(["name: Richard"], discard_until_first_match=True)
+        .then_output_should_be(["name.value: Richard"], discard_until_first_match=True)
         .input("Jose")
         .then_output_should_be(["name: Jose"], discard_until_first_match=True)
+        .then_output_should_be(["name.value: Jose"], discard_until_first_match=True)
         .input("Carlos")
         .then_output_should_be(["name: Carlos"], discard_until_first_match=True)
+        .then_output_should_be(["name.value: Carlos"], discard_until_first_match=True)
         .then_output_should_be(
             [
                 "To run this tool again do:",
