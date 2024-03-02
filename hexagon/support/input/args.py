@@ -45,13 +45,17 @@ class HexagonArg(Generic[T]):
             self.__model__.trace(self.__field__)
         return self.__value__
 
-    def prompt(self, **kwargs):
+    def prompt(
+        self,
+        skip_trace: Union[bool, Callable] = False,
+        **kwargs,
+    ):
         if not self.__model__:
             raise ValueError(
                 "Cannot prompt for a value when model reference is not initialized. "
                 "Probably _init_refs was not called."
             )
-        return self.__model__.prompt(self.__field__, **kwargs)
+        return self.__model__.prompt(self.__field__, skip_trace, **kwargs)
 
     def _init_refs(self, model, field):
         self.__field__ = field
@@ -200,7 +204,7 @@ class ToolArgs(BaseModel):
                 )
         super().__init__(**data)
 
-    def __getattribute__(self, item, skip_trace=False, just_get=False):
+    def __getattribute__(self, item, just_get=False):
         if just_get:
             return super().__getattribute__(item)
         if item == "__fields__":
@@ -255,7 +259,12 @@ class ToolArgs(BaseModel):
                 )
             self.__fields_traced__.add(model_field.name)
 
-    def prompt(self, field: Union[ModelField, str], skip_trace=False, **kwargs):
+    def prompt(
+        self,
+        field: Union[ModelField, str],
+        skip_trace: Union[bool, Callable] = False,
+        **kwargs,
+    ):
         if not self.__prompt__:
             raise ValueError("prompt not initialized. Did _with_prompt() get called?")
 
@@ -273,6 +282,9 @@ class ToolArgs(BaseModel):
 
         self.__setattr__(model_field.name, value_)
         getattribute__ = self.__getattribute__(model_field.name)
+
+        if callable(skip_trace):
+            skip_trace = skip_trace(value_)
 
         if not skip_trace and self.__config__.trace_on_prompt:
             self.trace(model_field, retrace=not skip_trace)
