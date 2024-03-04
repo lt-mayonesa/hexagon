@@ -32,6 +32,13 @@ class HexagonArg(Generic[T]):
         skip_trace: Union[bool, Callable] = False,
         **kwargs,
     ):
+        """
+        Prompt the user for a value for this argument.
+
+        :param skip_trace: true if this prompt should not be traced by hexagon
+        :param kwargs: any extra argument supported by hexagon and InquirePy
+        :return:
+        """
         if not self.__model__:
             raise ValueError(
                 "Cannot prompt for a value when model reference is not initialized. "
