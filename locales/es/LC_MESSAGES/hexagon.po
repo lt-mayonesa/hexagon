@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2024-02-19 01:17+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-04 20:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,7 +98,7 @@ msgstr "¡Listo! Ahora podes ejecutar tu CLI de la siguiente manera:"
 msgid "msg.actions.internal.install_cli.not_in_path"
 msgstr "[yellow]⚠ {dir} no está en tu $PATH[/yellow]"
 
-#: hexagon/actions/internal/replay.py:15
+#: hexagon/actions/internal/replay.py:17
 msgid "msg.actions.internal.replay.last_command"
 msgstr "[dim]Repitiendo comando: {last_command}"
 
@@ -225,15 +226,15 @@ msgstr "Tu acción parece tener un error de dependencias de módulos"
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr "La ejecución de {action} falló"
 
-#: hexagon/runtime/execute/tool.py:76
+#: hexagon/runtime/execute/tool.py:77
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr "Atrás"
 
-#: hexagon/runtime/execute/tool.py:78
+#: hexagon/runtime/execute/tool.py:79
 msgid "msg.support.execute.tool.go_back_description"
 msgstr "Volver al menú anterior"
 
-#: hexagon/runtime/execute/tool.py:79
+#: hexagon/runtime/execute/tool.py:80
 msgid "icon.global.go_back"
 msgstr "↩"
 
@@ -433,13 +434,13 @@ msgstr "Configuración {property} no es válida para argumento {argument}"
 msgid "msg.support.prompt.prompt.directory_created"
 msgstr "📁 directorio creado: {path} [green]✓[/green]"
 
-#: hexagon/support/tracer.py:84
+#: hexagon/support/tracer.py:97
 msgid "msg.main.tracer.run_again"
 msgstr ""
 "[cyan][dim]Para ejecutar nuevamente:[/dim]\n"
 "  {command}[/cyan]"
 
-#: hexagon/support/tracer.py:90
+#: hexagon/support/tracer.py:103
 msgid "msg.main.tracer.or"
 msgstr ""
 "[cyan][dim] o:[/dim]\n"

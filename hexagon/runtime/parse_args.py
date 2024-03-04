@@ -9,7 +9,6 @@ from hexagon.support.input.args import (
     ARGUMENT_KEY_PREFIX,
     OptionalArg,
     PositionalArg,
-    bool_negated_key,
 )
 from hexagon.utils.typing import should_support_multiple_args, field_info
 
@@ -95,7 +94,7 @@ def __add_parser_argument(parser, field: ModelField):
     )
     if is_bool:
         parser.add_argument(
-            *[bool_negated_key(r.replace("-", "")) for r in reprs if r],
+            *[__bool_negated_key(r.replace("-", "")) for r in reprs if r],
             action="store_const",
             dest=field.name,
             const="false",
@@ -182,3 +181,7 @@ def __group_by_key_appending(result):
             else:
                 d[k] = v
     return d
+
+
+def __bool_negated_key(name: str):
+    return f"{ARGUMENT_KEY_PREFIX * 2}no-{name}"

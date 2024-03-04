@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List, Union, Optional
 
-from hexagon.runtime.parse_args import CliArgs
+from hexagon.support.input.args import CliArgs
 
 
 @dataclass
