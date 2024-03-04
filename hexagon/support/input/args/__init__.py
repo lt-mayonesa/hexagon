@@ -12,6 +12,13 @@ from hexagon.support.input.args.hexagon_args import (
 from hexagon.support.input.args.tool_args import ToolArgs
 from hexagon.support.input.args.cli_args import CliArgs
 
+ARGUMENT_KEY_PREFIX = ARGUMENT_KEY_PREFIX
+HexagonArg = HexagonArg
+PositionalArg = PositionalArg
+OptionalArg = OptionalArg
+ToolArgs = ToolArgs
+CliArgs = CliArgs
+
 
 # noinspection PyPep8Naming
 def Arg(
