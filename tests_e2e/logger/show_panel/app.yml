@@ -1,0 +1,11 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+
+tools:
+  - name: panel
+    action: panel
+    type: shell
+
+envs: []

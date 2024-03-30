@@ -2,11 +2,11 @@ import os
 from typing import Any, Type
 
 from pydantic import ValidationError
-from rich.syntax import Syntax
 from ruamel import yaml
 from ruamel.yaml import YAML
 
 from hexagon.domain.hexagon_error import HexagonError
+from hexagon.support.output.printer import Logger
 
 
 def read_file(path: str) -> Any:
@@ -37,7 +37,7 @@ class YamlValidationError(HexagonError):
         self.actual_yaml_file = open(yaml_path, "r").read() if yaml_path else None
         super().__init__(self._error_printer)
 
-    def _error_printer(self, logger):
+    def _error_printer(self, logger: Logger):
         logger.error(
             _("error.support.yaml.invalid_yaml").format(
                 errors_length=len(self.errors), yaml_path=self.yaml_path
@@ -55,12 +55,10 @@ class YamlValidationError(HexagonError):
                     err, self.yaml_content
                 )
                 logger.example(
-                    Syntax(
-                        "\n".join(self.actual_yaml_file.splitlines()[start:end]),
-                        "yaml",
-                        line_numbers=True,
-                        start_line=start + 1,
-                    ),
+                    "\n".join(self.actual_yaml_file.splitlines()[start:end]),
+                    syntax="yaml",
+                    show_line_numbers=True,
+                    start_line=start + 1,
                     decorator_start=False,
                     decorator_end=False,
                 )

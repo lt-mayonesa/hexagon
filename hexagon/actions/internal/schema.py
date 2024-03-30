@@ -27,7 +27,7 @@ def main(tool, env, env_args, cli_args):
         cli_args.target.prompt()
 
     if cli_args.target.value == Target.STDOUT:
-        log.example(ConfigFile.schema_json(indent=2))
+        log.example(ConfigFile.schema_json(indent=2), syntax="json")
     else:
         if not cli_args.file_path.value:
             cli_args.file_path.prompt()

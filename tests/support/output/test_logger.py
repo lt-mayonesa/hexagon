@@ -1,4 +1,5 @@
 import pytest
+from rich.syntax import Syntax
 
 from hexagon.support.output.printer import Logger
 from hexagon.support.output.printer.themes import LoggingTheme
@@ -15,6 +16,10 @@ class Console:
     @property
     def output(self):
         return "\n".join(self.__output)
+
+    @property
+    def raw_output(self):
+        return self.__output
 
 
 @pytest.mark.parametrize(
@@ -130,3 +135,43 @@ def test_log_example(process_out, process_in, message, expected):
     ).example(message)
 
     assert console.output == expected
+
+
+def test_log_example_with_syntax():
+    console = Console()
+
+    Logger(LoggingTheme(), console).example(
+        "# this is a yaml file\nkey: value",
+        syntax="yaml",
+        show_line_numbers=True,
+        decorator_start=False,
+        decorator_end=False,
+    )
+
+    assert isinstance(console.raw_output[0], Syntax)
+    assert console.raw_output[0].code == "# this is a yaml file\nkey: value"
+    assert console.raw_output[0].lexer.name == "YAML"
+    assert console.raw_output[0].line_numbers is True
+    assert console.raw_output[0].line_range is None
+
+
+def test_log_file():
+    console = Console()
+
+    Logger(LoggingTheme(), console).file(__file__, line_range=(1, 10))
+
+    assert isinstance(console.raw_output[0], Syntax)
+    assert console.raw_output[0].code == open(__file__, "r").read()
+    assert console.raw_output[0].lexer.name == "Python"
+    assert console.raw_output[0].line_numbers is True
+    assert console.raw_output[0].line_range == (1, 10)
+
+
+def test_panel_color():
+    console = Console()
+
+    Logger(LoggingTheme(), console).panel("my panel", color="red")
+
+    assert console.raw_output[0].style == "red"
+    assert console.raw_output[0].renderable.style == "red"
+    assert console.raw_output[0].renderable.markup == "[red]my panel[/red]"
