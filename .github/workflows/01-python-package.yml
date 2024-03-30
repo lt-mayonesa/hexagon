@@ -126,7 +126,7 @@ jobs:
           check_name: E2E Tests Python${{ matrix.python-version }}
 
       - name: Publish Test Result MacOS
-        uses: EnricoMi/publish-unit-test-result-action@macosv2
+        uses: EnricoMi/publish-unit-test-result-action/macos@v2
         if: always() && matrix.os == 'macos-latest'
         continue-on-error: true
         with:
