@@ -2,6 +2,16 @@
 
 <!--next-version-placeholder-->
 
+## v0.58.0 (2024-03-30)
+
+### Feature
+
+* **logger:** Add file & panel log APIs ([#80](https://github.com/lt-mayonesa/hexagon/issues/80)) ([`5e4a2db`](https://github.com/lt-mayonesa/hexagon/commit/5e4a2dbb9328d43a5921a51cc3b0ed42c6abbea6))
+
+### Documentation
+
+* **readme:** Install from pypi ([`6968d45`](https://github.com/lt-mayonesa/hexagon/commit/6968d45b54222086f940f9b635771214c0352bd5))
+
 ## v0.57.0 (2024-03-02)
 
 ### Feature
