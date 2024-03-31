@@ -121,6 +121,13 @@ class Configuration:
                     action="hexagon.actions.internal.install_cli",
                 ),
                 ActionTool(
+                    name="manage-clis",
+                    long_name=_("msg.domain.configuration.manage_clis_long_name"),
+                    description=_("msg.domain.configuration.manage_clis_description"),
+                    type=ToolType.hexagon,
+                    action="hexagon.actions.internal.manage_clis",
+                ),
+                ActionTool(
                     name="get-json-schema",
                     long_name=_("msg.domain.configuration.get_json_schema_long_name"),
                     description=_(

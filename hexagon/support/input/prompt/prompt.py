@@ -207,7 +207,7 @@ class Prompt:
             return inq(**inquiry_args)
         except TypeError as e:
             if "__init__() got an unexpected keyword argument" in e.args[0]:
-                prop = re.search(".*\s('\w+')$", e.args[0]).group(1).strip()
+                prop = re.search(".*\\s('\\w+')$", e.args[0]).group(1).strip()
                 err = HexagonArgumentSetupError(model_field.name, prop)
             else:
                 raise e
