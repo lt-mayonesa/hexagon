@@ -111,6 +111,42 @@ def test_install_cli_and_provide_bins_path():
         )  # noqa: E501
 
 
+def test_install_cli_pass_arguments():
+    os.remove(
+        os.path.join(storage_path, "hexagon", f"{cli_install_path_storage_key}.txt")
+    )
+
+    command = "hexagon-test"
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            [
+                "install",
+                os.path.join(e2e_test_folder_path(__file__), "config.yml"),
+                f"--bin-path={commands_dir_path}",
+            ],
+            os_env_vars={
+                HexagonSpec.HEXAGON_STORAGE_PATH: storage_path,
+                "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
+                "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
+            },
+        )
+        .then_output_should_be(
+            ["would have ran python3 -m pip install -r requirements.txt"], True
+        )
+        .then_output_should_be(["would have ran npm install --only=production"])
+        .then_output_should_be(["$ hexagon-test"], True)
+        .exit()
+    )
+
+    with open(os.path.join(commands_dir_path, command), "r") as file:
+        assert (
+            file.read() == "#!/bin/bash\n"
+            "# file create by hexagon\n"
+            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config.yml")} hexagon $@'
+        )  # noqa: E501
+
+
 # noinspection PyPep8Naming
 def test_warn_install_dir_not_PATH():
     (

@@ -5,7 +5,7 @@ from pydantic import FilePath, validator, DirectoryPath
 
 from hexagon.runtime.dependencies import scan_and_install_dependencies
 from hexagon.runtime.singletons import configuration
-from hexagon.support.input.args import ToolArgs, Arg, PositionalArg
+from hexagon.support.input.args import ToolArgs, Arg, PositionalArg, OptionalArg
 from hexagon.support.output.printer import log
 from hexagon.support.storage import (
     load_user_data,
@@ -19,9 +19,10 @@ class Args(ToolArgs):
         None,
         prompt_message=_("action.actions.internal.install_cli.config_file_location"),
     )
-    bin_path: PositionalArg[DirectoryPath] = Arg(
-        str(os.path.expanduser(os.path.join("~", "bin"))),
+    bin_path: OptionalArg[DirectoryPath] = Arg(
+        None,
         prompt_message=_("action.actions.internal.install_cli.commands_path"),
+        prompt_default=str(os.path.expanduser(os.path.join("~", ".local", "bin"))),
     )
 
     @validator("src_path")
@@ -35,16 +36,20 @@ class Args(ToolArgs):
         raise ValueError(_("error.actions.internal.install_cli.select_valid_file"))
 
 
-def main(tool, env, env_args, cli_args: Args):
+def main(_tool, _env, _env_args, cli_args: Args):
     if not cli_args.src_path.value:
         cli_args.src_path.prompt(default=str(Path.cwd()))
 
     cli, tools, envs = configuration.init_config(cli_args.src_path.value.resolve())
 
-    bin_path = load_user_data(HexagonStorageKeys.cli_install_path.value)
+    bin_path = (
+        load_user_data(HexagonStorageKeys.cli_install_path.value)
+        or cli_args.bin_path.value
+    )
 
     if not bin_path:
-        bin_path = cli_args.bin_path.prompt().resolve()
+        if not cli_args.bin_path.value:
+            bin_path = cli_args.bin_path.prompt().resolve()
         store_user_data(HexagonStorageKeys.cli_install_path.value, str(bin_path))
 
     command_path = os.path.join(bin_path, cli.command)
