@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.58.1 (2024-04-08)
+
+### Fix
+
+* **install:** Make bin_path optional arg ([`741044a`](https://github.com/lt-mayonesa/hexagon/commit/741044a2244770c18b66dfd972bc1220cab910ad))
+
 ## v0.58.0 (2024-03-30)
 
 ### Feature
