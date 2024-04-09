@@ -1,0 +1,21 @@
+cli: 
+  name: Test
+  command: hexagon-test
+  entrypoint:
+    shell: /usr/bin/env zsh
+    pre_command: poetry run
+    environ:
+      ANOTHER_TEST_ENV_VAR: 123
+  custom_tools_dir: .
+
+tools:
+  - name: google
+    long_name: Google
+    type: web
+    action: 'open_link'
+    envs:
+      '*': https://www.google.com/
+
+envs:
+  - name: dev
+    alias: d

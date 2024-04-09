@@ -1,0 +1,18 @@
+cli: 
+  name: Test
+  command: hexagon-test
+  entrypoint:
+    shell: /bin/sh
+  custom_tools_dir: .
+
+tools:
+  - name: google
+    long_name: Google
+    type: web
+    action: 'open_link'
+    envs:
+      '*': https://www.google.com/
+
+envs:
+  - name: dev
+    alias: d

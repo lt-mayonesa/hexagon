@@ -13,6 +13,12 @@ commands_dir_path = os.path.realpath(
 test_folder_path = e2e_test_folder_path(__file__)
 storage_path = os.path.join(test_folder_path, "storage")
 
+TEST_ENV_VARS = {
+    HexagonSpec.HEXAGON_STORAGE_PATH: storage_path,
+    "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
+    "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
+}
+
 cli_install_path_storage_key = "cli-install-path"
 
 
@@ -37,13 +43,7 @@ def test_install_cli():
     command = "hexagon-test"
     (
         as_a_user(__file__)
-        .run_hexagon(
-            os_env_vars={
-                HexagonSpec.HEXAGON_STORAGE_PATH: storage_path,
-                "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
-                "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
-            }
-        )
+        .run_hexagon(os_env_vars=TEST_ENV_VARS)
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
@@ -64,8 +64,9 @@ def test_install_cli():
     with open(os.path.join(commands_dir_path, command), "r") as file:
         assert (
             file.read() == "#!/bin/bash\n"
-            "# file create by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config.yml")} hexagon $@'
+            "# file created by hexagon\n"
+            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config.yml")} \\\n'
+            f"hexagon $@"
         )  # noqa: E501
 
 
@@ -77,13 +78,7 @@ def test_install_cli_and_provide_bins_path():
     command = "hexagon-test"
     (
         as_a_user(__file__)
-        .run_hexagon(
-            os_env_vars={
-                HexagonSpec.HEXAGON_STORAGE_PATH: storage_path,
-                "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
-                "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
-            }
-        )
+        .run_hexagon(os_env_vars=TEST_ENV_VARS)
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
@@ -106,8 +101,9 @@ def test_install_cli_and_provide_bins_path():
     with open(os.path.join(commands_dir_path, command), "r") as file:
         assert (
             file.read() == "#!/bin/bash\n"
-            "# file create by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config.yml")} hexagon $@'
+            "# file created by hexagon\n"
+            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config.yml")} \\\n'
+            f"hexagon $@"
         )  # noqa: E501
 
 
@@ -125,11 +121,7 @@ def test_install_cli_pass_arguments():
                 os.path.join(e2e_test_folder_path(__file__), "config.yml"),
                 f"--bin-path={commands_dir_path}",
             ],
-            os_env_vars={
-                HexagonSpec.HEXAGON_STORAGE_PATH: storage_path,
-                "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
-                "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
-            },
+            os_env_vars=TEST_ENV_VARS,
         )
         .then_output_should_be(
             ["would have ran python3 -m pip install -r requirements.txt"], True
@@ -142,8 +134,120 @@ def test_install_cli_pass_arguments():
     with open(os.path.join(commands_dir_path, command), "r") as file:
         assert (
             file.read() == "#!/bin/bash\n"
-            "# file create by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config.yml")} hexagon $@'
+            "# file created by hexagon\n"
+            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config.yml")} \\\n'
+            f"hexagon $@"
+        )  # noqa: E501
+
+
+def test_install_cli_change_entrypoint_shell():
+    command = "hexagon-test"
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            [
+                "install",
+                os.path.join(
+                    e2e_test_folder_path(__file__), "config_entrypoint_shell.yml"
+                ),
+                f"--bin-path={commands_dir_path}",
+            ],
+            os_env_vars=TEST_ENV_VARS,
+        )
+        .then_output_should_be(["$ hexagon-test"], discard_until_first_match=True)
+        .exit()
+    )
+
+    with open(os.path.join(commands_dir_path, command), "r") as file:
+        assert (
+            file.read() == "#!/bin/sh\n"
+            "# file created by hexagon\n"
+            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config_entrypoint_shell.yml")} \\\n'
+            f"hexagon $@"
+        )  # noqa: E501
+
+
+def test_install_cli_change_entrypoint_pre_command():
+    command = "hexagon-test"
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            [
+                "install",
+                os.path.join(
+                    e2e_test_folder_path(__file__), "config_entrypoint_pre_command.yml"
+                ),
+                f"--bin-path={commands_dir_path}",
+            ],
+            os_env_vars=TEST_ENV_VARS,
+        )
+        .then_output_should_be(["$ hexagon-test"], discard_until_first_match=True)
+        .exit()
+    )
+
+    with open(os.path.join(commands_dir_path, command), "r") as file:
+        assert (
+            file.read() == "#!/bin/bash\n"
+            "# file created by hexagon\n"
+            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config_entrypoint_pre_command.yml")} \\\n'
+            f"pipenv run hexagon $@"
+        )  # noqa: E501
+
+
+def test_install_cli_change_entrypoint_environ():
+    command = "hexagon-test"
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            [
+                "install",
+                os.path.join(
+                    e2e_test_folder_path(__file__), "config_entrypoint_environ.yml"
+                ),
+                f"--bin-path={commands_dir_path}",
+            ],
+            os_env_vars=TEST_ENV_VARS,
+        )
+        .then_output_should_be(["$ hexagon-test"], discard_until_first_match=True)
+        .exit()
+    )
+
+    with open(os.path.join(commands_dir_path, command), "r") as file:
+        assert (
+            file.read() == "#!/bin/bash\n"
+            "# file created by hexagon\n"
+            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config_entrypoint_environ.yml")} \\\n'
+            "MY_TEST_ENV_VAR=test \\\n"
+            "ANOTHER_TEST_ENV_VAR=123 \\\n"
+            f"hexagon $@"
+        )  # noqa: E501
+
+
+def test_install_cli_change_entrypoint_complete():
+    command = "hexagon-test"
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            [
+                "install",
+                os.path.join(
+                    e2e_test_folder_path(__file__), "config_entrypoint_complete.yml"
+                ),
+                f"--bin-path={commands_dir_path}",
+            ],
+            os_env_vars=TEST_ENV_VARS,
+        )
+        .then_output_should_be(["$ hexagon-test"], discard_until_first_match=True)
+        .exit()
+    )
+
+    with open(os.path.join(commands_dir_path, command), "r") as file:
+        assert (
+            file.read() == "#!/usr/bin/env zsh\n"
+            "# file created by hexagon\n"
+            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config_entrypoint_complete.yml")} \\\n'
+            "ANOTHER_TEST_ENV_VAR=123 \\\n"
+            f"poetry run hexagon $@"
         )  # noqa: E501
 
 

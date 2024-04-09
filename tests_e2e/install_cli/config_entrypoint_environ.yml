@@ -1,0 +1,20 @@
+cli: 
+  name: Test
+  command: hexagon-test
+  entrypoint:
+    environ:
+      MY_TEST_ENV_VAR: test
+      ANOTHER_TEST_ENV_VAR: 123
+  custom_tools_dir: .
+
+tools:
+  - name: google
+    long_name: Google
+    type: web
+    action: 'open_link'
+    envs:
+      '*': https://www.google.com/
+
+envs:
+  - name: dev
+    alias: d

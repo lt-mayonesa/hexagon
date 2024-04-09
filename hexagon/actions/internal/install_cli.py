@@ -54,10 +54,22 @@ def main(_tool, _env, _env_args, cli_args: Args):
 
     command_path = os.path.join(bin_path, cli.command)
     with open(command_path, "w") as command:
+        pre_command = (
+            cli.entrypoint.pre_command + " " if cli.entrypoint.pre_command else ""
+        )
         command.write(
-            "#!/bin/bash\n"
-            "# file create by hexagon\n"
-            f"HEXAGON_CONFIG_FILE={cli_args.src_path.value.resolve()} hexagon $@"
+            "\n".join(
+                [
+                    f"#!{cli.entrypoint.shell or '/bin/bash'}",
+                    "# file created by hexagon",
+                    f"HEXAGON_CONFIG_FILE={cli_args.src_path.value.resolve()} \\",
+                    *[
+                        f"{key}={value} \\"
+                        for key, value in cli.entrypoint.environ.items()
+                    ],
+                    f"{pre_command}hexagon $@",
+                ]
+            )
         )
 
     _make_executable(command_path)
