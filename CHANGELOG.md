@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.59.0 (2024-04-09)
+
+### Feature
+
+* **cli:** Allow configuring entrypoint on install ([`ed75377`](https://github.com/lt-mayonesa/hexagon/commit/ed7537743c6fdfe957a095d7ab51b7302df347ec))
+
 ## v0.58.1 (2024-04-08)
 
 ### Fix
