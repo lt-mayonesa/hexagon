@@ -2,7 +2,7 @@ from inspect import isclass
 from typing import Optional, Dict, Union, List, Callable
 
 from pydantic import BaseModel
-from pydantic.fields import ModelField
+from pydantic.v1.fields import ModelField
 
 from hexagon.support.input.args import HexagonArg
 from hexagon.support.input.args.hexagon_args import PositionalArg, OptionalArg
@@ -18,13 +18,13 @@ class ToolArgs(BaseModel):
     raw_extra_args: Optional[List[str]] = None
 
     def __init__(self, **data):
-        for v in self.__fields__.values():
+        for v in self.model_fields.values():
             if (
-                isclass(v.type_) and issubclass(v.type_, HexagonArg)
+                isclass(v.annotation) and issubclass(v.annotation, HexagonArg)
             ) and not isinstance(v.default, HexagonArg):
                 v.default = (
                     PositionalArg(v.default)
-                    if v.type_ == PositionalArg
+                    if v.annotation == PositionalArg
                     else OptionalArg(v.default)
                 )
         super().__init__(**data)
@@ -32,10 +32,10 @@ class ToolArgs(BaseModel):
     def __getattribute__(self, item, just_get=False):
         if just_get:
             return super().__getattribute__(item)
-        if item == "__fields__":
+        if item == "model_fields":
             return super().__getattribute__(item)
-        if item in self.__fields__:
-            field = self.__fields__[item]
+        if item in self.model_fields:
+            field = self.model_fields[item]
             value_ = self.__getattribute__(item, just_get=True)
 
             if (
@@ -53,14 +53,14 @@ class ToolArgs(BaseModel):
         arg = self.__getattribute__(key, just_get=True)
         if isinstance(arg, HexagonArg):
             # noinspection PyProtectedMember
-            arg._init_refs(self, self.__fields__.get(key))
+            arg._init_refs(self, self.model_fields.get(key))
 
     def trace(self, field: Union[ModelField, str], retrace=False):
         if not self.__tracer__:
             raise ValueError("Tracer not initialized. Did _with_tracer() get called?")
 
         model_field = (
-            field if isinstance(field, ModelField) else self.__fields__.get(field)
+            field if isinstance(field, ModelField) else self.model_fields.get(field)
         )
         if not model_field:
             raise ValueError(
@@ -75,9 +75,9 @@ class ToolArgs(BaseModel):
         if (
             retrace or model_field.name not in self.__fields_traced__
         ) and model_field.name in self.__fields_set__:
-            if model_field.type_ == PositionalArg:
+            if model_field.annotation == PositionalArg:
                 self.__tracer__.tracing(f"arg_{model_field.name}", value_.__value__)
-            elif model_field.type_ == OptionalArg:
+            elif model_field.annotation == OptionalArg:
                 n, a = OptionalArg.cli_repr(model_field)
                 self.__tracer__.tracing(
                     f"arg_{model_field.name}", value_.__value__, key=n, key_alias=a
@@ -94,7 +94,7 @@ class ToolArgs(BaseModel):
             raise ValueError("prompt not initialized. Did _with_prompt() get called?")
 
         model_field = (
-            field if isinstance(field, ModelField) else self.__fields__.get(field)
+            field if isinstance(field, ModelField) else self.model_fields.get(field)
         )
         if not model_field:
             raise ValueError(
@@ -118,7 +118,7 @@ class ToolArgs(BaseModel):
 
     def _with_tracer(self, tracer):
         self.__tracer__ = tracer
-        for k, field in self.__fields__.items():
+        for k, field in self.model_fields.items():
             arg = self.__getattribute__(k, just_get=True)
             if isinstance(arg, HexagonArg):
                 # noinspection PyProtectedMember
@@ -127,7 +127,7 @@ class ToolArgs(BaseModel):
 
     def _with_prompt(self, prompt):
         self.__prompt__ = prompt
-        for k, field in self.__fields__.items():
+        for k, field in self.model_fields.items():
             arg = self.__getattribute__(k, just_get=True)
             if isinstance(arg, HexagonArg):
                 # noinspection PyProtectedMember

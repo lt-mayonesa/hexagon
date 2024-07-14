@@ -10,7 +10,7 @@ class CliArgs(BaseModel):
     tool: PositionalArg[Optional[str]] = None
     env: PositionalArg[Optional[str]] = None
 
-    extra_args: Optional[Dict[str, Union[list, bool, int, str]]] = None
+    extra_args: Dict[str, Union[list, bool, int, float, str]] = None
     raw_extra_args: Optional[List[str]] = None
     total_args: int
 

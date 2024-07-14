@@ -1,7 +1,8 @@
 import datetime
 from typing import Any, Dict, Optional
 
-from pydantic import BaseSettings, ValidationError
+from pydantic import ValidationError
+from pydantic_settings import BaseSettings
 from pydantic.types import DirectoryPath
 
 from hexagon.runtime.yaml import YamlValidationError

@@ -7,7 +7,7 @@ from pydantic import (
     DirectoryPath as PydanticDirectoryPath,
     errors,
 )
-from pydantic.errors import _PathValueError
+from pydantic.v1.errors import _PathValueError
 
 
 class FileNotExistsError(_PathValueError):

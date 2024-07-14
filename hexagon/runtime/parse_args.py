@@ -1,8 +1,10 @@
 import argparse
 import sys
-from typing import List
 
-from pydantic.fields import ModelField
+from typing import List, get_origin
+
+from pydantic import TypeAdapter
+from pydantic.fields import FieldInfo
 
 from hexagon.support.input.args import (
     CliArgs,
@@ -63,11 +65,11 @@ def init_arg_parser(
     if sys.version_info < (3, 8):
         __polyfill_extend_action(__p)
 
-    for field in model.__fields__.values():
-        if fields and field.name not in fields:
+    for name, field in model.model_fields.items():
+        if fields and name not in fields:
             continue
-        if field.type_ in [PositionalArg, OptionalArg]:
-            __add_parser_argument(__p, field)
+        if get_origin(field.annotation) in [PositionalArg, OptionalArg]:
+            __add_parser_argument(__p, name, field)
     return __p
 
 
@@ -81,8 +83,8 @@ def __polyfill_extend_action(__p):
     __p.register("action", "extend", ExtendAction)
 
 
-def __add_parser_argument(parser, field: ModelField):
-    reprs = field.type_.cli_repr(field)
+def __add_parser_argument(parser, field_name: str, field: FieldInfo):
+    reprs = field.annotation.cli_repr(field_name, field)
     nargs, action, constant_default, is_bool = __config_base_on_type(field)
     # type and default behavior is handled by pydantic
     parser.add_argument(
@@ -90,15 +92,15 @@ def __add_parser_argument(parser, field: ModelField):
         nargs=nargs,
         action=action,
         const=constant_default,
-        help=f"{field.field_info.description or field.name} (default: {field.default})",
+        help=f"{field.description or field_name} (default: {field.default})",
     )
     if is_bool:
         parser.add_argument(
             *[__bool_negated_key(r.replace("-", "")) for r in reprs if r],
             action="store_const",
-            dest=field.name,
+            dest=field_name,
             const="false",
-            help=f"Disable {field.name}",
+            help=f"Disable {field_name}",
         )
 
 
@@ -119,7 +121,8 @@ def __config_base_on_type(field):
             constant_default,
             is_bool,
         )
-        if field.type_ == OptionalArg and should_support_multiple_args(field)
+        if get_origin(field.annotation) == OptionalArg
+        and should_support_multiple_args(field)
         else (
             "?",
             "store",
@@ -132,9 +135,9 @@ def __config_base_on_type(field):
 def __guess_optional_keys(extra: List[str]):
     """
     Return a dict by guessing optional keys from a list of arguments, e.g.:
-    ['--number', '123', '--name', 'John', '--name', 'Doe'] -> {'number': '123','name': ['John', 'Doe']}
-    ['123'] -> {'0': '123'}
-    ['123', '--letter', 'A'] -> {'0': '123', 'letter': 'A'}
+    ['--number', '123', '--name', 'John', '--name', 'Doe'] -> {'number': 123,'name': ['John', 'Doe']}
+    ['123'] -> {'0': 123}
+    ['123', '--letter', 'A'] -> {'0': 123, 'letter': 'A'}
     :param extra:
     :return:
     """
@@ -154,16 +157,16 @@ def __args_to_key_vals(extra):
         if current.startswith(ARGUMENT_KEY_PREFIX):
             if "=" in current:
                 key, value = current[2:].split("=")
-                result.append({key: value})
+                result.append({key: __adapt_value_type(value)})
                 i += 1
             elif not next_ or next_.startswith(ARGUMENT_KEY_PREFIX):
                 result.append({current[2:]: True})
                 i += 1
             else:
-                result.append({current[2:]: next_})
+                result.append({current[2:]: __adapt_value_type(next_)})
                 i += 2
         else:
-            result.append({str(arg_index): current})
+            result.append({str(arg_index): __adapt_value_type(current)})
             i += 1
             arg_index += 1
     return result
@@ -185,3 +188,18 @@ def __group_by_key_appending(result):
 
 def __bool_negated_key(name: str):
     return f"{ARGUMENT_KEY_PREFIX * 2}no-{name}"
+
+
+def __adapt_value_type(value: str):
+    result = __try_to_parse_type(value, bool)
+    if result is not None:
+        return result
+    return __try_to_parse_type(value, int) or __try_to_parse_type(value, float) or value
+
+
+def __try_to_parse_type(value: str, target: type):
+    adapter = TypeAdapter(target)
+    try:
+        return adapter.validate_strings(value)
+    except ValueError:
+        return None

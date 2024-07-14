@@ -11,7 +11,7 @@ from prompt_toolkit.buffer import ValidationState
 from prompt_toolkit.document import Document
 from prompt_toolkit.validation import ValidationError, Validator
 from pydantic import ValidationError as PydanticValidationError, DirectoryPath
-from pydantic.fields import ModelField, Validator as PydanticValidator
+from pydantic.v1.fields import ModelField, Validator as PydanticValidator
 
 from hexagon.domain.hexagon_error import ListHexagonError
 from hexagon.runtime.singletons import options
