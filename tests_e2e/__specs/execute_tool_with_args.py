@@ -138,11 +138,11 @@ def test_arguments_type_matters():
             [
                 "There where 3 error(s) in your input",
                 "",
-                "✗ age -> value is not a valid integer",
+                "✗ age -> Input should be a valid integer, unable to parse string as an integer",
                 "",
-                "✗ nationality -> USA is not a valid nationality",
+                "✗ nationality -> Value error, USA is not a valid nationality",
                 "",
-                "✗ car_brand -> we don't accept Chevrolet cars",
+                "✗ car_brand -> Value error, we don't accept Chevrolet cars",
             ],
             ignore_blank_lines=False,
         )

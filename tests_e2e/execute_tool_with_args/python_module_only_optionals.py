@@ -14,7 +14,7 @@ class Args(ToolArgs):
 
     name: OptionalArg[str]
     age: OptionalArg[str]
-    country: OptionalArg[Union[str, int]]
+    country: OptionalArg[str]
     likes: OptionalArg[List[str]]
 
 

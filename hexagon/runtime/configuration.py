@@ -93,7 +93,9 @@ class Configuration:
 
     def add_tool(self, tool: Union[ActionTool, GroupTool]):
         self.__config.tools.append(tool)
-        self.__yaml["tools"].append(tool.dict(exclude_none=True, exclude_unset=True))
+        self.__yaml["tools"].append(
+            tool.model_dump(mode="json", exclude_none=True, exclude_unset=True)
+        )
 
     def update_custom_tools_path(self, value, comment=None, position=0):
         self.__config.cli.custom_tools_dir = value

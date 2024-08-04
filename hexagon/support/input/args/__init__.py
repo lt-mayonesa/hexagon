@@ -1,6 +1,6 @@
 from typing import Optional, Union, Any, Callable
 
-from pydantic import (
+from pydantic.fields import (
     Field as PydanticField,
 )
 from hexagon.support.input.args.hexagon_args import (

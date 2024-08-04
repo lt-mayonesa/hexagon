@@ -4,7 +4,7 @@ import sys
 from typing import List, get_origin
 
 from pydantic import TypeAdapter
-from pydantic.fields import FieldInfo
+from pydantic_core import PydanticUndefined
 
 from hexagon.support.input.args import (
     CliArgs,
@@ -12,7 +12,8 @@ from hexagon.support.input.args import (
     OptionalArg,
     PositionalArg,
 )
-from hexagon.utils.typing import should_support_multiple_args, field_info
+from hexagon.support.input.args.field_reference import FieldReference
+from hexagon.typing import should_support_multiple_args, field_type_information
 
 
 # noinspection PyProtectedMember
@@ -49,6 +50,7 @@ def parse_cli_args(args=None, model=CliArgs, **kwargs):
             + count,
         }
     )
+    # return model.model_validate_json(json.dumps(data))
     return model(**{k: v for k, v in data.items() if v is not None})
 
 
@@ -69,7 +71,7 @@ def init_arg_parser(
         if fields and name not in fields:
             continue
         if get_origin(field.annotation) in [PositionalArg, OptionalArg]:
-            __add_parser_argument(__p, name, field)
+            __add_parser_argument(__p, FieldReference(name, field))
     return __p
 
 
@@ -83,24 +85,25 @@ def __polyfill_extend_action(__p):
     __p.register("action", "extend", ExtendAction)
 
 
-def __add_parser_argument(parser, field_name: str, field: FieldInfo):
-    reprs = field.annotation.cli_repr(field_name, field)
-    nargs, action, constant_default, is_bool = __config_base_on_type(field)
-    # type and default behavior is handled by pydantic
+def __add_parser_argument(parser, field: FieldReference):
+    reprs = field.info.annotation.cli_repr(field)
+    nargs, action, constant_default, is_bool = __config_base_on_type(field.info)
+
+    default = None if field.info.default is PydanticUndefined else field.info.default
     parser.add_argument(
         *[r for r in reprs if r],
         nargs=nargs,
         action=action,
         const=constant_default,
-        help=f"{field.description or field_name} (default: {field.default})",
+        help=f"{field.info.description or field.name} (default: {default})",
     )
     if is_bool:
         parser.add_argument(
             *[__bool_negated_key(r.replace("-", "")) for r in reprs if r],
             action="store_const",
-            dest=field_name,
+            dest=field.name,
             const="false",
-            help=f"Disable {field_name}",
+            help=f"Disable {field.name}",
         )
 
 
@@ -111,15 +114,14 @@ def __config_base_on_type(field):
     :param field:
     :return:
     """
-    field_type, _, __ = field_info(field)
-    is_bool = field_type == bool
-    constant_default = "true" if is_bool else None
+    field_type, _, __ = field_type_information(field)
+    constant_default = "true" if field_type.is_bool else None
     return (
         (
             "*",
             "extend",
             constant_default,
-            is_bool,
+            field_type.is_bool,
         )
         if get_origin(field.annotation) == OptionalArg
         and should_support_multiple_args(field)
@@ -127,7 +129,7 @@ def __config_base_on_type(field):
             "?",
             "store",
             constant_default,
-            is_bool,
+            field_type.is_bool,
         )
     )
 

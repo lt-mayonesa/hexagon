@@ -2,7 +2,7 @@ import re
 from copy import copy
 from enum import Enum, auto
 from pathlib import Path
-from typing import Any, Dict, Literal, Callable, List
+from typing import Any, Dict, Literal, Callable, List, get_origin
 
 from InquirerPy import inquirer
 from InquirerPy.base import Choice
@@ -10,17 +10,22 @@ from InquirerPy.utils import run_in_terminal
 from prompt_toolkit.buffer import ValidationState
 from prompt_toolkit.document import Document
 from prompt_toolkit.validation import ValidationError, Validator
-from pydantic import ValidationError as PydanticValidationError, DirectoryPath
-from pydantic.v1.fields import ModelField, Validator as PydanticValidator
+from pydantic import (
+    ValidationError as PydanticValidationError,
+    DirectoryPath,
+)
+from pydantic.v1.fields import Validator as PydanticValidator
+from pydantic_core import SchemaValidator
 
 from hexagon.domain.hexagon_error import ListHexagonError
 from hexagon.runtime.singletons import options
 from hexagon.support.input.args import HexagonArg
+from hexagon.support.input.args.field_reference import FieldReference
 from hexagon.support.input.prompt.for_all_methods import for_all_methods
 from hexagon.support.input.prompt.hints import HintsBuilder
 from hexagon.support.input.types import path_validator
 from hexagon.support.output.printer import log
-from hexagon.utils.typing import field_info
+from hexagon.typing import field_type_information, TypeInformation
 
 
 class HexagonArgumentSetupError(ListHexagonError):
@@ -52,12 +57,13 @@ class PromptValidator(Validator):
             raise ValidationError(message=e.args[0], cursor_position=len(document.text))
 
 
-def default_validator(model_field: ModelField, mapper=lambda x: x):
+def default_validator(field_reference: FieldReference, mapper=lambda x: x):
     def func(cls, value):
-        value, error = model_field.validate(mapper(value), {}, loc="")
-        if error:
-            raise PydanticValidationError([error], model=cls)
-        return value
+        validator = SchemaValidator({"type": "any"})
+        try:
+            return validator.validate_python(mapper(value))
+        except ValidationError as e:
+            raise PydanticValidationError([e], model=cls)
 
     return func
 
@@ -66,16 +72,17 @@ def list_mapper(v):
     return v.strip().split("\n")
 
 
-def set_default(invocation_extras, model_field: ModelField):
-    if model_field.field_info.extra.get("prompt_default"):
-        return {"default": model_field.field_info.extra["prompt_default"]}
+def set_default(invocation_extras, field_reference: FieldReference):
+    extras = field_reference.info.json_schema_extra or {}
+    if extras.get("prompt_default"):
+        return {"default": extras["prompt_default"]}
     if "default" in invocation_extras:
         return {"default": invocation_extras["default"]}
-    elif model_field.default:
+    elif field_reference.info.default:
         default = (
-            model_field.default.value
-            if isinstance(model_field.default, HexagonArg)
-            else model_field.default
+            field_reference.info.default.value
+            if isinstance(field_reference.info.default, HexagonArg)
+            else field_reference.info.default
         )
         if default is not None:
             return {"default": default}
@@ -101,7 +108,7 @@ class InquiryType(Enum):
 
 
 def _determine_expected_inquiry(
-    iterable, of_enum, type_, declaration_extras, invocation_extras
+    iterable, of_enum, field_type, declaration_extras, invocation_extras
 ) -> (InquiryType, dict):
     """
     TODO: move this to a separate module and unit test it
@@ -124,13 +131,13 @@ def _determine_expected_inquiry(
         )
     elif of_enum:
         query = InquiryType.ENUM if not searchable else InquiryType.ENUM_SEARCHABLE
-    elif issubclass(type_, Path):
+    elif issubclass(field_type.base_type, Path):
         query = InquiryType.PATH if not searchable else InquiryType.PATH_SEARCHABLE
-    elif issubclass(type_, bool):
+    elif issubclass(field_type.base_type, bool):
         query = InquiryType.BOOLEAN
-    elif issubclass(type_, int):
+    elif issubclass(field_type.base_type, int):
         query = InquiryType.INT
-    elif issubclass(type_, float):
+    elif issubclass(field_type.base_type, float):
         query = InquiryType.FLOAT
     elif extras.get("secret", False):
         query = InquiryType.SECRET
@@ -140,18 +147,18 @@ def _determine_expected_inquiry(
 
 @for_all_methods(log.status_aware, exclude=["query_field"])
 class Prompt:
-    def query_field(self, model_field: ModelField, model_class, **kwargs):
+    def query_field(self, field_reference: FieldReference, model_class, **kwargs):
         # TODO: this method is a mess, refactor it
-        declaration_extras = copy(model_field.field_info.extra)
+        declaration_extras = copy(field_reference.info.json_schema_extra or {})
         invocation_extras = copy(kwargs)
         inquiry_args = {
             "message": declaration_extras.get("prompt_message", None)
-            or f"Enter {model_field.name}:",
+            or f"Enter {field_reference.name}:",
             "instruction": declaration_extras.get("prompt_instruction", None),
         }
-        inquiry_args.update(set_default(invocation_extras, model_field))
+        inquiry_args.update(set_default(invocation_extras, field_reference))
 
-        field_type, iterable, of_enum = field_info(model_field)
+        field_type, iterable, of_enum = field_type_information(field_reference.info)
 
         inquiry_type, extras = _determine_expected_inquiry(
             iterable, of_enum, field_type, declaration_extras, invocation_extras
@@ -181,18 +188,18 @@ class Prompt:
             field_type=field_type,
         )
 
-        if model_field.sub_fields:
+        if issubclass(get_origin(field_reference.info.annotation), HexagonArg):
             validators_ = {
                 "default": PydanticValidator(
-                    default_validator(model_field, mapper=mapper), check_fields=True
+                    default_validator(field_reference, mapper=mapper), check_fields=True
                 )
             }
-            if model_field.class_validators:
-                validators_.update(
-                    {
-                        **model_field.class_validators,
-                    }
-                )
+            # if field_reference.info.class_validators:
+            #     validators_.update(
+            #         {
+            #             **field_reference.info.class_validators,
+            #         }
+            #     )
             inquiry_args["validate"] = PromptValidator(
                 validators_,
                 model_class,
@@ -208,7 +215,7 @@ class Prompt:
         except TypeError as e:
             if "__init__() got an unexpected keyword argument" in e.args[0]:
                 prop = re.search(".*\s('\w+')$", e.args[0]).group(1).strip()
-                err = HexagonArgumentSetupError(model_field.name, prop)
+                err = HexagonArgumentSetupError(field_reference.name, prop)
             else:
                 raise e
 
@@ -325,7 +332,7 @@ def setup_enum_list(
     self: Prompt,
     inquiry_type: Literal[InquiryType.ENUM_LIST, InquiryType.ENUM_LIST_SEARCHABLE],
     inquiry_args: Dict[str, Any],
-    field_type: Any,
+    field_type: TypeInformation,
     **_,
 ) -> (Callable, Callable):
     inquiry_args["choices"] = [
@@ -334,7 +341,7 @@ def setup_enum_list(
             value=x,
             enabled=("default" in inquiry_args and x in inquiry_args["default"]),
         )
-        for x in field_type.__args__[0]
+        for x in field_type.base_type.__args__[0]
     ]
     inquiry_args["default"] = ""
     if inquiry_type == InquiryType.ENUM_LIST_SEARCHABLE:
@@ -361,10 +368,12 @@ def setup_enum(
     self: Prompt,
     inquiry_type: Literal[InquiryType.ENUM, InquiryType.ENUM_SEARCHABLE],
     inquiry_args: Dict[str, Any],
-    field_type: Any,
+    field_type: TypeInformation,
     **_,
 ) -> (Callable, Callable):
-    inquiry_args["choices"] = [{"name": x.name, "value": x} for x in field_type]
+    inquiry_args["choices"] = [
+        {"name": x.name, "value": x} for x in field_type.base_type
+    ]
     if inquiry_type == InquiryType.ENUM_SEARCHABLE:
         inquiry_args["default"] = (
             inquiry_args["default"].value if "default" in inquiry_args else None
@@ -394,7 +403,7 @@ def setup_path(
     inquiry_type: Literal[InquiryType.PATH, InquiryType.PATH_SEARCHABLE],
     inquiry_args: Dict[str, Any],
     extras: Dict[str, Any],
-    field_type: Any,
+    field_type: TypeInformation,
 ) -> (Callable, Callable):
     if inquiry_type == InquiryType.PATH_SEARCHABLE:
         choices: List[Dict[str, Any] or Any] = []
@@ -428,7 +437,7 @@ def setup_path(
         inquiry_args["only_directories"] = (
             inquiry_args["only_directories"]
             if "only_directories" in inquiry_args
-            else issubclass(field_type, DirectoryPath)
+            else field_type.is_directory_path
         )
         return self.path, lambda x: x
 

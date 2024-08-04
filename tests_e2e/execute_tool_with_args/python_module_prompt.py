@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Any, Optional, List
 
-from pydantic import validator
+from pydantic import field_validator
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
@@ -59,19 +59,19 @@ class Args(ToolArgs):
         None, prompt_default=True, prompt_message="Do you want to continue?"
     )
 
-    @validator("age")
-    def validate_age(cls, arg):
+    @field_validator("age")
+    def validate_age(cls, arg: OptionalArg[int]):
         if arg:
-            v = int(arg) if isinstance(arg, str) else arg.value
-            if v < 18:
+            v = arg.value
+            if v and v < 18:
                 raise ValueError("age must be greater than 18")
         return arg
 
-    @validator("age")
-    def validate_age_max(cls, arg):
+    @field_validator("age")
+    def validate_age_max(cls, arg: OptionalArg[int]):
         if arg:
-            v = int(arg) if isinstance(arg, str) else arg.value
-            if v > 48:
+            v = arg.value
+            if v and v > 48:
                 raise ValueError("age must be less than 48")
         return arg
 

@@ -1,11 +1,11 @@
 import abc
-from copy import copy
 from typing import Generic, Union, Callable, TypeVar, get_args, Any, get_origin
 
-from pydantic import ValidationError, ValidationInfo, GetCoreSchemaHandler
-from pydantic.fields import FieldInfo
+from pydantic import ValidationInfo, GetCoreSchemaHandler
 from pydantic_core import core_schema
+from pydantic_core.core_schema import ValidatorFunctionWrapHandler
 
+from hexagon.support.input.args.field_reference import FieldReference
 
 ARGUMENT_KEY_PREFIX = "-"
 
@@ -18,10 +18,6 @@ class HexagonArg(Generic[T]):
 
     def __init__(self, value: T):
         self.__value__ = value
-
-    # @classmethod
-    # def __get_validators__(cls):
-    #     yield cls.arg_validator(cls)
 
     @property
     def value(self):
@@ -48,68 +44,82 @@ class HexagonArg(Generic[T]):
             )
         return self.__model__.prompt(self.__field__, skip_trace, **kwargs)
 
-    def _init_refs(self, model, field):
+    def _init_refs(self, model: Any, field: FieldReference):
         self.__field__ = field
         self.__model__ = model
 
     @staticmethod
     @abc.abstractmethod
-    def cli_repr(name: str, field: FieldInfo):
+    def cli_repr(field: FieldReference):
         return
 
     def __str__(self, **kwargs):
         return str(self.__value__)
 
-    # @staticmethod
-    # def arg_validator(cls):
-    #     def validate(v, field: ValidationInfo):
-    #         if not isinstance(v, cls):
-    #             v = cls(v)
-    #         if not get_args(field.annotation):
-    #             # Generic parameters were not provided, ie: `name = PositionalArg`,
-    #             # so we don't try to validate them and just return the value as is
-    #             return v
-    #         value = get_args(field.annotation)[0]
-    #
-    #         value.metadata = copy(field.metadata)
-    #         valid_value, error = value.validate(v.__value__, {}, loc="")
-    #         if error:
-    #             raise ValidationError([error, cls])
-    #         return cls(valid_value)
-    #
-    #     return validate
-    @classmethod
-    def validate(cls, value: T, info: ValidationInfo):
-        return cls(value)
-
     @classmethod
     def __get_pydantic_core_schema__(
         cls, source_type: Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
-        return core_schema.with_info_after_validator_function(
-            cls.validate,
-            handler(get_args(source_type)[0]),
-            field_name=handler.field_name,
+        origin = get_origin(source_type)
+        if origin is None:  # used as `x: Owner` without params
+            origin = source_type
+            item_tp = Any
+        else:
+            item_tp = get_args(source_type)[0]
+        # both calling handler(...) and handler.generate_schema(...)
+        # would work, but prefer the latter for conceptual and consistency reasons
+        item_schema = handler.generate_schema(item_tp)
+
+        def val_item(v: Any, handler: ValidatorFunctionWrapHandler) -> HexagonArg[Any]:
+            if not isinstance(v, cls):
+                v = cls(handler(v))
+            # handler(v.__value__)
+            return v
+
+        python_schema = core_schema.chain_schema(
+            # `chain_schema` means do the following steps in order:
+            [
+                # # Ensure the value is an instance of HexagonArg
+                # core_schema.is_instance_schema(cls),
+                # Use the item_schema to validate `items`
+                core_schema.no_info_wrap_validator_function(val_item, item_schema),
+            ]
+        )
+
+        return core_schema.json_or_python_schema(
+            # for JSON accept an object with name and item keys
+            json_schema=core_schema.chain_schema(
+                [
+                    item_schema,
+                    # after validating the json data convert it to python
+                    core_schema.no_info_before_validator_function(
+                        lambda v: cls(v),
+                        # note that we re-use the same schema here as below
+                        python_schema,
+                    ),
+                ]
+            ),
+            python_schema=python_schema,
         )
 
 
 class PositionalArg(HexagonArg[T]):
     @staticmethod
-    def cli_repr(name: str, field: FieldInfo):
-        return name, None
+    def cli_repr(field: FieldReference):
+        return field.name, None
 
 
 class OptionalArg(HexagonArg[T]):
     @staticmethod
-    def cli_repr(name: str, field: FieldInfo):
+    def cli_repr(field: FieldReference):
         def initials():
-            return "".join([w[0] for w in name.split("_")])
+            return "".join([w[0] for w in field.name.split("_")])
 
         return (
-            name_key(name.replace("_", "-")),
+            name_key(field.name.replace("_", "-")),
             alias_key(
-                field.alias.replace("_", "-")
-                if field.alias and field.alias != name
+                field.info.alias.replace("_", "-")
+                if field.info.alias and field.info.alias != field.name
                 else initials()
             ),
         )

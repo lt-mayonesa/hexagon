@@ -122,7 +122,8 @@ def _execute_python_module(
         raise ActionInputError(e, tool.name)
     except HexagonError as e:
         raise e
-    except Exception:
+    except Exception as e:
+        # TODO: pass along traceback
         raise ActionExecuteError(action_id, custom_tools_path)
 
 
@@ -237,9 +238,9 @@ def __load_module(module: str):
 
 def __call_subprocess(command: str, env: Optional[Env], tool: ActionTool):
     env_vars = os.environ.copy()
-    env_vars[ENVVAR_EXECUTION_TOOL] = tool.json()
+    env_vars[ENVVAR_EXECUTION_TOOL] = tool.model_dump_json()
     if env:
-        env_vars[ENVVAR_EXECUTION_ENV] = env.json()
+        env_vars[ENVVAR_EXECUTION_ENV] = env.model_dump_json()
     return (
         subprocess.call(command, shell=True, env=env_vars),
         command,

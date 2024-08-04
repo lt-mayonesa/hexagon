@@ -229,8 +229,8 @@ def test_execute_node_script_module_with_env_and_arguments():
                 "arg1",
                 "arg2",
                 "envvars:",
-                'HEXAGON_EXECUTION_TOOL = {"name": "node-module-env", "type": "shell", "icon": null, "alias": "nme", "long_name": "Node Module Env Test", "description": null, "envs": {"dev": [789, "ghi"], "qa": {"foo": "foo", "--bar": "bar"}}, "traced": true, "action": "node-module.js"}',  # noqa: E501
-                'HEXAGON_EXECUTION_ENV = {"name": "dev", "alias": "d", "long_name": "dev", "description": null}',
+                'HEXAGON_EXECUTION_TOOL = {"name":"node-module-env","type":"shell","icon":null,"alias":"nme","long_name":"Node Module Env Test","description":null,"envs":{"dev":[789,"ghi"],"qa":{"foo":"foo","--bar":"bar"}},"traced":true,"action":"node-module.js"}',  # noqa: E501
+                'HEXAGON_EXECUTION_ENV = {"name":"dev","alias":"d","long_name":"dev","description":null}',
             ]
         )
         .exit()
@@ -251,8 +251,8 @@ def test_execute_node_script_module_with_other_env():
                 "foo=foo",
                 "--bar=bar",
                 "envvars:",
-                'HEXAGON_EXECUTION_TOOL = {"name": "node-module-env", "type": "shell", "icon": null, "alias": "nme", "long_name": "Node Module Env Test", "description": null, "envs": {"dev": [789, "ghi"], "qa": {"foo": "foo", "--bar": "bar"}}, "traced": true, "action": "node-module.js"}',  # noqa: E501
-                'HEXAGON_EXECUTION_ENV = {"name": "qa", "alias": "q", "long_name": "qa", "description": null}',
+                'HEXAGON_EXECUTION_TOOL = {"name":"node-module-env","type":"shell","icon":null,"alias":"nme","long_name":"Node Module Env Test","description":null,"envs":{"dev":[789,"ghi"],"qa":{"foo":"foo","--bar":"bar"}},"traced":true,"action":"node-module.js"}',  # noqa: E501
+                'HEXAGON_EXECUTION_ENV = {"name":"qa","alias":"q","long_name":"qa","description":null}',
             ]
         )
         .exit()
