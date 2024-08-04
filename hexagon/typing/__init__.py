@@ -1,5 +1,4 @@
 from enum import Enum
-from types import NoneType
 from typing import Any, Union, get_args, get_origin, Annotated
 
 from pydantic.fields import FieldInfo
@@ -37,7 +36,7 @@ def _field_type(field: FieldInfo):
         t = ars[0]
     if get_origin(p) is Annotated:
         return p
-    if len(ars) > 1 and ars[-1] is not NoneType:
+    if len(ars) > 1 and ars[-1] is not type(None):
         raise MultipleHintsNotSupportedError(ars)
     return t
 
