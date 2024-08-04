@@ -1,10 +1,9 @@
 from enum import Enum
 from pathlib import Path
-from typing import List, Set, Optional, Dict, Union, Any, Annotated
+from typing import List, Set, Optional, Dict, Union, Any
 
 import pytest
 from pydantic import BaseModel, DirectoryPath as PydanticDirectoryPath
-from pydantic.types import PathType
 
 from hexagon.domain.hexagon_error import HexagonError
 from hexagon.support.input.args import PositionalArg, OptionalArg

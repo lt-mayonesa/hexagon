@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-04 21:28+0200\n"
+"POT-Creation-Date: 2024-08-05 00:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,15 +86,15 @@ msgstr ""
 "¿En qué directorio te gustaría que se guarden los comandos de CLI? Debería "
 "estar en el PATH de tu SO."
 
-#: hexagon/actions/internal/install_cli.py:36
+#: hexagon/actions/internal/install_cli.py:35
 msgid "error.actions.internal.install_cli.select_valid_file"
 msgstr "Por favor, selecciona un YAML valido (*.yaml o *.yml)"
 
-#: hexagon/actions/internal/install_cli.py:79
+#: hexagon/actions/internal/install_cli.py:78
 msgid "msg.actions.internal.install_cli.success"
 msgstr "¡Listo! Ahora podes ejecutar tu CLI de la siguiente manera:"
 
-#: hexagon/actions/internal/install_cli.py:89
+#: hexagon/actions/internal/install_cli.py:88
 msgid "msg.actions.internal.install_cli.not_in_path"
 msgstr "[yellow]⚠ {dir} no está en tu $PATH[/yellow]"
 
@@ -330,7 +330,7 @@ msgstr "Por favor, selecciona una herramienta valida"
 msgid "error.support.yaml.invalid_yaml"
 msgstr "Hay {errors_length} errores en el YAML: {yaml_path}"
 
-#: hexagon/runtime/yaml.py:49
+#: hexagon/runtime/yaml.py:50
 msgid "error.support.yaml.error_at"
 msgstr "✗ [u][bold]{loc}[/bold] -> {message}[/u]"
 

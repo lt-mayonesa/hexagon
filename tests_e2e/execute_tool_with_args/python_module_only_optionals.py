@@ -1,4 +1,4 @@
-from typing import Any, Optional, List, Union
+from typing import Any, Optional, List
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool

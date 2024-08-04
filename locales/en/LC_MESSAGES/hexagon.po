@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-04 21:28+0200\n"
+"POT-Creation-Date: 2024-08-05 00:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,16 +83,16 @@ msgid "action.actions.internal.install_cli.commands_path"
 msgstr ""
 "Where do you want your CLI commands to be saved? This should be on your path"
 
-#: hexagon/actions/internal/install_cli.py:36
+#: hexagon/actions/internal/install_cli.py:35
 msgid "error.actions.internal.install_cli.select_valid_file"
 msgstr "Please select a valid YAML file"
 
-#: hexagon/actions/internal/install_cli.py:79
+#: hexagon/actions/internal/install_cli.py:78
 msgid "msg.actions.internal.install_cli.success"
 msgstr ""
 "[green]✓ [white][u]All done! Now you can execute your project's CLI like:"
 
-#: hexagon/actions/internal/install_cli.py:89
+#: hexagon/actions/internal/install_cli.py:88
 msgid "msg.actions.internal.install_cli.not_in_path"
 msgstr "[yellow]⚠ {dir} is not in your $PATH[/yellow]"
 
@@ -327,7 +327,7 @@ msgstr "Please select a valid tool"
 msgid "error.support.yaml.invalid_yaml"
 msgstr "There were {errors_length} error(s) in your YAML file: {yaml_path}"
 
-#: hexagon/runtime/yaml.py:49
+#: hexagon/runtime/yaml.py:50
 msgid "error.support.yaml.error_at"
 msgstr "✗ [u][bold]{loc}[/bold] -> {message}[/u]"
 
