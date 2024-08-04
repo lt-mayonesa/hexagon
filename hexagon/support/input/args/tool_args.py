@@ -21,6 +21,7 @@ class ToolArgs(BaseModel):
     __prompt__ = None
     __fields_traced__ = set()
     __fields_initialized__ = set()
+    __track_fields_set__ = False
 
     show_help: bool = False
     extra_args: Optional[Dict[str, Union[list, bool, int, str]]] = None
@@ -53,6 +54,7 @@ class ToolArgs(BaseModel):
                         else OptionalArg(value_)
                     ),
                 )
+        self.__track_fields_set__ = True
 
     def __getattribute__(self, item, just_get=False):
         if just_get:
@@ -74,20 +76,13 @@ class ToolArgs(BaseModel):
         return super().__getattribute__(item)
 
     def __setattr__(self, key, value):
-        # if key in self.model_fields:
-        #     if not isinstance(value, HexagonArg) and issubclass(
-        #         get_origin(self.model_fields[key].annotation), HexagonArg
-        #     ):
-        #         value = (
-        #             PositionalArg(value)
-        #             if self.model_fields[key].annotation == PositionalArg
-        #             else OptionalArg(value)
-        #         )
         super().__setattr__(key, value)
         arg = self.__getattribute__(key, just_get=True)
         if isinstance(arg, HexagonArg):
             # noinspection PyProtectedMember
             arg._init_refs(self, FieldReference(key, self.model_fields.get(key)))
+        if self.__track_fields_set__:
+            self.__fields_initialized__.add(key)
 
     def trace(self, field: Union[FieldReference, str], retrace=False):
         if not self.__tracer__:
@@ -109,10 +104,8 @@ class ToolArgs(BaseModel):
         value_ = self.__getattribute__(model_field.name, just_get=True)
 
         if (
-            (retrace or model_field.name not in self.__fields_traced__)
-            and model_field.name in self.model_fields_set
-            and value_.__value__ is not None
-        ):
+            retrace or model_field.name not in self.__fields_traced__
+        ) and model_field.name in self.__fields_initialized__:
             if get_origin(model_field.info.annotation) == PositionalArg:
                 self.__tracer__.tracing(f"arg_{model_field.name}", value_.__value__)
             elif get_origin(model_field.info.annotation) == OptionalArg:
