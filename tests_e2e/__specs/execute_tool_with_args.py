@@ -594,63 +594,6 @@ def test_should_prompt_fuzzy_file_search():
     )
 
 
-def test_should_prompt_fuzzy_file_search_with_generic_choice_at_arg_level():
-    (
-        as_a_user(__file__)
-        .run_hexagon(
-            ["prompt", "prompt_fuzzy_file_generic"],
-            os_env_vars={"HEXAGON_THEME": "no_border"},
-        )
-        .then_output_should_be(
-            [
-                "",
-                "",
-                "Enter fuzzy_file_input",
-                "5/5",
-                "Any",
-                "01_file.txt",
-                "02_file.txt",
-                "03_file.txt",
-            ],
-        )
-        .carriage_return()
-        .then_output_should_be(
-            ["fuzzy_file_input_generic: Any"], discard_until_first_match=True
-        )
-        .exit()
-    )
-
-
-def test_should_prompt_fuzzy_file_search_with_multiple_generic_choice_at_arg_level():
-    (
-        as_a_user(__file__)
-        .run_hexagon(
-            ["prompt", "prompt_fuzzy_file_generic_multiple"],
-            os_env_vars={"HEXAGON_THEME": "no_border"},
-        )
-        .then_output_should_be(
-            [
-                "",
-                "",
-                "Enter fuzzy_file_input",
-                "7/7",
-                "Any",
-                "All",
-                "None",
-                "01_file.txt",
-                "02_file.txt",
-                "03_file.txt",
-            ],
-        )
-        .arrow_down()
-        .carriage_return()
-        .then_output_should_be(
-            ["fuzzy_file_input_generic: *"], discard_until_first_match=True
-        )
-        .exit()
-    )
-
-
 def test_should_prompt_fuzzy_file_search_with_generic_choice_at_prompt_level():
     (
         as_a_user(__file__)

@@ -416,18 +416,6 @@ def setup_path(
 ) -> (Callable, Callable):
     if inquiry_type == InquiryType.PATH_SEARCHABLE:
         choices: List[Dict[str, Any] or Any] = []
-        if "glob_extra_choices" in extras:
-            extra_choices = extras["glob_extra_choices"]
-            for choice in extra_choices:
-                choices.append(
-                    choice
-                    if isinstance(choice, dict)
-                    else {
-                        "name": choice,
-                        "value": choice,
-                    }
-                )
-
         if "glob" in extras:
             choices = choices + [
                 f

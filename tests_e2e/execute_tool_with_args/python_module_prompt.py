@@ -39,22 +39,6 @@ class Args(ToolArgs):
         choices=["a sentence to match", "a sentence not to match", "something else"],
     )
     fuzzy_file_input: OptionalArg[FilePath] = Arg(None, searchable=True, glob="*.txt")
-    fuzzy_file_input_extra_choices: OptionalArg[FilePath] = Arg(
-        None,
-        searchable=True,
-        glob="*.txt",
-        glob_extra_choices=["Any"],
-    )
-    fuzzy_file_input_extra_dict_choices: OptionalArg[FilePath] = Arg(
-        None,
-        searchable=True,
-        glob="*.txt",
-        glob_extra_choices=[
-            {"name": "Any", "value": "any"},
-            {"name": "All", "value": "*"},
-            {"name": "None", "value": "none"},
-        ],
-    )
     proceed: OptionalArg[bool] = Arg(
         None, prompt_default=True, prompt_message="Do you want to continue?"
     )
@@ -94,8 +78,6 @@ def main(
         "prompt_validate_type": prompt_validate_type,
         "prompt_fuzzy_search": prompt_fuzzy_search,
         "prompt_fuzzy_file": prompt_fuzzy_file,
-        "prompt_fuzzy_file_generic": prompt_fuzzy_file_generic,
-        "prompt_fuzzy_file_generic_multiple": prompt_fuzzy_file_generic_multiple,
         "prompt_fuzzy_file_invalid_extra": prompt_fuzzy_file_invalid_extra,
         "prompt_multiple_times": prompt_multiple_times,
         "prompt_boolean": prompt_boolean,
@@ -145,18 +127,6 @@ def prompt_fuzzy_search(cli_args):
 
 def prompt_fuzzy_file(cli_args):
     log.result(f"fuzzy_file_input: {cli_args.fuzzy_file_input.prompt()}")
-
-
-def prompt_fuzzy_file_generic(cli_args):
-    log.result(
-        f"fuzzy_file_input_generic: {cli_args.fuzzy_file_input_extra_choices.prompt()}"
-    )
-
-
-def prompt_fuzzy_file_generic_multiple(cli_args):
-    log.result(
-        f"fuzzy_file_input_generic: {cli_args.fuzzy_file_input_extra_dict_choices.prompt()}"
-    )
 
 
 def prompt_fuzzy_file_invalid_extra(cli_args):
