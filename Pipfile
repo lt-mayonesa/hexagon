@@ -8,7 +8,6 @@ inquirerpy = "*"
 rich = "*"
 clipboard = "*"
 "ruamel.yaml" = "*"
-# TODO: need to support pydantic v2, huge refactor
 pydantic = "*"
 typing-extensions = "*"
 packaging = "*"
