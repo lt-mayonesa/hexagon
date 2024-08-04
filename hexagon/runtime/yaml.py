@@ -44,15 +44,16 @@ class YamlValidationError(HexagonError):
             )
         )
         for err in self.errors:
+            loc_ = tuple(x for x in err["loc"] if x not in ["ActionTool", "GroupTool"])
             logger.error(
                 os.linesep  # this \n can not go in the .po file because it breaks msgmt
                 + _("error.support.yaml.error_at").format(
-                    loc=".".join(map(lambda i: str(i), err["loc"])), message=err["msg"]
+                    loc=".".join(map(lambda i: str(i), loc_)), message=err["msg"]
                 )
             )
             if self.yaml_content and yaml:
                 (start, line_number, end) = self.__lines_of_error(
-                    err, self.yaml_content
+                    loc_, self.yaml_content
                 )
                 logger.example(
                     "\n".join(self.actual_yaml_file.splitlines()[start:end]),
@@ -64,8 +65,8 @@ class YamlValidationError(HexagonError):
                 )
 
     @classmethod
-    def __lines_of_error(cls, err, ruamel_yaml):
-        line_number = cls.__yaml_line_number(ruamel_yaml, err["loc"])
+    def __lines_of_error(cls, loc, ruamel_yaml):
+        line_number = cls.__yaml_line_number(ruamel_yaml, loc)
         return (
             max(0, line_number - 3),
             line_number,
@@ -73,7 +74,9 @@ class YamlValidationError(HexagonError):
         )
 
     @classmethod
-    def __yaml_line_number(cls, yml, loc: list, line_count_hack: int = 0):
+    def __yaml_line_number(
+        cls, yml, loc: tuple, line_count_hack: int = 0, previous_lc=None
+    ):
         """
         Get line number of location by accessing YAML metadata
 
@@ -83,6 +86,8 @@ class YamlValidationError(HexagonError):
         for some reason ruamel .lc returns one less line_number for each level
         :return: the line number of loc
         """
+        if yml is None:
+            return previous_lc.line + line_count_hack
         if len(loc) == 1:
             try:
                 return (
@@ -96,5 +101,8 @@ class YamlValidationError(HexagonError):
                 ) + yml.lc.line
         else:
             return cls.__yaml_line_number(
-                yml[loc[0]], loc[1:], line_count_hack=line_count_hack + 1
+                yml[loc[0]],
+                loc[1:],
+                line_count_hack=line_count_hack + 1,
+                previous_lc=yml.lc,
             )

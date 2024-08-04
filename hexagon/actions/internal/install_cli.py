@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from pydantic import FilePath, validator, DirectoryPath
+from pydantic import FilePath, DirectoryPath, field_validator
 
 from hexagon.runtime.dependencies import scan_and_install_dependencies
 from hexagon.runtime.singletons import configuration
@@ -25,14 +25,13 @@ class Args(ToolArgs):
         prompt_default=str(os.path.expanduser(os.path.join("~", ".local", "bin"))),
     )
 
-    @validator("src_path")
-    def is_yaml(cls, arg):
-        if isinstance(arg, str):
-            if arg.endswith(".yaml") or arg.endswith(".yml"):
-                return arg
-        else:
-            if arg.value.suffix == ".yaml" or arg.value.suffix == ".yml":
-                return arg
+    @field_validator("src_path")
+    @classmethod
+    def is_yaml(cls, arg: PositionalArg[FilePath]):
+        if arg.value is None:
+            return arg
+        if arg.value.suffix == ".yaml" or arg.value.suffix == ".yml":
+            return arg
         raise ValueError(_("error.actions.internal.install_cli.select_valid_file"))
 
 

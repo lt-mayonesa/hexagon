@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 00:53+0200\n"
+"POT-Creation-Date: 2024-08-04 21:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,31 +129,31 @@ msgstr ""
 msgid "error.domain.configuration.group_tool_file_not_found"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:118
+#: hexagon/runtime/configuration.py:120
 msgid "msg.domain.configuration.install_cli_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:119
+#: hexagon/runtime/configuration.py:121
 msgid "msg.domain.configuration.install_cli_description"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:125
+#: hexagon/runtime/configuration.py:127
 msgid "msg.domain.configuration.get_json_schema_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:127
+#: hexagon/runtime/configuration.py:129
 msgid "msg.domain.configuration.get_json_schema_description"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:145
+#: hexagon/runtime/configuration.py:147
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:152
+#: hexagon/runtime/configuration.py:154
 msgid "msg.domain.configuration.replay_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:158
+#: hexagon/runtime/configuration.py:160
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr ""
 
@@ -162,7 +162,7 @@ msgstr ""
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr ""
 
-#: hexagon/runtime/execute/action.py:143
+#: hexagon/runtime/execute/action.py:144
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 
@@ -406,11 +406,11 @@ msgstr ""
 msgid "msg.support.prompt.hints.help"
 msgstr ""
 
-#: hexagon/support/input/prompt/prompt.py:30
+#: hexagon/support/input/prompt/prompt.py:34
 msgid "error.support.input.prompt.prompt.invalid_argument_setup"
 msgstr ""
 
-#: hexagon/support/input/prompt/prompt.py:294
+#: hexagon/support/input/prompt/prompt.py:310
 msgid "msg.support.prompt.prompt.directory_created"
 msgstr ""
 
