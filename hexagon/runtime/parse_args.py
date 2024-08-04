@@ -1,6 +1,5 @@
 import argparse
 import sys
-
 from typing import List, get_origin
 
 from pydantic import TypeAdapter

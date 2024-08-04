@@ -12,7 +12,6 @@ from prompt_toolkit.document import Document
 from prompt_toolkit.validation import ValidationError, Validator
 from pydantic import (
     ValidationError as PydanticValidationError,
-    DirectoryPath,
 )
 from pydantic.v1.fields import Validator as PydanticValidator
 from pydantic_core import SchemaValidator

@@ -1,7 +1,7 @@
 import abc
 from typing import Generic, Union, Callable, TypeVar, get_args, Any, get_origin
 
-from pydantic import ValidationInfo, GetCoreSchemaHandler
+from pydantic import GetCoreSchemaHandler
 from pydantic_core import core_schema
 from pydantic_core.core_schema import ValidatorFunctionWrapHandler
 
