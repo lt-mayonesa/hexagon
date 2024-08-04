@@ -122,7 +122,7 @@ def _execute_python_module(
         raise ActionInputError(e, tool.name)
     except HexagonError as e:
         raise e
-    except Exception as e:
+    except Exception:
         # TODO: pass along traceback
         raise ActionExecuteError(action_id, custom_tools_path)
 

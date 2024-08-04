@@ -28,7 +28,7 @@ class ToolArgs(BaseModel):
     raw_extra_args: Optional[List[str]] = None
 
     def __init__(self, **data):
-        for k, v in self.model_fields.items():
+        for _k, v in self.model_fields.items():
             if (
                 isclass(get_origin(v.annotation))
                 and issubclass(get_origin(v.annotation), HexagonArg)
