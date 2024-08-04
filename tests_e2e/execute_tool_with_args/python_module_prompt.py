@@ -60,6 +60,7 @@ class Args(ToolArgs):
     )
 
     @field_validator("age")
+    @classmethod
     def validate_age(cls, arg: OptionalArg[int]):
         if arg:
             v = arg.value
@@ -68,6 +69,7 @@ class Args(ToolArgs):
         return arg
 
     @field_validator("age")
+    @classmethod
     def validate_age_max(cls, arg: OptionalArg[int]):
         if arg:
             v = arg.value

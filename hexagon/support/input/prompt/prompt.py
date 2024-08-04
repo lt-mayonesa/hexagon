@@ -2,7 +2,7 @@ import re
 from copy import copy
 from enum import Enum, auto
 from pathlib import Path
-from typing import Any, Dict, Literal, Callable, List, get_origin
+from typing import Any, Dict, Literal, Callable, List
 
 from InquirerPy import inquirer
 from InquirerPy.base import Choice
@@ -57,8 +57,25 @@ class PromptValidator(Validator):
 
 
 def default_validator(field_reference: FieldReference, mapper=lambda x: x):
+    def __recurse_schema_until_model_fields_type(schema):
+        if schema.get("type") == "model-fields":
+            return schema["fields"]
+        return __recurse_schema_until_model_fields_type(schema["schema"])
+
     def func(cls, value):
-        validator = SchemaValidator({"type": "any"})
+        schema__ = cls.__pydantic_core_schema__
+        target_field_schema: Dict = __recurse_schema_until_model_fields_type(schema__)[
+            field_reference.name
+        ]["schema"]
+        validator = SchemaValidator(
+            {
+                "type": "definitions",
+                "schema": target_field_schema,
+                "definitions": schema__.get("definitions"),
+            }
+            if "definitions" in schema__
+            else target_field_schema
+        )
         try:
             return validator.validate_python(mapper(value))
         except ValidationError as e:
@@ -187,22 +204,15 @@ class Prompt:
             field_type=field_type,
         )
 
-        if issubclass(get_origin(field_reference.info.annotation), HexagonArg):
-            validators_ = {
+        inquiry_args["validate"] = PromptValidator(
+            {
                 "default": PydanticValidator(
-                    default_validator(field_reference, mapper=mapper), check_fields=True
+                    default_validator(field_reference, mapper=mapper),
+                    check_fields=True,
                 )
-            }
-            # if field_reference.info.class_validators:
-            #     validators_.update(
-            #         {
-            #             **field_reference.info.class_validators,
-            #         }
-            #     )
-            inquiry_args["validate"] = PromptValidator(
-                validators_,
-                model_class,
-            )
+            },
+            model_class,
+        )
 
         # FIXME: this is working by chance, it's not the best way to do it
         if "searchable" in invocation_extras:

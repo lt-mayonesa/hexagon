@@ -73,7 +73,6 @@ class HexagonArg(Generic[T]):
         def val_item(v: Any, handler: ValidatorFunctionWrapHandler) -> HexagonArg[Any]:
             if not isinstance(v, cls):
                 v = cls(handler(v))
-            # handler(v.__value__)
             return v
 
         python_schema = core_schema.chain_schema(
