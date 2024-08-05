@@ -10,10 +10,7 @@ from InquirerPy.utils import run_in_terminal
 from prompt_toolkit.buffer import ValidationState
 from prompt_toolkit.document import Document
 from prompt_toolkit.validation import ValidationError, Validator
-from pydantic import (
-    ValidationError as PydanticValidationError,
-)
-from pydantic.v1.fields import Validator as PydanticValidator
+from pydantic import ValidationError as PydanticValidationError, BeforeValidator
 from pydantic_core import SchemaValidator
 
 from hexagon.domain.hexagon_error import ListHexagonError
@@ -206,9 +203,8 @@ class Prompt:
 
         inquiry_args["validate"] = PromptValidator(
             {
-                "default": PydanticValidator(
-                    default_validator(field_reference, mapper=mapper),
-                    check_fields=True,
+                "default": BeforeValidator(
+                    default_validator(field_reference, mapper=mapper)
                 )
             },
             model_class,
