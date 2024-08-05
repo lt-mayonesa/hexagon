@@ -27,7 +27,7 @@ def _local_version_mock(override=None):
     return Version("0.1.0")
 
 
-def _latest_version_mock():
+def _latest_version_mock(override=None):
     return Version("0.2.0")
 
 
