@@ -84,7 +84,7 @@
             "subProcess": true,
             "env": {
                 "HEXAGON_STORAGE_PATH": "${workspaceFolder}/tests_e2e/update_hexagon/storage",
-                "HEXAGON_TEST_VERSION_OVERRIDE": "0.1.0",
+                "HEXAGON_TEST_LOCAL_VERSION_OVERRIDE": "0.1.0",
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
                 "HEXAGON_CHANGELOG_FILE_PATH_TEST_OVERRIDE": "${workspaceFolder}/tests_e2e/update_hexagon/CHANGELOG.md",
                 "HEXAGON_THEME": "default"
@@ -106,7 +106,7 @@
                 "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
                 "HEXAGON_SEND_TELEMETRY": "0",
                 "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
-                "HEXAGON_TEST_VERSION_OVERRIDE": "1000.1.0"
+                "HEXAGON_TEST_LOCAL_VERSION_OVERRIDE": "1000.1.0"
             }
         },
         {

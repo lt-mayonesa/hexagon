@@ -26,9 +26,11 @@ def check_for_hexagon_updates():
 
     with log.status(_("msg.support.update.hexagon.checking_new_versions")):
         current_version = version.local(
-            override=os.getenv("HEXAGON_TEST_VERSION_OVERRIDE", None)
+            override=os.getenv("HEXAGON_TEST_LOCAL_VERSION_OVERRIDE", None)
         )
-        latest_version = version.latest()
+        latest_version = version.latest(
+            override=os.getenv("HEXAGON_TEST_LATEST_VERSION_OVERRIDE", None)
+        )
 
         if current_version >= latest_version:
             return

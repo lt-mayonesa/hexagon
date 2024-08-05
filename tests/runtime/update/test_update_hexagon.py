@@ -32,7 +32,7 @@ def _latest_version_mock():
 
 
 def test_hexagon_updates_itself(monkeypatch):
-    monkeypatch.setenv("HEXAGON_TEST_VERSION_OVERRIDE", "0.1.0")
+    monkeypatch.setenv("HEXAGON_TEST_LOCAL_VERSION_OVERRIDE", "0.1.0")
     monkeypatch.setattr(prompt, "confirm", _confirm_mock)
     monkeypatch.setattr(version, "local", _local_version_mock)
     monkeypatch.setattr(version, "latest", _latest_version_mock)
