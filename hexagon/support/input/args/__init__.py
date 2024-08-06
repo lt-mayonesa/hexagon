@@ -1,8 +1,10 @@
 from typing import Optional, Union, Any, Callable
 
-from pydantic import (
+from pydantic.fields import (
     Field as PydanticField,
 )
+
+from hexagon.support.input.args.cli_args import CliArgs
 from hexagon.support.input.args.hexagon_args import (
     ARGUMENT_KEY_PREFIX,
     HexagonArg,
@@ -10,7 +12,6 @@ from hexagon.support.input.args.hexagon_args import (
     OptionalArg,
 )
 from hexagon.support.input.args.tool_args import ToolArgs
-from hexagon.support.input.args.cli_args import CliArgs
 
 ARGUMENT_KEY_PREFIX = ARGUMENT_KEY_PREFIX
 HexagonArg = HexagonArg

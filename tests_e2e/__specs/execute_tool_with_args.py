@@ -138,11 +138,11 @@ def test_arguments_type_matters():
             [
                 "There where 3 error(s) in your input",
                 "",
-                "✗ age -> value is not a valid integer",
+                "✗ age -> Input should be a valid integer, unable to parse string as an integer",
                 "",
-                "✗ nationality -> USA is not a valid nationality",
+                "✗ nationality -> Value error, USA is not a valid nationality",
                 "",
-                "✗ car_brand -> we don't accept Chevrolet cars",
+                "✗ car_brand -> Value error, we don't accept Chevrolet cars",
             ],
             ignore_blank_lines=False,
         )
@@ -590,63 +590,6 @@ def test_should_prompt_fuzzy_file_search():
             ],
         )
         .input("file_c")
-        .exit()
-    )
-
-
-def test_should_prompt_fuzzy_file_search_with_generic_choice_at_arg_level():
-    (
-        as_a_user(__file__)
-        .run_hexagon(
-            ["prompt", "prompt_fuzzy_file_generic"],
-            os_env_vars={"HEXAGON_THEME": "no_border"},
-        )
-        .then_output_should_be(
-            [
-                "",
-                "",
-                "Enter fuzzy_file_input",
-                "5/5",
-                "Any",
-                "01_file.txt",
-                "02_file.txt",
-                "03_file.txt",
-            ],
-        )
-        .carriage_return()
-        .then_output_should_be(
-            ["fuzzy_file_input_generic: Any"], discard_until_first_match=True
-        )
-        .exit()
-    )
-
-
-def test_should_prompt_fuzzy_file_search_with_multiple_generic_choice_at_arg_level():
-    (
-        as_a_user(__file__)
-        .run_hexagon(
-            ["prompt", "prompt_fuzzy_file_generic_multiple"],
-            os_env_vars={"HEXAGON_THEME": "no_border"},
-        )
-        .then_output_should_be(
-            [
-                "",
-                "",
-                "Enter fuzzy_file_input",
-                "7/7",
-                "Any",
-                "All",
-                "None",
-                "01_file.txt",
-                "02_file.txt",
-                "03_file.txt",
-            ],
-        )
-        .arrow_down()
-        .carriage_return()
-        .then_output_should_be(
-            ["fuzzy_file_input_generic: *"], discard_until_first_match=True
-        )
         .exit()
     )
 

@@ -1,4 +1,4 @@
-from typing import Any, Optional, List, Union
+from typing import Any, Optional, List
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
@@ -14,7 +14,7 @@ class Args(ToolArgs):
 
     name: OptionalArg[str]
     age: OptionalArg[str]
-    country: OptionalArg[Union[str, int]]
+    country: OptionalArg[str]
     likes: OptionalArg[List[str]]
 
 

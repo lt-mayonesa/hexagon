@@ -91,13 +91,18 @@ jobs:
           name: hexagon-${{ github.sha }}
           path: dist
 
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: dist
+
       - uses: ./.github/actions/download-i18n
 
       - name: Setup e2e dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest
-          python -m pip install --find-links=./dist hexagon
+          artifact=$(ls dist/*.tar.gz)
+          python -m pip install $artifact
 
       - name: e2e tests
         uses: nick-fields/retry@v2

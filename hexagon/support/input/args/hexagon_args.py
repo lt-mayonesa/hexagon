@@ -1,9 +1,11 @@
 import abc
-from copy import copy
-from typing import Generic, Union, Callable, TypeVar
+from typing import Generic, Union, Callable, TypeVar, get_args, Any, get_origin
 
-from pydantic import ValidationError
-from pydantic.fields import ModelField
+from pydantic import GetCoreSchemaHandler
+from pydantic_core import core_schema
+from pydantic_core.core_schema import ValidatorFunctionWrapHandler
+
+from hexagon.support.input.args.field_reference import FieldReference
 
 ARGUMENT_KEY_PREFIX = "-"
 
@@ -16,10 +18,6 @@ class HexagonArg(Generic[T]):
 
     def __init__(self, value: T):
         self.__value__ = value
-
-    @classmethod
-    def __get_validators__(cls):
-        yield cls.arg_validator(cls)
 
     @property
     def value(self):
@@ -46,56 +44,82 @@ class HexagonArg(Generic[T]):
             )
         return self.__model__.prompt(self.__field__, skip_trace, **kwargs)
 
-    def _init_refs(self, model, field):
+    def _init_refs(self, model: Any, field: FieldReference):
         self.__field__ = field
         self.__model__ = model
 
     @staticmethod
     @abc.abstractmethod
-    def cli_repr(field: ModelField):
+    def cli_repr(field: FieldReference):
         return
 
     def __str__(self, **kwargs):
         return str(self.__value__)
 
-    @staticmethod
-    def arg_validator(cls):
-        def validate(v, field: ModelField):
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source_type: Any, handler: GetCoreSchemaHandler
+    ) -> core_schema.CoreSchema:
+        origin = get_origin(source_type)
+        if origin is None:  # used as `x: Owner` without params
+            origin = source_type
+            item_tp = Any
+        else:
+            item_tp = get_args(source_type)[0]
+        # both calling handler(...) and handler.generate_schema(...)
+        # would work, but prefer the latter for conceptual and consistency reasons
+        item_schema = handler.generate_schema(item_tp)
+
+        def val_item(v: Any, handler: ValidatorFunctionWrapHandler) -> HexagonArg[Any]:
             if not isinstance(v, cls):
-                v = cls(v)
-            if not field.sub_fields:
-                # Generic parameters were not provided, ie: `name = PositionalArg`,
-                # so we don't try to validate them and just return the value as is
-                return v
-            value = field.sub_fields[0]
+                v = cls(handler(v))
+            return v
 
-            value.field_info.extra = copy(field.field_info.extra)
-            valid_value, error = value.validate(v.__value__, {}, loc="")
-            if error:
-                raise ValidationError([error], model=cls)
-            return cls(valid_value)
+        python_schema = core_schema.chain_schema(
+            # `chain_schema` means do the following steps in order:
+            [
+                # # Ensure the value is an instance of HexagonArg
+                # core_schema.is_instance_schema(cls),
+                # Use the item_schema to validate `items`
+                core_schema.no_info_wrap_validator_function(val_item, item_schema),
+            ]
+        )
 
-        return validate
+        return core_schema.json_or_python_schema(
+            # for JSON accept an object with name and item keys
+            json_schema=core_schema.chain_schema(
+                [
+                    item_schema,
+                    # after validating the json data convert it to python
+                    core_schema.no_info_before_validator_function(
+                        lambda v: cls(v),
+                        # note that we re-use the same schema here as below
+                        python_schema,
+                    ),
+                ]
+            ),
+            python_schema=python_schema,
+        )
 
 
 class PositionalArg(HexagonArg[T]):
     @staticmethod
-    def cli_repr(field: ModelField):
+    def cli_repr(field: FieldReference):
         return field.name, None
 
 
 class OptionalArg(HexagonArg[T]):
     @staticmethod
-    def cli_repr(field: ModelField):
-        def initials_from(name: str):
-            return "".join([w[0] for w in name.split("_")])
+    def cli_repr(field: FieldReference):
+        def initials():
+            return "".join([w[0] for w in field.name.split("_")])
 
         return (
             name_key(field.name.replace("_", "-")),
             alias_key(
-                field.alias.replace("_", "-")
-                if field.alias and field.alias != field.name
-                else initials_from(field.name)
+                field.info.alias.replace("_", "-")
+                if field.info.alias and field.info.alias != field.name
+                else initials()
             ),
         )
 

@@ -53,7 +53,7 @@ class Tracer:
         key_alias: str = None,
     ):
         if not value:
-            pass
+            return
 
         for t in self._trace:
             if t.ref == ref:

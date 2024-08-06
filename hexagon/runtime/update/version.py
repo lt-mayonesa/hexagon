@@ -23,9 +23,10 @@ def _local_version():
         return pkg_resources.require("hexagon")[0].version
 
 
-def latest():
+def latest(override: str = None):
     latest_release_request = Request(
-        f"https://api.github.com/repos/{REPO_ORG}/{REPO_NAME}/releases/latest"
+        override
+        or f"https://api.github.com/repos/{REPO_ORG}/{REPO_NAME}/releases/latest"
     )
     add_github_access_token(latest_release_request)
     latest_github_release = json.load(urlopen(latest_release_request))

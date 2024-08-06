@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 00:53+0200\n"
+"POT-Creation-Date: 2024-08-05 00:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,16 +83,16 @@ msgid "action.actions.internal.install_cli.commands_path"
 msgstr ""
 "Where do you want your CLI commands to be saved? This should be on your path"
 
-#: hexagon/actions/internal/install_cli.py:36
+#: hexagon/actions/internal/install_cli.py:35
 msgid "error.actions.internal.install_cli.select_valid_file"
 msgstr "Please select a valid YAML file"
 
-#: hexagon/actions/internal/install_cli.py:79
+#: hexagon/actions/internal/install_cli.py:78
 msgid "msg.actions.internal.install_cli.success"
 msgstr ""
 "[green]✓ [white][u]All done! Now you can execute your project's CLI like:"
 
-#: hexagon/actions/internal/install_cli.py:89
+#: hexagon/actions/internal/install_cli.py:88
 msgid "msg.actions.internal.install_cli.not_in_path"
 msgstr "[yellow]⚠ {dir} is not in your $PATH[/yellow]"
 
@@ -138,33 +138,33 @@ msgstr "Added alias to {file}"
 msgid "error.domain.configuration.group_tool_file_not_found"
 msgstr "File {config_file_path} could not be found"
 
-#: hexagon/runtime/configuration.py:118
+#: hexagon/runtime/configuration.py:120
 msgid "msg.domain.configuration.install_cli_long_name"
 msgstr "Install CLI"
 
-#: hexagon/runtime/configuration.py:119
+#: hexagon/runtime/configuration.py:121
 msgid "msg.domain.configuration.install_cli_description"
 msgstr "Install a custom project CLI from a YAML file."
 
-#: hexagon/runtime/configuration.py:125
+#: hexagon/runtime/configuration.py:127
 msgid "msg.domain.configuration.get_json_schema_long_name"
 msgstr "Get JSON Schema"
 
-#: hexagon/runtime/configuration.py:127
+#: hexagon/runtime/configuration.py:129
 msgid "msg.domain.configuration.get_json_schema_description"
 msgstr ""
 "Generate JSON Schema for hexagon config file (app.yml). Which can be "
 "imported in your IDE, or used for validation."
 
-#: hexagon/runtime/configuration.py:145
+#: hexagon/runtime/configuration.py:147
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr "Save Last Command as Shell Alias"
 
-#: hexagon/runtime/configuration.py:152
+#: hexagon/runtime/configuration.py:154
 msgid "msg.domain.configuration.replay_long_name"
 msgstr "Replay Last Command"
 
-#: hexagon/runtime/configuration.py:158
+#: hexagon/runtime/configuration.py:160
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr "Create A New Tool"
 
@@ -173,7 +173,7 @@ msgstr "Create A New Tool"
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Installing {runtime} dependencies at path: {path}"
 
-#: hexagon/runtime/execute/action.py:143
+#: hexagon/runtime/execute/action.py:144
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 "To support tool arguments either add a model extending\n"
@@ -327,7 +327,7 @@ msgstr "Please select a valid tool"
 msgid "error.support.yaml.invalid_yaml"
 msgstr "There were {errors_length} error(s) in your YAML file: {yaml_path}"
 
-#: hexagon/runtime/yaml.py:49
+#: hexagon/runtime/yaml.py:50
 msgid "error.support.yaml.error_at"
 msgstr "✗ [u][bold]{loc}[/bold] -> {message}[/u]"
 
@@ -423,12 +423,12 @@ msgstr "HintsBuilder should have at least one hint"
 msgid "msg.support.prompt.hints.help"
 msgstr "help:"
 
-#: hexagon/support/input/prompt/prompt.py:30
+#: hexagon/support/input/prompt/prompt.py:34
 msgid "error.support.input.prompt.prompt.invalid_argument_setup"
 msgstr ""
 "Config [b]{property}[/b] is not supported for argument [b]{argument}[/b]"
 
-#: hexagon/support/input/prompt/prompt.py:294
+#: hexagon/support/input/prompt/prompt.py:310
 msgid "msg.support.prompt.prompt.directory_created"
 msgstr "📁 created directory: {path} [green]✓[/green]"
 

@@ -48,7 +48,7 @@ class GroupTool(Tool):
     tools: Union[str, List[Union[ActionTool, GroupTool]]]
 
 
-GroupTool.update_forward_refs()
+GroupTool.model_rebuild()
 
 
 class ToolGroupConfigFile(BaseModel):

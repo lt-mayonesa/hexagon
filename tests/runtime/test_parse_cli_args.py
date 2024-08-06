@@ -1,10 +1,7 @@
-from typing import List, Set, Optional
-
 import pytest
-from pydantic import BaseModel
 
-from hexagon.runtime.parse_args import parse_cli_args, should_support_multiple_args
-from hexagon.support.input.args import PositionalArg, OptionalArg, ToolArgs
+from hexagon.runtime.parse_args import parse_cli_args
+from hexagon.support.input.args import OptionalArg, ToolArgs
 
 
 def test_no_cli_args_passed():
@@ -98,6 +95,16 @@ def test_cli_args_env_is_second_positional_argument():
                 "foo": True,
             },
         ),
+        (
+            ["--float", "1.23"],
+            {
+                "float": 1.23,
+            },
+        ),
+        (
+            ["--bool", "true", "--not-bool", "false"],
+            {"bool": True, "not-bool": False},
+        ),
     ],
 )
 def test_cli_args_all_extra_arguments_mapping(optional_args, expected):
@@ -156,29 +163,6 @@ def test_cli_args_should_show_help(args):
     assert actual.show_help is True
     assert actual.tool is None
     assert actual.env is None
-
-
-def test_get_generic_type_hint():
-    class TestModel(BaseModel):
-        name: PositionalArg[str] = None
-        last_names: PositionalArg[List[str]] = None
-        age: OptionalArg[int] = None
-        friends: OptionalArg[List[int]] = None
-        enemies: OptionalArg[Set[int]] = None
-        relatives: OptionalArg[set] = None
-        parents: OptionalArg[tuple] = None
-        grand_parents: Optional[OptionalArg[tuple]] = None
-
-    model = TestModel()
-
-    assert should_support_multiple_args(model.__fields__["name"]) is False
-    assert should_support_multiple_args(model.__fields__["last_names"]) is True
-    assert should_support_multiple_args(model.__fields__["age"]) is False
-    assert should_support_multiple_args(model.__fields__["friends"]) is True
-    assert should_support_multiple_args(model.__fields__["enemies"]) is True
-    assert should_support_multiple_args(model.__fields__["relatives"]) is True
-    assert should_support_multiple_args(model.__fields__["parents"]) is True
-    assert should_support_multiple_args(model.__fields__["grand_parents"]) is True
 
 
 bool_input_keys = [

@@ -31,9 +31,12 @@ def _clear_last_check():
         os.remove(last_checked_storage_path)
 
 
+temp_file_path = os.path.join(test_folder_path, "github_version_mock.json")
+
 base_os_env_vars = {
     "HEXAGON_UPDATE_DISABLED": "false",
-    "HEXAGON_TEST_VERSION_OVERRIDE": "0.1.0",
+    "HEXAGON_TEST_LOCAL_VERSION_OVERRIDE": "0.1.0",
+    "HEXAGON_TEST_LATEST_VERSION_OVERRIDE": f"file://{temp_file_path}",
     "HEXAGON_STORAGE_PATH": storage_path,
 }
 

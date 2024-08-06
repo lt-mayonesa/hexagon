@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Any, Optional, List
 
-from pydantic import validator
+from pydantic import field_validator
 
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
@@ -39,39 +39,25 @@ class Args(ToolArgs):
         choices=["a sentence to match", "a sentence not to match", "something else"],
     )
     fuzzy_file_input: OptionalArg[FilePath] = Arg(None, searchable=True, glob="*.txt")
-    fuzzy_file_input_extra_choices: OptionalArg[FilePath] = Arg(
-        None,
-        searchable=True,
-        glob="*.txt",
-        glob_extra_choices=["Any"],
-    )
-    fuzzy_file_input_extra_dict_choices: OptionalArg[FilePath] = Arg(
-        None,
-        searchable=True,
-        glob="*.txt",
-        glob_extra_choices=[
-            {"name": "Any", "value": "any"},
-            {"name": "All", "value": "*"},
-            {"name": "None", "value": "none"},
-        ],
-    )
     proceed: OptionalArg[bool] = Arg(
         None, prompt_default=True, prompt_message="Do you want to continue?"
     )
 
-    @validator("age")
-    def validate_age(cls, arg):
+    @field_validator("age")
+    @classmethod
+    def validate_age(cls, arg: OptionalArg[int]):
         if arg:
-            v = int(arg) if isinstance(arg, str) else arg.value
-            if v < 18:
+            v = arg.value
+            if v and v < 18:
                 raise ValueError("age must be greater than 18")
         return arg
 
-    @validator("age")
-    def validate_age_max(cls, arg):
+    @field_validator("age")
+    @classmethod
+    def validate_age_max(cls, arg: OptionalArg[int]):
         if arg:
-            v = int(arg) if isinstance(arg, str) else arg.value
-            if v > 48:
+            v = arg.value
+            if v and v > 48:
                 raise ValueError("age must be less than 48")
         return arg
 
@@ -92,8 +78,6 @@ def main(
         "prompt_validate_type": prompt_validate_type,
         "prompt_fuzzy_search": prompt_fuzzy_search,
         "prompt_fuzzy_file": prompt_fuzzy_file,
-        "prompt_fuzzy_file_generic": prompt_fuzzy_file_generic,
-        "prompt_fuzzy_file_generic_multiple": prompt_fuzzy_file_generic_multiple,
         "prompt_fuzzy_file_invalid_extra": prompt_fuzzy_file_invalid_extra,
         "prompt_multiple_times": prompt_multiple_times,
         "prompt_boolean": prompt_boolean,
@@ -143,18 +127,6 @@ def prompt_fuzzy_search(cli_args):
 
 def prompt_fuzzy_file(cli_args):
     log.result(f"fuzzy_file_input: {cli_args.fuzzy_file_input.prompt()}")
-
-
-def prompt_fuzzy_file_generic(cli_args):
-    log.result(
-        f"fuzzy_file_input_generic: {cli_args.fuzzy_file_input_extra_choices.prompt()}"
-    )
-
-
-def prompt_fuzzy_file_generic_multiple(cli_args):
-    log.result(
-        f"fuzzy_file_input_generic: {cli_args.fuzzy_file_input_extra_dict_choices.prompt()}"
-    )
 
 
 def prompt_fuzzy_file_invalid_extra(cli_args):

@@ -1,20 +1,16 @@
 import datetime
-from typing import Any, Dict, Optional
+from typing import Optional, Type
 
-from pydantic import BaseSettings, ValidationError
+from pydantic import ValidationError
 from pydantic.types import DirectoryPath
+from pydantic_settings import (
+    BaseSettings,
+    PydanticBaseSettingsSource,
+    SettingsConfigDict,
+    InitSettingsSource,
+)
 
 from hexagon.runtime.yaml import YamlValidationError
-
-
-def _local_settings_source(settings: BaseSettings) -> Dict[str, Any]:
-    from hexagon.support.storage import (
-        HEXAGON_STORAGE_APP,
-        HexagonStorageKeys,
-        load_user_data,
-    )
-
-    return load_user_data(HexagonStorageKeys.options.value, HEXAGON_STORAGE_APP) or {}
 
 
 def _save_settings_to_source(options):
@@ -33,11 +29,29 @@ def _save_settings_to_source(options):
     )
 
 
+class UserDataSettingsSource(InitSettingsSource):
+    def __init__(self, settings_cls: type[BaseSettings]):
+        from hexagon.support.storage import (
+            HEXAGON_STORAGE_APP,
+            HexagonStorageKeys,
+            load_user_data,
+        )
+
+        local_options = (
+            load_user_data(HexagonStorageKeys.options.value, app=HEXAGON_STORAGE_APP)
+            or {}
+        )
+
+        super().__init__(settings_cls, local_options)
+
+
 class KeymapOptions(BaseSettings):
     create_dir: str = "c-p"
 
 
 class Options(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix="HEXAGON_")
+
     theme: Optional[str] = "default"
     update_time_between_checks: Optional[datetime.timedelta] = datetime.timedelta(
         days=1
@@ -50,17 +64,21 @@ class Options(BaseSettings):
     hints_disabled: Optional[bool] = False
     keymap: KeymapOptions = KeymapOptions()
 
-    class Config:
-        env_prefix = "HEXAGON_"
-
-        @classmethod
-        def customise_sources(cls, init_settings, env_settings, file_secret_settings):
-            return (
-                init_settings,
-                env_settings,
-                _local_settings_source,
-                file_secret_settings,
-            )
+    @classmethod
+    def settings_customise_sources(
+        cls,
+        settings_cls: Type[BaseSettings],
+        init_settings: PydanticBaseSettingsSource,
+        env_settings: PydanticBaseSettingsSource,
+        dotenv_settings: PydanticBaseSettingsSource,
+        file_secret_settings: PydanticBaseSettingsSource,
+    ):
+        return (
+            init_settings,
+            env_settings,
+            UserDataSettingsSource(settings_cls),
+            file_secret_settings,
+        )
 
 
 def get_options(init_settings: dict) -> Options:
