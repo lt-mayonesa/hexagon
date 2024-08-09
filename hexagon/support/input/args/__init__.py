@@ -41,15 +41,23 @@ def Arg(
 
     TODO: add support for `validators` kwarg
     """
+    kwargs.update(
+        [
+            (k, v)
+            for k, v in {
+                "prompt_default": prompt_default,
+                "prompt_message": prompt_message,
+                "prompt_instruction": prompt_instruction,
+                "prompt_suggestions": prompt_suggestions,
+                "searchable": searchable,
+            }.items()
+            if v is not None
+        ]
+    )
     return PydanticField(
         default,
         alias=alias,
         title=title,
         description=description,
-        prompt_default=prompt_default,
-        prompt_message=prompt_message,
-        prompt_instruction=prompt_instruction,
-        prompt_suggestions=prompt_suggestions,
-        searchable=searchable,
         **kwargs,
     )
