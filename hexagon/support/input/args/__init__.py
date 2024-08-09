@@ -1,4 +1,4 @@
-from typing import Optional, Union, Any, Callable
+from typing import Optional, Union, Any, Callable, List
 
 from pydantic.fields import (
     Field as PydanticField,
@@ -31,6 +31,7 @@ def Arg(
     prompt_default: Optional[Union[Any, Callable[[Any], Any]]] = None,
     prompt_message: Optional[Union[str, Callable[[Any], str]]] = None,
     prompt_instruction: Optional[str] = None,
+    prompt_suggestions: Optional[Union[List[str], Callable[[], List[str]]]] = None,
     searchable: bool = False,
     **kwargs,
 ):
@@ -40,14 +41,23 @@ def Arg(
 
     TODO: add support for `validators` kwarg
     """
+    kwargs.update(
+        [
+            (k, v)
+            for k, v in {
+                "prompt_default": prompt_default,
+                "prompt_message": prompt_message,
+                "prompt_instruction": prompt_instruction,
+                "prompt_suggestions": prompt_suggestions,
+                "searchable": searchable,
+            }.items()
+            if v is not None
+        ]
+    )
     return PydanticField(
         default,
         alias=alias,
         title=title,
         description=description,
-        prompt_default=prompt_default,
-        prompt_message=prompt_message,
-        prompt_instruction=prompt_instruction,
-        searchable=searchable,
         **kwargs,
     )

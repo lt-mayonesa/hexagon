@@ -123,7 +123,6 @@ def _execute_python_module(
     except HexagonError as e:
         raise e
     except Exception:
-        # TODO: pass along traceback
         raise ActionExecuteError(action_id, custom_tools_path)
 
 
