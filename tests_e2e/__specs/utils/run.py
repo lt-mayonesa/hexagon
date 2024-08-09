@@ -22,7 +22,6 @@ def run_hexagon_e2e_test(
     yaml_file_name: str = "app.yml",
     os_env_vars: Optional[Dict[str, str]] = None,
     test_file_path_is_absolute: bool = False,
-    cwd: str = None,
 ):
     if os_env_vars is None:
         os_env_vars = {}
@@ -69,7 +68,7 @@ def run_hexagon_e2e_test(
 
     os_env_vars["PYTHONPATH"] = hexagon_path
 
-    return run_hexagon(cwd or test_folder_path, args, os_env_vars)
+    return run_hexagon(test_folder_path, args, os_env_vars)
 
 
 def run_hexagon(
