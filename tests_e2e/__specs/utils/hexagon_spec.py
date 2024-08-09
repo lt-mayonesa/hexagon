@@ -18,6 +18,7 @@ from tests_e2e.__specs.utils.cli import (
     BACKSPACE_CHARACTER,
     CONTROL_C_CHARACTER,
     SPACE_BAR_CHARACTER,
+    TAB_CHARACTER,
 )
 from tests_e2e.__specs.utils.config import write_hexagon_config
 from tests_e2e.__specs.utils.console import print
@@ -182,6 +183,11 @@ class HexagonSpec:
         _log(self.space_bar)
         __tracebackhide__ = True
         return self.write(SPACE_BAR_CHARACTER)
+
+    def tab(self) -> "HexagonSpec":
+        _log(self.tab)
+        __tracebackhide__ = True
+        return self.write(TAB_CHARACTER)
 
     def esc(self) -> "HexagonSpec":
         _log(self.esc)

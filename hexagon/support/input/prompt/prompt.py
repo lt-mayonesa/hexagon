@@ -8,6 +8,7 @@ from InquirerPy import inquirer
 from InquirerPy.base import Choice
 from InquirerPy.utils import run_in_terminal
 from prompt_toolkit.buffer import ValidationState
+from prompt_toolkit.completion import FuzzyWordCompleter
 from prompt_toolkit.document import Document
 from prompt_toolkit.validation import ValidationError, Validator
 from pydantic import ValidationError as PydanticValidationError, BeforeValidator
@@ -450,7 +451,11 @@ def setup_secret(self: Prompt, **_) -> (Callable, Callable):
     return self.secret, lambda x: x
 
 
-def setup_string(self: Prompt, **_) -> (Callable, Callable):
+def setup_string(
+    self: Prompt, inquiry_args: Dict[str, Any], extras: Dict[str, Any], **_
+) -> (Callable, Callable):
+    if "prompt_suggestions" in extras:
+        inquiry_args["completer"] = FuzzyWordCompleter(extras["prompt_suggestions"])
     return self.text, lambda x: x
 
 
