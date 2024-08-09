@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.60.0 (2024-08-09)
+
+### Feature
+
+* **prompt:** Allow to provide text suggestions ([#88](https://github.com/lt-mayonesa/hexagon/issues/88)) ([`fb1319a`](https://github.com/lt-mayonesa/hexagon/commit/fb1319a7ab7e42acbf76776a8842923d86b17b3e))
+
 ## v0.59.0 (2024-04-09)
 
 ### Feature
