@@ -165,6 +165,21 @@ def test_cli_args_should_show_help(args):
     assert actual.env is None
 
 
+@pytest.mark.parametrize(
+    "args",
+    [
+        (["--version"]),
+        (["-v"]),
+    ],
+)
+def test_cli_args_should_show_version(args):
+    actual = parse_cli_args(args)
+    assert actual.show_help is False
+    assert actual.show_version is True
+    assert actual.tool is None
+    assert actual.env is None
+
+
 bool_input_keys = [
     "--proceed={val}",
     "--proceed {val}",

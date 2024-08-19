@@ -18,6 +18,7 @@ def main():
         from hexagon.support.hooks import HexagonHooks
         from hexagon.runtime.parse_args import parse_cli_args
         from hexagon.support.tracer import init_tracer
+        from hexagon.runtime.version import print_version
 
         log.load_theme(options.theme)
 
@@ -25,6 +26,9 @@ def main():
 
         if args.show_help:
             return print_help(cli, tools, envs)
+
+        if args.show_version:
+            return print_version(cli, tools, envs)
 
         collect_plugins(configuration.project_path, cli.plugins)
         tracer = init_tracer(args)

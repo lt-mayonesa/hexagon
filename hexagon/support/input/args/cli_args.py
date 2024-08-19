@@ -7,6 +7,7 @@ from hexagon.support.input.args.hexagon_args import PositionalArg
 
 class CliArgs(BaseModel):
     show_help: bool = False
+    show_version: bool = False
     tool: PositionalArg[Optional[str]] = None
     env: PositionalArg[Optional[str]] = None
 

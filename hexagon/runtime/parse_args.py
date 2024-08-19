@@ -34,10 +34,11 @@ def parse_cli_args(args=None, model=CliArgs, **kwargs):
 
     known_args, extra = _parser.parse_known_args(args)
 
-    if all(not x for x in known_args.__dict__.values()) and any(
-        [a in ["-h", "--help"] for a in args]
-    ):
+    if __no_known_args(known_args) and __arg_any_of(args, ["-h", "--help"]):
         return model(show_help=True, total_args=0)
+
+    if __no_known_args(known_args) and __arg_any_of(extra, ["-v", "--version"]):
+        return model(show_version=True, total_args=0)
 
     count, extra_args = __guess_optional_keys(extra)
     data = vars(known_args)
@@ -51,6 +52,14 @@ def parse_cli_args(args=None, model=CliArgs, **kwargs):
     )
     # return model.model_validate_json(json.dumps(data))
     return model(**{k: v for k, v in data.items() if v is not None})
+
+
+def __arg_any_of(args, values):
+    return any([a in values for a in args])
+
+
+def __no_known_args(known_args):
+    return all(not x for x in known_args.__dict__.values())
 
 
 def init_arg_parser(
