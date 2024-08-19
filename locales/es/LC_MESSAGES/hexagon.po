@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-05 00:00+0200\n"
+"POT-Creation-Date: 2024-08-09 21:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -173,7 +173,7 @@ msgstr "Crear una nueva herramienta"
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Instalando dependencias de {runtime} en directorio {path}"
 
-#: hexagon/runtime/execute/action.py:144
+#: hexagon/runtime/execute/action.py:143
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 "Para usar argumentos de CLI agregar a tu script\n"
@@ -284,29 +284,29 @@ msgstr ""
 msgid "msg.support.update.hexagon.checking_new_versions"
 msgstr "Verificando si existen nuevas versión de hexagon"
 
-#: hexagon/runtime/update/hexagon.py:37
+#: hexagon/runtime/update/hexagon.py:39
 msgid "msg.support.update.hexagon.new_version_available"
 msgstr ""
 "¡Existe una nueva versión {version_start}{latest_version}{version_end} de "
 "{hexagon_start}hexagon{hexagon_end}!"
 
-#: hexagon/runtime/update/hexagon.py:43
+#: hexagon/runtime/update/hexagon.py:45
 msgid "msg.support.update.hexagon.fetching_changelog"
 msgstr "Descargando información de cambios"
 
-#: hexagon/runtime/update/hexagon.py:54
+#: hexagon/runtime/update/hexagon.py:56
 msgid "msg.support.update.hexagon.and_much_more"
 msgstr "¡y mucho más!"
 
-#: hexagon/runtime/update/hexagon.py:57
+#: hexagon/runtime/update/hexagon.py:59
 msgid "action.support.update.hexagon.confirm_update"
 msgstr "¿Te gustaría actualizar?"
 
-#: hexagon/runtime/update/hexagon.py:61
+#: hexagon/runtime/update/hexagon.py:63
 msgid "msg.support.update.hexagon.updating"
 msgstr "Actualizando"
 
-#: hexagon/runtime/update/hexagon.py:68
+#: hexagon/runtime/update/hexagon.py:70
 msgid "msg.support.update.hexagon.updated"
 msgstr "[green]🗸[/green] Se actualizó a la última versión"
 
@@ -426,11 +426,11 @@ msgstr "No se configuró HintsBuilder correctamente."
 msgid "msg.support.prompt.hints.help"
 msgstr "ayuda:"
 
-#: hexagon/support/input/prompt/prompt.py:34
+#: hexagon/support/input/prompt/prompt.py:32
 msgid "error.support.input.prompt.prompt.invalid_argument_setup"
 msgstr "Configuración {property} no es válida para argumento {argument}"
 
-#: hexagon/support/input/prompt/prompt.py:310
+#: hexagon/support/input/prompt/prompt.py:307
 msgid "msg.support.prompt.prompt.directory_created"
 msgstr "📁 directorio creado: {path} [green]✓[/green]"
 
