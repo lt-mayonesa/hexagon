@@ -3,15 +3,15 @@ import os
 from tests_e2e.__specs.utils.hexagon_spec import as_a_user
 from tests_e2e.__specs.utils.path import e2e_test_folder_path
 
-storage_path = os.path.join(e2e_test_folder_path(__file__), ".config", "test")
-
 
 def test_register_all_hooks_correctly():
-    if os.path.exists(storage_path):
-        for file in os.listdir(storage_path):
-            os.remove(os.path.join(storage_path, file))
+    # if os.path.exists(storage_path):
+    #     for file in os.listdir(storage_path):
+    #         os.remove(os.path.join(storage_path, file))
 
-    (as_a_user(__file__).run_hexagon(["echo", "dev"]).exit())
+    spec = as_a_user(__file__).run_hexagon(["echo", "dev"]).exit()
+
+    storage_path = os.path.join(e2e_test_folder_path(spec.test_dir), ".config", "test")
 
     with open(os.path.join(storage_path, "hook_start.txt"), "r") as file:
         assert file.read() == "1"

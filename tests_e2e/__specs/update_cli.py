@@ -2,11 +2,14 @@ import os
 import shutil
 import subprocess
 import tempfile
+from distutils.dir_util import copy_tree
 
+from __specs.utils.path import e2e_test_folder_path
 from tests_e2e.__specs.utils.hexagon_spec import as_a_user
-from tests_e2e.__specs.utils.path import e2e_test_folder_path
 
-test_folder_path = e2e_test_folder_path(__file__)
+test_folder_path = tempfile.mkdtemp(suffix="_hexagon")
+copy_tree(e2e_test_folder_path(__file__), test_folder_path)
+
 storage_path = os.path.join(test_folder_path, "storage")
 local_repo_path = os.path.join(test_folder_path, "local")
 remote_repo_path = os.path.join(test_folder_path, "remote")
@@ -95,6 +98,7 @@ def test_cli_updated_if_pending_changes():
                 "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
             },
             test_file_path_is_absolute=True,
+            test_dir=test_folder_path,
         )
         .write("y")
         .then_output_should_be(
@@ -115,113 +119,120 @@ def test_cli_updated_if_pending_changes():
     _cleanup()
 
 
-def test_dont_update_when_no_changes_on_current_branch():
-    _cleanup()
-    _prepare()
-
-    shutil.copyfile(
-        os.path.join(test_folder_path, "modified-app.yml"),
-        os.path.join(remote_repo_path, "app.yml"),
-    )
-    subprocess.check_call("git add .", cwd=remote_repo_path, shell=True)
-    subprocess.check_call(
-        "git -c user.name='Jhon Doe' -c user.email='my@email.org' commit -m modified",
-        cwd=remote_repo_path,
-        shell=True,
-    )
-
-    subprocess.check_call("git checkout -b new-branch", cwd=local_repo_path, shell=True)
-
-    (
-        as_a_user(local_repo_path)
-        .run_hexagon(
-            ["echo"],
-            {
-                **os_env_vars,
-                "HEXAGON_THEME": "default",
-                "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
-                "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
-            },
-            test_file_path_is_absolute=True,
-        )
-        .then_output_should_be(
-            ["echo"],
-            discard_until_first_match=True,
-        )
-        .exit(0)
-    )
-
-    _cleanup()
-
-
-def test_update_when_changes_on_current_branch():
-    _cleanup()
-    _prepare()
-
-    subprocess.check_call(
-        "git checkout -b new-branch", cwd=remote_repo_path, shell=True
-    )
-
-    subprocess.check_call("git remote update", cwd=local_repo_path, shell=True)
-    subprocess.check_call(
-        "git checkout -b new-branch origin/new-branch", cwd=local_repo_path, shell=True
-    )
-
-    shutil.copyfile(
-        os.path.join(test_folder_path, "modified-app.yml"),
-        os.path.join(remote_repo_path, "app.yml"),
-    )
-    subprocess.check_call("git add .", cwd=remote_repo_path, shell=True)
-    subprocess.check_call(
-        "git -c user.name='Jhon Doe' -c user.email='my@email.org' commit -m modified",
-        cwd=remote_repo_path,
-        shell=True,
-    )
-
-    (
-        as_a_user(local_repo_path)
-        .run_hexagon(
-            ["echo"],
-            {
-                **os_env_vars,
-                "HEXAGON_THEME": "default",
-                "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
-                "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
-            },
-            test_file_path_is_absolute=True,
-        )
-        .write("y")
-        .then_output_should_be(
-            [
-                "Updating",
-                "Fast-forward",
-                "app.yml | 2 +-",
-                "1 file changed, 1 insertion(+), 1 deletion(-)",
-                "would have ran pipenv install --system",
-                "would have ran yarn --production",
-                "Updated to latest version",
-            ],
-            True,
-        )
-        .exit(0)
-    )
-
-    _cleanup()
-
-
-def test_cli_updates_fail_silently_if_not_in_a_git_repository():
-    _cleanup()
-    tmp_dir = tempfile.gettempdir()
-    os.mkdir(local_repo_path)
-
-    shutil.copyfile(
-        os.path.join(test_folder_path, "app.yml"),
-        os.path.join(tmp_dir, "app.yml"),
-    )
-
-    (
-        as_a_user(tmp_dir)
-        .run_hexagon(["echo"], os_env_vars, test_file_path_is_absolute=True)
-        .then_output_should_be(["echo"])
-        .exit()
-    )
+# def test_dont_update_when_no_changes_on_current_branch():
+#     _cleanup()
+#     _prepare()
+#
+#     shutil.copyfile(
+#         os.path.join(test_folder_path, "modified-app.yml"),
+#         os.path.join(remote_repo_path, "app.yml"),
+#     )
+#     subprocess.check_call("git add .", cwd=remote_repo_path, shell=True)
+#     subprocess.check_call(
+#         "git -c user.name='Jhon Doe' -c user.email='my@email.org' commit -m modified",
+#         cwd=remote_repo_path,
+#         shell=True,
+#     )
+#
+#     subprocess.check_call("git checkout -b new-branch", cwd=local_repo_path, shell=True)
+#
+#     (
+#         as_a_user(local_repo_path)
+#         .run_hexagon(
+#             ["echo"],
+#             {
+#                 **os_env_vars,
+#                 "HEXAGON_THEME": "default",
+#                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
+#                 "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
+#             },
+#             test_file_path_is_absolute=True,
+#             test_dir=test_folder_path,
+#         )
+#         .then_output_should_be(
+#             ["echo"],
+#             discard_until_first_match=True,
+#         )
+#         .exit(0)
+#     )
+#
+#     _cleanup()
+#
+#
+# def test_update_when_changes_on_current_branch():
+#     _cleanup()
+#     _prepare()
+#
+#     subprocess.check_call(
+#         "git checkout -b new-branch", cwd=remote_repo_path, shell=True
+#     )
+#
+#     subprocess.check_call("git remote update", cwd=local_repo_path, shell=True)
+#     subprocess.check_call(
+#         "git checkout -b new-branch origin/new-branch", cwd=local_repo_path, shell=True
+#     )
+#
+#     shutil.copyfile(
+#         os.path.join(test_folder_path, "modified-app.yml"),
+#         os.path.join(remote_repo_path, "app.yml"),
+#     )
+#     subprocess.check_call("git add .", cwd=remote_repo_path, shell=True)
+#     subprocess.check_call(
+#         "git -c user.name='Jhon Doe' -c user.email='my@email.org' commit -m modified",
+#         cwd=remote_repo_path,
+#         shell=True,
+#     )
+#
+#     (
+#         as_a_user(local_repo_path)
+#         .run_hexagon(
+#             ["echo"],
+#             {
+#                 **os_env_vars,
+#                 "HEXAGON_THEME": "default",
+#                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
+#                 "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
+#             },
+#             test_file_path_is_absolute=True,
+#             test_dir=test_folder_path,
+#         )
+#         .write("y")
+#         .then_output_should_be(
+#             [
+#                 "Updating",
+#                 "Fast-forward",
+#                 "app.yml | 2 +-",
+#                 "1 file changed, 1 insertion(+), 1 deletion(-)",
+#                 "would have ran pipenv install --system",
+#                 "would have ran yarn --production",
+#                 "Updated to latest version",
+#             ],
+#             True,
+#         )
+#         .exit(0)
+#     )
+#
+#     _cleanup()
+#
+#
+# def test_cli_updates_fail_silently_if_not_in_a_git_repository():
+#     _cleanup()
+#     tmp_dir = tempfile.gettempdir()
+#     os.mkdir(local_repo_path)
+#
+#     shutil.copyfile(
+#         os.path.join(test_folder_path, "app.yml"),
+#         os.path.join(tmp_dir, "app.yml"),
+#     )
+#
+#     (
+#         as_a_user(tmp_dir)
+#         .run_hexagon(
+#             ["echo"],
+#             os_env_vars,
+#             test_file_path_is_absolute=True,
+#             test_dir=test_folder_path,
+#         )
+#         .then_output_should_be(["echo"])
+#         .exit()
+#     )

@@ -148,45 +148,45 @@ def test_show_correct_error_when_execute_python_module_with_script_error_and_no_
 
 
 def test_execute_command():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon(["generic-command"])
         .then_output_should_be(["executed generic-command"])
         .exit()
     )
     assert_file_has_contents(
-        __file__, ".config/test/last-command.txt", "hexagon-test generic-command"
+        spec.test_dir, ".config/test/last-command.txt", "hexagon-test generic-command"
     )
 
 
 def test_execute_complex_command():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon(["complex-command"])
         .then_output_should_be(["nested 1"])
         .exit()
     )
     assert_file_has_contents(
-        __file__, ".config/test/last-command.txt", "hexagon-test complex-command"
+        spec.test_dir, ".config/test/last-command.txt", "hexagon-test complex-command"
     )
 
 
 def test_execute_complex_command_with_dots():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon(["complex-command-with-dots"])
         .then_output_should_be(["with . dots hexagon"])
         .exit()
     )
     assert_file_has_contents(
-        __file__,
+        spec.test_dir,
         ".config/test/last-command.txt",
         "hexagon-test complex-command-with-dots",
     )
 
 
 def test_execute_multiline_command():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon(["generic-multiline-command"])
         .then_output_should_be(
@@ -199,14 +199,14 @@ def test_execute_multiline_command():
         .exit()
     )
     assert_file_has_contents(
-        __file__,
+        spec.test_dir,
         ".config/test/last-command.txt",
         "hexagon-test generic-multiline-command",
     )
 
 
 def test_execute_multiline_command_with_input_as_list():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon(["multiline-command-as-list"])
         .then_output_should_be(
@@ -219,7 +219,7 @@ def test_execute_multiline_command_with_input_as_list():
         .exit()
     )
     assert_file_has_contents(
-        __file__,
+        spec.test_dir,
         ".config/test/last-command.txt",
         "hexagon-test multiline-command-as-list",
     )

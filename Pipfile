@@ -19,6 +19,7 @@ flake8 = "*"
 pytest = "*"
 black = "*"
 flake8-bugbear = "*"
+pytest-xdist = "*"
 
 [requires]
 python_version = "3.11"

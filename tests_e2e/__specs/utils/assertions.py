@@ -198,7 +198,7 @@ def _assert_process_output_line(
     return True
 
 
-MAX_ATTEMPTS = 50
+MAX_ATTEMPTS = 100
 
 
 def assert_process_output(

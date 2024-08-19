@@ -1,6 +1,8 @@
 import os
 import platform
 import subprocess
+import tempfile
+from distutils.dir_util import copy_tree
 from typing import Dict, List, Optional
 
 from tests_e2e.__specs.utils.console import print
@@ -22,6 +24,7 @@ def run_hexagon_e2e_test(
     yaml_file_name: str = "app.yml",
     os_env_vars: Optional[Dict[str, str]] = None,
     test_file_path_is_absolute: bool = False,
+    test_dir: Optional[str] = None,
 ):
     if os_env_vars is None:
         os_env_vars = {}
@@ -29,6 +32,10 @@ def run_hexagon_e2e_test(
     test_folder_path = (
         test_file if test_file_path_is_absolute else e2e_test_folder_path(test_file)
     )
+
+    tmp_dir = test_dir or tempfile.mkdtemp(suffix="_hexagon")
+    copy_tree(test_folder_path, tmp_dir)
+    test_folder_path = tmp_dir
 
     os_env_vars["HEXAGON_TEST_SHELL"] = (
         os_env_vars["HEXAGON_TEST_SHELL"]
@@ -68,7 +75,7 @@ def run_hexagon_e2e_test(
 
     os_env_vars["PYTHONPATH"] = hexagon_path
 
-    return run_hexagon(test_folder_path, args, os_env_vars)
+    return test_folder_path, run_hexagon(test_folder_path, args, os_env_vars)
 
 
 def run_hexagon(
