@@ -2,7 +2,7 @@ from tests_e2e.__specs.utils.hexagon_spec import as_a_user
 
 
 def test_replay_last_command_by_prompt():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon()
         .enter()
@@ -18,7 +18,7 @@ def test_replay_last_command_by_prompt():
 
     (
         as_a_user(__file__)
-        .run_hexagon(os_env_vars={"HEXAGON_THEME": "no_border"})
+        .run_hexagon(os_env_vars={"HEXAGON_THEME": "no_border"}, test_dir=spec.test_dir)
         .then_output_should_be(
             [
                 "",
@@ -49,7 +49,7 @@ def test_replay_last_command_by_prompt():
 
 
 def test_replay_last_command_by_name():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon()
         .enter()
@@ -65,7 +65,7 @@ def test_replay_last_command_by_name():
 
     (
         as_a_user(__file__)
-        .run_hexagon(["replay"])
+        .run_hexagon(["replay"], test_dir=spec.test_dir)
         .then_output_should_be(
             [
                 "name: john",
@@ -79,7 +79,7 @@ def test_replay_last_command_by_name():
 
 
 def test_replay_last_command_by_alias():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon()
         .enter()
@@ -95,7 +95,7 @@ def test_replay_last_command_by_alias():
 
     (
         as_a_user(__file__)
-        .run_hexagon(["r"])
+        .run_hexagon(["r"], test_dir=spec.test_dir)
         .then_output_should_be(
             [
                 "name: john",
@@ -109,7 +109,7 @@ def test_replay_last_command_by_alias():
 
 
 def test_replay_last_command_with_spaced_arg():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon()
         .enter()
@@ -124,7 +124,7 @@ def test_replay_last_command_with_spaced_arg():
 
     (
         as_a_user(__file__)
-        .run_hexagon(["replay"])
+        .run_hexagon(["replay"], test_dir=spec.test_dir)
         .then_output_should_be(
             [
                 "name: john",
@@ -138,7 +138,7 @@ def test_replay_last_command_with_spaced_arg():
 
 
 def test_replay_last_command_with_complex_arg():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon()
         .enter()
@@ -153,7 +153,7 @@ def test_replay_last_command_with_complex_arg():
 
     (
         as_a_user(__file__)
-        .run_hexagon(["replay"])
+        .run_hexagon(["replay"], test_dir=spec.test_dir)
         .then_output_should_be(
             [
                 "name: john",

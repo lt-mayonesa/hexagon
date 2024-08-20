@@ -49,7 +49,7 @@ def _shared_assertions(spec: HexagonSpec):
 
 
 def test_create_new_open_link_tool():
-    (
+    spec = (
         as_a_user(__file__)
         .given_a_cli_yaml(base_app_file)
         .run_hexagon()
@@ -80,12 +80,12 @@ def test_create_new_open_link_tool():
         .input(DESCRIPTION)
         .then_output_should_be(
             ["Would you like to add a description? (this will be displayed along side"],
-            True,
+            discard_until_first_match=True,
         )
         .exit()
     )
 
-    app_file = read_hexagon_config(__file__)
+    app_file = read_hexagon_config(spec.test_dir)
     created_tool = app_file["tools"][1]
     assert created_tool["action"] == "open_link"
     assert created_tool["type"] == "web"
@@ -93,7 +93,7 @@ def test_create_new_open_link_tool():
 
 
 def test_create_new_python_module_tool():
-    (
+    spec = (
         as_a_user(__file__)
         .given_a_cli_yaml(base_app_file)
         .run_hexagon()
@@ -141,20 +141,20 @@ def test_create_new_python_module_tool():
         .exit()
     )
 
-    app_file = read_hexagon_config(__file__)
+    app_file = read_hexagon_config(spec.test_dir)
     created_tool = app_file["tools"][1]
     assert created_tool["action"] == "a-new-action"
     assert created_tool["type"] == "shell"
     assert created_tool["alias"] == "anac"
 
     assert os.path.isfile(
-        os.path.join(e2e_test_folder_path(__file__), "a-new-action/__init__.py")
+        os.path.join(e2e_test_folder_path(spec.test_dir), "a-new-action/__init__.py")
     )
     assert os.path.isfile(
-        os.path.join(e2e_test_folder_path(__file__), "a-new-action/README.md")
+        os.path.join(e2e_test_folder_path(spec.test_dir), "a-new-action/README.md")
     )
 
-    shutil.rmtree(os.path.join(e2e_test_folder_path(__file__), "a-new-action"))
+    shutil.rmtree(os.path.join(e2e_test_folder_path(spec.test_dir), "a-new-action"))
 
 
 def test_create_tool_creates_custom_tools_dir():
@@ -162,14 +162,7 @@ def test_create_tool_creates_custom_tools_dir():
     app_file = base_app_file.copy()
     app_file["cli"].pop("custom_tools_dir")
 
-    custom_tools_dir_path = os.path.join(
-        e2e_test_folder_path(__file__), custom_tools_dir_name
-    )
-    if os.path.isdir(custom_tools_dir_path):
-        shutil.rmtree(custom_tools_dir_path)
-    os.mkdir(custom_tools_dir_path)
-
-    (
+    spec = (
         as_a_user(__file__)
         .given_a_cli_yaml(app_file)
         .run_hexagon()
@@ -197,20 +190,20 @@ def test_create_tool_creates_custom_tools_dir():
         .exit()
     )
 
-    config_file = read_hexagon_config(__file__)
+    config_file = read_hexagon_config(spec.test_dir)
 
     assert config_file["cli"]["custom_tools_dir"] == f"./{custom_tools_dir_name}"
 
     assert os.path.isfile(
         os.path.join(
-            e2e_test_folder_path(__file__),
+            e2e_test_folder_path(spec.test_dir),
             custom_tools_dir_name,
             "a-new-action/__init__.py",
         )
     )
     assert os.path.isfile(
         os.path.join(
-            e2e_test_folder_path(__file__),
+            e2e_test_folder_path(spec.test_dir),
             custom_tools_dir_name,
             "a-new-action/README.md",
         )
