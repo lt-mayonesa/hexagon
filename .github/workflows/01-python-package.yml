@@ -192,7 +192,6 @@ jobs:
         uses: python-semantic-release/python-semantic-release@v9.8.6
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          root_options: "-vv"
 
       # see https://docs.pypi.org/trusted-publishers/
       - name: Publish package distributions to PyPI

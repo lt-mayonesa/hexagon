@@ -3,6 +3,11 @@ Make your team's knowledge truly accessible, truly shared, and truly empowering 
 
 [![01_ci-cd](https://github.com/lt-mayonesa/hexagon/actions/workflows/01-python-package.yml/badge.svg)](https://github.com/lt-mayonesa/hexagon/actions/workflows/01-python-package.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![PyPI - Version](https://img.shields.io/pypi/v/hexagon)](https://pypi.org/project/hexagon/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hexagon)](https://pypi.org/project/hexagon/)
+[![PyPI - License](https://img.shields.io/pypi/l/hexagon)](https://pypi.org/project/hexagon/)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/hexagon)](https://pypi.org/project/hexagon/)
+
 
 [![hexagon setup example](https://user-images.githubusercontent.com/11464844/141402773-2fa1e859-cbe7-43a2-87e8-81620307167f.gif)](https://asciinema.org/a/Mk8of7EC0grfsSgWYrEdGCjdF)
 
