@@ -62,7 +62,7 @@ def check_for_hexagon_updates():
 
         with log.status(_("msg.support.update.hexagon.updating")):
             subprocess.check_call(
-                f"{sys.executable} -m pip --disable-pip-version-check install https://github.com/{REPO_ORG}/{REPO_NAME}/releases/download/v{latest_version}/hexagon-{latest_version}.tar.gz",
+                f"{sys.executable} -m pip install hexagon --upgrade",
                 shell=True,
                 stdout=subprocess.DEVNULL,
             )

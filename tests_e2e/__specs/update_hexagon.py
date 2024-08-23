@@ -31,7 +31,7 @@ def _clear_last_check():
         os.remove(last_checked_storage_path)
 
 
-temp_file_path = os.path.join(test_folder_path, "github_version_mock.json")
+temp_file_path = os.path.join(test_folder_path, "pypi_version_mock.json")
 
 base_os_env_vars = {
     "HEXAGON_UPDATE_DISABLED": "false",
