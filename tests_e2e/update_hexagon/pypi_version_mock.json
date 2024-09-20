@@ -1,0 +1,200 @@
+{
+  "info": {
+    "author": "Joaco Campero",
+    "author_email": "juacocampero@gmail.com",
+    "bugtrack_url": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License",
+      "Operating System :: OS Independent",
+      "Programming Language :: Python :: 3"
+    ],
+    "description": "# hexagon\nMake your team's knowledge truly accessible, truly shared, and truly empowering by creating your own CLI.\n\n[![01_ci-cd](https://github.com/lt-mayonesa/hexagon/actions/workflows/01-python-package.yml/badge.svg)](https://github.com/lt-mayonesa/hexagon/actions/workflows/01-python-package.yml)\n[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)\n[![PyPI - Version](https://img.shields.io/pypi/v/hexagon)](https://pypi.org/project/hexagon/)\n[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hexagon)](https://pypi.org/project/hexagon/)\n[![PyPI - License](https://img.shields.io/pypi/l/hexagon)](https://pypi.org/project/hexagon/)\n[![PyPI - Downloads](https://img.shields.io/pypi/dm/hexagon)](https://pypi.org/project/hexagon/)\n\n\n[![hexagon setup example](https://user-images.githubusercontent.com/11464844/141402773-2fa1e859-cbe7-43a2-87e8-81620307167f.gif)](https://asciinema.org/a/Mk8of7EC0grfsSgWYrEdGCjdF)\n\n---\n\n## Getting Started\n\n### Install hexagon\n```bash\npip install hexagon\n```\n\n### Create your teams CLI\n\nEither use our [template repo](https://github.com/lt-mayonesa/hexagon-tools) or create a YAML like the following\n```yaml\ncli:\n  custom_tools_dir: .  # relative to this file\n  name: Test CLI\n  command: tc\n\nenvs:\n  - name: dev\n    alias: d\n  - name: qa\n    alias: q\n\ntools:\n\n  - name: google\n    alias: g\n    long_name: Google\n    description: Open google\n    type: web\n    envs:\n      dev: google.dev\n      qa: google.qa\n    action: open_link\n\n  - name: hello-world\n    alias: hw\n    long_name: Greet the world\n    type: shell\n    action: echo \"Hello World!\"\n```\n\n### Install the CLI\n\nRun `hexagon` and select the CLI installation tool\n\n## Options\n\n### Theming\n\nHexagon supports 3 themes for now:\n\n - default (some nice colors and decorations)\n - disabled (no colors and no decorations)\n - result_only (with colors but only shows the result logs)\n\nThis can be specified by the envvar `HEXAGON_THEME`, i.e.,\n\n```bash\n# assuming you installed a CLI with command tc\nHEXAGON_THEME=result_only tc\n```\n\n\n## Development\n\n### Pre-requisites\n\n```bash\npip install pipenv\n```\n\n### Run:\n\n```bash\n# start a shell\npipenv shell\n# install hexagon dependencies\npipenv install --dev\n# run it\npython -m hexagon\n```\n\n### Unit Tests:\n\n```bash\npytest -svv tests/\n```\n\n### E2E Tests:\n\n```bash\n# first generate the transalation files\n.github/scripts/i18n/build.sh\n# run tests\npytest -svv tests_e2e/\n```\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": "https://github.com/lt-mayonesa/hexagon",
+    "keywords": null,
+    "license": null,
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "hexagon",
+    "package_url": "https://pypi.org/project/hexagon/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/hexagon/",
+    "project_urls": {
+      "Bug Tracker": "https://github.com/lt-mayonesa/hexagon/issues",
+      "Homepage": "https://github.com/lt-mayonesa/hexagon"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/hexagon/0.61.0/",
+    "requires_dist": [
+      "clipboard==0.0.4",
+      "pyperclip==1.9.0",
+      "wcwidth==0.2.13",
+      "prompt-toolkit==3.0.47; python_full_version >= \"3.7.0\"",
+      "rich==13.7.1; python_full_version >= \"3.7.0\"",
+      "ruamel.yaml.clib==0.2.8; python_version < \"3.13\" and platform_python_implementation == \"CPython\"",
+      "mdurl==0.1.2; python_version >= \"3.7\"",
+      "ruamel.yaml==0.18.6; python_version >= \"3.7\"",
+      "inquirerpy==0.3.4; python_version >= \"3.7\" and python_version < \"4.0\"",
+      "pfzy==0.3.4; python_version >= \"3.7\" and python_version < \"4.0\"",
+      "annotated-types==0.7.0; python_version >= \"3.8\"",
+      "markdown==3.7; python_version >= \"3.8\"",
+      "markdown-it-py==3.0.0; python_version >= \"3.8\"",
+      "packaging==24.1; python_version >= \"3.8\"",
+      "pydantic==2.8.2; python_version >= \"3.8\"",
+      "pydantic-core==2.20.1; python_version >= \"3.8\"",
+      "pydantic-settings==2.4.0; python_version >= \"3.8\"",
+      "pygments==2.18.0; python_version >= \"3.8\"",
+      "python-dotenv==1.0.1; python_version >= \"3.8\"",
+      "typing-extensions==4.12.2; python_version >= \"3.8\""
+    ],
+    "requires_python": ">=3.9",
+    "summary": "Build your Team's CLI",
+    "version": "999.0.0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 24661995,
+  "releases": {
+    "0.60.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "c8fdc01e681059aac4bfb178c9ba82f1b183604b9292c8f30dec0d4d178a0bb9",
+          "md5": "8bb746ef429bfa9dc09eddcb33869e38",
+          "sha256": "d1fb01244fc0b6103622d66f18bf9ad24bba78ad67537c43f0d68545e6d5b792"
+        },
+        "downloads": -1,
+        "filename": "hexagon-0.60.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8bb746ef429bfa9dc09eddcb33869e38",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 79599,
+        "upload_time": "2024-08-12T10:15:38",
+        "upload_time_iso_8601": "2024-08-12T10:15:38.572406Z",
+        "url": "https://files.pythonhosted.org/packages/c8/fd/c01e681059aac4bfb178c9ba82f1b183604b9292c8f30dec0d4d178a0bb9/hexagon-0.60.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "a306a528b98d4e6e5aeab61a35e0e1d35925b44b2ba556e65b097aeba0beb1ad",
+          "md5": "5400cb8982c78b642faf40addfe5ed5f",
+          "sha256": "21b9d7cecdab6e8040a4d957ec5023601dd14aca32e73effdd096c968dc2e411"
+        },
+        "downloads": -1,
+        "filename": "hexagon-0.60.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "5400cb8982c78b642faf40addfe5ed5f",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 79614,
+        "upload_time": "2024-08-12T10:15:40",
+        "upload_time_iso_8601": "2024-08-12T10:15:40.096474Z",
+        "url": "https://files.pythonhosted.org/packages/a3/06/a528b98d4e6e5aeab61a35e0e1d35925b44b2ba556e65b097aeba0beb1ad/hexagon-0.60.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.61.0": [
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "cdc4a8af9d2af82e42c6d606a500b9531e79e03d23b4607cd4f779d160c41361",
+          "md5": "18459af9d43a37a0d76bae5762947f11",
+          "sha256": "f8be5a0273a09d4cb396df8754645fb46ac8b2c8fb8a54502cdca9e916f32efb"
+        },
+        "downloads": -1,
+        "filename": "hexagon-0.61.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "18459af9d43a37a0d76bae5762947f11",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 80257,
+        "upload_time": "2024-08-20T22:05:19",
+        "upload_time_iso_8601": "2024-08-20T22:05:19.985502Z",
+        "url": "https://files.pythonhosted.org/packages/cd/c4/a8af9d2af82e42c6d606a500b9531e79e03d23b4607cd4f779d160c41361/hexagon-0.61.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "blake2b_256": "3a58fb9670f830cf2a0dbc2ab2825e4a2d0837f164bab51cf680f489a653f8a9",
+          "md5": "a9d4121aee09e6d73564e3921513fc2e",
+          "sha256": "c68eda7b073371037b7fc975055a90679f6743b4fad87762a15d6e52efbac9dc"
+        },
+        "downloads": -1,
+        "filename": "hexagon-0.61.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a9d4121aee09e6d73564e3921513fc2e",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.9",
+        "size": 93787,
+        "upload_time": "2024-08-20T22:05:22",
+        "upload_time_iso_8601": "2024-08-20T22:05:22.127622Z",
+        "url": "https://files.pythonhosted.org/packages/3a/58/fb9670f830cf2a0dbc2ab2825e4a2d0837f164bab51cf680f489a653f8a9/hexagon-0.61.0.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "cdc4a8af9d2af82e42c6d606a500b9531e79e03d23b4607cd4f779d160c41361",
+        "md5": "18459af9d43a37a0d76bae5762947f11",
+        "sha256": "f8be5a0273a09d4cb396df8754645fb46ac8b2c8fb8a54502cdca9e916f32efb"
+      },
+      "downloads": -1,
+      "filename": "hexagon-0.61.0-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "18459af9d43a37a0d76bae5762947f11",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.9",
+      "size": 80257,
+      "upload_time": "2024-08-20T22:05:19",
+      "upload_time_iso_8601": "2024-08-20T22:05:19.985502Z",
+      "url": "https://files.pythonhosted.org/packages/cd/c4/a8af9d2af82e42c6d606a500b9531e79e03d23b4607cd4f779d160c41361/hexagon-0.61.0-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "3a58fb9670f830cf2a0dbc2ab2825e4a2d0837f164bab51cf680f489a653f8a9",
+        "md5": "a9d4121aee09e6d73564e3921513fc2e",
+        "sha256": "c68eda7b073371037b7fc975055a90679f6743b4fad87762a15d6e52efbac9dc"
+      },
+      "downloads": -1,
+      "filename": "hexagon-0.61.0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "a9d4121aee09e6d73564e3921513fc2e",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.9",
+      "size": 93787,
+      "upload_time": "2024-08-20T22:05:22",
+      "upload_time_iso_8601": "2024-08-20T22:05:22.127622Z",
+      "url": "https://files.pythonhosted.org/packages/3a/58/fb9670f830cf2a0dbc2ab2825e4a2d0837f164bab51cf680f489a653f8a9/hexagon-0.61.0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

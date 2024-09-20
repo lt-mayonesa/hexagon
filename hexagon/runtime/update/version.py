@@ -4,8 +4,7 @@ from urllib.request import Request, urlopen
 
 from packaging.version import parse as parse_version
 
-from hexagon.runtime.update import REPO_NAME, REPO_ORG
-from hexagon.runtime.update.github import add_github_access_token
+from hexagon.runtime.update import REPO_NAME
 
 
 def local(override=None):
@@ -25,9 +24,7 @@ def _local_version():
 
 def latest(override: str = None):
     latest_release_request = Request(
-        override
-        or f"https://api.github.com/repos/{REPO_ORG}/{REPO_NAME}/releases/latest"
+        override or f"https://pypi.org/pypi/{REPO_NAME}/json"
     )
-    add_github_access_token(latest_release_request)
-    latest_github_release = json.load(urlopen(latest_release_request))
-    return parse_version(latest_github_release["name"].replace("v", ""))
+    latest_pypi_release = json.load(urlopen(latest_release_request))
+    return parse_version(latest_pypi_release["info"]["version"])
