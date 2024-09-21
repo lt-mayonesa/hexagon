@@ -23,7 +23,7 @@ jobs:
         with:
           version: ${{ steps.versions.outputs.black }}
 
-      - uses: TrueBrain/actions-flake8@v2.1
+      - uses: TrueBrain/actions-flake8@v2.3
         with:
           flake8_version: ${{ steps.versions.outputs.flake8 }}
           plugins: flake8-bugbear==${{ steps.versions.outputs.bugbear }}
