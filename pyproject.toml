@@ -14,7 +14,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.semantic_release]
 # see https://python-semantic-release.readthedocs.io/en/latest/configuration.html
-build_command = "python setup.py sdist bdist_wheel"
+build_command = "pip install wheel setuptools && python setup.py sdist bdist_wheel"
 version_variables = [
     'setup.py:__version__',
     'hexagon/runtime/version.py:__version__',
