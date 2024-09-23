@@ -47,13 +47,14 @@ def check_for_hexagon_updates():
                     current_version, fetch_changelog(REPO_ORG, REPO_NAME)
                 )
 
-            entries = format_entries(changelog)
-
-            for entry in entries[:CHANGELOG_MAX_PRINT_ENTRIES]:
-                log.info("  - " + entry.message)
-
-            if len(entries) > CHANGELOG_MAX_PRINT_ENTRIES:
-                log.info(_("msg.support.update.hexagon.and_much_more"))
+            # entries = format_entries(changelog)
+            #
+            # for entry in entries[:CHANGELOG_MAX_PRINT_ENTRIES]:
+            #     log.info("  - " + entry.message)
+            #
+            # if len(entries) > CHANGELOG_MAX_PRINT_ENTRIES:
+            #     log.info(_("msg.support.update.hexagon.and_much_more"))
+            log.example(changelog, syntax="md")
 
         if not prompt.confirm(
             _("action.support.update.hexagon.confirm_update"), default=True
