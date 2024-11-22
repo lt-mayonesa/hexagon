@@ -41,7 +41,7 @@ def prepare_test():
 
 def test_install_cli():
     command = "hexagon-test"
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon(os_env_vars=TEST_ENV_VARS)
         .then_output_should_be(
@@ -65,7 +65,7 @@ def test_install_cli():
         assert (
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE=/private{os.path.join("/private",spec.test_dir, "config.yml")} \\\n'
             f"hexagon $@"
         )  # noqa: E501
 
@@ -76,7 +76,7 @@ def test_install_cli_and_provide_bins_path():
     )
 
     command = "hexagon-test"
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon(os_env_vars=TEST_ENV_VARS)
         .then_output_should_be(
@@ -102,7 +102,7 @@ def test_install_cli_and_provide_bins_path():
         assert (
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE=/private{os.path.join(spec.test_dir, "config.yml")} \\\n'
             f"hexagon $@"
         )  # noqa: E501
 
