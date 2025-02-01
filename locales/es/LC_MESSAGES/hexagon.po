@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-04 20:41+0100\n"
+"POT-Creation-Date: 2025-02-01 19:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,7 +56,7 @@ msgstr ""
 "¿Te gustaría agregar una descripción? (va a ser mostrada junto con el nombre/"
 "comando)"
 
-#: hexagon/actions/internal/create_new_tool.py:37
+#: hexagon/actions/internal/create_new_tool.py:36
 msgid "action.actions.internal.create_new_tool.input_custom_tools_path"
 msgstr ""
 "¿Donde te gustaría que se encuentre? (puede ser un directorio relativo al "
@@ -72,7 +72,7 @@ msgstr ""
 "[magenta]Tu CLI no tiene un directorio de herramientas (cli."
 "custom_tools_dir).[/magenta]"
 
-#: hexagon/actions/internal/create_new_tool.py:95
+#: hexagon/actions/internal/create_new_tool.py:94
 msgid "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
 msgstr "relativo a este archivo"
 
@@ -149,22 +149,32 @@ msgid "msg.domain.configuration.install_cli_description"
 msgstr "Instalar una CLI desde un archivo YAML de configuración."
 
 #: hexagon/runtime/configuration.py:125
+#, fuzzy
+msgid "msg.domain.configuration.manage_clis_long_name"
+msgstr "Guardar el último comando ejecutado como shell alias"
+
+#: hexagon/runtime/configuration.py:126
+#, fuzzy
+msgid "msg.domain.configuration.manage_clis_description"
+msgstr "Instalar una CLI desde un archivo YAML de configuración."
+
+#: hexagon/runtime/configuration.py:132
 msgid "msg.domain.configuration.get_json_schema_long_name"
 msgstr "Crear una nueva herramienta"
 
-#: hexagon/runtime/configuration.py:127
+#: hexagon/runtime/configuration.py:133
 msgid "msg.domain.configuration.get_json_schema_description"
 msgstr "Instalar una CLI desde un archivo YAML de configuración."
 
-#: hexagon/runtime/configuration.py:145
+#: hexagon/runtime/configuration.py:152
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr "Guardar el último comando ejecutado como shell alias"
 
-#: hexagon/runtime/configuration.py:152
+#: hexagon/runtime/configuration.py:159
 msgid "msg.domain.configuration.replay_long_name"
 msgstr "Repetir el último comando ejecutado"
 
-#: hexagon/runtime/configuration.py:158
+#: hexagon/runtime/configuration.py:165
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr "Crear una nueva herramienta"
 

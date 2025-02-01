@@ -27,9 +27,6 @@ class Args(ToolArgs):
         prompt_message="What do you want to do with the CLI?",
     )
 
-    class Config:
-        trace_on_access = False
-
 
 def main(_, __, ___, cli_args: Args):
     bins_path = load_user_data(HexagonStorageKeys.cli_install_path.value)

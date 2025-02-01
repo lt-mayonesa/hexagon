@@ -1,21 +1,19 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR ORGANIZATION
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-04 20:41+0100\n"
+"POT-Creation-Date: 2025-02-01 21:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
 
 #: hexagon/__main__.py:40
 msgid "msg.main.first_time_intro"
@@ -53,7 +51,7 @@ msgstr ""
 msgid "action.actions.internal.create_new_tool.input_description"
 msgstr ""
 
-#: hexagon/actions/internal/create_new_tool.py:37
+#: hexagon/actions/internal/create_new_tool.py:36
 msgid "action.actions.internal.create_new_tool.input_custom_tools_path"
 msgstr ""
 
@@ -65,7 +63,7 @@ msgstr ""
 msgid "msg.actions.internal.create_new_tool.custom_tools_dir_not_set"
 msgstr ""
 
-#: hexagon/actions/internal/create_new_tool.py:95
+#: hexagon/actions/internal/create_new_tool.py:94
 msgid "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
 msgstr ""
 
@@ -138,22 +136,30 @@ msgid "msg.domain.configuration.install_cli_description"
 msgstr ""
 
 #: hexagon/runtime/configuration.py:125
+msgid "msg.domain.configuration.manage_clis_long_name"
+msgstr ""
+
+#: hexagon/runtime/configuration.py:126
+msgid "msg.domain.configuration.manage_clis_description"
+msgstr ""
+
+#: hexagon/runtime/configuration.py:132
 msgid "msg.domain.configuration.get_json_schema_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:127
+#: hexagon/runtime/configuration.py:133
 msgid "msg.domain.configuration.get_json_schema_description"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:145
+#: hexagon/runtime/configuration.py:152
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:152
+#: hexagon/runtime/configuration.py:159
 msgid "msg.domain.configuration.replay_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:158
+#: hexagon/runtime/configuration.py:165
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr ""
 
@@ -421,3 +427,4 @@ msgstr ""
 #: hexagon/support/tracer.py:103
 msgid "msg.main.tracer.or"
 msgstr ""
+

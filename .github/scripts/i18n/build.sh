@@ -12,13 +12,10 @@ fi
 
 rm -f "$printer_path"
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  pygettext3 -d hexagon -o locales/hexagon.pot hexagon
-elif [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
   find hexagon -name '*.py' -print0 | sort -z | xargs -0 xgettext -d hexagon -o locales/hexagon.pot --keyword=_
 else
-  echo "unsupported os"
-  exit 1
+  pygettext3 -d hexagon -o locales/hexagon.pot hexagon
 fi
 
 for locale in locales/**/LC_MESSAGES/hexagon.po; do

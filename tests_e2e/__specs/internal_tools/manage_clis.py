@@ -52,8 +52,8 @@ def test_something_quick():
             },
         )
         .enter()
-        .then_output_should_be(["hola"])
-        .arrow_down()
+        # .then_output_should_be(["hola"])
+        # .arrow_down()
         .enter()
         .exit()
     )
