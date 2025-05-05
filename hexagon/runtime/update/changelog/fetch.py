@@ -8,18 +8,18 @@ class ChangelogFile(object):
     def __init__(self, file):
         self.file = file
 
-    def line(self):
+    def readlines(self):
         raise NotImplementedError("Please Implement this method")
 
 
 class LocalChangelogFile(ChangelogFile):
-    def line(self):
-        return self.file.readline()
+    def readlines(self):
+        return self.file.readlines()
 
 
 class RemoteChangelogFile(ChangelogFile):
-    def line(self):
-        return self.file.readline().decode(self.file.headers.get_content_charset())
+    def readlines(self):
+        return self.file.readlines().decode(self.file.headers.get_content_charset())
 
 
 def fetch_changelog(repo_org: str, repo_name: str):

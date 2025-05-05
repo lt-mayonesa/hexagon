@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-05 00:00+0200\n"
+"POT-Creation-Date: 2025-02-01 19:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: hexagon/__main__.py:40
+#: hexagon/__main__.py:44
 msgid "msg.main.first_time_intro"
 msgstr "This looks like your first time running hexagon."
 
-#: hexagon/__main__.py:40
+#: hexagon/__main__.py:44
 msgid "msg.main.first_time_tool"
 msgstr "You should probably run \"Install CLI\"."
 
@@ -173,7 +173,7 @@ msgstr "Create A New Tool"
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr "Installing {runtime} dependencies at path: {path}"
 
-#: hexagon/runtime/execute/action.py:144
+#: hexagon/runtime/execute/action.py:143
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 "To support tool arguments either add a model extending\n"
@@ -282,28 +282,24 @@ msgstr ""
 msgid "msg.support.update.hexagon.checking_new_versions"
 msgstr "Checking for new hexagon versions"
 
-#: hexagon/runtime/update/hexagon.py:37
+#: hexagon/runtime/update/hexagon.py:39
 msgid "msg.support.update.hexagon.new_version_available"
 msgstr ""
 "New [cyan]hexagon[/cyan] version available [green]{latest_version}[/green]!"
 
-#: hexagon/runtime/update/hexagon.py:43
+#: hexagon/runtime/update/hexagon.py:45
 msgid "msg.support.update.hexagon.fetching_changelog"
 msgstr "Fetching changelog"
 
-#: hexagon/runtime/update/hexagon.py:54
-msgid "msg.support.update.hexagon.and_much_more"
-msgstr "and much more!"
-
-#: hexagon/runtime/update/hexagon.py:57
+#: hexagon/runtime/update/hexagon.py:60
 msgid "action.support.update.hexagon.confirm_update"
 msgstr "Would you like to update?"
 
-#: hexagon/runtime/update/hexagon.py:61
+#: hexagon/runtime/update/hexagon.py:64
 msgid "msg.support.update.hexagon.updating"
 msgstr "Updating"
 
-#: hexagon/runtime/update/hexagon.py:68
+#: hexagon/runtime/update/hexagon.py:71
 msgid "msg.support.update.hexagon.updated"
 msgstr "Updated to latest version"
 
@@ -423,12 +419,12 @@ msgstr "HintsBuilder should have at least one hint"
 msgid "msg.support.prompt.hints.help"
 msgstr "help:"
 
-#: hexagon/support/input/prompt/prompt.py:34
+#: hexagon/support/input/prompt/prompt.py:32
 msgid "error.support.input.prompt.prompt.invalid_argument_setup"
 msgstr ""
 "Config [b]{property}[/b] is not supported for argument [b]{argument}[/b]"
 
-#: hexagon/support/input/prompt/prompt.py:310
+#: hexagon/support/input/prompt/prompt.py:307
 msgid "msg.support.prompt.prompt.directory_created"
 msgstr "📁 created directory: {path} [green]✓[/green]"
 
@@ -443,3 +439,6 @@ msgid "msg.main.tracer.or"
 msgstr ""
 "[cyan][dim] or:[/dim]\n"
 "  {command}[/cyan]"
+
+#~ msgid "msg.support.update.hexagon.and_much_more"
+#~ msgstr "and much more!"

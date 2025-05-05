@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-05 00:00+0200\n"
+"POT-Creation-Date: 2025-02-01 19:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: hexagon/__main__.py:40
+#: hexagon/__main__.py:44
 msgid "msg.main.first_time_intro"
 msgstr ""
 
-#: hexagon/__main__.py:40
+#: hexagon/__main__.py:44
 msgid "msg.main.first_time_tool"
 msgstr ""
 
@@ -162,7 +162,7 @@ msgstr ""
 msgid "msg.support.dependencies.installing_dependencies"
 msgstr ""
 
-#: hexagon/runtime/execute/action.py:144
+#: hexagon/runtime/execute/action.py:143
 msgid "msg.support.execute.action.tool_help_epilog"
 msgstr ""
 
@@ -266,27 +266,23 @@ msgstr ""
 msgid "msg.support.update.hexagon.checking_new_versions"
 msgstr ""
 
-#: hexagon/runtime/update/hexagon.py:37
+#: hexagon/runtime/update/hexagon.py:39
 msgid "msg.support.update.hexagon.new_version_available"
 msgstr ""
 
-#: hexagon/runtime/update/hexagon.py:43
+#: hexagon/runtime/update/hexagon.py:45
 msgid "msg.support.update.hexagon.fetching_changelog"
 msgstr ""
 
-#: hexagon/runtime/update/hexagon.py:54
-msgid "msg.support.update.hexagon.and_much_more"
-msgstr ""
-
-#: hexagon/runtime/update/hexagon.py:57
+#: hexagon/runtime/update/hexagon.py:60
 msgid "action.support.update.hexagon.confirm_update"
 msgstr ""
 
-#: hexagon/runtime/update/hexagon.py:61
+#: hexagon/runtime/update/hexagon.py:64
 msgid "msg.support.update.hexagon.updating"
 msgstr ""
 
-#: hexagon/runtime/update/hexagon.py:68
+#: hexagon/runtime/update/hexagon.py:71
 msgid "msg.support.update.hexagon.updated"
 msgstr ""
 
@@ -406,11 +402,11 @@ msgstr ""
 msgid "msg.support.prompt.hints.help"
 msgstr ""
 
-#: hexagon/support/input/prompt/prompt.py:34
+#: hexagon/support/input/prompt/prompt.py:32
 msgid "error.support.input.prompt.prompt.invalid_argument_setup"
 msgstr ""
 
-#: hexagon/support/input/prompt/prompt.py:310
+#: hexagon/support/input/prompt/prompt.py:307
 msgid "msg.support.prompt.prompt.directory_created"
 msgstr ""
 

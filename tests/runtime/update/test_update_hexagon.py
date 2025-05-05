@@ -1,3 +1,4 @@
+import os
 import subprocess
 import sys
 from unittest import mock
@@ -33,6 +34,10 @@ def _latest_version_mock(override=None):
 
 def test_hexagon_updates_itself(monkeypatch):
     monkeypatch.setenv("HEXAGON_TEST_LOCAL_VERSION_OVERRIDE", "0.1.0")
+    monkeypatch.setenv(
+        "HEXAGON_CHANGELOG_FILE_PATH_TEST_OVERRIDE",
+        os.path.join(os.path.dirname(__file__), "TEST_CHANGELOG.md"),
+    )
     monkeypatch.setattr(prompt, "confirm", _confirm_mock)
     monkeypatch.setattr(version, "local", _local_version_mock)
     monkeypatch.setattr(version, "latest", _latest_version_mock)
