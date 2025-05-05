@@ -132,7 +132,6 @@ _tracer: Optional[Tracer] = None
 
 
 def tracer() -> Tracer:
-    global _tracer
     if not _tracer:
         raise ValueError("Tracer not initialized")
     return _tracer
