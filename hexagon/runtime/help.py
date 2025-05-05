@@ -24,7 +24,7 @@ def print_help(cli_config: Cli, tools: List[Tool], envs: List[Env]):
 
     log.info(f"[bold]{cli_config.name}")
     log.info(
-        f"usage: {cli_config.command} \[tool] \[env] \[\[positional-tool-arg] \[--optional-tool-arg=123] ...]",
+        rf"usage: {cli_config.command} \[tool] \[env] \[\[positional-tool-arg] \[--optional-tool-arg=123] ...]",
         gap_start=1,
         gap_end=1,
     )

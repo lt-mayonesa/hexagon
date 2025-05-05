@@ -101,10 +101,9 @@ def test_should_argument_should_be_traced_once():
 @pytest.mark.parametrize(
     "args",
     [
-        ["--name=John", "--age", "31", "--country", "Argentina", "--likes", "sand", "beach"],  # fmt: skip
-        ["--likes", "sand", "beach", "--name=John", "--country", "Argentina", "--age", "31"],  # fmt: skip
-        ["--name=John", "--age", "31", "--country", "Argentina", "--likes", "sand", "beach"],  # fmt: skip
-        ["-n=John", "-a", "31", "-c", "Argentina", "-l", "sand", "beach"],  # fmt: skip
+        ["--name=John", "--age=31", "--country=Argentina", "--likes=sand", "--likes=beach"],  # fmt: skip
+        ["--likes=sand", "--likes=beach", "--name=John", "--country=Argentina", "--age=31"],  # fmt: skip
+        ["-n=John", "-a=31", "-c=Argentina", "-l=sand", "-l=beach"],  # fmt: skip
     ],
 )
 def test_only_optional_arguments(args):

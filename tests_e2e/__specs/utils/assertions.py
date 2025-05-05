@@ -17,7 +17,19 @@ last_output_file_path = os.path.realpath(
 
 def debugger_is_active() -> bool:
     """Return if the debugger is currently active"""
-    return hasattr(sys, "gettrace") and sys.gettrace() is not None
+    # Check for standard trace function
+    gettrace = hasattr(sys, "gettrace") and sys.gettrace() is not None
+
+    # Check for PyCharm debugger
+    pydev_debugger = "pydevd" in sys.modules
+
+    # Check for VSCode debugger
+    vscode_debugger = any(mod.startswith("debugpy") for mod in sys.modules)
+
+    # Check for environment variable some debuggers might set
+    env_debugger = os.environ.get("PYTHONBREAKPOINT") is not None
+
+    return gettrace or pydev_debugger or vscode_debugger or env_debugger
 
 
 def _save_last_output(lines: List[str]):

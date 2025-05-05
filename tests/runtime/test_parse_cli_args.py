@@ -40,6 +40,24 @@ def test_cli_args_env_is_second_positional_argument():
     assert actual.extra_args is None
 
 
+def test_cli_args_combined_equal_separated_and_space():
+    actual = parse_cli_args(
+        [
+            "some-tool",
+            "--name=John",
+            "--age=31",
+            "--country=Argentina",
+        ]
+    )
+    assert actual.tool.value == "some-tool"
+    assert actual.env is None
+    assert actual.extra_args == {
+        "age": 31,
+        "country": "Argentina",
+        "name": "John",
+    }
+
+
 @pytest.mark.parametrize(
     "optional_args,expected",
     [

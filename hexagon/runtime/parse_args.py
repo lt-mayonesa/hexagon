@@ -50,7 +50,6 @@ def parse_cli_args(args=None, model=CliArgs, **kwargs):
             + count,
         }
     )
-    # return model.model_validate_json(json.dumps(data))
     return model(**{k: v for k, v in data.items() if v is not None})
 
 

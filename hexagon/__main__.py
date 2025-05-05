@@ -62,6 +62,7 @@ def main():
         )
 
         HexagonHooks.end.run()
+        return None
     except KeyboardInterrupt:
         sys.exit(1)
     except Exception as e:
