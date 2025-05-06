@@ -6,15 +6,12 @@ from hexagon.runtime.singletons import options
 from hexagon.runtime.update import REPO_ORG, REPO_NAME
 from hexagon.runtime.update import version
 from hexagon.runtime.update.changelog.fetch import fetch_changelog
-from hexagon.runtime.update.changelog.format import format_entries
 from hexagon.runtime.update.changelog.parse import parse_changelog
 from hexagon.runtime.update.shared import already_checked_for_updates
 from hexagon.runtime.update.silent_fail import silent_fail
 from hexagon.support.input.prompt import prompt
 from hexagon.support.output.printer import log
 from hexagon.support.storage import HEXAGON_STORAGE_APP
-
-CHANGELOG_MAX_PRINT_ENTRIES = 10
 
 
 @silent_fail
@@ -47,13 +44,7 @@ def check_for_hexagon_updates():
                     current_version, fetch_changelog(REPO_ORG, REPO_NAME)
                 )
 
-            entries = format_entries(changelog)
-
-            for entry in entries[:CHANGELOG_MAX_PRINT_ENTRIES]:
-                log.info("  - " + entry.message)
-
-            if len(entries) > CHANGELOG_MAX_PRINT_ENTRIES:
-                log.info(_("msg.support.update.hexagon.and_much_more"))
+            log.example(changelog, syntax="md")
 
         if not prompt.confirm(
             _("action.support.update.hexagon.confirm_update"), default=True

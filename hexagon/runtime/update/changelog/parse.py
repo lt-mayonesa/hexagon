@@ -1,56 +1,70 @@
 import re
 from io import StringIO
-from typing import List, Optional
 
 from markdown import Markdown
 from packaging.version import parse as parse_version, Version
 
-from hexagon.runtime.update.changelog import ChangelogVersionEntry, ChangelogEntry
 from hexagon.runtime.update.changelog.fetch import ChangelogFile
 
 CHANGELOG_MAX_EMPTY_LINES = 10
 
 
-def parse_changelog(
-    current_hexagon_version: Version, changelog_file: ChangelogFile
-) -> List[ChangelogVersionEntry]:
-    entries = []
-    current_version: Optional[ChangelogVersionEntry] = None
-    current_entry_type: str = ""
-    consecutive_empty_lines_count = 0
-    while True:
-        line = changelog_file.line()
+def parse_changelog(current_hexagon_version: Version, changelog_file: ChangelogFile):
+    """
+    Parse the changelog file and return a simplified view of it.
 
-        version_match = re.search("^## v(\\d+\\.\\d+\\.\\d+)", line)
-        if version_match:
-            if current_version:
-                entries.append(current_version)
-            current_version = ChangelogVersionEntry(version_match.groups(0)[0])
-            if current_hexagon_version == parse_version(current_version.version):
-                entries.append(current_version)
+    The changelog file is expected to be in the following format:
+    ```
+    ## v0.7.0
+    ### Feature
+    * feat(task): added something new ()
+    * feat(users): added email support ()
+    * feat(users): added legs support ()
+    ```
+
+    The function will return the following view:
+    ```
+    ## v0.7.0
+    ### tasks
+    feat: added something new
+    ### users
+    feat: added email support
+    feat: added legs support
+    ```
+
+    """
+    changelog = {}
+    current_version = None
+    for line in changelog_file.readlines():
+        if line.startswith("## v"):
+            current_version = parse_version(line.split(" ")[1])
+            if current_version == current_hexagon_version:
                 break
-
-        entry_type_match = re.search("^### (\\w+)$", line)
-        if entry_type_match:
-            current_entry_type = entry_type_match.groups(0)[0]
-
-        match = re.search("^\\* ([^(]+)", line)
-        if match:
-            current_version.entries.append(
-                ChangelogEntry(current_entry_type, _unmark(match.groups(0)[0]))
-            )
-
-        if not line:
-            if consecutive_empty_lines_count > CHANGELOG_MAX_EMPTY_LINES:
-                if current_version:
-                    entries.append(current_version)
-                break
-            else:
-                consecutive_empty_lines_count += 1
+            changelog[current_version] = {}
         else:
-            consecutive_empty_lines_count = 0
+            match = re.match(r"^\* (\w+)\((.*)\):\s(.*)\s(\(.*\))", line)
+            if match:
+                if match.group(2) in changelog[current_version]:
+                    changelog[current_version][match.group(2)].append(
+                        f"{match.group(1)}: {match.group(3)}"
+                    )
+                else:
+                    changelog[current_version][match.group(2)] = [
+                        f"{match.group(1)}: {match.group(3)}"
+                    ]
 
-    return entries
+    return "\n".join(
+        [
+            "\n".join(
+                [f"## v{version}"]
+                + [
+                    "\n".join([f"### {group}"] + entries)
+                    for group, entries in entries.items()
+                ]
+            )
+            for version, entries in changelog.items()
+        ]
+    )
 
 
 def _unmark_element(element, stream=None):

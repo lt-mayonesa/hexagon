@@ -2,6 +2,10 @@ cli:
   custom_tools_dir: .  # relative to this file
   name: hexagon dev cli
   command: hex
+  options:
+    update_disabled: true
+    cli_update_disabled: true
+
 
 commands:
   build-i18n: &i18n ../.github/scripts/i18n/build.sh
@@ -58,3 +62,9 @@ tools:
     long_name: upgrade pipenv dependencies
     type: shell
     action: pipenv update
+
+  - name: release
+    alias: re
+    long_name: release hexagon to PyPi
+    type: shell
+    action: twine upload dist/*
