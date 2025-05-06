@@ -6,7 +6,6 @@ from hexagon.runtime.singletons import options
 from hexagon.runtime.update import REPO_ORG, REPO_NAME
 from hexagon.runtime.update import version
 from hexagon.runtime.update.changelog.fetch import fetch_changelog
-from hexagon.runtime.update.changelog.format import format_entries
 from hexagon.runtime.update.changelog.parse import parse_changelog
 from hexagon.runtime.update.shared import already_checked_for_updates
 from hexagon.runtime.update.silent_fail import silent_fail

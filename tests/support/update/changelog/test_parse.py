@@ -1,6 +1,5 @@
 from packaging.version import Version
 
-from hexagon.runtime.update.changelog import ChangelogVersionEntry, ChangelogEntry
 from hexagon.runtime.update.changelog.fetch import ChangelogFile
 from hexagon.runtime.update.changelog.parse import parse_changelog
 
