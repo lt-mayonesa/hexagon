@@ -109,41 +109,47 @@ def test_prompt_to_update_hexagon_again_next_day():
 def test_show_changelog():
     _clear_last_check()
 
-    # (
-    #     as_a_user(__file__)
-    #     .run_hexagon(
-    #         ["my-module"],
-    #         os_env_vars={
-    #             **base_os_env_vars,
-    #             "HEXAGON_CHANGELOG_FILE_PATH_TEST_OVERRIDE": os.path.join(
-    #                 test_folder_path, "CHANGELOG.md"
-    #             ),
-    #             "HEXAGON_TEST_LOCAL_VERSION_OVERRIDE": "0.59.0",
-    #             "HEXAGON_THEME": "default",
-    #         },
-    #     )
-    #     .then_output_should_be(["New hexagon version available"], True)
-    #     .then_output_should_be(
-    #         [
-    #             "- Feature 1",
-    #             "- Feature 2",
-    #             "- Feature 3",
-    #             "- Feature 4",
-    #             "- Fix 1",
-    #             "- Fix 2",
-    #             "- Fix 3",
-    #             "- Fix 4",
-    #             "- Documentation 1",
-    #             "- Documentation 2",
-    #             "and much more!",
-    #         ],
-    #         True,
-    #     )
-    #     .write("n")
-    #     .then_output_should_be(
-    #         [["Would you like to update?", "No"]],
-    #         discard_until_first_match=True,
-    #     )
-    #     .then_output_should_be(["my-module"])
-    #     .exit()
-    # )
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            ["my-module"],
+            os_env_vars={
+                **base_os_env_vars,
+                "HEXAGON_CHANGELOG_FILE_PATH_TEST_OVERRIDE": os.path.join(
+                    test_folder_path, "CHANGELOG.md"
+                ),
+                "HEXAGON_TEST_LOCAL_VERSION_OVERRIDE": "0.59.0",
+                "HEXAGON_THEME": "default",
+            },
+        )
+        .then_output_should_be(["New hexagon version available"], True)
+        .then_output_should_be(
+            [
+                "## v0.61.0",
+                "### release",
+                "chore: specify build command",
+                "chore: configure semantic release v9",
+                "### ci",
+                "chore: publish to PyPi",
+                "### deps",
+                "chore: bump actions/checkout from 3 to 4",
+                "chore: bump nick-fields/retry from 2 to 3",
+                "chore: bump actions/setup-python from 4 to 5",
+                "chore: bump markdown from 3.6 to 3.7",
+                "## v0.60.0",
+                "### deps",
+                "chore: setup dependabot version upgrades",
+                "chore: migrate to pydantic v2 (#81)",
+                "### prompt",
+                "feat: allow to provide text suggestions (#88)",
+            ],
+            True,
+        )
+        .write("n")
+        .then_output_should_be(
+            [["Would you like to update?", "No"]],
+            discard_until_first_match=True,
+        )
+        .then_output_should_be(["my-module"])
+        .exit()
+    )

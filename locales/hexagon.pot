@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-01 19:55+0100\n"
+"POT-Creation-Date: 2025-05-06 12:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -262,27 +262,27 @@ msgstr ""
 msgid "error.support.cli.git.failed_to_get_remote"
 msgstr ""
 
-#: hexagon/runtime/update/hexagon.py:27
+#: hexagon/runtime/update/hexagon.py:24
 msgid "msg.support.update.hexagon.checking_new_versions"
 msgstr ""
 
-#: hexagon/runtime/update/hexagon.py:39
+#: hexagon/runtime/update/hexagon.py:36
 msgid "msg.support.update.hexagon.new_version_available"
 msgstr ""
 
-#: hexagon/runtime/update/hexagon.py:45
+#: hexagon/runtime/update/hexagon.py:42
 msgid "msg.support.update.hexagon.fetching_changelog"
 msgstr ""
 
-#: hexagon/runtime/update/hexagon.py:60
+#: hexagon/runtime/update/hexagon.py:50
 msgid "action.support.update.hexagon.confirm_update"
 msgstr ""
 
-#: hexagon/runtime/update/hexagon.py:64
+#: hexagon/runtime/update/hexagon.py:54
 msgid "msg.support.update.hexagon.updating"
 msgstr ""
 
-#: hexagon/runtime/update/hexagon.py:71
+#: hexagon/runtime/update/hexagon.py:61
 msgid "msg.support.update.hexagon.updated"
 msgstr ""
 

@@ -13,8 +13,6 @@ from hexagon.support.input.prompt import prompt
 from hexagon.support.output.printer import log
 from hexagon.support.storage import HEXAGON_STORAGE_APP
 
-CHANGELOG_MAX_PRINT_ENTRIES = 10
-
 
 @silent_fail
 def check_for_hexagon_updates():
@@ -46,13 +44,6 @@ def check_for_hexagon_updates():
                     current_version, fetch_changelog(REPO_ORG, REPO_NAME)
                 )
 
-            # entries = format_entries(changelog)
-            #
-            # for entry in entries[:CHANGELOG_MAX_PRINT_ENTRIES]:
-            #     log.info("  - " + entry.message)
-            #
-            # if len(entries) > CHANGELOG_MAX_PRINT_ENTRIES:
-            #     log.info(_("msg.support.update.hexagon.and_much_more"))
             log.example(changelog, syntax="md")
 
         if not prompt.confirm(

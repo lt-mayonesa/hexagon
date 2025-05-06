@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-01 19:55+0100\n"
+"POT-Creation-Date: 2025-05-06 12:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -278,28 +278,28 @@ msgstr ""
 "Couldn't get the remote name from your cli's repository, too many choices "
 "and origin is not present"
 
-#: hexagon/runtime/update/hexagon.py:27
+#: hexagon/runtime/update/hexagon.py:24
 msgid "msg.support.update.hexagon.checking_new_versions"
 msgstr "Checking for new hexagon versions"
 
-#: hexagon/runtime/update/hexagon.py:39
+#: hexagon/runtime/update/hexagon.py:36
 msgid "msg.support.update.hexagon.new_version_available"
 msgstr ""
 "New [cyan]hexagon[/cyan] version available [green]{latest_version}[/green]!"
 
-#: hexagon/runtime/update/hexagon.py:45
+#: hexagon/runtime/update/hexagon.py:42
 msgid "msg.support.update.hexagon.fetching_changelog"
 msgstr "Fetching changelog"
 
-#: hexagon/runtime/update/hexagon.py:60
+#: hexagon/runtime/update/hexagon.py:50
 msgid "action.support.update.hexagon.confirm_update"
 msgstr "Would you like to update?"
 
-#: hexagon/runtime/update/hexagon.py:64
+#: hexagon/runtime/update/hexagon.py:54
 msgid "msg.support.update.hexagon.updating"
 msgstr "Updating"
 
-#: hexagon/runtime/update/hexagon.py:71
+#: hexagon/runtime/update/hexagon.py:61
 msgid "msg.support.update.hexagon.updated"
 msgstr "Updated to latest version"
 
@@ -439,6 +439,3 @@ msgid "msg.main.tracer.or"
 msgstr ""
 "[cyan][dim] or:[/dim]\n"
 "  {command}[/cyan]"
-
-#~ msgid "msg.support.update.hexagon.and_much_more"
-#~ msgstr "and much more!"
