@@ -1,5 +1,9 @@
 name: 'Test Report'
 
+permissions:
+  contents: read
+  pull-requests: write
+
 on:
   workflow_run:
     workflows: [ '01_ci-cd' ]
