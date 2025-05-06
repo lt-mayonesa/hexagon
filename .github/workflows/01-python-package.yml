@@ -141,6 +141,8 @@ jobs:
   i18n:
     name: i18n
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
