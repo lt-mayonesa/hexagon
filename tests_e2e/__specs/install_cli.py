@@ -73,7 +73,7 @@ def test_install_cli(request):
         assert (
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE=/private{os.path.join(test_folder_path, "config.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE={os.path.join(test_folder_path, "config.yml")} \\\n'
             f"hexagon $@"
         )  # noqa: E501
 
@@ -109,7 +109,7 @@ def test_install_cli_and_provide_bins_path(request):
         assert (
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE=/private{os.path.join(test_folder_path, "config.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE={os.path.join(test_folder_path, "config.yml")} \\\n'
             f"hexagon $@"
         )  # noqa: E501
 
@@ -142,7 +142,7 @@ def test_install_cli_pass_arguments(request):
         assert (
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE=/private{os.path.join(test_folder_path, "config.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE={os.path.join(test_folder_path, "config.yml")} \\\n'
             f"hexagon $@"
         )  # noqa: E501
 
@@ -202,7 +202,7 @@ def test_install_cli_change_entrypoint_pre_command(request):
         assert (
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE=/private{os.path.join(test_folder_path, "config_entrypoint_pre_command.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE={os.path.join(test_folder_path, "config_entrypoint_pre_command.yml")} \\\n'
             f"pipenv run hexagon $@"
         )  # noqa: E501
 
@@ -328,7 +328,7 @@ def test_do_not_warn_install_dir_not_in_PATH_when_it_is(request):
                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
                 "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
                 "HEXAGON_THEME": "default",
-                "PATH": f"{os.getenv('PATH')}:/private{binary_location_path(test_folder_path)}",
+                "PATH": f"{os.getenv('PATH')}:{binary_location_path(test_folder_path)}",
             }
         )
         .then_output_should_be(
