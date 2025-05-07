@@ -2,7 +2,7 @@ import os
 import platform
 import subprocess
 import tempfile
-from distutils.dir_util import copy_tree
+from shutil import copytree
 from typing import Dict, List, Optional
 
 from tests_e2e.__specs.utils.console import print
@@ -34,7 +34,7 @@ def run_hexagon_e2e_test(
     )
 
     tmp_dir = test_dir or tempfile.mkdtemp(suffix="_hexagon")
-    copy_tree(test_folder_path, tmp_dir)
+    copytree(test_folder_path, tmp_dir, dirs_exist_ok=True)
     test_folder_path = tmp_dir
 
     os_env_vars["HEXAGON_TEST_SHELL"] = (

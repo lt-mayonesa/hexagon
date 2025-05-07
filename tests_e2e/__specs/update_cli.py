@@ -2,13 +2,12 @@ import os
 import shutil
 import subprocess
 import tempfile
-from distutils.dir_util import copy_tree
 
 from __specs.utils.path import e2e_test_folder_path
 from tests_e2e.__specs.utils.hexagon_spec import as_a_user
 
 test_folder_path = tempfile.mkdtemp(suffix="_hexagon")
-copy_tree(e2e_test_folder_path(__file__), test_folder_path)
+shutil.copytree(e2e_test_folder_path(__file__), test_folder_path, dirs_exist_ok=True)
 
 storage_path = os.path.join(test_folder_path, "storage")
 local_repo_path = os.path.join(test_folder_path, "local")

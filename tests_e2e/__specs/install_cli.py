@@ -65,7 +65,7 @@ def test_install_cli():
         assert (
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE=/private{os.path.join("/private",spec.test_dir, "config.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE=/private{os.path.join("/private", spec.test_dir, "config.yml")} \\\n'
             f"hexagon $@"
         )  # noqa: E501
 

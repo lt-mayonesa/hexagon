@@ -1,7 +1,6 @@
 import os
 import shutil
 
-from tests_e2e.__specs.utils.hexagon_spec import as_a_user
 from tests_e2e.__specs.utils.path import e2e_test_folder_path
 
 LONG_NAME = "Custom Action Test"
