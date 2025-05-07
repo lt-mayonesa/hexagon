@@ -83,7 +83,7 @@ def main(_tool, _env, _env_args, cli_args: Args):
 
     path = os.getenv("PATH").split(":")
 
-    if bin_path not in path:
+    if str(bin_path) not in path:
         log.info(
             _("msg.actions.internal.install_cli.not_in_path").format(dir=bin_path),
             gap_start=1,

@@ -1,4 +1,5 @@
 import inspect
+import tempfile
 import time
 from subprocess import Popen
 from typing import Callable, Dict, List, Optional, Union
@@ -62,9 +63,9 @@ class HexagonSpec:
     HEXAGON_STORAGE_PATH = "HEXAGON_STORAGE_PATH"
     HEXAGON_CONFIG_FILE = "HEXAGON_CONFIG_FILE"
 
-    def __init__(self, file) -> None:
+    def __init__(self, file, test_dir=None) -> None:
         self.__file = file
-        self.test_dir = None
+        self.test_dir = test_dir or tempfile.mkdtemp(suffix="_hexagon")
         self.process: Optional[Popen[str]] = None
         self.command = None
         self.lines_read: List[str] = []
@@ -72,12 +73,17 @@ class HexagonSpec:
         self.yaml_file_name = "app.yml"
         self._execution_time_start = None
 
+    def executing_first(self, lambda_func: Callable) -> "HexagonSpec":
+        _log(self.executing_first, lambda_func=lambda_func)
+        lambda_func(self)
+        return self
+
     def given_a_cli_yaml(self, config: Union[str, Dict]) -> "HexagonSpec":
         _log(self.given_a_cli_yaml, config=config)
         if isinstance(config, str):
             self.yaml_file_name = config
         else:
-            write_hexagon_config(self.__file, config)
+            write_hexagon_config(self.test_dir, config)
         return self
 
     def run_hexagon(
@@ -105,7 +111,7 @@ class HexagonSpec:
                 yaml_file_name=self.yaml_file_name,
                 os_env_vars=os_env_vars,
                 test_file_path_is_absolute=test_file_path_is_absolute,
-                test_dir=test_dir,
+                test_dir=test_dir or self.test_dir,
             )
         else:
             self.test_dir, self.process = run_hexagon_e2e_test(
@@ -113,7 +119,7 @@ class HexagonSpec:
                 yaml_file_name=self.yaml_file_name,
                 os_env_vars=os_env_vars,
                 test_file_path_is_absolute=test_file_path_is_absolute,
-                test_dir=test_dir,
+                test_dir=test_dir or self.test_dir,
             )
         return self
 
@@ -263,5 +269,5 @@ class HexagonSpec:
         return self
 
 
-def as_a_user(test_file) -> "HexagonSpec":
-    return HexagonSpec(test_file)
+def as_a_user(test_file, test_dir=None) -> "HexagonSpec":
+    return HexagonSpec(test_file, test_dir=test_dir)

@@ -64,6 +64,9 @@ def run_hexagon_e2e_test(
     if "HEXAGON_DISABLE_DEPENDENCY_SCAN" not in os_env_vars:
         os_env_vars["HEXAGON_DISABLE_DEPENDENCY_SCAN"] = "1"
 
+    if "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED" not in os_env_vars:
+        os_env_vars["HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED"] = "1"
+
     os.environ["HEXAGON_STORAGE_PATH"] = os_env_vars.get(
         "HEXAGON_STORAGE_PATH",
         os.getenv("HEXAGON_STORAGE_PATH", os.path.join(test_folder_path, ".config")),
