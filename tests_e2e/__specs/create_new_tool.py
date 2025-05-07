@@ -1,9 +1,9 @@
 import os
 import shutil
+from pathlib import Path
 
 from tests_e2e.__specs.utils.config import read_hexagon_config
 from tests_e2e.__specs.utils.hexagon_spec import HexagonSpec, as_a_user
-from tests_e2e.__specs.utils.path import e2e_test_folder_path
 
 LONG_NAME = "Custom Action Test"
 DESCRIPTION = "Hexagon Custom Action Test Description"
@@ -147,14 +147,10 @@ def test_create_new_python_module_tool():
     assert created_tool["type"] == "shell"
     assert created_tool["alias"] == "anac"
 
-    assert os.path.isfile(
-        os.path.join(e2e_test_folder_path(spec.test_dir), "a-new-action/__init__.py")
-    )
-    assert os.path.isfile(
-        os.path.join(e2e_test_folder_path(spec.test_dir), "a-new-action/README.md")
-    )
+    assert os.path.isfile(os.path.join(spec.test_dir, "a-new-action/__init__.py"))
+    assert os.path.isfile(os.path.join(spec.test_dir, "a-new-action/README.md"))
 
-    shutil.rmtree(os.path.join(e2e_test_folder_path(spec.test_dir), "a-new-action"))
+    shutil.rmtree(os.path.join(spec.test_dir, "a-new-action"))
 
 
 def test_create_tool_creates_custom_tools_dir():
@@ -164,6 +160,11 @@ def test_create_tool_creates_custom_tools_dir():
 
     spec = (
         as_a_user(__file__)
+        .executing_first(
+            lambda spec: Path(spec.test_dir)
+            .joinpath(custom_tools_dir_name)
+            .mkdir(exist_ok=True, parents=True)
+        )
         .given_a_cli_yaml(app_file)
         .run_hexagon()
         .with_shared_behavior(_shared_assertions)
@@ -184,7 +185,7 @@ def test_create_tool_creates_custom_tools_dir():
                 "Where would you like it to be? (can be absolute path or relative to YAML",
                 "",
             ],
-            True,
+            discard_until_first_match=True,
         )
         .input(f"/{custom_tools_dir_name}")
         .exit()
@@ -195,16 +196,8 @@ def test_create_tool_creates_custom_tools_dir():
     assert config_file["cli"]["custom_tools_dir"] == f"./{custom_tools_dir_name}"
 
     assert os.path.isfile(
-        os.path.join(
-            e2e_test_folder_path(spec.test_dir),
-            custom_tools_dir_name,
-            "a-new-action/__init__.py",
-        )
+        os.path.join(spec.test_dir, custom_tools_dir_name, "a-new-action/__init__.py")
     )
     assert os.path.isfile(
-        os.path.join(
-            e2e_test_folder_path(spec.test_dir),
-            custom_tools_dir_name,
-            "a-new-action/README.md",
-        )
+        os.path.join(spec.test_dir, custom_tools_dir_name, "a-new-action/README.md")
     )
