@@ -282,9 +282,7 @@ def assert_execution_time(elapsed: int, expected: int):
 
 
 def assert_file_has_contents(test_file: str, file: str, contents: str):
-    test_dir = e2e_test_folder_path(test_file)
-
-    with open(os.path.join(test_dir, file), "r") as f:
+    with open(os.path.join(test_file, file), "r") as f:
         assert f.read() == contents
 
 

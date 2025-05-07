@@ -2,6 +2,7 @@ import os
 import platform
 import subprocess
 import tempfile
+from pathlib import Path
 from shutil import copytree
 from typing import Dict, List, Optional
 
@@ -71,6 +72,8 @@ def run_hexagon_e2e_test(
         "HEXAGON_STORAGE_PATH",
         os.getenv("HEXAGON_STORAGE_PATH", os.path.join(test_folder_path, ".config")),
     )
+
+    Path(os.environ["HEXAGON_STORAGE_PATH"]).mkdir(parents=True, exist_ok=True)
 
     app_config_path = os.path.join(test_folder_path, *yaml_file_name.split("/"))
     if os.path.isfile(app_config_path):

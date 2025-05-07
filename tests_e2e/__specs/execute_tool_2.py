@@ -280,14 +280,14 @@ def test_execute_a_formatted_command_with_all_action_args():
 
 def test_execute_inline_command_with_path():
     path = os.environ["PATH"]
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon(["inline-command-with-PATH"])
         .then_output_should_be([path])
         .exit()
     )
     assert_file_has_contents(
-        __file__,
+        spec.test_dir,
         ".config/test/last-command.txt",
         "hexagon-test inline-command-with-PATH",
     )

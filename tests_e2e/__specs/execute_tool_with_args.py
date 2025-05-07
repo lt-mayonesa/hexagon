@@ -582,7 +582,7 @@ def test_should_prompt_fuzzy_file_search():
                 "",
                 "",
                 "Enter fuzzy_file_input",
-                "4/4",
+                "3/3",
                 "01_file.txt",
                 "02_file.txt",
                 "03_file.txt",
