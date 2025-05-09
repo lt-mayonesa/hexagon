@@ -341,7 +341,7 @@ def test_do_not_warn_install_dir_not_in_PATH_when_it_is(request):
         )
         .then_output_should_be(["would have ran npm install --only=production"])
         .then_output_should_be(["$ hexagon-test"], discard_until_first_match=True)
-        .then_output_should_not_contain([f"is not in your $PATH"])
+        .then_output_should_not_contain(["is not in your $PATH"])
         .exit()
     )
 

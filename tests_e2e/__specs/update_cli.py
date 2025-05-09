@@ -17,8 +17,8 @@ def os_env_vars(test_folder_path):
 def _prepare(test_folder_path):
     remote_repo_path = os.path.join(test_folder_path, "remote")
     local_repo_path = os.path.join(test_folder_path, "local")
-    os.makedirs(remote_repo_path)
-    os.makedirs(local_repo_path)
+    os.makedirs(remote_repo_path, exist_ok=True)
+    os.makedirs(local_repo_path, exist_ok=True)
     subprocess.check_call("git init", cwd=remote_repo_path, shell=True)
     subprocess.check_call("git branch -m main", cwd=remote_repo_path, shell=True)
     files_to_copy = ["app.yml", "package.json", "Pipfile", "yarn.lock"]
@@ -43,7 +43,11 @@ def test_cli_not_updated_if_no_pending_changes():
     _prepare(spec.test_dir)
 
     (
-        spec.run_hexagon(["echo"], os_env_vars(spec.test_dir))
+        spec.run_hexagon(
+            ["echo"],
+            os_env_vars(spec.test_dir),
+            test_dir=os.path.join(spec.test_dir, "local"),
+        )
         .then_output_should_be(["echo"])
         .exit()
     )
@@ -75,6 +79,7 @@ def test_cli_updated_if_pending_changes():
                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
                 "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
             },
+            test_dir=os.path.join(spec.test_dir, "local"),
         )
         .write("y")
         .then_output_should_be(
@@ -123,6 +128,7 @@ def test_dont_update_when_no_changes_on_current_branch():
                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
                 "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
             },
+            test_dir=os.path.join(spec.test_dir, "local"),
         )
         .then_output_should_be(
             ["echo"],
@@ -169,6 +175,7 @@ def test_update_when_changes_on_current_branch():
                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
                 "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
             },
+            test_dir=os.path.join(spec.test_dir, "local"),
         )
         .write("y")
         .then_output_should_be(
@@ -190,14 +197,14 @@ def test_update_when_changes_on_current_branch():
 def test_cli_updates_fail_silently_if_not_in_a_git_repository():
     spec = as_a_user(__file__)
     local_repo_path = os.path.join(spec.test_dir, "local")
-    os.mkdir(local_repo_path)
-
-    shutil.copyfile(
-        os.path.join(spec.test_dir, "app.yml"),
-    )
+    os.makedirs(local_repo_path, exist_ok=True)
 
     (
-        spec.run_hexagon(["echo"], os_env_vars(spec.test_dir))
+        spec.run_hexagon(
+            ["echo"],
+            os_env_vars(spec.test_dir),
+            test_dir=os.path.join(spec.test_dir, "local"),
+        )
         .then_output_should_be(["echo"])
         .exit()
     )
