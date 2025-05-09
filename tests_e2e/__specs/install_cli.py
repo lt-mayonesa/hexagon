@@ -5,7 +5,6 @@ from pathlib import Path
 import pytest
 
 from tests_e2e.__specs.utils.hexagon_spec import as_a_user
-from tests_e2e.__specs.utils.path import e2e_test_folder_path
 
 TEST_ENV_VARS = {
     "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
@@ -48,8 +47,8 @@ def test_install_cli(request):
     command = "hexagon-test"
     test_folder_path = test_dirs[request.node.name]
     (
-        as_a_user(__file__)
-        .run_hexagon(os_env_vars=TEST_ENV_VARS, test_dir=test_folder_path)
+        as_a_user(__file__, test_dir=test_folder_path)
+        .run_hexagon(os_env_vars=TEST_ENV_VARS)
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
@@ -82,8 +81,8 @@ def test_install_cli_and_provide_bins_path(request):
     command = "hexagon-test"
     test_folder_path = test_dirs[request.node.name]
     (
-        as_a_user(__file__)
-        .run_hexagon(os_env_vars=TEST_ENV_VARS, test_dir=test_folder_path)
+        as_a_user(__file__, test_dir=test_folder_path)
+        .run_hexagon(os_env_vars=TEST_ENV_VARS)
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
@@ -118,7 +117,7 @@ def test_install_cli_pass_arguments(request):
     command = "hexagon-test"
     test_folder_path = test_dirs[request.node.name]
     (
-        as_a_user(__file__)
+        as_a_user(__file__, test_dir=test_folder_path)
         .run_hexagon(
             [
                 "install",
@@ -126,7 +125,6 @@ def test_install_cli_pass_arguments(request):
                 f"--bin-path={binary_location_path(test_folder_path)}",
             ],
             os_env_vars=TEST_ENV_VARS,
-            test_dir=test_folder_path,
         )
         .then_output_should_be(
             ["would have ran python3 -m pip install -r requirements.txt"], True
@@ -151,17 +149,14 @@ def test_install_cli_change_entrypoint_shell(request):
     command = "hexagon-test"
     test_folder_path = test_dirs[request.node.name]
     (
-        as_a_user(__file__)
+        as_a_user(__file__, test_dir=test_folder_path)
         .run_hexagon(
             [
                 "install",
-                os.path.join(
-                    e2e_test_folder_path(__file__), "config_entrypoint_shell.yml"
-                ),
+                os.path.join(test_folder_path, "config_entrypoint_shell.yml"),
                 f"--bin-path={binary_location_path(test_folder_path)}",
             ],
             os_env_vars=TEST_ENV_VARS,
-            test_dir=test_folder_path,
         )
         .then_output_should_be(["$ hexagon-test"], discard_until_first_match=True)
         .exit()
@@ -173,7 +168,7 @@ def test_install_cli_change_entrypoint_shell(request):
         assert (
             file.read() == "#!/bin/sh\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config_entrypoint_shell.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE={os.path.join(test_folder_path, "config_entrypoint_shell.yml")} \\\n'
             f"hexagon $@"
         )  # noqa: E501
 
@@ -182,7 +177,7 @@ def test_install_cli_change_entrypoint_pre_command(request):
     command = "hexagon-test"
     test_folder_path = test_dirs[request.node.name]
     (
-        as_a_user(__file__)
+        as_a_user(__file__, test_dir=test_folder_path)
         .run_hexagon(
             [
                 "install",
@@ -190,7 +185,6 @@ def test_install_cli_change_entrypoint_pre_command(request):
                 f"--bin-path={binary_location_path(test_folder_path)}",
             ],
             os_env_vars=TEST_ENV_VARS,
-            test_dir=test_folder_path,
         )
         .then_output_should_be(["$ hexagon-test"], discard_until_first_match=True)
         .exit()
@@ -211,17 +205,14 @@ def test_install_cli_change_entrypoint_environ(request):
     command = "hexagon-test"
     test_folder_path = test_dirs[request.node.name]
     (
-        as_a_user(__file__)
+        as_a_user(__file__, test_dir=test_folder_path)
         .run_hexagon(
             [
                 "install",
-                os.path.join(
-                    e2e_test_folder_path(__file__), "config_entrypoint_environ.yml"
-                ),
+                os.path.join(test_folder_path, "config_entrypoint_environ.yml"),
                 f"--bin-path={binary_location_path(test_folder_path)}",
             ],
             os_env_vars=TEST_ENV_VARS,
-            test_dir=test_folder_path,
         )
         .then_output_should_be(["$ hexagon-test"], discard_until_first_match=True)
         .exit()
@@ -233,7 +224,7 @@ def test_install_cli_change_entrypoint_environ(request):
         assert (
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config_entrypoint_environ.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE={os.path.join(test_folder_path, "config_entrypoint_environ.yml")} \\\n'
             "MY_TEST_ENV_VAR=test \\\n"
             "ANOTHER_TEST_ENV_VAR=123 \\\n"
             f"hexagon $@"
@@ -244,17 +235,14 @@ def test_install_cli_change_entrypoint_complete(request):
     command = "hexagon-test"
     test_folder_path = test_dirs[request.node.name]
     (
-        as_a_user(__file__)
+        as_a_user(__file__, test_dir=test_folder_path)
         .run_hexagon(
             [
                 "install",
-                os.path.join(
-                    e2e_test_folder_path(__file__), "config_entrypoint_complete.yml"
-                ),
+                os.path.join(test_folder_path, "config_entrypoint_complete.yml"),
                 f"--bin-path={binary_location_path(test_folder_path)}",
             ],
             os_env_vars=TEST_ENV_VARS,
-            test_dir=test_folder_path,
         )
         .then_output_should_be(["$ hexagon-test"], discard_until_first_match=True)
         .exit()
@@ -266,7 +254,7 @@ def test_install_cli_change_entrypoint_complete(request):
         assert (
             file.read() == "#!/usr/bin/env zsh\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(e2e_test_folder_path(__file__), "config_entrypoint_complete.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE={os.path.join(test_folder_path, "config_entrypoint_complete.yml")} \\\n'
             "ANOTHER_TEST_ENV_VAR=123 \\\n"
             f"poetry run hexagon $@"
         )  # noqa: E501
@@ -276,14 +264,13 @@ def test_install_cli_change_entrypoint_complete(request):
 def test_warn_install_dir_not_PATH(request):
     test_folder_path = test_dirs[request.node.name]
     (
-        as_a_user(__file__)
+        as_a_user(__file__, test_dir=test_folder_path)
         .run_hexagon(
             os_env_vars={
                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
                 "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
                 "HEXAGON_THEME": "default",
             },
-            test_dir=test_folder_path,
         )
         .then_output_should_be(
             [

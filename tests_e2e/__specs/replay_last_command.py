@@ -17,8 +17,8 @@ def test_replay_last_command_by_prompt():
     )
 
     (
-        as_a_user(__file__)
-        .run_hexagon(os_env_vars={"HEXAGON_THEME": "no_border"}, test_dir=spec.test_dir)
+        as_a_user(__file__, test_dir=spec.test_dir)
+        .run_hexagon(os_env_vars={"HEXAGON_THEME": "no_border"})
         .then_output_should_be(
             [
                 "",
@@ -64,8 +64,8 @@ def test_replay_last_command_by_name():
     )
 
     (
-        as_a_user(__file__)
-        .run_hexagon(["replay"], test_dir=spec.test_dir)
+        as_a_user(__file__, test_dir=spec.test_dir)
+        .run_hexagon(["replay"])
         .then_output_should_be(
             [
                 "name: john",
@@ -94,8 +94,8 @@ def test_replay_last_command_by_alias():
     )
 
     (
-        as_a_user(__file__)
-        .run_hexagon(["r"], test_dir=spec.test_dir)
+        as_a_user(__file__, test_dir=spec.test_dir)
+        .run_hexagon(["r"])
         .then_output_should_be(
             [
                 "name: john",
@@ -123,8 +123,8 @@ def test_replay_last_command_with_spaced_arg():
     )
 
     (
-        as_a_user(__file__)
-        .run_hexagon(["replay"], test_dir=spec.test_dir)
+        as_a_user(__file__, test_dir=spec.test_dir)
+        .run_hexagon(["replay"])
         .then_output_should_be(
             [
                 "name: john",
@@ -152,8 +152,8 @@ def test_replay_last_command_with_complex_arg():
     )
 
     (
-        as_a_user(__file__)
-        .run_hexagon(["replay"], test_dir=spec.test_dir)
+        as_a_user(__file__, test_dir=spec.test_dir)
+        .run_hexagon(["replay"])
         .then_output_should_be(
             [
                 "name: john",

@@ -1,5 +1,4 @@
 import inspect
-import tempfile
 import time
 from subprocess import Popen
 from typing import Callable, Dict, List, Optional, Union
@@ -27,6 +26,7 @@ from tests_e2e.__specs.utils.run import (
     run_hexagon_e2e_test,
     write_to_process,
     clean_hexagon_environment,
+    init_hexagon_e2e_test,
 )
 
 
@@ -65,7 +65,7 @@ class HexagonSpec:
 
     def __init__(self, file, test_dir=None) -> None:
         self.__file = file
-        self.test_dir = test_dir or tempfile.mkdtemp(suffix="_hexagon")
+        self.test_dir = init_hexagon_e2e_test(self.__file, test_dir)
         self.process: Optional[Popen[str]] = None
         self.command = None
         self.lines_read: List[str] = []
@@ -90,16 +90,12 @@ class HexagonSpec:
         self,
         command: List[str] = None,
         os_env_vars: Optional[Dict[str, str]] = None,
-        test_file_path_is_absolute: bool = False,
-        test_dir: Optional[str] = None,
     ) -> "HexagonSpec":
         print(f"\n\n[dim]RUNNING SPEC -> [/dim][b]{inspect.stack()[1][3]}[/b]")
         _log(
             self.run_hexagon,
             command=command,
             os_env_vars=os_env_vars,
-            test_file_path_is_absolute=test_file_path_is_absolute,
-            test_dir=test_dir,
         )
         __tracebackhide__ = True
         self._execution_time_start = time.time()
@@ -110,16 +106,14 @@ class HexagonSpec:
                 self.command,
                 yaml_file_name=self.yaml_file_name,
                 os_env_vars=os_env_vars,
-                test_file_path_is_absolute=test_file_path_is_absolute,
-                test_dir=test_dir or self.test_dir,
+                test_dir=self.test_dir,
             )
         else:
             self.test_dir, self.process = run_hexagon_e2e_test(
                 self.__file,
                 yaml_file_name=self.yaml_file_name,
                 os_env_vars=os_env_vars,
-                test_file_path_is_absolute=test_file_path_is_absolute,
-                test_dir=test_dir or self.test_dir,
+                test_dir=self.test_dir,
             )
         return self
 

@@ -19,24 +19,26 @@ HEXAGON_COMMAND: List[str] = ["python", "-m", "hexagon"]
 HEXAGON_COMMAND_DARWIN: List[str] = ["python3", "-m", "hexagon"]
 
 
+def init_hexagon_e2e_test(test_file, test_dir: Optional[str] = None):
+    test_folder_path = e2e_test_folder_path(test_file)
+
+    tmp_dir = test_dir or tempfile.mkdtemp(suffix="_hexagon")
+    copytree(test_folder_path, tmp_dir, dirs_exist_ok=True)
+    return tmp_dir
+
+
 def run_hexagon_e2e_test(
     test_file: str,
     args: List[str] = tuple(),
     yaml_file_name: str = "app.yml",
     os_env_vars: Optional[Dict[str, str]] = None,
-    test_file_path_is_absolute: bool = False,
     test_dir: Optional[str] = None,
 ):
     if os_env_vars is None:
         os_env_vars = {}
 
-    test_folder_path = (
-        test_file if test_file_path_is_absolute else e2e_test_folder_path(test_file)
-    )
-
-    tmp_dir = test_dir or tempfile.mkdtemp(suffix="_hexagon")
-    copytree(test_folder_path, tmp_dir, dirs_exist_ok=True)
-    test_folder_path = tmp_dir
+    test_folder_path = test_dir
+    print(f"running e2e file: {test_file}, at test dir {test_folder_path}")
 
     os_env_vars["HEXAGON_TEST_SHELL"] = (
         os_env_vars["HEXAGON_TEST_SHELL"]
