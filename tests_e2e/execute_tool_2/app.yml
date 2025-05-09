@@ -104,3 +104,9 @@ tools:
     type: shell
     alias: pmse
     long_name: Python Module Script Error Test
+
+  - name: p-m-inner-script-error
+    action: inner.p_m_inner_script_error
+    type: shell
+    alias: pmise
+    long_name: Python Module Inner Script Error Test

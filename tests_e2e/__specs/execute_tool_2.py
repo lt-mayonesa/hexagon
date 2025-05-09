@@ -93,6 +93,40 @@ def test_show_correct_error_when_execute_python_module_with_script_error():
     )
 
 
+def test_show_correct_error_when_execute_inner_python_module_with_script_error():
+    (
+        as_a_user(__file__)
+        .run_hexagon(["p-m-inner-script-error"])
+        .then_output_should_be(
+            [
+                "executed inner.p_m_inner_script_error",
+                "╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮",
+                {
+                    "expected": ["inner/p_m_inner_script_error.py:15"],
+                    "max_lines": 2,
+                    "line_delimiter": " │\n│ ",
+                },
+            ]
+        )
+        .then_output_should_be(
+            [
+                "12",
+                "13",
+                "14",
+                "15 │   err = [][3]",
+                "16",
+                "17",
+                "18",
+                "─────────────────────────────────────────────────────────────────────",
+                "IndexError: list index out of range",
+                "Execution of tool inner.p_m_inner_script_error failed",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit(status=1)
+    )
+
+
 def test_show_correct_error_when_execute_python_module_with_script_error_and_no_custom_tools_dir():
     (
         as_a_user(__file__)

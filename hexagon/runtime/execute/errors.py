@@ -105,11 +105,20 @@ class WithTracebackError(HexagonError):
             (
                 t
                 for t, path, file_name in cls.__walk_tb(tb)
-                if file_name == action_id
-                or path == os.path.join(custom_tools_path, action_id)
+                if cls.__executed_action_in_traceback(
+                    action_id, custom_tools_path, file_name, path
+                )
             ),
             None,
         )
+
+    @classmethod
+    def __executed_action_in_traceback(
+        cls, action_id, custom_tools_path, file_name, path
+    ):
+        action_name = action_id.split(".")[-1]
+        action_path = os.path.join(custom_tools_path, *action_id.split("."))
+        return file_name == action_name or path == action_path
 
     @classmethod
     def __walk_tb(cls, tb):
