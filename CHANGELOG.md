@@ -1,6 +1,68 @@
 # CHANGELOG
 
 
+## v0.62.2 (2025-05-09)
+
+### Bug Fixes
+
+- **errors**: Show traceback on group tools
+  ([#150](https://github.com/lt-mayonesa/hexagon/pull/150),
+  [`47cae1a`](https://github.com/lt-mayonesa/hexagon/commit/47cae1ab73818d36333bd8f2ce9141da78fae6b4))
+
+### Chores
+
+- **deps**: Bump markdown from 3.7 to 3.8 ([#149](https://github.com/lt-mayonesa/hexagon/pull/149),
+  [`2f07726`](https://github.com/lt-mayonesa/hexagon/commit/2f07726e8008c3e4b555e4c94ac7649e03f32bd6))
+
+Bumps [markdown](https://github.com/Python-Markdown/markdown) from 3.7 to 3.8. - [Release
+  notes](https://github.com/Python-Markdown/markdown/releases) -
+  [Changelog](https://github.com/Python-Markdown/markdown/blob/master/docs/changelog.md) -
+  [Commits](https://github.com/Python-Markdown/markdown/compare/3.7...3.8)
+
+--- updated-dependencies: - dependency-name: markdown dependency-version: '3.8'
+
+dependency-type: direct:production
+
+update-type: version-update:semver-minor ...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+
+Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+
+- **deps-dev**: Bump black from 24.10.0 to 25.1.0
+  ([#148](https://github.com/lt-mayonesa/hexagon/pull/148),
+  [`f164e25`](https://github.com/lt-mayonesa/hexagon/commit/f164e259832b9b5fdabba0c467692131886715ff))
+
+Bumps [black](https://github.com/psf/black) from 24.10.0 to 25.1.0. - [Release
+  notes](https://github.com/psf/black/releases) -
+  [Changelog](https://github.com/psf/black/blob/main/CHANGES.md) -
+  [Commits](https://github.com/psf/black/compare/24.10.0...25.1.0)
+
+--- updated-dependencies: - dependency-name: black dependency-version: 25.1.0
+
+dependency-type: direct:development
+
+update-type: version-update:semver-major ...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+
+Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+
+- **format**: Apply new black version
+  ([`92bc198`](https://github.com/lt-mayonesa/hexagon/commit/92bc1985a14a38dca8c87661f0d3322fbecc1d95))
+
+### Continuous Integration
+
+- **release**: Rollback to user token
+  ([`55dd61e`](https://github.com/lt-mayonesa/hexagon/commit/55dd61ef043562f3f860fc2db224a85ef79301ce))
+
+- **release**: Setup correct permission on jobs
+  ([`587f7a9`](https://github.com/lt-mayonesa/hexagon/commit/587f7a95cc3ac0cf90c126a21f9739abc0b90a07))
+
+- **release**: Use github token on release
+  ([`bd6220d`](https://github.com/lt-mayonesa/hexagon/commit/bd6220d20fa9fdb9f4aff1e0ddd1e78dc35e2475))
+
+
 ## v0.62.1 (2025-05-06)
 
 ### Bug Fixes
