@@ -104,7 +104,6 @@ class HexagonSpec:
         if command:
             self.command = command
             self.test_dir, self.process = run_hexagon_e2e_test(
-                self.__file,
                 self.command,
                 yaml_file_name=self.yaml_file_name,
                 os_env_vars=os_env_vars,
@@ -112,7 +111,6 @@ class HexagonSpec:
             )
         else:
             self.test_dir, self.process = run_hexagon_e2e_test(
-                self.__file,
                 yaml_file_name=self.yaml_file_name,
                 os_env_vars=os_env_vars,
                 test_dir=test_dir or self.test_dir,
