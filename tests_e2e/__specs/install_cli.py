@@ -40,7 +40,7 @@ def prepare_test(request):
         ),
         "w",
     ) as file:
-        file.write(os.path.realpath(binary_location_path(test_folder_path)))
+        file.write(binary_location_path(test_folder_path))
 
 
 def test_install_cli(request):

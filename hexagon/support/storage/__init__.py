@@ -176,6 +176,7 @@ def load_user_data(key: str, app: str = None):
             )
         elif value_type == StorageValueType.dictionary:
             return YAML().load(file)
+        return None
 
 
 def delete_user_data(app: str, key: str):

@@ -32,36 +32,31 @@ def run_hexagon_e2e_test(
     yaml_file_name: str = "app.yml",
     os_env_vars: Optional[Dict[str, str]] = None,
     test_dir: Optional[str] = None,
-):
+) -> (str, subprocess.Popen[str]):
     if os_env_vars is None:
         os_env_vars = {}
 
-    test_folder_path = test_dir
+    _set_env_vars_defaults(test_dir, os_env_vars)
+    _create_required_dirs(os_env_vars)
 
-    _set_env_vars(os_env_vars)
-
-    os.environ["HEXAGON_STORAGE_PATH"] = os_env_vars.get(
-        "HEXAGON_STORAGE_PATH",
-        os.getenv("HEXAGON_STORAGE_PATH", os.path.join(test_folder_path, ".config")),
-    )
-
-    Path(os.environ["HEXAGON_STORAGE_PATH"]).mkdir(parents=True, exist_ok=True)
-
-    app_config_path = os.path.join(test_folder_path, *yaml_file_name.split("/"))
+    app_config_path = os.path.join(test_dir, *yaml_file_name.split("/"))
     if os.path.isfile(app_config_path):
         os_env_vars["HEXAGON_CONFIG_FILE"] = app_config_path
 
     os_env_vars["PYTHONPATH"] = hexagon_path
 
-    return test_folder_path, run_hexagon(test_folder_path, args, os_env_vars)
+    return test_dir, run_hexagon_subprocess(test_dir, args, os_env_vars)
 
 
-def _set_env_vars(os_env_vars):
-    os_env_vars["HEXAGON_TEST_SHELL"] = (
-        os_env_vars["HEXAGON_TEST_SHELL"]
-        if "HEXAGON_TEST_SHELL" in os_env_vars
-        else "HEXAGON_TEST_SHELL"
-    )
+def _create_required_dirs(os_env_vars):
+    Path(os_env_vars["HEXAGON_STORAGE_PATH"]).mkdir(parents=True, exist_ok=True)
+
+
+def _set_env_vars_defaults(test_dir, os_env_vars):
+    if "HEXAGON_TEST_SHELL" not in os_env_vars:
+        os_env_vars["HEXAGON_TEST_SHELL"] = "HEXAGON_TEST_SHELL"
+    if "HEXAGON_STORAGE_PATH" not in os_env_vars:
+        os_env_vars["HEXAGON_STORAGE_PATH"] = os.path.join(test_dir, ".config")
     if "HEXAGON_THEME" not in os_env_vars:
         os_env_vars["HEXAGON_THEME"] = "result_only"
     if "HEXAGON_HINTS_DISABLED" not in os_env_vars:
@@ -80,7 +75,7 @@ def _set_env_vars(os_env_vars):
         os_env_vars["HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED"] = "1"
 
 
-def run_hexagon(
+def run_hexagon_subprocess(
     cwd: str,
     args: List[str] = tuple(),
     os_env_vars: Optional[Dict[str, str]] = None,
