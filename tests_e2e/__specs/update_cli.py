@@ -199,11 +199,16 @@ def test_cli_updates_fail_silently_if_not_in_a_git_repository():
     local_repo_path = os.path.join(spec.test_dir, "local")
     os.makedirs(local_repo_path, exist_ok=True)
 
+    shutil.copyfile(
+        os.path.join(spec.test_dir, "app.yml"),
+        os.path.join(local_repo_path, "app.yml"),
+    )
+
     (
         spec.run_hexagon(
             ["echo"],
             os_env_vars(spec.test_dir),
-            test_dir=os.path.join(spec.test_dir, "local"),
+            test_dir=local_repo_path,
         )
         .then_output_should_be(["echo"])
         .exit()

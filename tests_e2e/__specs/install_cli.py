@@ -17,7 +17,7 @@ test_dirs = {}
 
 
 def binary_location_path(test_folder_path):
-    return os.path.join(test_folder_path, "bin")
+    return os.path.realpath(os.path.join(test_folder_path, "bin"))
 
 
 @pytest.fixture(autouse=True)
@@ -72,7 +72,7 @@ def test_install_cli(request):
         assert (
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(test_folder_path, "config.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE={os.path.realpath(os.path.join(test_folder_path, "config.yml"))} \\\n'
             f"hexagon $@"
         )  # noqa: E501
 
@@ -108,7 +108,7 @@ def test_install_cli_and_provide_bins_path(request):
         assert (
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(test_folder_path, "config.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE={os.path.realpath(os.path.join(test_folder_path, "config.yml"))} \\\n'
             f"hexagon $@"
         )  # noqa: E501
 
@@ -140,7 +140,7 @@ def test_install_cli_pass_arguments(request):
         assert (
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(test_folder_path, "config.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE={os.path.realpath(os.path.join(test_folder_path, "config.yml"))} \\\n'
             f"hexagon $@"
         )  # noqa: E501
 
@@ -168,7 +168,7 @@ def test_install_cli_change_entrypoint_shell(request):
         assert (
             file.read() == "#!/bin/sh\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(test_folder_path, "config_entrypoint_shell.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE={os.path.realpath(os.path.join(test_folder_path, "config_entrypoint_shell.yml"))} \\\n'
             f"hexagon $@"
         )  # noqa: E501
 
@@ -196,7 +196,7 @@ def test_install_cli_change_entrypoint_pre_command(request):
         assert (
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(test_folder_path, "config_entrypoint_pre_command.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE={os.path.realpath(os.path.join(test_folder_path, "config_entrypoint_pre_command.yml"))} \\\n'
             f"pipenv run hexagon $@"
         )  # noqa: E501
 
@@ -224,7 +224,7 @@ def test_install_cli_change_entrypoint_environ(request):
         assert (
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(test_folder_path, "config_entrypoint_environ.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE={os.path.realpath(os.path.join(test_folder_path, "config_entrypoint_environ.yml"))} \\\n'
             "MY_TEST_ENV_VAR=test \\\n"
             "ANOTHER_TEST_ENV_VAR=123 \\\n"
             f"hexagon $@"
@@ -254,7 +254,7 @@ def test_install_cli_change_entrypoint_complete(request):
         assert (
             file.read() == "#!/usr/bin/env zsh\n"
             "# file created by hexagon\n"
-            f'HEXAGON_CONFIG_FILE={os.path.join(test_folder_path, "config_entrypoint_complete.yml")} \\\n'
+            f'HEXAGON_CONFIG_FILE={os.path.realpath(os.path.join(test_folder_path, "config_entrypoint_complete.yml"))} \\\n'
             "ANOTHER_TEST_ENV_VAR=123 \\\n"
             f"poetry run hexagon $@"
         )  # noqa: E501
