@@ -24,6 +24,8 @@ def init_hexagon_e2e_test(test_file, test_dir: Optional[str] = None):
 
     tmp_dir = test_dir or tempfile.mkdtemp(suffix="_hexagon")
     copytree(test_folder_path, tmp_dir, dirs_exist_ok=True)
+    print(f"Initializing e2e test: {test_file}")
+    print(f"Copied test folder from {test_folder_path} to {tmp_dir}")
     return tmp_dir
 
 
@@ -32,55 +34,45 @@ def run_hexagon_e2e_test(
     yaml_file_name: str = "app.yml",
     os_env_vars: Optional[Dict[str, str]] = None,
     test_dir: Optional[str] = None,
-):
-    if os_env_vars is None:
-        os_env_vars = {}
+) -> (str, subprocess.Popen[str]):
+    os_env_vars = os_env_vars.copy() if os_env_vars is not None else {}
 
-    test_folder_path = test_dir
+    _set_env_vars_defaults(test_dir, os_env_vars)
+    _create_required_dirs(os_env_vars)
 
-    _set_env_vars(os_env_vars)
-
-    os.environ["HEXAGON_STORAGE_PATH"] = os_env_vars.get(
-        "HEXAGON_STORAGE_PATH",
-        os.getenv("HEXAGON_STORAGE_PATH", os.path.join(test_folder_path, ".config")),
-    )
-
-    Path(os.environ["HEXAGON_STORAGE_PATH"]).mkdir(parents=True, exist_ok=True)
-
-    app_config_path = os.path.join(test_folder_path, *yaml_file_name.split("/"))
+    app_config_path = os.path.join(test_dir, *yaml_file_name.split("/"))
     if os.path.isfile(app_config_path):
         os_env_vars["HEXAGON_CONFIG_FILE"] = app_config_path
 
     os_env_vars["PYTHONPATH"] = hexagon_path
 
-    return test_folder_path, run_hexagon(test_folder_path, args, os_env_vars)
+    return test_dir, run_hexagon_subprocess(test_dir, args, os_env_vars)
 
 
-def _set_env_vars(os_env_vars):
-    os_env_vars["HEXAGON_TEST_SHELL"] = (
-        os_env_vars["HEXAGON_TEST_SHELL"]
-        if "HEXAGON_TEST_SHELL" in os_env_vars
-        else "HEXAGON_TEST_SHELL"
-    )
-    if "HEXAGON_THEME" not in os_env_vars:
-        os_env_vars["HEXAGON_THEME"] = "result_only"
-    if "HEXAGON_HINTS_DISABLED" not in os_env_vars:
-        os_env_vars["HEXAGON_HINTS_DISABLED"] = "1"
-    if "HEXAGON_UPDATE_DISABLED" not in os_env_vars:
-        os_env_vars["HEXAGON_UPDATE_DISABLED"] = "1"
-    if "HEXAGON_CLI_UPDATE_DISABLED" not in os_env_vars:
-        os_env_vars["HEXAGON_CLI_UPDATE_DISABLED"] = "1"
-    if "HEXAGON_SEND_TELEMETRY" not in os_env_vars:
-        os_env_vars["HEXAGON_SEND_TELEMETRY"] = "0"
-    if "HEXAGON_LOCALES_DIR" not in os_env_vars:
-        os_env_vars["HEXAGON_LOCALES_DIR"] = os.path.join(hexagon_path, "locales")
-    if "HEXAGON_DISABLE_DEPENDENCY_SCAN" not in os_env_vars:
-        os_env_vars["HEXAGON_DISABLE_DEPENDENCY_SCAN"] = "1"
-    if "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED" not in os_env_vars:
-        os_env_vars["HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED"] = "1"
+def _create_required_dirs(os_env_vars):
+    Path(os_env_vars["HEXAGON_STORAGE_PATH"]).mkdir(parents=True, exist_ok=True)
 
 
-def run_hexagon(
+def _set_env_vars_defaults(test_dir, os_env_vars):
+    defaults = {
+        "HEXAGON_CLI_UPDATE_DISABLED": "1",
+        "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
+        "HEXAGON_DISABLE_DEPENDENCY_SCAN": "1",
+        "HEXAGON_HINTS_DISABLED": "1",
+        "HEXAGON_LOCALES_DIR": os.path.join(hexagon_path, "locales"),
+        "HEXAGON_STORAGE_PATH": os.path.join(test_dir, ".config"),
+        "HEXAGON_SEND_TELEMETRY": "0",
+        "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
+        "HEXAGON_THEME": "result_only",
+        "HEXAGON_UPDATE_DISABLED": "1",
+    }
+
+    for key, value in defaults.items():
+        if key not in os_env_vars:
+            os_env_vars[key] = value
+
+
+def run_hexagon_subprocess(
     cwd: str,
     args: List[str] = tuple(),
     os_env_vars: Optional[Dict[str, str]] = None,
