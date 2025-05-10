@@ -108,6 +108,7 @@ def main(tool, env, env_args, cli_args):
                 )
             ),
             os.path.join(configuration.custom_tools_path, new_tool.action),
+            dirs_exist_ok=True,
         )
 
         _replace_variables(

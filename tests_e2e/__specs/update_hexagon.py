@@ -1,54 +1,40 @@
 import os
 from datetime import date, timedelta
+from pathlib import Path
 
 from tests_e2e.__specs.utils.hexagon_spec import as_a_user
-from tests_e2e.__specs.utils.path import e2e_test_folder_path
 
 LAST_UPDATE_DATE_FORMAT = "%Y%m%d"
 
-test_folder_path = e2e_test_folder_path(__file__)
-storage_path = os.path.realpath(os.path.join(test_folder_path, "storage"))
-last_checked_storage_path = os.path.join(
-    storage_path, "hexagon", "last-update-check.txt"
-)
 
-
-def _write_storage_path():
-    if not os.path.exists(os.path.dirname(last_checked_storage_path)):
-        os.makedirs(os.path.dirname(last_checked_storage_path))
-
-
-def _write_last_check(last_check_date):
-    _write_storage_path()
-
-    with open(last_checked_storage_path, "w") as file:
+def _write_last_check(test_dir, last_check_date):
+    Path(os.path.join(test_dir, ".config", "hexagon")).mkdir(
+        exist_ok=True, parents=True
+    )
+    with open(
+        os.path.join(test_dir, ".config", "hexagon", "last-update-check.txt"), "w"
+    ) as file:
         file.write(last_check_date.strftime(LAST_UPDATE_DATE_FORMAT))
 
 
-def _clear_last_check():
-    _write_storage_path()
-    if os.path.exists(last_checked_storage_path):
-        os.remove(last_checked_storage_path)
+def base_os_env_vars(test_dir):
+    return {
+        "HEXAGON_UPDATE_DISABLED": "false",
+        "HEXAGON_TEST_LOCAL_VERSION_OVERRIDE": "0.1.0",
+        "HEXAGON_TEST_LATEST_VERSION_OVERRIDE": f"file://{os.path.join(test_dir, 'pypi_version_mock.json')}",
+    }
 
 
-temp_file_path = os.path.join(test_folder_path, "pypi_version_mock.json")
-
-base_os_env_vars = {
-    "HEXAGON_UPDATE_DISABLED": "false",
-    "HEXAGON_TEST_LOCAL_VERSION_OVERRIDE": "0.1.0",
-    "HEXAGON_TEST_LATEST_VERSION_OVERRIDE": f"file://{temp_file_path}",
-    "HEXAGON_STORAGE_PATH": storage_path,
-}
-
-no_changelog_env_vars = {**base_os_env_vars, "HEXAGON_UPDATE_SHOW_CHANGELOG": ""}
+def no_changelog_env_vars(test_dir):
+    return {**base_os_env_vars(test_dir), "HEXAGON_UPDATE_SHOW_CHANGELOG": ""}
 
 
 def test_new_hexagon_version_available():
-    _clear_last_check()
-
+    spec = as_a_user(__file__)
     (
-        as_a_user(__file__)
-        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars)
+        spec.run_hexagon(
+            ["my-module"], os_env_vars=no_changelog_env_vars(spec.test_dir)
+        )
         .write("n")
         .then_output_should_be(
             [["Would you like to update?", "No"]], discard_until_first_match=True
@@ -59,11 +45,11 @@ def test_new_hexagon_version_available():
 
 
 def test_prompt_to_update_hexagon_only_once():
-    _clear_last_check()
-
+    spec = as_a_user(__file__)
     (
-        as_a_user(__file__)
-        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars)
+        spec.run_hexagon(
+            ["my-module"], os_env_vars=no_changelog_env_vars(spec.test_dir)
+        )
         .write("n")
         .then_output_should_be(
             [["Would you like to update?", "No"]], discard_until_first_match=True
@@ -73,30 +59,34 @@ def test_prompt_to_update_hexagon_only_once():
     )
 
     (
-        as_a_user(__file__)
-        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars)
+        as_a_user(__file__, test_dir=spec.test_dir)
+        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars(spec.test_dir))
         .then_output_should_be(["my-module"])
         .exit()
     )
 
 
 def test_prompt_to_update_hexagon_once_a_day():
-    _write_last_check(date.today())
+    spec = as_a_user(__file__)
+    _write_last_check(spec.test_dir, date.today())
 
     (
-        as_a_user(__file__)
-        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars)
+        spec.run_hexagon(
+            ["my-module"], os_env_vars=no_changelog_env_vars(spec.test_dir)
+        )
         .then_output_should_be(["my-module"])
         .exit()
     )
 
 
 def test_prompt_to_update_hexagon_again_next_day():
-    _write_last_check(date.today() - timedelta(days=1))
+    spec = as_a_user(__file__)
+    _write_last_check(spec.test_dir, date.today() - timedelta(days=1))
 
     (
-        as_a_user(__file__)
-        .run_hexagon(["my-module"], os_env_vars=no_changelog_env_vars)
+        spec.run_hexagon(
+            ["my-module"], os_env_vars=no_changelog_env_vars(spec.test_dir)
+        )
         .write("n")
         .then_output_should_be(
             [["Would you like to update?", "No"]], discard_until_first_match=True
@@ -107,16 +97,14 @@ def test_prompt_to_update_hexagon_again_next_day():
 
 
 def test_show_changelog():
-    _clear_last_check()
-
+    spec = as_a_user(__file__)
     (
-        as_a_user(__file__)
-        .run_hexagon(
+        spec.run_hexagon(
             ["my-module"],
             os_env_vars={
-                **base_os_env_vars,
+                **base_os_env_vars(spec.test_dir),
                 "HEXAGON_CHANGELOG_FILE_PATH_TEST_OVERRIDE": os.path.join(
-                    test_folder_path, "CHANGELOG.md"
+                    spec.test_dir, "CHANGELOG.md"
                 ),
                 "HEXAGON_TEST_LOCAL_VERSION_OVERRIDE": "0.59.0",
                 "HEXAGON_THEME": "default",

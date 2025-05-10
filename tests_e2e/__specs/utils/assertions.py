@@ -6,7 +6,6 @@ import sys
 from typing import Any, Callable, Dict, List
 
 from tests_e2e.__specs.utils.console import print
-from tests_e2e.__specs.utils.path import e2e_test_folder_path
 
 last_output_file_path = os.path.realpath(
     os.path.join(
@@ -198,7 +197,7 @@ def _assert_process_output_line(
     return True
 
 
-MAX_ATTEMPTS = 50
+MAX_ATTEMPTS = 100
 
 
 def assert_process_output(
@@ -282,15 +281,8 @@ def assert_execution_time(elapsed: int, expected: int):
 
 
 def assert_file_has_contents(test_file: str, file: str, contents: str):
-    test_dir = e2e_test_folder_path(test_file)
-
-    with open(os.path.join(test_dir, file), "r") as f:
+    with open(os.path.join(test_file, file), "r") as f:
         assert f.read() == contents
-
-
-def assert_file_does_not_exist(test_file: str, file: str):
-    test_dir = e2e_test_folder_path(test_file)
-    assert os.path.isfile(os.path.join(test_dir, file)) is False
 
 
 def _is_linebreak(line):

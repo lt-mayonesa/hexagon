@@ -37,14 +37,14 @@ tools:
 
   - name: unit-tests
     alias: ut
-    long_name: run unit tests tests
+    long_name: Run unit tests tests
     type: shell
     action: |
       pipenv run pytest -svv tests/
 
   - name: e2e-tests
     alias: e2e
-    long_name: run end to end tests
+    long_name: Run end to end tests
     description: execute a set of end to end tests
     type: shell
     action: |
@@ -53,18 +53,25 @@ tools:
 
   - name: build
     alias: b
-    long_name: build hexagon
+    long_name: Build hexagon
     type: shell
     action: pipenv run python setup.py sdist bdist_wheel
 
   - name: upgrade-pipenv
     alias: up
-    long_name: upgrade pipenv dependencies
+    long_name: Upgrade pipenv dependencies
     type: shell
     action: pipenv update
 
-  - name: release
-    alias: re
-    long_name: release hexagon to PyPi
+  - name: switch-venv
+    alias: se
+    long_name: Switch python venv
+    description: Switch python version being used, change version, rebuild python venv
     type: shell
-    action: twine upload dist/*
+    action: |
+      echo "Sadly I cannot automate this for you ¯\_(ツ)_/¯, please do it manually."
+      echo "1. exit the current shell: (ctrl + d, cmd + d, exit)"
+      echo "2. remove current venv: pipenv --rm"
+      echo "3. enter new shell: pipenv shell --python [your version (3.11, 3.12, ...)]"
+      echo "4. install dependencies: pipenv install --dev"
+      echo "DONE!"

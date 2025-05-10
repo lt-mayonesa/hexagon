@@ -2,22 +2,27 @@ import os
 
 from tests_e2e.__specs.utils.hexagon_spec import as_a_user
 
-test_folder_path = os.path.realpath(
-    os.path.join(__file__, os.path.pardir, os.path.pardir, "save_alias")
-)
 
-aliases_file_path = os.path.join(test_folder_path, "home-aliases.txt")
-last_command_file_path = os.path.join(test_folder_path, "last_command")
+def _alias_file_path(spec):
+    return os.path.join(spec.test_dir, "home-aliases.txt")
+
+
+def _write_alias_file(spec):
+    with open(_alias_file_path(spec), "w") as file:
+        file.write("previous line\n")
 
 
 def test_save_alias():
-    with open(aliases_file_path, "w") as file:
-        file.write("previous line\n")
-
-    (as_a_user(__file__).run_hexagon().enter().exit())
+    spec = (
+        as_a_user(__file__)
+        .executing_first(_write_alias_file)
+        .run_hexagon()
+        .enter()
+        .exit()
+    )
 
     (
-        as_a_user(__file__)
+        as_a_user(__file__, test_dir=spec.test_dir)
         .run_hexagon()
         .arrow_down()
         .enter()
@@ -33,7 +38,7 @@ def test_save_alias():
         .exit()
     )
 
-    with open(aliases_file_path, "r") as file:
+    with open(_alias_file_path(spec), "r") as file:
         assert (
             file.read()
             == 'previous line\n\n# added by hexagon\nalias hexagon-save-alias-test="hexagon-test python-module"'

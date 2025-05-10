@@ -1,41 +1,24 @@
 import os
 import shutil
 import subprocess
-import tempfile
 
 from tests_e2e.__specs.utils.hexagon_spec import as_a_user
-from tests_e2e.__specs.utils.path import e2e_test_folder_path
-
-test_folder_path = e2e_test_folder_path(__file__)
-storage_path = os.path.join(test_folder_path, "storage")
-local_repo_path = os.path.join(test_folder_path, "local")
-remote_repo_path = os.path.join(test_folder_path, "remote")
-
-last_checked_storage_path = os.path.join(storage_path, "test", "last-update-check.txt")
-
-os_env_vars = {
-    "HEXAGON_STORAGE_PATH": storage_path,
-    "HEXAGON_CLI_UPDATE_DISABLED": "false",
-    "PIPENV_PIPFILE": os.path.realpath(
-        os.path.join(test_folder_path, os.path.pardir, os.path.pardir, "Pipfile")
-    ),
-}
 
 
-def _delete_directory_if_exists(directory_path):
-    if os.path.exists(directory_path):
-        shutil.rmtree(directory_path)
+def os_env_vars(test_folder_path):
+    return {
+        "HEXAGON_CLI_UPDATE_DISABLED": "false",
+        "PIPENV_PIPFILE": os.path.realpath(
+            os.path.join(test_folder_path, os.path.pardir, os.path.pardir, "Pipfile")
+        ),
+    }
 
 
-def _cleanup():
-    _delete_directory_if_exists(storage_path)
-    _delete_directory_if_exists(local_repo_path)
-    _delete_directory_if_exists(remote_repo_path)
-
-
-def _prepare():
-    os.makedirs(remote_repo_path)
-    os.makedirs(local_repo_path)
+def _prepare(test_folder_path):
+    remote_repo_path = os.path.join(test_folder_path, "remote")
+    local_repo_path = os.path.join(test_folder_path, "local")
+    os.makedirs(remote_repo_path, exist_ok=True)
+    os.makedirs(local_repo_path, exist_ok=True)
     subprocess.check_call("git init", cwd=remote_repo_path, shell=True)
     subprocess.check_call("git branch -m main", cwd=remote_repo_path, shell=True)
     files_to_copy = ["app.yml", "package.json", "Pipfile", "yarn.lock"]
@@ -55,25 +38,28 @@ def _prepare():
 
 
 def test_cli_not_updated_if_no_pending_changes():
-    _cleanup()
-    _prepare()
+    spec = as_a_user(__file__)
+
+    _prepare(spec.test_dir)
 
     (
-        as_a_user(local_repo_path)
-        .run_hexagon(["echo"], os_env_vars, test_file_path_is_absolute=True)
+        spec.run_hexagon(
+            ["echo"],
+            os_env_vars(spec.test_dir),
+            test_dir=os.path.join(spec.test_dir, "local"),
+        )
         .then_output_should_be(["echo"])
         .exit()
     )
 
-    _cleanup()
-
 
 def test_cli_updated_if_pending_changes():
-    _cleanup()
-    _prepare()
+    spec = as_a_user(__file__)
 
+    _prepare(spec.test_dir)
+    remote_repo_path = os.path.join(spec.test_dir, "remote")
     shutil.copyfile(
-        os.path.join(test_folder_path, "modified-app.yml"),
+        os.path.join(spec.test_dir, "modified-app.yml"),
         os.path.join(remote_repo_path, "app.yml"),
     )
 
@@ -85,16 +71,15 @@ def test_cli_updated_if_pending_changes():
     )
 
     (
-        as_a_user(local_repo_path)
-        .run_hexagon(
+        spec.run_hexagon(
             ["echo"],
             {
-                **os_env_vars,
+                **os_env_vars(spec.test_dir),
                 "HEXAGON_THEME": "default",
                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
                 "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
             },
-            test_file_path_is_absolute=True,
+            test_dir=os.path.join(spec.test_dir, "local"),
         )
         .write("y")
         .then_output_should_be(
@@ -112,15 +97,17 @@ def test_cli_updated_if_pending_changes():
         .exit()
     )
 
-    _cleanup()
-
 
 def test_dont_update_when_no_changes_on_current_branch():
-    _cleanup()
-    _prepare()
+    spec = as_a_user(__file__)
+
+    _prepare(spec.test_dir)
+
+    remote_repo_path = os.path.join(spec.test_dir, "remote")
+    local_repo_path = os.path.join(spec.test_dir, "local")
 
     shutil.copyfile(
-        os.path.join(test_folder_path, "modified-app.yml"),
+        os.path.join(spec.test_dir, "modified-app.yml"),
         os.path.join(remote_repo_path, "app.yml"),
     )
     subprocess.check_call("git add .", cwd=remote_repo_path, shell=True)
@@ -133,16 +120,15 @@ def test_dont_update_when_no_changes_on_current_branch():
     subprocess.check_call("git checkout -b new-branch", cwd=local_repo_path, shell=True)
 
     (
-        as_a_user(local_repo_path)
-        .run_hexagon(
+        spec.run_hexagon(
             ["echo"],
             {
-                **os_env_vars,
+                **os_env_vars(spec.test_dir),
                 "HEXAGON_THEME": "default",
                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
                 "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
             },
-            test_file_path_is_absolute=True,
+            test_dir=os.path.join(spec.test_dir, "local"),
         )
         .then_output_should_be(
             ["echo"],
@@ -151,12 +137,14 @@ def test_dont_update_when_no_changes_on_current_branch():
         .exit(0)
     )
 
-    _cleanup()
-
 
 def test_update_when_changes_on_current_branch():
-    _cleanup()
-    _prepare()
+    spec = as_a_user(__file__)
+
+    _prepare(spec.test_dir)
+
+    remote_repo_path = os.path.join(spec.test_dir, "remote")
+    local_repo_path = os.path.join(spec.test_dir, "local")
 
     subprocess.check_call(
         "git checkout -b new-branch", cwd=remote_repo_path, shell=True
@@ -168,7 +156,7 @@ def test_update_when_changes_on_current_branch():
     )
 
     shutil.copyfile(
-        os.path.join(test_folder_path, "modified-app.yml"),
+        os.path.join(spec.test_dir, "modified-app.yml"),
         os.path.join(remote_repo_path, "app.yml"),
     )
     subprocess.check_call("git add .", cwd=remote_repo_path, shell=True)
@@ -179,16 +167,15 @@ def test_update_when_changes_on_current_branch():
     )
 
     (
-        as_a_user(local_repo_path)
-        .run_hexagon(
+        spec.run_hexagon(
             ["echo"],
             {
-                **os_env_vars,
+                **os_env_vars(spec.test_dir),
                 "HEXAGON_THEME": "default",
                 "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
                 "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
             },
-            test_file_path_is_absolute=True,
+            test_dir=os.path.join(spec.test_dir, "local"),
         )
         .write("y")
         .then_output_should_be(
@@ -206,22 +193,23 @@ def test_update_when_changes_on_current_branch():
         .exit(0)
     )
 
-    _cleanup()
-
 
 def test_cli_updates_fail_silently_if_not_in_a_git_repository():
-    _cleanup()
-    tmp_dir = tempfile.gettempdir()
-    os.mkdir(local_repo_path)
+    spec = as_a_user(__file__)
+    local_repo_path = os.path.join(spec.test_dir, "local")
+    os.makedirs(local_repo_path, exist_ok=True)
 
     shutil.copyfile(
-        os.path.join(test_folder_path, "app.yml"),
-        os.path.join(tmp_dir, "app.yml"),
+        os.path.join(spec.test_dir, "app.yml"),
+        os.path.join(local_repo_path, "app.yml"),
     )
 
     (
-        as_a_user(tmp_dir)
-        .run_hexagon(["echo"], os_env_vars, test_file_path_is_absolute=True)
+        spec.run_hexagon(
+            ["echo"],
+            os_env_vars(spec.test_dir),
+            test_dir=local_repo_path,
+        )
         .then_output_should_be(["echo"])
         .exit()
     )

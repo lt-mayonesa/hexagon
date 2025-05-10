@@ -7,7 +7,7 @@ from tests_e2e.__specs.utils.hexagon_spec import as_a_user
 
 
 def test_execute_python_tool_with_one_positional_arguments():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon(["p-m-args", "John"])
         .then_output_should_be(
@@ -23,14 +23,14 @@ def test_execute_python_tool_with_one_positional_arguments():
         .exit()
     )
     assert_file_has_contents(
-        __file__,
+        spec.test_dir,
         ".config/test/last-command.txt",
         "hexagon-test p-m-args John",
     )
 
 
 def test_execute_python_tool_with_several_positional_arguments():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon(["p-m-args", "John", "31", "French"])
         .then_output_should_be(
@@ -46,14 +46,14 @@ def test_execute_python_tool_with_several_positional_arguments():
         .exit()
     )
     assert_file_has_contents(
-        __file__,
+        spec.test_dir,
         ".config/test/last-command.txt",
         "hexagon-test p-m-args John 31 French",
     )
 
 
 def test_should_only_trace_passed_arguments_and_not_defaults():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon(["p-m-args", "John", "31", "Argentinian", "--car-brand", "Ford"])
         .then_output_should_be(
@@ -69,14 +69,14 @@ def test_should_only_trace_passed_arguments_and_not_defaults():
         .exit()
     )
     assert_file_has_contents(
-        __file__,
+        spec.test_dir,
         ".config/test/last-command.txt",
         "hexagon-test p-m-args John 31 Argentinian --car-brand=Ford",
     )
 
 
 def test_should_argument_should_be_traced_once():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon(["access-multiple-times", "John"])
         .then_output_should_be(
@@ -92,7 +92,7 @@ def test_should_argument_should_be_traced_once():
         .exit()
     )
     assert_file_has_contents(
-        __file__,
+        spec.test_dir,
         ".config/test/last-command.txt",
         "hexagon-test access-multiple-times John",
     )
@@ -107,7 +107,7 @@ def test_should_argument_should_be_traced_once():
     ],
 )
 def test_only_optional_arguments(args):
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon(["only-optionals"] + args)
         .then_output_should_be(
@@ -121,7 +121,7 @@ def test_only_optional_arguments(args):
         .exit()
     )
     assert_file_has_contents(
-        __file__,
+        spec.test_dir,
         ".config/test/last-command.txt",
         "hexagon-test only-optionals --name=John --age=31 --country=Argentina --likes=sand --likes=beach",
     )
@@ -150,7 +150,7 @@ def test_arguments_type_matters():
 
 
 def test_optional_arguments_as_list():
-    (
+    spec = (
         as_a_user(__file__)
         .run_hexagon(["p-m-args", "John", "--car-years", "1997", "1998"])
         .then_output_should_be(
@@ -166,7 +166,7 @@ def test_optional_arguments_as_list():
         .exit()
     )
     assert_file_has_contents(
-        __file__,
+        spec.test_dir,
         ".config/test/last-command.txt",
         "hexagon-test p-m-args John --car-years=1997 --car-years=1998",
     )
@@ -582,7 +582,7 @@ def test_should_prompt_fuzzy_file_search():
                 "",
                 "",
                 "Enter fuzzy_file_input",
-                "4/4",
+                "3/3",
                 "01_file.txt",
                 "02_file.txt",
                 "03_file.txt",
