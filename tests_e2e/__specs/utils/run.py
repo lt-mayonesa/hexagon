@@ -53,26 +53,22 @@ def _create_required_dirs(os_env_vars):
 
 
 def _set_env_vars_defaults(test_dir, os_env_vars):
-    if "HEXAGON_TEST_SHELL" not in os_env_vars:
-        os_env_vars["HEXAGON_TEST_SHELL"] = "HEXAGON_TEST_SHELL"
-    if "HEXAGON_STORAGE_PATH" not in os_env_vars:
-        os_env_vars["HEXAGON_STORAGE_PATH"] = os.path.join(test_dir, ".config")
-    if "HEXAGON_THEME" not in os_env_vars:
-        os_env_vars["HEXAGON_THEME"] = "result_only"
-    if "HEXAGON_HINTS_DISABLED" not in os_env_vars:
-        os_env_vars["HEXAGON_HINTS_DISABLED"] = "1"
-    if "HEXAGON_UPDATE_DISABLED" not in os_env_vars:
-        os_env_vars["HEXAGON_UPDATE_DISABLED"] = "1"
-    if "HEXAGON_CLI_UPDATE_DISABLED" not in os_env_vars:
-        os_env_vars["HEXAGON_CLI_UPDATE_DISABLED"] = "1"
-    if "HEXAGON_SEND_TELEMETRY" not in os_env_vars:
-        os_env_vars["HEXAGON_SEND_TELEMETRY"] = "0"
-    if "HEXAGON_LOCALES_DIR" not in os_env_vars:
-        os_env_vars["HEXAGON_LOCALES_DIR"] = os.path.join(hexagon_path, "locales")
-    if "HEXAGON_DISABLE_DEPENDENCY_SCAN" not in os_env_vars:
-        os_env_vars["HEXAGON_DISABLE_DEPENDENCY_SCAN"] = "1"
-    if "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED" not in os_env_vars:
-        os_env_vars["HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED"] = "1"
+    defaults = {
+        "HEXAGON_CLI_UPDATE_DISABLED": "1",
+        "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
+        "HEXAGON_DISABLE_DEPENDENCY_SCAN": "1",
+        "HEXAGON_HINTS_DISABLED": "1",
+        "HEXAGON_LOCALES_DIR": os.path.join(hexagon_path, "locales"),
+        "HEXAGON_STORAGE_PATH": os.path.join(test_dir, ".config"),
+        "HEXAGON_SEND_TELEMETRY": "0",
+        "HEXAGON_TEST_SHELL": "HEXAGON_TEST_SHELL",
+        "HEXAGON_THEME": "result_only",
+        "HEXAGON_UPDATE_DISABLED": "1",
+    }
+
+    for key, value in defaults.items():
+        if key not in os_env_vars:
+            os_env_vars[key] = value
 
 
 def run_hexagon_subprocess(

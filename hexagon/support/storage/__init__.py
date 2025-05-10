@@ -65,11 +65,10 @@ def _get_storage_dir_path():
     return _config_storage_path
 
 
-def _resolve_storage_path(app: str, key: str, base_dir=None):
+def _resolve_storage_path(app: str, key: str, base_dir=None) -> (str, str):
     base_dir = base_dir if base_dir else _get_storage_dir_path()
     key_split = key.split(".")
-    # noinspection PyRedundantParentheses
-    return (os.path.join(base_dir, app, *key_split[:-1]), *key_split[-1:])
+    return os.path.join(base_dir, app, *key_split[:-1]), *key_split[-1:]
 
 
 def _storage_value_type_by_data_type(data: InputDataType):
