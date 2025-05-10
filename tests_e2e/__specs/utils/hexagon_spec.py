@@ -35,7 +35,7 @@ def _log(f, *args, **kwargs):
     Prints the hexagon step being executed.
 
     This was previously defined as a decorator, using ParamSpec to support type hints.
-    But it wasn't working correctly as decorated methods are part of a class. :shrug:
+    But it wasn't working correctly as decorated methods are part of a class. ¯\_(ツ)_/¯
 
     :param f: reference to the function being logged
     :param args: function args
@@ -52,6 +52,12 @@ def _log(f, *args, **kwargs):
         print(f"\t[dim]{arg}")
     if func_args:
         print(")")
+
+
+class DeveloperError(Exception):
+    """
+    Exception raised when HexagonSpec is incorrectly used.
+    """
 
 
 class HexagonSpec:
@@ -72,8 +78,14 @@ class HexagonSpec:
         self.last_input = None
         self.yaml_file_name = "app.yml"
         self._execution_time_start = None
+        self._run_started = False
 
     def executing_first(self, lambda_func: Callable) -> "HexagonSpec":
+        if self._run_started:
+            raise DeveloperError(
+                "executing_first() must be one of the first steps in the test. "
+                "It should not be used after run_hexagon()"
+            )
         _log(self.executing_first, lambda_func=lambda_func)
         lambda_func(self)
         return self
@@ -101,6 +113,7 @@ class HexagonSpec:
         )
         __tracebackhide__ = True
         self._execution_time_start = time.time()
+        self._run_started = True
         if command:
             self.command = command
             self.test_dir, self.process = run_hexagon_e2e_test(
@@ -118,6 +131,10 @@ class HexagonSpec:
         return self
 
     def with_shared_behavior(self, func: Callable):
+        if not self._run_started:
+            raise DeveloperError(
+                "with_shared_behavior() cannot be used before was called run_hexagon()"
+            )
         _log(self.with_shared_behavior, func=func)
         __tracebackhide__ = True
         func(self)
