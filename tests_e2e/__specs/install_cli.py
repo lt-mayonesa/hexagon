@@ -6,7 +6,7 @@ import pytest
 
 from tests_e2e.__specs.utils.hexagon_spec import as_a_user
 
-TEST_ENV_VARS = {
+MOCK_UPDATER_ENV_VARS = {
     "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",
     "HEXAGON_DEPENDENCY_UPDATER_MOCK_ENABLED": "1",
 }
@@ -48,7 +48,7 @@ def test_install_cli(request):
     test_folder_path = test_dirs[request.node.name]
     (
         as_a_user(__file__, test_dir=test_folder_path)
-        .run_hexagon(os_env_vars=TEST_ENV_VARS)
+        .run_hexagon(os_env_vars=MOCK_UPDATER_ENV_VARS)
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
@@ -82,7 +82,7 @@ def test_install_cli_and_provide_bins_path(request):
     test_folder_path = test_dirs[request.node.name]
     (
         as_a_user(__file__, test_dir=test_folder_path)
-        .run_hexagon(os_env_vars=TEST_ENV_VARS)
+        .run_hexagon(os_env_vars=MOCK_UPDATER_ENV_VARS)
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
@@ -124,7 +124,7 @@ def test_install_cli_pass_arguments(request):
                 os.path.join(test_folder_path, "config.yml"),
                 f"--bin-path={binary_location_path(test_folder_path)}",
             ],
-            os_env_vars=TEST_ENV_VARS,
+            os_env_vars=MOCK_UPDATER_ENV_VARS,
         )
         .then_output_should_be(
             ["would have ran python3 -m pip install -r requirements.txt"], True
@@ -156,7 +156,7 @@ def test_install_cli_change_entrypoint_shell(request):
                 os.path.join(test_folder_path, "config_entrypoint_shell.yml"),
                 f"--bin-path={binary_location_path(test_folder_path)}",
             ],
-            os_env_vars=TEST_ENV_VARS,
+            os_env_vars=MOCK_UPDATER_ENV_VARS,
         )
         .then_output_should_be(["$ hexagon-test"], discard_until_first_match=True)
         .exit()
@@ -184,7 +184,7 @@ def test_install_cli_change_entrypoint_pre_command(request):
                 os.path.join(test_folder_path, "config_entrypoint_pre_command.yml"),
                 f"--bin-path={binary_location_path(test_folder_path)}",
             ],
-            os_env_vars=TEST_ENV_VARS,
+            os_env_vars=MOCK_UPDATER_ENV_VARS,
         )
         .then_output_should_be(["$ hexagon-test"], discard_until_first_match=True)
         .exit()
@@ -212,7 +212,7 @@ def test_install_cli_change_entrypoint_environ(request):
                 os.path.join(test_folder_path, "config_entrypoint_environ.yml"),
                 f"--bin-path={binary_location_path(test_folder_path)}",
             ],
-            os_env_vars=TEST_ENV_VARS,
+            os_env_vars=MOCK_UPDATER_ENV_VARS,
         )
         .then_output_should_be(["$ hexagon-test"], discard_until_first_match=True)
         .exit()
@@ -242,7 +242,7 @@ def test_install_cli_change_entrypoint_complete(request):
                 os.path.join(test_folder_path, "config_entrypoint_complete.yml"),
                 f"--bin-path={binary_location_path(test_folder_path)}",
             ],
-            os_env_vars=TEST_ENV_VARS,
+            os_env_vars=MOCK_UPDATER_ENV_VARS,
         )
         .then_output_should_be(["$ hexagon-test"], discard_until_first_match=True)
         .exit()

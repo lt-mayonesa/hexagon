@@ -24,6 +24,8 @@ def init_hexagon_e2e_test(test_file, test_dir: Optional[str] = None):
 
     tmp_dir = test_dir or tempfile.mkdtemp(suffix="_hexagon")
     copytree(test_folder_path, tmp_dir, dirs_exist_ok=True)
+    print(f"Initializing e2e test: {test_file}")
+    print(f"Copied test folder from {test_folder_path} to {tmp_dir}")
     return tmp_dir
 
 
@@ -33,8 +35,7 @@ def run_hexagon_e2e_test(
     os_env_vars: Optional[Dict[str, str]] = None,
     test_dir: Optional[str] = None,
 ) -> (str, subprocess.Popen[str]):
-    if os_env_vars is None:
-        os_env_vars = {}
+    os_env_vars = os_env_vars.copy() if os_env_vars is not None else {}
 
     _set_env_vars_defaults(test_dir, os_env_vars)
     _create_required_dirs(os_env_vars)
