@@ -14,7 +14,7 @@ last_output_file_path = os.path.realpath(
 )
 
 
-def debugger_is_active() -> bool:
+def _debugger_is_active() -> bool:
     """Return if the debugger is currently active"""
     # Check for standard trace function
     gettrace = hasattr(sys, "gettrace") and sys.gettrace() is not None
@@ -29,6 +29,14 @@ def debugger_is_active() -> bool:
     env_debugger = os.environ.get("PYTHONBREAKPOINT") is not None
 
     return gettrace or pydev_debugger or vscode_debugger or env_debugger
+
+
+def _debug_logs_requested(debug: bool) -> bool:
+    return (
+        os.environ.get("HEXAGON_E2E_TEST_DEBUG", "false") == "true"
+        or os.environ.get("ACTIONS_RUNNER_DEBUG", "false") == "true"
+        or debug
+    )
 
 
 def _save_last_output(lines: List[str]):
@@ -116,7 +124,7 @@ def _read_next_line(process: subprocess.Popen, lines_read: List[str]):
 
     signal.signal(signal.SIGALRM, timeout_handler)
 
-    if not debugger_is_active():
+    if not _debugger_is_active():
         signal.alarm(10)
     line: str = process.stdout.readline()
     signal.alarm(0)
@@ -235,7 +243,7 @@ def assert_process_output(
         line: str = _read_next_line(process, lines_read)
         expected = expected_output[line_index]
 
-        if debug:
+        if _debug_logs_requested(debug):
             print(
                 f"[dim]expected: {expected}[/dim]\n"
                 f"[dim]line: {line}[/dim]\n"
@@ -270,7 +278,7 @@ def assert_process_ended(
 ):
     __tracebackhide__ = True
 
-    if debugger_is_active():
+    if _debugger_is_active():
         timeout_in_seconds = 60 * 5  # 5 minutes
 
     err = None
