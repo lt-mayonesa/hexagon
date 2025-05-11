@@ -35,7 +35,7 @@ def _log(f, *args, **kwargs):
     Prints the hexagon step being executed.
 
     This was previously defined as a decorator, using ParamSpec to support type hints.
-    But it wasn't working correctly as decorated methods are part of a class. ¯\_(ツ)_/¯
+    But it wasn't working correctly as decorated methods are part of a class.
 
     :param f: reference to the function being logged
     :param args: function args
@@ -69,7 +69,7 @@ class HexagonSpec:
     HEXAGON_STORAGE_PATH = "HEXAGON_STORAGE_PATH"
     HEXAGON_CONFIG_FILE = "HEXAGON_CONFIG_FILE"
 
-    def __init__(self, file, test_dir=None) -> None:
+    def __init__(self, file: str, test_dir: str = None, debug: bool = False) -> None:
         self.__file = file
         self.test_dir = init_hexagon_e2e_test(self.__file, test_dir)
         self.process: Optional[Popen[str]] = None
@@ -79,6 +79,7 @@ class HexagonSpec:
         self.yaml_file_name = "app.yml"
         self._execution_time_start = None
         self._run_started = False
+        self.debug = debug
 
     def executing_first(self, lambda_func: Callable) -> "HexagonSpec":
         if self._run_started:
@@ -103,6 +104,7 @@ class HexagonSpec:
         command: List[str] = None,
         os_env_vars: Optional[Dict[str, str]] = None,
         test_dir: Optional[str] = None,
+        execution_cwd: Optional[str] = None,
     ) -> "HexagonSpec":
         print(f"\n\n[dim]RUNNING SPEC -> [/dim][b]{inspect.stack()[1][3]}[/b]")
         _log(
@@ -110,6 +112,7 @@ class HexagonSpec:
             command=command,
             os_env_vars=os_env_vars,
             test_dir=test_dir,
+            execution_cwd=execution_cwd,
         )
         __tracebackhide__ = True
         self._execution_time_start = time.time()
@@ -120,13 +123,15 @@ class HexagonSpec:
                 self.command,
                 yaml_file_name=self.yaml_file_name,
                 os_env_vars=os_env_vars,
-                test_dir=test_dir or self.test_dir,
+                installation_cwd=test_dir or self.test_dir,
+                execution_cwd=execution_cwd,
             )
         else:
             self.test_dir, self.process = run_hexagon_e2e_test(
                 yaml_file_name=self.yaml_file_name,
                 os_env_vars=os_env_vars,
-                test_dir=test_dir or self.test_dir,
+                installation_cwd=test_dir or self.test_dir,
+                execution_cwd=execution_cwd,
             )
         return self
 
@@ -159,6 +164,7 @@ class HexagonSpec:
             discard_until_first_match=discard_until_first_match,
             ignore_blank_lines=ignore_blank_lines,
             lines_read=self.lines_read,
+            debug=self.debug,
         )
         return self
 
@@ -280,5 +286,7 @@ class HexagonSpec:
         return self
 
 
-def as_a_user(test_file, test_dir=None) -> "HexagonSpec":
-    return HexagonSpec(test_file, test_dir=test_dir)
+def as_a_user(
+    test_file: str, test_dir: str = None, debug: bool = False
+) -> "HexagonSpec":
+    return HexagonSpec(test_file, test_dir=test_dir, debug=debug)

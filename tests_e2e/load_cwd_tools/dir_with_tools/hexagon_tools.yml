@@ -1,0 +1,6 @@
+tools:
+  - name: extra-tool
+    alias: et
+    long_name: Extra tool
+    type: shell
+    action: echo "executed extra tool"
