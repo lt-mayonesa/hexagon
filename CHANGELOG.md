@@ -1,6 +1,31 @@
 # CHANGELOG
 
 
+## v0.63.0 (2025-05-11)
+
+### Chores
+
+- **e2e**: Minor code improvements ([#151](https://github.com/lt-mayonesa/hexagon/pull/151),
+  [`ebf4f87`](https://github.com/lt-mayonesa/hexagon/commit/ebf4f87213cddc665deef16e5dc1a6e988432659))
+
+- **tests**: Run e2e tests in parallel ([#90](https://github.com/lt-mayonesa/hexagon/pull/90),
+  [`5392dbe`](https://github.com/lt-mayonesa/hexagon/commit/5392dbed2ebd0130814def162c61abcbe2699635))
+
+### Features
+
+- **cwd-tools**: Load tools defined in hexagon_tools yaml
+  ([#152](https://github.com/lt-mayonesa/hexagon/pull/152),
+  [`93fd728`](https://github.com/lt-mayonesa/hexagon/commit/93fd72878761bf01d4761ca7dc476400e39dfe1f))
+
+added support for loading extra tools if a file named hexagon_tools.yml exists in the current
+  working directory.
+
+### Refactoring
+
+- **prompt**: Use Separator tool ([#153](https://github.com/lt-mayonesa/hexagon/pull/153),
+  [`faf0cd0`](https://github.com/lt-mayonesa/hexagon/commit/faf0cd05baac2eaba392c46aadb8b5fda2c03ef9))
+
+
 ## v0.62.2 (2025-05-09)
 
 ### Bug Fixes
