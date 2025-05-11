@@ -13,6 +13,7 @@ class ToolType(str, Enum):
     hexagon = "hexagon"
     group = "group"
     function = "function"
+    separator = "separator"
 
 
 class Tool(BaseModel):
@@ -53,3 +54,8 @@ GroupTool.model_rebuild()
 
 class ToolGroupConfigFile(BaseModel):
     tools: List[Union[ActionTool, GroupTool, FunctionTool]]
+
+
+Separator = FunctionTool(
+    name="__separator", type=ToolType.separator, function=lambda: None
+)

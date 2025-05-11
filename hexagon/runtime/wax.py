@@ -2,7 +2,7 @@ from typing import Union, List
 
 from hexagon.domain.env import Env
 from hexagon.domain.hooks.wax import Selection, SelectionType
-from hexagon.domain.tool import Tool
+from hexagon.domain.tool import Tool, Separator
 from hexagon.support.hooks import HexagonHooks
 from hexagon.support.input.prompt import prompt
 
@@ -24,7 +24,7 @@ def __classifier(value: Union[Tool, Env]):
 
 def __choices_with_long_name(choices: List[Union[Tool, Env]], classifier=lambda x: ""):
     def build_display(v: Union[Tool, Env]):
-        if "__separator" in v.name:
+        if Separator.name in v.name:
             return "--------------------------------------------------------------------------------"
         else:
             gap = 60 if v.description else 0
@@ -58,7 +58,7 @@ def select_env(available_envs: List[Env], tool_envs: dict = None, selected: str 
                 choices=__choices_with_long_name(
                     [e for e in available_envs if e.name in tool_envs.keys()]
                 ),
-                validate=lambda x: x and "__separator" not in x,
+                validate=lambda x: x and Separator.name not in x,
                 invalid_message=_("error.support.wax.invalid_environment"),
             ),
             True,
@@ -78,7 +78,7 @@ def select_tool(tools: List[Tool], selected: str = None):
     name = prompt.fuzzy(
         message=_("action.support.wax.select_tool"),
         choices=__choices_with_long_name(tools, classifier=__classifier),
-        validate=lambda x: x and "__separator" not in x,
+        validate=lambda x: x and Separator.name not in x,
         invalid_message=_("error.support.wax.invalid_tool"),
     )
 
