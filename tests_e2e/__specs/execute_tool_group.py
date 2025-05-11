@@ -53,15 +53,11 @@ def test_execute_tool_from_ui_after_leaving_tool_group():
             discard_until_first_match=True,
         )
         # Go back to previous (root) menu
-        .arrow_down()
-        .arrow_down()
+        .arrow_down(times=2)
         .enter()
         .then_output_should_be(["Go back"], discard_until_first_match=True)
         # Run an echo tool in the main app.yml file
-        .arrow_down()
-        .arrow_down()
-        .arrow_down()
-        .arrow_down()
+        .arrow_down(times=4)
         .then_output_should_be(
             ["Hi, which tool would you like to use today?"],
             discard_until_first_match=True,

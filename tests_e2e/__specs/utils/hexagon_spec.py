@@ -186,10 +186,18 @@ class HexagonSpec:
 
         return self
 
-    def arrow_down(self) -> "HexagonSpec":
+    def arrow_down(self, times: int = 1) -> "HexagonSpec":
+        """
+        Simulates pressing the arrow down key.
+        Sometimes test fail in CI if multiple .arrow_down().arrow_down()... are used.
+        If that happens use the :times: parameter.
+
+        :param times: number of times to press the arrow down key
+        :return:
+        """
         _log(self.arrow_down)
         __tracebackhide__ = True
-        write_to_process(self.process, ARROW_DOWN_CHARACTER)
+        write_to_process(self.process, ARROW_DOWN_CHARACTER * times)
         return self
 
     def arrow_up(self) -> "HexagonSpec":
