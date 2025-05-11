@@ -1,0 +1,13 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+
+tools:
+  - name: normal-tool
+    alias: nt
+    long_name: Normal tool
+    type: shell
+    action: echo "executed normal tool"
+
+envs: []

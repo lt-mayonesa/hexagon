@@ -206,6 +206,7 @@ def assert_process_output(
     discard_until_first_match=False,
     ignore_blank_lines=True,
     lines_read: List[str] = None,
+    debug: bool = False,
 ):
     """
     Assert the output of a CLI process
@@ -220,6 +221,7 @@ def assert_process_output(
     :param discard_until_first_match: Discard lines until the first expected line is found
     :param ignore_blank_lines: If line is blank ("\n"), ignore it
     :param lines_read: List to accumulate the lines read from the process
+    :param debug: whether to log debug information
     :return:
     """
     __tracebackhide__ = True
@@ -232,6 +234,14 @@ def assert_process_output(
     ):
         line: str = _read_next_line(process, lines_read)
         expected = expected_output[line_index]
+
+        if debug:
+            print(
+                f"[dim]expected: {expected}[/dim]\n"
+                f"[dim]line: {line}[/dim]\n"
+                f"[dim]discard_until_first_match: {discard_until_first_match}[/dim]\n"
+                f"[dim]ignore_blank_lines: {ignore_blank_lines}[/dim]\n"
+            )
 
         if ignore_blank_lines and _is_linebreak(line):
             continue

@@ -41,6 +41,7 @@ class Configuration:
         self.custom_tools_path = None
         self.__yaml = None
         self.__config: Optional[ConfigFile] = None
+        self.cwd_tools: List[Tool] = []
 
     def init_config(self, path: str) -> Tuple[Cli, List[Tool], List[Env]]:
         self.project_yaml = path
@@ -57,11 +58,41 @@ class Configuration:
 
         self.__recursive_group_load(self.__config.tools)
 
+        return self._configuration_tuple()
+
+    def add_tools(self, tools: List[Tool]) -> Tuple[Cli, List[Tool], List[Env]]:
+        self.cwd_tools += tools
+
+        return self._configuration_tuple()
+
+    def refresh(self) -> Tuple[Cli, List[Tool], List[Env]]:
+        return self.init_config(self.project_yaml)
+
+    def save(self) -> Tuple[Cli, List[Tool], List[Env]]:
+        write_file(self.project_yaml, self.__yaml)
+        return self._configuration_tuple()
+
+    def add_tool(self, tool: Union[ActionTool, GroupTool]):
+        self.__config.tools.append(tool)
+        self.__yaml["tools"].append(
+            tool.model_dump(mode="json", exclude_none=True, exclude_unset=True)
+        )
+
+    def update_custom_tools_path(self, value, comment=None, position=0):
+        self.__config.cli.custom_tools_dir = value
+        self.__yaml["cli"].insert(position, "custom_tools_dir", value, comment)
+        self.__register_custom_tools_path()
+
+    def _configuration_tuple(self):
         return (
             self.__config.cli,
-            self.__config.tools + self.__defaults,
+            self.cwd_tools + self.__config.tools + self.__defaults,
             self.__config.envs,
         )
+
+    @property
+    def has_config(self):
+        return self.__config is not None
 
     def __recursive_group_load(self, tools):
         for tool in tools:
@@ -80,40 +111,14 @@ class Configuration:
                     tool.tools = group_config.tools
                 self.__recursive_group_load(tool.tools)
 
-    def refresh(self) -> Tuple[Cli, List[Tool], List[Env]]:
-        return self.init_config(self.project_yaml)
-
-    def save(self) -> Tuple[Cli, List[Tool], List[Env]]:
-        write_file(self.project_yaml, self.__yaml)
-        return (
-            self.__config.cli,
-            self.__config.tools + self.__defaults,
-            self.__config.envs,
-        )
-
-    def add_tool(self, tool: Union[ActionTool, GroupTool]):
-        self.__config.tools.append(tool)
-        self.__yaml["tools"].append(
-            tool.model_dump(mode="json", exclude_none=True, exclude_unset=True)
-        )
-
-    def update_custom_tools_path(self, value, comment=None, position=0):
-        self.__config.cli.custom_tools_dir = value
-        self.__yaml["cli"].insert(position, "custom_tools_dir", value, comment)
-        self.__register_custom_tools_path()
-
     def __register_custom_tools_path(self):
         self.custom_tools_path = register_custom_tools_path(
             self.__config.cli.custom_tools_dir, self.project_path
         )
 
-    @property
-    def has_config(self):
-        return self.__config is not None
-
     @staticmethod
     def __initial_setup_config() -> Tuple[Cli, List[Tool], List[Env]]:
-        def tolls():
+        def _tools():
             return [
                 ActionTool(
                     name="install",
@@ -135,7 +140,7 @@ class Configuration:
 
         return (
             Cli(name="Hexagon", command="hexagon"),
-            tolls(),
+            _tools(),
             [],
         )
 

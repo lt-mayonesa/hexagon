@@ -33,20 +33,33 @@ def run_hexagon_e2e_test(
     args: List[str] = tuple(),
     yaml_file_name: str = "app.yml",
     os_env_vars: Optional[Dict[str, str]] = None,
-    test_dir: Optional[str] = None,
+    installation_cwd: Optional[str] = None,
+    execution_cwd: Optional[str] = None,
 ) -> (str, subprocess.Popen[str]):
+    """
+    Run hexagon in a subprocess setting the required environment variables.
+
+    :param args: a list of command line arguments to pass to hexagon
+    :param yaml_file_name: the name of the yaml file to use for the hexagon configuration
+    :param os_env_vars: a dictionary of environment variables to set for the subprocess
+    :param installation_cwd: directory where the yaml_file_name is located
+    :param execution_cwd: directory where the subprocess will be executed
+    :return:
+    """
     os_env_vars = os_env_vars.copy() if os_env_vars is not None else {}
 
-    _set_env_vars_defaults(test_dir, os_env_vars)
+    _set_env_vars_defaults(installation_cwd, os_env_vars)
     _create_required_dirs(os_env_vars)
 
-    app_config_path = os.path.join(test_dir, *yaml_file_name.split("/"))
+    app_config_path = os.path.join(installation_cwd, *yaml_file_name.split("/"))
     if os.path.isfile(app_config_path):
         os_env_vars["HEXAGON_CONFIG_FILE"] = app_config_path
 
     os_env_vars["PYTHONPATH"] = hexagon_path
 
-    return test_dir, run_hexagon_subprocess(test_dir, args, os_env_vars)
+    return installation_cwd, run_hexagon_subprocess(
+        execution_cwd or installation_cwd, args, os_env_vars
+    )
 
 
 def _create_required_dirs(os_env_vars):
@@ -73,13 +86,10 @@ def _set_env_vars_defaults(test_dir, os_env_vars):
 
 
 def run_hexagon_subprocess(
-    cwd: str,
-    args: List[str] = tuple(),
-    os_env_vars: Optional[Dict[str, str]] = None,
+    execution_cwd: str, args: List[str], os_env_vars: Dict[str, str]
 ):
     environment = os.environ.copy()
-    if os_env_vars:
-        environment.update(os_env_vars)
+    environment.update(os_env_vars)
 
     command = []
 
@@ -100,7 +110,7 @@ def run_hexagon_subprocess(
         stderr=subprocess.PIPE,
         stdin=subprocess.PIPE,
         encoding="utf-8",
-        cwd=cwd,
+        cwd=execution_cwd,
         env=environment,
         universal_newlines=True,
     )

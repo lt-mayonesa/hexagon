@@ -63,6 +63,7 @@ class Options(BaseSettings):
     config_storage_path: Optional[DirectoryPath] = None
     hints_disabled: Optional[bool] = False
     keymap: KeymapOptions = KeymapOptions()
+    cwd_tools_disabled: Optional[bool] = False
 
     @classmethod
     def settings_customise_sources(
