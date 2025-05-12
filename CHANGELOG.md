@@ -1,6 +1,22 @@
 # CHANGELOG
 
 
+## v0.63.1 (2025-05-12)
+
+### Bug Fixes
+
+- **release**: Use correct publish tool
+  ([`1925fa5`](https://github.com/lt-mayonesa/hexagon/commit/1925fa5e0f3810e7c3b582f405487fcd18828caa))
+
+### Chores
+
+- **e2e**: Reordered group tools to fix flaky test
+  ([#154](https://github.com/lt-mayonesa/hexagon/pull/154),
+  [`9e5e343`](https://github.com/lt-mayonesa/hexagon/commit/9e5e343390fe2dcfdc117bd2c32611fb46f363c6))
+
+ci logs where complaining about initial branch name being master
+
+
 ## v0.63.0 (2025-05-11)
 
 ### Chores
