@@ -199,16 +199,6 @@ jobs:
           git_committer_name: "github-actions"
           git_committer_email: "actions@users.noreply.github.com"
 
-      - name: Publish package distributions to GitHub Releases
-        id: github-release
-        # NOTE: DO NOT wrap the conditional in ${{ }} as it will always evaluate to true.
-        # See https://github.com/actions/runner/issues/1173
-        if: steps.release.outputs.released == 'true'
-        uses: python-semantic-release/upload-to-gh-release@main
-        with:
-          github_token: ${{ secrets.USER_TOKEN }}
-          tag: ${{ steps.release.outputs.tag }}
-
       # see https://docs.pypi.org/trusted-publishers/
       - name: Publish package distributions to PyPI
         id: pypi-publish
@@ -218,6 +208,17 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           verbose: true
+
+      - name: Publish package distributions to GitHub Releases
+        id: github-release
+        # NOTE: DO NOT wrap the conditional in ${{ }} as it will always evaluate to true.
+        # See https://github.com/actions/runner/issues/1173
+        if: steps.release.outputs.released == 'true'
+        uses: python-semantic-release/publish-action@v9.21.1
+        with:
+          github_token: ${{ secrets.USER_TOKEN }}
+          tag: ${{ steps.release.outputs.tag }}
+
 
   nightly:
     if: ${{ github.event_name == 'pull_request' || github.event_name == 'pull_request_target' }}

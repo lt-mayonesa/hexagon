@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 12:07+0200\n"
+"POT-Creation-Date: 2025-05-11 11:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -138,33 +138,33 @@ msgstr "Added alias to {file}"
 msgid "error.domain.configuration.group_tool_file_not_found"
 msgstr "File {config_file_path} could not be found"
 
-#: hexagon/runtime/configuration.py:120
+#: hexagon/runtime/configuration.py:125
 msgid "msg.domain.configuration.install_cli_long_name"
 msgstr "Install CLI"
 
-#: hexagon/runtime/configuration.py:121
+#: hexagon/runtime/configuration.py:126
 msgid "msg.domain.configuration.install_cli_description"
 msgstr "Install a custom project CLI from a YAML file."
 
-#: hexagon/runtime/configuration.py:127
+#: hexagon/runtime/configuration.py:132
 msgid "msg.domain.configuration.get_json_schema_long_name"
 msgstr "Get JSON Schema"
 
-#: hexagon/runtime/configuration.py:129
+#: hexagon/runtime/configuration.py:134
 msgid "msg.domain.configuration.get_json_schema_description"
 msgstr ""
 "Generate JSON Schema for hexagon config file (app.yml). Which can be "
 "imported in your IDE, or used for validation."
 
-#: hexagon/runtime/configuration.py:147
+#: hexagon/runtime/configuration.py:152
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr "Save Last Command as Shell Alias"
 
-#: hexagon/runtime/configuration.py:154
+#: hexagon/runtime/configuration.py:159
 msgid "msg.domain.configuration.replay_long_name"
 msgstr "Replay Last Command"
 
-#: hexagon/runtime/configuration.py:160
+#: hexagon/runtime/configuration.py:165
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr "Create A New Tool"
 
@@ -216,11 +216,11 @@ msgstr "There where {count} error(s) in your input for tool {tool}"
 msgid "error.support.execute.errors.invalid_argument"
 msgstr "✗ [bold]{loc}[/bold] -> {message}"
 
-#: hexagon/runtime/execute/errors.py:132
+#: hexagon/runtime/execute/errors.py:141
 msgid "error.support.execute.errors.python_dependency_error"
 msgstr "Your custom action seems to have a module dependency error"
 
-#: hexagon/runtime/execute/errors.py:138
+#: hexagon/runtime/execute/errors.py:147
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr "Execution of tool {action} failed"
 

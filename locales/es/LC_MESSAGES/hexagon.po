@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 12:07+0200\n"
+"POT-Creation-Date: 2025-05-11 11:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,31 +140,31 @@ msgstr "Se agrego el alias al archivo {file}"
 msgid "error.domain.configuration.group_tool_file_not_found"
 msgstr "No se encontró el archivo {config_file_path}"
 
-#: hexagon/runtime/configuration.py:120
+#: hexagon/runtime/configuration.py:125
 msgid "msg.domain.configuration.install_cli_long_name"
 msgstr "Instalar CLI"
 
-#: hexagon/runtime/configuration.py:121
+#: hexagon/runtime/configuration.py:126
 msgid "msg.domain.configuration.install_cli_description"
 msgstr "Instalar una CLI desde un archivo YAML de configuración."
 
-#: hexagon/runtime/configuration.py:127
+#: hexagon/runtime/configuration.py:132
 msgid "msg.domain.configuration.get_json_schema_long_name"
 msgstr "Crear una nueva herramienta"
 
-#: hexagon/runtime/configuration.py:129
+#: hexagon/runtime/configuration.py:134
 msgid "msg.domain.configuration.get_json_schema_description"
 msgstr "Instalar una CLI desde un archivo YAML de configuración."
 
-#: hexagon/runtime/configuration.py:147
+#: hexagon/runtime/configuration.py:152
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr "Guardar el último comando ejecutado como shell alias"
 
-#: hexagon/runtime/configuration.py:154
+#: hexagon/runtime/configuration.py:159
 msgid "msg.domain.configuration.replay_long_name"
 msgstr "Repetir el último comando ejecutado"
 
-#: hexagon/runtime/configuration.py:160
+#: hexagon/runtime/configuration.py:165
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr "Crear una nueva herramienta"
 
@@ -218,11 +218,11 @@ msgstr "Hay {count} errores en el input para la herramienta {tool}"
 msgid "error.support.execute.errors.invalid_argument"
 msgstr "✗ [bold]{loc}[/bold] -> {message}"
 
-#: hexagon/runtime/execute/errors.py:132
+#: hexagon/runtime/execute/errors.py:141
 msgid "error.support.execute.errors.python_dependency_error"
 msgstr "Tu acción parece tener un error de dependencias de módulos"
 
-#: hexagon/runtime/execute/errors.py:138
+#: hexagon/runtime/execute/errors.py:147
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr "La ejecución de {action} falló"
 
