@@ -12,12 +12,6 @@ envs:
     long_name: qa
 
 tools:
-  - name: google
-    long_name: Google
-    type: web
-    action: open_link
-    envs:
-      "*": https://www.google.com/
   - name: top-level-echo
     long_name: An echo in the main app.yml file
     type: shell

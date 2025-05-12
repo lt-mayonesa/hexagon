@@ -10,6 +10,6 @@ def silent_fail(func):
         try:
             return func()
         except Exception:
-            return
+            return None
 
     return wrapper

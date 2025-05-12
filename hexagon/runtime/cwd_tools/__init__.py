@@ -1,16 +1,9 @@
 import os
-from typing import Union, List
-
-from pydantic import BaseModel
 
 from hexagon.domain import HEXAGON_CWD_TOOLS_FILE_NAME
-from hexagon.domain.tool import ActionTool, GroupTool
+from hexagon.domain.tool import OnlyToolsFile
 from hexagon.runtime.options import Options
 from hexagon.runtime.yaml import read_file, load_model
-
-
-class OnlyToolsFile(BaseModel):
-    tools: List[Union[ActionTool, GroupTool]]
 
 
 def collect_cwd_tools(options: Options):

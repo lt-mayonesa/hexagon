@@ -56,6 +56,10 @@ class ToolGroupConfigFile(BaseModel):
     tools: List[Union[ActionTool, GroupTool, FunctionTool]]
 
 
+class OnlyToolsFile(BaseModel):
+    tools: List[Union[ActionTool, GroupTool]]
+
+
 Separator = FunctionTool(
     name="__separator", type=ToolType.separator, function=lambda: None
 )
