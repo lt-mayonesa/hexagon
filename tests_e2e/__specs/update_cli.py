@@ -19,7 +19,7 @@ def _prepare(test_folder_path):
     local_repo_path = os.path.join(test_folder_path, "local")
     os.makedirs(remote_repo_path, exist_ok=True)
     os.makedirs(local_repo_path, exist_ok=True)
-    subprocess.check_call("git init", cwd=remote_repo_path, shell=True)
+    subprocess.check_call("git init -b main", cwd=remote_repo_path, shell=True)
     subprocess.check_call("git branch -m main", cwd=remote_repo_path, shell=True)
     files_to_copy = ["app.yml", "package.json", "Pipfile", "yarn.lock"]
     for file in files_to_copy:

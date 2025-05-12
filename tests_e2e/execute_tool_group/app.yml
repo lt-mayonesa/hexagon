@@ -18,6 +18,10 @@ tools:
     action: open_link
     envs:
       "*": https://www.google.com/
+  - name: top-level-echo
+    long_name: An echo in the main app.yml file
+    type: shell
+    action: echo "top level echo"
   - name: group
     long_name: A group of tools
     type: group
@@ -30,10 +34,6 @@ tools:
     long_name: A group of tools in a dir with no custom dir
     type: group
     tools: group_tool_dir/app.yml
-  - name: top-level-echo
-    long_name: An echo in the main app.yml file
-    type: shell
-    action: echo "top level echo"
   - name: inline-group
     long_name: A group of tools defined in the same yaml
     type: group
