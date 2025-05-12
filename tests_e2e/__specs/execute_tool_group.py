@@ -6,6 +6,7 @@ def test_execute_tool_group_from_gui():
         as_a_user(__file__)
         .run_hexagon()
         .arrow_down()
+        .arrow_down()
         .enter()
         .then_output_should_be(
             [["Hi, which tool would you like to use today?", "A group of tools"]],
@@ -21,6 +22,7 @@ def test_execute_tool_group_with_no_alias_from_gui():
     (
         as_a_user(__file__)
         .run_hexagon()
+        .arrow_down()
         .arrow_down()
         .arrow_down()
         .enter()
@@ -47,6 +49,7 @@ def test_execute_tool_from_ui_after_leaving_tool_group():
         .run_hexagon(os_env_vars={"HEXAGON_THEME": "no_border"})
         # Select the first group
         .arrow_down()
+        .arrow_down()
         .enter()
         .then_output_should_be(
             [["Hi, which tool would you like to use today?", "A group of tools"]],
@@ -58,12 +61,6 @@ def test_execute_tool_from_ui_after_leaving_tool_group():
         .enter()
         .then_output_should_be(["Go back"], discard_until_first_match=True)
         # Run an echo tool in the main app.yml file
-        .arrow_down()
-        .then_output_should_be([""])
-        .arrow_down()
-        .then_output_should_be([""])
-        .arrow_down()
-        .then_output_should_be([""])
         .arrow_down()
         .then_output_should_be(
             ["Hi, which tool would you like to use today?"],
@@ -129,6 +126,7 @@ def test_execute_tool_group_has_correct_trace():
     (
         as_a_user(__file__)
         .run_hexagon(os_env_vars={"HEXAGON_THEME": "no_border"})
+        .arrow_down()
         .arrow_down()
         .enter()
         .then_output_should_be(
