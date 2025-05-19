@@ -42,7 +42,7 @@ def analyze_data():
     return results
 ```
 
-Functions should return a list of strings, which will be displayed as output in the CLI. If a function doesn't return anything, Hexagon will display a default success message.
+Functions should return a list of strings, which will be displayed as output in the CLI using the `log.result()` method. If a function doesn't return anything, Hexagon will display a default success message.
 
 ## Function Parameters
 

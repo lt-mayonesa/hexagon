@@ -27,6 +27,10 @@ Hexagon provides several built-in hooks:
 | Hook | Description | When It's Called |
 |------|-------------|------------------|
 | `start` | Called when Hexagon starts | After initialization, before tool execution |
+| `tool_selected` | Called when a tool is selected | After tool selection, before environment selection |
+| `env_selected` | Called when an environment is selected | After environment selection, before tool execution |
+| `before_tool_executed` | Called before a tool is executed | After environment selection, before tool execution |
+| `tool_executed` | Called after a tool is executed | After tool execution, before exit |
 | `end` | Called when Hexagon ends | After tool execution, before exit |
 
 ## Registering Hook Functions

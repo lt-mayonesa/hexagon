@@ -16,17 +16,18 @@ from hexagon.support.output.printer import log
 # Basic output
 log.info("This is an informational message")
 
-# Success message
-log.success("Operation completed successfully")
-
-# Warning message
-log.warning("This is a warning")
+# Result output (for command results)
+log.result("Command output")
 
 # Error message
 log.error("An error occurred")
 
-# Debug message (only shown in debug mode)
-log.debug("Debug information")
+# Panel for highlighted information
+log.panel("Important information")
+
+# Start and finish messages
+log.start("Starting operation")
+log.finish("Operation complete")
 ```
 
 ## Output Methods
@@ -36,13 +37,16 @@ The `log` object provides several methods for different types of output:
 | Method | Description |
 |--------|-------------|
 | `info` | Display an informational message |
-| `success` | Display a success message |
-| `warning` | Display a warning message |
+| `result` | Display command result output |
 | `error` | Display an error message |
-| `debug` | Display a debug message (only shown in debug mode) |
-| `start` | Display a start message |
-| `finish` | Display a finish message |
+| `panel` | Display a highlighted panel with content |
+| `example` | Display code examples with syntax highlighting |
+| `file` | Display file contents with syntax highlighting |
+| `extra` | Display additional information |
+| `start` | Display a start message (typically at CLI start) |
+| `finish` | Display a finish message (typically at CLI end) |
 | `gap` | Add a blank line |
+| `status` | Show a progress status indicator |
 
 ## Themes
 
