@@ -1,0 +1,170 @@
+---
+sidebar_position: 2
+---
+
+# Tool Types
+
+Hexagon supports several tool types, each designed for specific use cases. This guide explains each tool type and how to configure them.
+
+## Web Tools
+
+Web tools open URLs in your default browser. They're useful for accessing web applications, documentation, or any web resource.
+
+### Configuration
+
+```yaml
+- name: docs
+  alias: d
+  long_name: Documentation
+  description: Open team documentation
+  type: web
+  envs:
+    dev: https://docs-dev.example.com
+    prod: https://docs.example.com
+  action: open_link
+```
+
+### Key Properties
+
+- `type`: Must be set to `web`
+- `action`: Must be set to `open_link`
+- `envs`: Optional mapping of environment names to URLs
+
+## Shell Tools
+
+Shell tools execute shell commands. They're useful for running scripts, commands, or any CLI operation.
+
+### Configuration
+
+```yaml
+- name: deploy
+  alias: dep
+  long_name: Deploy Service
+  description: Deploy the service
+  type: shell
+  action: ./scripts/deploy.sh
+```
+
+### Multi-line Commands
+
+For more complex commands, you can use a list of strings:
+
+```yaml
+- name: setup
+  alias: s
+  long_name: Setup Project
+  description: Set up the project
+  type: shell
+  action:
+    - "echo 'Setting up project...'" 
+    - "npm install"
+    - "npm run build"
+```
+
+### Key Properties
+
+- `type`: Must be set to `shell`
+- `action`: The shell command(s) to execute
+
+## Function Tools
+
+Function tools call Python functions. They're useful for implementing custom logic that can't be easily expressed as a shell command.
+
+### Configuration
+
+```yaml
+- name: analyze
+  alias: a
+  long_name: Analyze Data
+  description: Run data analysis
+  type: function
+  function: custom_tools.analysis.analyze_data
+```
+
+### Implementation
+
+Create a Python file in your `custom_tools_dir` with the function implementation:
+
+```python
+# custom_tools/analysis.py
+
+def analyze_data():
+    print("Analyzing data...")
+    # Your analysis logic here
+    return ["Analysis complete", "Found 3 issues"]  # Return list of strings for output
+```
+
+### Key Properties
+
+- `type`: Must be set to `function`
+- `function`: The fully qualified function name
+
+## Group Tools
+
+Group tools organize related tools together. They're useful for creating a hierarchical structure in your CLI.
+
+### Configuration
+
+```yaml
+- name: infra
+  alias: i
+  long_name: Infrastructure
+  description: Infrastructure tools
+  type: group
+  tools:
+    - name: provision
+      alias: p
+      long_name: Provision Resources
+      type: shell
+      action: ./scripts/provision.sh
+    - name: teardown
+      alias: t
+      long_name: Teardown Resources
+      type: shell
+      action: ./scripts/teardown.sh
+```
+
+### Key Properties
+
+- `type`: Must be set to `group`
+- `tools`: List of tools in the group
+
+## Separator
+
+Separators add visual separation between tools in the CLI menu. They're useful for organizing tools into logical sections.
+
+### Configuration
+
+```yaml
+- name: __separator
+  type: separator
+```
+
+### Key Properties
+
+- `type`: Must be set to `separator`
+- `name`: Conventionally set to `__separator`
+
+## Hexagon Tools
+
+Hexagon tools are built-in tools provided by Hexagon itself. They're used for managing Hexagon and your custom CLIs.
+
+### Configuration
+
+These are typically not configured directly by users but are provided by Hexagon.
+
+### Key Properties
+
+- `type`: Set to `hexagon`
+
+## Best Practices
+
+- **Choose the Right Type**: Select the tool type that best fits your use case
+- **Consistent Naming**: Use consistent naming conventions for tools and aliases
+- **Clear Descriptions**: Provide clear descriptions for each tool
+- **Organize with Groups**: Use groups to organize related tools
+- **Use Separators**: Add separators to visually separate different sections of your CLI
+
+## Next Steps
+
+Learn how to configure [Environments](environments) for your CLI.

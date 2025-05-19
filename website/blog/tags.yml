@@ -1,0 +1,19 @@
+cli:
+  label: CLI
+  permalink: /cli
+  description: Posts about command-line interfaces and Hexagon CLI features
+
+release:
+  label: Release
+  permalink: /release
+  description: New releases and version updates
+
+tutorial:
+  label: Tutorial
+  permalink: /tutorial
+  description: Step-by-step guides for using Hexagon
+
+advanced:
+  label: Advanced
+  permalink: /advanced
+  description: Advanced topics and features for power users

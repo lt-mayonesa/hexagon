@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A56E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6C8EF2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Central Hexagon -->
+  <path d="M100 50
+           L130 67
+           L130 102
+           L100 120
+           L70 102
+           L70 67
+           Z" 
+        fill="url(#blueGradient)" 
+        stroke="#2A3698" 
+        stroke-width="2" />
+  
+  <!-- Terminal Symbol in Hexagon -->
+  <text x="90" y="95" font-family="monospace" font-size="20" fill="white">
+    &gt;_
+  </text>
+  
+  <!-- Python File -->
+  <g transform="translate(30, 30)">
+    <rect x="0" y="0" width="40" height="50" rx="3" ry="3" fill="#3776AB" stroke="#2A3698" stroke-width="1" />
+    <text x="12" y="30" font-family="monospace" font-size="12" fill="white">.py</text>
+    
+    <!-- Python Logo Simplified -->
+    <g transform="translate(10, 5) scale(0.2)">
+      <path d="M50,0 C25,0 25,15 25,15 L25,25 L50,25 L50,30 L15,30 C15,30 0,30 0,50 C0,70 15,70 15,70 L25,70 L25,60 C25,60 25,45 40,45 C55,45 65,45 65,45 C65,45 80,45 80,30 C80,15 65,15 65,15 L60,15 L60,15 C60,15 65,0 50,0 Z M35,10 C37.5,10 40,12.5 40,15 C40,17.5 37.5,20 35,20 C32.5,20 30,17.5 30,15 C30,12.5 32.5,10 35,10 Z" fill="white"/>
+      <path d="M50,100 C75,100 75,85 75,85 L75,75 L50,75 L50,70 L85,70 C85,70 100,70 100,50 C100,30 85,30 85,30 L75,30 L75,40 C75,40 75,55 60,55 C45,55 35,55 35,55 C35,55 20,55 20,70 C20,85 35,85 35,85 L40,85 L40,85 C40,85 35,100 50,100 Z M65,90 C62.5,90 60,87.5 60,85 C60,82.5 62.5,80 65,80 C67.5,80 70,82.5 70,85 C70,87.5 67.5,90 65,90 Z" fill="white"/>
+    </g>
+  </g>
+  
+  <!-- JavaScript File -->
+  <g transform="translate(130, 30)">
+    <rect x="0" y="0" width="40" height="50" rx="3" ry="3" fill="#F7DF1E" stroke="#2A3698" stroke-width="1" />
+    <text x="12" y="30" font-family="monospace" font-size="12" fill="#333">.js</text>
+    
+    <!-- JS Logo Simplified -->
+    <g transform="translate(10, 5) scale(0.3)">
+      <path d="M0,0 L60,0 L60,60 L0,60 Z" fill="#F7DF1E"/>
+      <path d="M15,50 C15,55 20,60 25,60 C30,60 35,55 35,50 L35,30 L25,30 L25,50 C25,50 25,50 20,50 C15,50 15,45 15,45 Z" fill="#333"/>
+      <path d="M40,30 L50,30 C55,30 60,35 60,40 C60,45 55,50 50,50 C45,50 40,45 40,40 L30,40 C30,50 40,60 50,60 C60,60 70,50 70,40 C70,30 60,20 50,20 L40,20 Z" fill="#333"/>
+    </g>
+  </g>
+  
+  <!-- Shell Script File -->
+  <g transform="translate(80, 120)">
+    <rect x="0" y="0" width="40" height="50" rx="3" ry="3" fill="#4EAA25" stroke="#2A3698" stroke-width="1" />
+    <text x="12" y="30" font-family="monospace" font-size="12" fill="white">.sh</text>
+    
+    <!-- Bash Logo Simplified -->
+    <g transform="translate(10, 5) scale(0.2)">
+      <path d="M0,50 L40,20 L40,40 L80,10 L80,90 L40,60 L40,80 Z" fill="white"/>
+    </g>
+  </g>
+  
+  <!-- Connecting Lines -->
+  <line x1="70" y1="85" x2="50" y2="55" stroke="#4A56E2" stroke-width="2" stroke-dasharray="3,3" />
+  <line x1="130" y1="85" x2="150" y2="55" stroke="#4A56E2" stroke-width="2" stroke-dasharray="3,3" />
+  <line x1="100" y1="120" x2="100" y2="145" stroke="#4A56E2" stroke-width="2" stroke-dasharray="3,3" />
+</svg>
