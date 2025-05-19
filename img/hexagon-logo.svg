@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="hexGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A56E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6C8EF2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main Hexagon -->
+  <path d="M100 20
+           L170 60
+           L170 140
+           L100 180
+           L30 140
+           L30 60
+           Z" 
+        fill="url(#hexGradient)" 
+        stroke="#2A3698" 
+        stroke-width="4" />
+  
+  <!-- Terminal Symbol -->
+  <g transform="translate(65, 70)">
+    <rect x="0" y="0" width="70" height="50" rx="5" ry="5" fill="white" opacity="0.9" />
+    <text x="10" y="20" font-family="monospace" font-size="16" fill="#333">
+      <tspan x="10" y="25">&gt;_</tspan>
+    </text>
+    
+    <!-- Command Lines -->
+    <line x1="10" y1="35" x2="40" y2="35" stroke="#333" stroke-width="2" />
+    <line x1="10" y1="40" x2="50" y2="40" stroke="#333" stroke-width="2" />
+  </g>
+  
+  <!-- Small Hexagons -->
+  <g opacity="0.7">
+    <path d="M45 50 L55 45 L65 50 L65 60 L55 65 L45 60 Z" fill="white" />
+    <path d="M135 50 L145 45 L155 50 L155 60 L145 65 L135 60 Z" fill="white" />
+    <path d="M45 130 L55 125 L65 130 L65 140 L55 145 L45 140 Z" fill="white" />
+    <path d="M135 130 L145 125 L155 130 L155 140 L145 145 L135 140 Z" fill="white" />
+  </g>
+</svg>

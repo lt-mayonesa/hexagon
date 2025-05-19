@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A56E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6C8EF2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- YAML File -->
+  <g transform="translate(30, 30)">
+    <rect x="0" y="0" width="90" height="110" rx="5" ry="5" fill="white" stroke="#333" stroke-width="2" />
+    
+    <!-- File content lines -->
+    <g fill="#333">
+      <text x="10" y="20" font-family="monospace" font-size="10">cli:</text>
+      <text x="20" y="35" font-family="monospace" font-size="10">name: My CLI</text>
+      <text x="20" y="50" font-family="monospace" font-size="10">command: mc</text>
+      <text x="10" y="65" font-family="monospace" font-size="10">tools:</text>
+      <text x="20" y="80" font-family="monospace" font-size="10">- name: web</text>
+      <text x="20" y="95" font-family="monospace" font-size="10">  type: web</text>
+    </g>
+  </g>
+  
+  <!-- Rocket -->
+  <g transform="translate(130, 40)">
+    <!-- Rocket Body -->
+    <path d="M20,80 L20,30 C20,10 40,0 40,0 C40,0 60,10 60,30 L60,80 Z" fill="url(#blueGradient)" stroke="#2A3698" stroke-width="2" />
+    
+    <!-- Rocket Window -->
+    <circle cx="40" cy="30" r="10" fill="white" stroke="#2A3698" stroke-width="1" />
+    
+    <!-- Rocket Fins -->
+    <path d="M20,80 L0,100 L20,90 Z" fill="#6C8EF2" stroke="#2A3698" stroke-width="1" />
+    <path d="M60,80 L80,100 L60,90 Z" fill="#6C8EF2" stroke="#2A3698" stroke-width="1" />
+    
+    <!-- Rocket Base -->
+    <path d="M20,80 L40,90 L60,80 Z" fill="#FF6B6B" stroke="#2A3698" stroke-width="1" />
+    
+    <!-- Rocket Flames -->
+    <path d="M30,90 L40,120 L50,90" fill="none" stroke="#FF9E4F" stroke-width="4" />
+    <path d="M35,90 L40,110 L45,90" fill="none" stroke="#FFCC4F" stroke-width="2" />
+  </g>
+  
+  <!-- Hexagon Border -->
+  <path d="M100 10
+           L180 50
+           L180 150
+           L100 190
+           L20 150
+           L20 50
+           Z" 
+        fill="none" 
+        stroke="#4A56E2" 
+        stroke-width="2"
+        stroke-dasharray="5,5" />
+</svg>

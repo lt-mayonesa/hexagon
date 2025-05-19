@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="atom.xsl"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://lt-mayonesa.github.io/hexagon/blog</id>
+    <title>Hexagon Blog</title>
+    <updated>2025-05-19T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://lt-mayonesa.github.io/hexagon/blog"/>
+    <subtitle>Hexagon Blog</subtitle>
+    <icon>https://lt-mayonesa.github.io/hexagon/img/favicon.svg</icon>
+    <entry>
+        <title type="html"><![CDATA[Welcome to the Hexagon Blog]]></title>
+        <id>https://lt-mayonesa.github.io/hexagon/blog/welcome-to-hexagon</id>
+        <link href="https://lt-mayonesa.github.io/hexagon/blog/welcome-to-hexagon"/>
+        <updated>2025-05-19T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[This blog will feature updates, tutorials, and insights about Hexagon - the tool that makes your team's knowledge truly accessible, truly shared, and truly empowering through custom CLIs.]]></summary>
+        <content type="html"><![CDATA[<p>This blog will feature updates, tutorials, and insights about Hexagon - the tool that makes your team's knowledge truly accessible, truly shared, and truly empowering through custom CLIs.</p>
+<p>Stay tuned for upcoming posts about:</p>
+<ul>
+<li>New releases and features</li>
+<li>Best practices for creating effective team CLIs</li>
+<li>Advanced usage patterns and customizations</li>
+<li>Community highlights and use cases</li>
+</ul>
+<p>We're excited to share more about Hexagon and how it can help your team streamline workflows and share knowledge effectively.</p>]]></content>
+        <author>
+            <name>Joaco Campero</name>
+            <uri>https://github.com/lt-mayonesa</uri>
+        </author>
+        <category label="CLI" term="CLI"/>
+    </entry>
+</feed>
