@@ -41,6 +41,7 @@ const sidebars: SidebarsConfig = {
       label: 'Advanced',
       items: [
         'advanced/custom-tools',
+        'advanced/prompting',
         'advanced/hooks',
         'advanced/internationalization',
       ],

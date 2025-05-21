@@ -6,6 +6,8 @@ sidebar_position: 2
 
 Hexagon supports several tool types, each designed for specific use cases. This guide explains each tool type and how to configure them.
 
+One of Hexagon's core strengths is its ability to execute custom tools created in Python. This allows you to extend your CLI with powerful, custom functionality beyond the basic tool types.
+
 ## Web Tools
 
 Web tools open URLs in your default browser. They're useful for accessing web applications, documentation, or any web resource.
@@ -157,6 +159,100 @@ These are typically not configured directly by users but are provided by Hexagon
 
 - `type`: Set to `hexagon`
 
+## Custom Python Tools
+
+One of Hexagon's most powerful features is the ability to execute custom Python tools. These are Python modules that implement specific functionality and can be referenced directly in your CLI configuration.
+
+### Configuration
+
+Custom Python tools are typically configured as shell tools that reference a Python module:
+
+```yaml
+- name: custom-tool
+  alias: ct
+  long_name: Custom Tool
+  description: Execute a custom Python tool
+  type: shell
+  action: python_module
+```
+
+You can also provide environment-specific parameters:
+
+```yaml
+- name: custom-tool-env
+  alias: cte
+  long_name: Custom Tool with Environment
+  description: Execute a custom Python tool with environment-specific parameters
+  type: shell
+  action: python_module
+  envs:
+    dev:
+      - param1
+      - param2
+    prod:
+      param1: value1
+      param2: value2
+```
+
+### Implementation
+
+Custom Python tools are implemented as Python modules in the Hexagon codebase or in your custom tools directory. Here's a simplified example of a custom tool implementation:
+
+```python
+from hexagon.support.output.printer import log
+from hexagon.support.input.args import ToolArgs, PositionalArg, Arg
+
+class Args(ToolArgs):
+    name: PositionalArg[str] = Arg(
+        None, prompt_message="Enter a name"
+    )
+
+def main(tool, env, env_args, cli_args):
+    # Access tool configuration
+    tool_name = tool.name
+    
+    # Access environment
+    env_name = env.name if env else "No environment"
+    
+    # Access environment-specific arguments
+    env_specific_args = env_args
+    
+    # Only prompt for command-line arguments if not provided
+    if not cli_args.name.value:
+        cli_args.name.prompt()
+    
+    # Output results
+    log.info(f"Executing {tool_name} in {env_name}")
+    log.info(f"Hello, {cli_args.name.value}!")
+    
+    # Return results (displayed with log.result())
+    return [
+        f"Tool: {tool_name}",
+        f"Environment: {env_name}",
+        f"Environment Args: {env_specific_args}",
+        f"Name: {cli_args.name.value}"
+    ]
+```
+
+### Accessing Tool Configuration
+
+Custom tools have access to:
+
+- `tool`: The tool configuration (name, alias, description, etc.)
+- `env`: The selected environment (if any)
+- `env_args`: Environment-specific arguments from the YAML configuration
+- `cli_args`: Command-line arguments defined in the `Args` class
+
+### Examples in Hexagon Core
+
+Hexagon includes several built-in custom tools in the `hexagon/actions` directory:
+
+- `hexagon/actions/external/open_link.py`: Opens URLs in the default browser
+- `hexagon/actions/internal/create_new_tool.py`: Creates new tools
+- `hexagon/actions/internal/install_cli.py`: Installs a CLI
+
+These tools demonstrate how to implement complex functionality that goes beyond simple shell commands or web links.
+
 ## Best Practices
 
 - **Choose the Right Type**: Select the tool type that best fits your use case
@@ -164,6 +260,7 @@ These are typically not configured directly by users but are provided by Hexagon
 - **Clear Descriptions**: Provide clear descriptions for each tool
 - **Organize with Groups**: Use groups to organize related tools
 - **Use Separators**: Add separators to visually separate different sections of your CLI
+- **Leverage Custom Tools**: Use custom Python tools for complex functionality
 
 ## Next Steps
 

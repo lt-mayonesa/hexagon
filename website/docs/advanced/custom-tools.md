@@ -6,6 +6,8 @@ sidebar_position: 1
 
 Hexagon allows you to create custom tools with Python code. This guide explains how to create and use custom tools in your CLI.
 
+Custom tools are a core feature of Hexagon, allowing you to implement complex functionality that goes beyond simple shell commands or web links. They are Python modules that can be referenced directly in your CLI configuration.
+
 ## Understanding Custom Tools
 
 Custom tools are Python functions that can be called from your CLI. They provide a way to implement complex logic that can't be easily expressed as a shell command or web link.
@@ -150,42 +152,171 @@ def risky_operation():
 - **Modularity**: Keep functions small and focused on a single task
 - **Testing**: Write tests for your custom tools to ensure they work correctly
 
+## Creating Core-Integrated Custom Tools
+
+In addition to function tools that are called via the `function` property, Hexagon supports a more powerful type of custom tool that integrates directly with its core functionality. These tools are Python modules that can be referenced as shell actions in your CLI configuration.
+
+### Tool Structure
+
+A core-integrated custom tool typically consists of:
+
+1. An `Args` class that defines the command-line arguments
+2. A `main` function that implements the tool's functionality
+
+```python
+# custom_tools/greeting_tool.py
+from hexagon.support.output.printer import log
+from hexagon.support.input.args import ToolArgs, PositionalArg, OptionalArg, Arg
+
+class Args(ToolArgs):
+    name: PositionalArg[str] = Arg(
+        None, prompt_message="Enter your name"
+    )
+    greeting: OptionalArg[str] = Arg(
+        "Hello", prompt_message="Enter a greeting"
+    )
+
+def main(tool, env, env_args, cli_args):
+    # Only prompt if the value wasn't provided as a command-line argument
+    if not cli_args.name.value:
+        cli_args.name.prompt()
+    
+    # Access the value directly from cli_args.name.value
+    # No need to assign to a variable since cli_args.name holds the prompted value
+    
+    # Access environment-specific arguments if available
+    env_name = env.name if env else "No environment"
+    env_specific = env_args if env_args else {}
+    
+    # Log information messages
+    log.info(f"Tool: {tool.name}")
+    log.info(f"Environment: {env_name}")
+    
+    # Create the greeting message using values directly from cli_args
+    message = f"{cli_args.greeting.value}, {cli_args.name.value}!"
+    
+    # Return results (will be displayed with log.result())
+    return [message, f"Environment args: {env_specific}"]
+```
+
+### YAML Configuration
+
+To use this custom tool in your CLI, configure it as a shell tool that references the Python module:
+
+```yaml
+- name: greet
+  alias: g
+  long_name: Greeting
+  description: Greet a person
+  type: shell
+  action: greeting_tool
+```
+
+You can also provide environment-specific parameters:
+
+```yaml
+- name: greet-env
+  alias: ge
+  long_name: Environment Greeting
+  description: Greet a person with environment-specific settings
+  type: shell
+  action: greeting_tool
+  envs:
+    dev:
+      language: "English"
+      formal: false
+    prod:
+      language: "Spanish"
+      formal: true
+```
+
+### Accessing the Tool Configuration
+
+The `main` function receives four parameters:
+
+1. `tool`: The tool configuration object (name, alias, description, etc.)
+2. `env`: The selected environment object (if any)
+3. `env_args`: Environment-specific arguments from the YAML configuration
+4. `cli_args`: Command-line arguments defined in the `Args` class
+
+### Using the Printer Module
+
+Custom tools can use the `log` object from `hexagon.support.output.printer` to display information:
+
+```python
+from hexagon.support.output.printer import log
+
+def main(tool, env, env_args, cli_args):
+    # Display information messages
+    log.info("Processing...")
+    
+    # Display a panel with highlighted information
+    log.panel("Important information", title="Note")
+    
+    # Display example code
+    log.example("print('Hello, World!')", syntax="python")
+    
+    # Return results
+    return ["Operation completed successfully"]
+```
+
 ## Example: Data Processing Tool
 
 ```python
 # custom_tools/data_processor.py
 import json
 import os
+from hexagon.support.output.printer import log
+from hexagon.support.input.args import ToolArgs, PositionalArg, Arg
 
-def process_data(file_path):
-    """Process data from a JSON file.
+class Args(ToolArgs):
+    file_path: PositionalArg[str] = Arg(
+        None, prompt_message="Enter the path to the JSON file"
+    )
+
+def main(tool, env, env_args, cli_args):
+    # Only prompt if the file path wasn't provided as a command-line argument
+    if not cli_args.file_path.value:
+        cli_args.file_path.prompt()
     
-    Args:
-        file_path: Path to the JSON file
-        
-    Returns:
-        List of strings with processing results
-    """
-    if not os.path.exists(file_path):
-        return [f"Error: File not found: {file_path}"]
+    log.info(f"Processing file: {cli_args.file_path.value}")
+    
+    if not os.path.exists(cli_args.file_path.value):
+        log.error(f"File not found: {cli_args.file_path.value}")
+        return [f"Error: File not found: {cli_args.file_path.value}"]
     
     try:
-        with open(file_path, 'r') as f:
+        with open(cli_args.file_path.value, 'r') as f:
             data = json.load(f)
         
         # Process the data
         item_count = len(data)
         categories = set(item['category'] for item in data if 'category' in item)
         
+        log.info(f"Found {item_count} items")
+        log.info(f"Found {len(categories)} categories")
+        
         return [
             f"Processed {item_count} items",
             f"Found {len(categories)} categories: {', '.join(categories)}"
         ]
     except json.JSONDecodeError:
+        log.error("Invalid JSON file")
         return ["Error: Invalid JSON file"]
     except Exception as e:
+        log.error(f"Error: {str(e)}")
         return [f"Error: {str(e)}"]
 ```
+
+## Examples from Hexagon Core
+
+Hexagon includes several built-in custom tools in the `hexagon/actions` directory that demonstrate best practices:
+
+- `hexagon/actions/external/open_link.py`: Opens URLs in the default browser
+- `hexagon/actions/internal/create_new_tool.py`: Creates new tools with interactive prompts
+- `hexagon/actions/internal/install_cli.py`: Installs a CLI with proper error handling
+
+These tools show how to implement complex functionality, handle errors, and provide a good user experience.
 
 ## Next Steps
 
