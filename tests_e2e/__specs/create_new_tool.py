@@ -2,8 +2,8 @@ import os
 import shutil
 from pathlib import Path
 
-from tests_e2e.__specs.utils.config import read_hexagon_config
-from tests_e2e.__specs.utils.hexagon_spec import HexagonSpec, as_a_user
+from tests_e2e.framework.config import read_hexagon_config
+from tests_e2e.framework.hexagon_spec import HexagonSpec, as_a_user
 
 LONG_NAME = "Custom Action Test"
 DESCRIPTION = "Hexagon Custom Action Test Description"

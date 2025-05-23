@@ -1,4 +1,4 @@
-from tests_e2e.__specs.utils.hexagon_spec import as_a_user
+from tests_e2e.framework.hexagon_spec import as_a_user
 
 
 def test_panel_with_default_values_is_shown():

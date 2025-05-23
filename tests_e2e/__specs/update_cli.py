@@ -2,7 +2,7 @@ import os
 import shutil
 import subprocess
 
-from tests_e2e.__specs.utils.hexagon_spec import as_a_user
+from tests_e2e.framework.hexagon_spec import as_a_user
 
 
 def os_env_vars(test_folder_path):

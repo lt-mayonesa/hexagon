@@ -3,13 +3,13 @@ import time
 from subprocess import Popen
 from typing import Callable, Dict, List, Optional, Union
 
-from tests_e2e.__specs.utils.assertions import (
+from tests_e2e.framework.assertions import (
     Expected_Process_Output,
     assert_process_output,
     assert_process_ended,
     assert_execution_time,
 )
-from tests_e2e.__specs.utils.cli import (
+from tests_e2e.framework.cli import (
     ARROW_DOWN_CHARACTER,
     ARROW_UP_CHARACTER,
     LINE_FEED_CHARACTER,
@@ -20,9 +20,9 @@ from tests_e2e.__specs.utils.cli import (
     SPACE_BAR_CHARACTER,
     TAB_CHARACTER,
 )
-from tests_e2e.__specs.utils.config import write_hexagon_config
-from tests_e2e.__specs.utils.console import print
-from tests_e2e.__specs.utils.run import (
+from tests_e2e.framework.config import write_hexagon_config
+from tests_e2e.framework.console import print
+from tests_e2e.framework.run import (
     run_hexagon_e2e_test,
     write_to_process,
     clean_hexagon_environment,

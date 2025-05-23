@@ -6,13 +6,11 @@ from pathlib import Path
 from shutil import copytree
 from typing import Dict, List, Optional
 
-from tests_e2e.__specs.utils.console import print
-from tests_e2e.__specs.utils.path import e2e_test_folder_path
+from tests_e2e.framework.console import print
+from tests_e2e.framework.path import e2e_test_folder_path
 
 hexagon_path = os.path.realpath(
-    os.path.join(
-        os.path.dirname(__file__), os.path.pardir, os.path.pardir, os.path.pardir
-    )
+    os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir)
 )
 
 HEXAGON_COMMAND: List[str] = ["python", "-m", "hexagon"]

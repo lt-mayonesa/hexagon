@@ -5,7 +5,7 @@ import subprocess
 import sys
 from typing import Any, Callable, Dict, List
 
-from tests_e2e.__specs.utils.console import print
+from tests_e2e.framework.console import print
 
 last_output_file_path = os.path.realpath(
     os.path.join(

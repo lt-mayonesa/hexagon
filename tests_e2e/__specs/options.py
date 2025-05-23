@@ -4,7 +4,7 @@ from pathlib import Path
 
 from ruamel.yaml.main import YAML
 
-from tests_e2e.__specs.utils.hexagon_spec import as_a_user
+from tests_e2e.framework.hexagon_spec import as_a_user
 
 base_env_vars = {"HEXAGON_THEME": "result_only"}
 local_options = {"update_time_between_checks": "P2D"}

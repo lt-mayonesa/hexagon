@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from tests_e2e.__specs.utils.hexagon_spec import as_a_user
+from tests_e2e.framework.hexagon_spec import as_a_user
 
 MOCK_UPDATER_ENV_VARS = {
     "HEXAGON_DISABLE_DEPENDENCY_SCAN": "0",

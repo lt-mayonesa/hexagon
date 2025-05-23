@@ -1,6 +1,6 @@
 import os.path
 
-from tests_e2e.__specs.utils.hexagon_spec import as_a_user
+from tests_e2e.framework.hexagon_spec import as_a_user
 
 
 def test_dir_with_hexagon_tool_execute_extra_tool():

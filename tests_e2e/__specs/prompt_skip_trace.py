@@ -1,4 +1,4 @@
-from tests_e2e.__specs.utils.hexagon_spec import as_a_user
+from tests_e2e.framework.hexagon_spec import as_a_user
 
 
 def test_when_trace_is_skipped_execute_again_is_not_shown():

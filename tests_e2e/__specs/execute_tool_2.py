@@ -1,7 +1,7 @@
 import os
 
-from tests_e2e.__specs.utils.assertions import assert_file_has_contents
-from tests_e2e.__specs.utils.hexagon_spec import as_a_user
+from tests_e2e.framework.assertions import assert_file_has_contents
+from tests_e2e.framework.hexagon_spec import as_a_user
 
 shared_prompt_output = [
     "Hi, which tool would you like to use today?",

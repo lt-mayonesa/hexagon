@@ -1,4 +1,4 @@
-from tests_e2e.__specs.utils.hexagon_spec import as_a_user
+from tests_e2e.framework.hexagon_spec import as_a_user
 
 
 def test_show_default_when_arg_has_prompt_default():
