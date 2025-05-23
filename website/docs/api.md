@@ -18,7 +18,7 @@ The `Cli` class represents your custom CLI configuration. It defines the name, c
 
 ### Tool
 
-The `Tool` class and its subclasses represent the tools available in your CLI. Different tool types (web, shell, function, etc.) provide different functionality.
+The `Tool` class and its subclasses represent the tools available in your CLI. Different tool types (web, shell, custom Python tools, etc.) provide different functionality.
 
 [Learn more about Tool configuration](api/tool)
 
@@ -34,7 +34,6 @@ Actions define what happens when a tool is executed. Hexagon provides several bu
 
 - [Web Actions](api/actions/web): Open web links
 - [Shell Actions](api/actions/shell): Execute shell commands
-- [Function Actions](api/actions/function): Call Python functions
 
 ## Support
 
