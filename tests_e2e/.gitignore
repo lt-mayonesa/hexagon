@@ -1,5 +1,5 @@
 storage
-print_help/app.yml
-print_help/app.yaml
+__test_resources/_parallel/print_help/app.yml
+__test_resources/_parallel/print_help/app.yaml
 */.config/**/*
 bin
