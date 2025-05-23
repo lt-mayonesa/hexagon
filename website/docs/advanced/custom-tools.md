@@ -52,9 +52,9 @@ def analyze_data():
     return results
 ```
 
-### Step 3: Reference the Function in Your Configuration
+### Step 3: Reference the Tool in Your Configuration
 
-Reference the function in your CLI configuration:
+Reference the custom tool in your CLI configuration:
 
 ```yaml
 tools:
@@ -62,15 +62,13 @@ tools:
     alias: a
     long_name: Analyze Data
     description: Run data analysis
-    type: function
-    function: data_tools.analyze_data
+    type: shell
+    action: data_tools.analyze_data
 ```
 
-The `function` property should be the module name and function name, separated by a dot.
+## Return Values
 
-## Function Return Values
-
-Custom functions should return a list of strings, which will be displayed as output in the CLI:
+Custom tools should return a list of strings, which will be displayed as output in the CLI:
 
 ```python
 def my_function():
@@ -98,8 +96,8 @@ tools:
     alias: g
     long_name: Greet
     description: Greet a person
-    type: function
-    function: greetings.greet
+    type: shell
+    action: greetings.greet
 ```
 
 Users can then pass arguments when calling the tool:
@@ -152,9 +150,9 @@ def risky_operation():
 - **Modularity**: Keep functions small and focused on a single task
 - **Testing**: Write tests for your custom tools to ensure they work correctly
 
-## Creating Core-Integrated Custom Tools
+## Creating Custom Python Tools
 
-In addition to function tools that are called via the `function` property, Hexagon supports a more powerful type of custom tool that integrates directly with its core functionality. These tools are Python modules that can be referenced as shell actions in your CLI configuration.
+Hexagon's core functionality includes the ability to create custom tools that integrate directly with its core functionality. These tools are Python modules that can be referenced as shell actions in your CLI configuration.
 
 ### Tool Structure
 

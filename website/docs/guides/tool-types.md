@@ -68,38 +68,9 @@ For more complex commands, you can use a list of strings:
 - `type`: Must be set to `shell`
 - `action`: The shell command(s) to execute
 
-## Function Tools
+## Custom Python Tools
 
-Function tools call Python functions. They're useful for implementing custom logic that can't be easily expressed as a shell command.
-
-### Configuration
-
-```yaml
-- name: analyze
-  alias: a
-  long_name: Analyze Data
-  description: Run data analysis
-  type: function
-  function: custom_tools.analysis.analyze_data
-```
-
-### Implementation
-
-Create a Python file in your `custom_tools_dir` with the function implementation:
-
-```python
-# custom_tools/analysis.py
-
-def analyze_data():
-    print("Analyzing data...")
-    # Your analysis logic here
-    return ["Analysis complete", "Found 3 issues"]  # Return list of strings for output
-```
-
-### Key Properties
-
-- `type`: Must be set to `function`
-- `function`: The fully qualified function name
+For implementing custom logic that can't be easily expressed as a shell command, use custom Python tools. See the [Custom Tools](../advanced/custom-tools) documentation for details on creating and using custom Python tools in your CLI.
 
 ## Group Tools
 

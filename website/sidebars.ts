@@ -66,7 +66,6 @@ const sidebars: SidebarsConfig = {
       items: [
         'api/actions/web',
         'api/actions/shell',
-        'api/actions/function',
       ],
     },
     {

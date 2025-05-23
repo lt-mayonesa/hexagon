@@ -12,7 +12,6 @@ Hexagon defines several tool classes:
 
 - `Tool`: Base class for all tools
   - `ActionTool`: Tools that perform actions (web, shell)
-  - `FunctionTool`: Tools that call Python functions
   - `GroupTool`: Tools that group other tools
 
 ## Tool Class
@@ -80,20 +79,7 @@ class ActionTool(Tool):
 |--------|-------------|
 | `executable_str` | Returns the action as a string, joining multiple actions with newlines |
 
-## FunctionTool Class
 
-The `FunctionTool` class represents tools that call Python functions.
-
-```python
-class FunctionTool(Tool):
-    function: Callable
-```
-
-### Properties
-
-| Property | Type | Description | Required |
-|----------|------|-------------|----------|
-| `function` | `Callable` | The function to call | Yes |
 
 ## GroupTool Class
 
@@ -146,24 +132,7 @@ shell_tool = ActionTool(
 )
 ```
 
-### Function Tool
 
-```python
-from hexagon.domain.tool import FunctionTool, ToolType
-
-def analyze_data():
-    print("Analyzing data...")
-    return ["Analysis complete", "Found 3 issues"]
-
-function_tool = FunctionTool(
-    name="analyze",
-    alias="a",
-    long_name="Analyze Data",
-    description="Run data analysis",
-    type=ToolType.function,
-    function=analyze_data
-)
-```
 
 ### Group Tool
 

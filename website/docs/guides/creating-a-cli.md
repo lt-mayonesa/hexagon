@@ -74,18 +74,9 @@ Tools are the core of your CLI. Here are examples of different tool types:
   action: ./scripts/deploy.sh
 ```
 
-### Function Tool
+### Custom Python Tool
 
-For function tools, you'll need to implement the function in a Python file and place it in your `custom_tools_dir`:
-
-```yaml
-- name: analyze
-  alias: a
-  long_name: Analyze Data
-  description: Run data analysis
-  type: function
-  function: custom_tools.analysis.analyze_data
-```
+For custom Python tools, see the [Custom Tools](../advanced/custom-tools) documentation for details on implementation.
 
 ### Tool Group
 
