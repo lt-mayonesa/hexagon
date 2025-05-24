@@ -18,10 +18,10 @@ If you need to install or upgrade Python, visit the [official Python website](ht
 
 ## Installing Hexagon
 
-Hexagon is available on PyPI and can be installed using pip:
+Hexagon is available on PyPI and can be installed using pipx:
 
 ```bash
-pip install hexagon
+pipx install hexagon
 ```
 
 This will install the latest stable version of Hexagon and all its dependencies.

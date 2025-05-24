@@ -17,7 +17,7 @@ Make your team's knowledge truly accessible, truly shared, and truly empowering 
 
 ### Install hexagon
 ```bash
-pip install hexagon
+pipx install hexagon
 ```
 
 ### Create your teams CLI
