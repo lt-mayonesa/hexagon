@@ -1,7 +1,7 @@
 from typing import List
 
 from hexagon.runtime.singletons import options
-from hexagon.support.input.prompt.key_bindings import to_readable_name
+from hexagon.support.input.prompt.hints.key_bindings import to_readable_name
 
 
 def _fmt(msg: str, keys: List[str]) -> List[str]:

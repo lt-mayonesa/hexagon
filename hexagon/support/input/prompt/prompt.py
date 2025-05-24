@@ -1,6 +1,5 @@
 import re
 from copy import copy
-from enum import Enum, auto
 from pathlib import Path
 from typing import Any, Dict, Literal, Callable, List
 
@@ -20,6 +19,10 @@ from hexagon.support.input.args import HexagonArg
 from hexagon.support.input.args.field_reference import FieldReference
 from hexagon.support.input.prompt.for_all_methods import for_all_methods
 from hexagon.support.input.prompt.hints import HintsBuilder
+from hexagon.support.input.prompt.inquiry_type import (
+    determine_expected_inquiry,
+    InquiryType,
+)
 from hexagon.support.input.types import path_validator
 from hexagon.support.output.printer import log
 from hexagon.typing import field_type_information, TypeInformation
@@ -104,61 +107,6 @@ def set_default(invocation_extras, field_reference: FieldReference):
     return {}
 
 
-class InquiryType(Enum):
-    STRING = auto()
-    STRING_SEARCHABLE = auto()
-    STRING_LIST = auto()
-    STRING_LIST_SEARCHABLE = auto()
-    ENUM = auto()
-    ENUM_SEARCHABLE = auto()
-    ENUM_LIST = auto()
-    ENUM_LIST_SEARCHABLE = auto()
-    PATH = auto()
-    PATH_SEARCHABLE = auto()
-    INT = auto()
-    FLOAT = auto()
-    SECRET = auto()
-    BOOLEAN = auto()
-
-
-def _determine_expected_inquiry(
-    iterable, of_enum, field_type, declaration_extras, invocation_extras
-) -> (InquiryType, dict):
-    """
-    TODO: move this to a separate module and unit test it
-    """
-    extras = {**declaration_extras, **invocation_extras}
-    searchable = extras.get("searchable", False)
-
-    query = InquiryType.STRING if not searchable else InquiryType.STRING_SEARCHABLE
-    if iterable and of_enum:
-        query = (
-            InquiryType.ENUM_LIST
-            if not searchable
-            else InquiryType.ENUM_LIST_SEARCHABLE
-        )
-    elif iterable:
-        query = (
-            InquiryType.STRING_LIST
-            if not searchable
-            else InquiryType.STRING_LIST_SEARCHABLE
-        )
-    elif of_enum:
-        query = InquiryType.ENUM if not searchable else InquiryType.ENUM_SEARCHABLE
-    elif issubclass(field_type.base_type, Path):
-        query = InquiryType.PATH if not searchable else InquiryType.PATH_SEARCHABLE
-    elif issubclass(field_type.base_type, bool):
-        query = InquiryType.BOOLEAN
-    elif issubclass(field_type.base_type, int):
-        query = InquiryType.INT
-    elif issubclass(field_type.base_type, float):
-        query = InquiryType.FLOAT
-    elif extras.get("secret", False):
-        query = InquiryType.SECRET
-
-    return query, extras
-
-
 @for_all_methods(log.status_aware, exclude=["query_field"])
 class Prompt:
     def query_field(self, field_reference: FieldReference, model_class, **kwargs):
@@ -174,8 +122,16 @@ class Prompt:
 
         field_type, iterable, of_enum = field_type_information(field_reference.info)
 
-        inquiry_type, extras = _determine_expected_inquiry(
-            iterable, of_enum, field_type, declaration_extras, invocation_extras
+        extras = {
+            # **inquiry_args,
+            **declaration_extras,
+            **invocation_extras,
+        }
+        inquiry_type = determine_expected_inquiry(
+            iterable=iterable,
+            of_enum=of_enum,
+            field_type=field_type,
+            extras=extras,
         )
 
         setups = {
@@ -227,6 +183,7 @@ class Prompt:
 
         if err:
             raise err
+        return None
 
     @staticmethod
     def text(**kwargs):
