@@ -24,7 +24,15 @@ from hexagon.typing import should_support_multiple_args, field_type_information
         ("grand_parents", True),
     ],
 )
-def test_get_generic_type_hint(field, expected):
+def test_should_support_multiple_args_returns_correct_value_for_different_field_types(
+    field, expected
+):
+    """
+    Given a TestModel class with various field types (str, List[str], int, etc.).
+    When should_support_multiple_args is called with a specific field.
+    Then it should return True for collection types (List, Set, tuple) and False for scalar types.
+    """
+
     class TestModel(BaseModel):
         name: PositionalArg[str] = None
         last_names: PositionalArg[List[str]] = None
@@ -72,7 +80,18 @@ class Pet(BaseModel):
         ("file_hexagon", Path, False, False),
     ],
 )
-def test_field_info(field, expected_type, expected_iterable, expected_of_enum):
+def test_field_type_information_returns_correct_type_properties_for_different_field_types(
+    field, expected_type, expected_iterable, expected_of_enum
+):
+    """
+    Given a TestModel class with various field types (basic types, collections, enums, etc.).
+    When field_type_information is called with a specific field.
+    Then it should return a tuple with:
+      - The correct base type (str, int, List, etc.).
+      - Whether the field is an iterable (True for collections, False for scalar types).
+      - Whether the field is an enum (True for enum types, False for non-enum types).
+    """
+
     class TestModel(BaseModel):
         model_config = {"arbitrary_types_allowed": True}
         name: PositionalArg[str] = None
@@ -108,7 +127,13 @@ def test_field_info(field, expected_type, expected_iterable, expected_of_enum):
         "arg_basic",
     ],
 )
-def test_field_with_multiple_types_should_raise_error(field):
+def test_field_type_information_raises_hexagon_error_when_field_has_union_types(field):
+    """
+    Given a TestModel class with fields using Union types.
+    When field_type_information is called with a field that has multiple possible types.
+    Then a HexagonError should be raised.
+    """
+
     class TestModel(BaseModel):
         optional_arg_union: OptionalArg[Union[str, int]] = None
         arg_basic: Union[List[str], Dict[str, int], Any] = None

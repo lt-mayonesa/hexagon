@@ -54,17 +54,33 @@ envs = [Env(name="dev", alias="d"), Env(name="qa", alias="q")]
         ("unknown_tool", None),
     ],
 )
-def test_search_tools_dict_by_key_or_alias(search, expected):
+def test_search_by_name_or_alias_returns_correct_tool_name(search, expected):
+    """
+    Given a list of tools with names and aliases.
+    When searching for a tool by its name or alias.
+    Then the tool's name should be returned if found, otherwise None.
+    """
     assert wax.search_by_name_or_alias(tools, search) == expected
 
 
-def test_tool_is_selected_from_cmd(monkeypatch):
+def test_select_tool_returns_correct_tool_when_specified_in_command(monkeypatch):
+    """
+    Given a list of tools with names and aliases.
+    When selecting a tool by the name 'docker' from command line.
+    Then the Tool object with name='docker', alias='d', action='docker_run' should be returned.
+    """
     assert wax.select_tool(tools, "docker") == Tool(
         name="docker", alias="d", action="docker_run"
     )
 
 
-def test_tool_is_selected_by_prompt(monkeypatch, tool_mock):
+def test_select_tool_prompts_user_when_no_tool_specified(monkeypatch, tool_mock):
+    """
+    Given a list of tools with names and aliases.
+    When no tool is specified in command line.
+    Then user should be prompted to select a tool with a fuzzy search interface.
+    And the Tool object matching the user's selection ('docker') should be returned.
+    """
     monkeypatch.setattr(prompt, "fuzzy", tool_mock)
 
     assert wax.select_tool(tools) == Tool(name="docker", alias="d", action="docker_run")
@@ -77,20 +93,42 @@ def test_tool_is_selected_by_prompt(monkeypatch, tool_mock):
     assert tool_mock.args[3] == "error.support.wax.invalid_tool"
 
 
-def test_tool_has_no_env_property():
+def test_select_env_returns_none_when_tool_has_no_env_property():
+    """
+    Given a tool with env property set to None.
+    When calling select_env with this tool's env property.
+    Then a tuple of (None, None) should be returned for both env and env_args.
+    """
     assert wax.select_env(envs, None) == (None, None)
 
 
-def test_tool_has_env_property_with_wildcard():
+def test_select_env_returns_wildcard_value_when_tool_has_wildcard_env_property():
+    """
+    Given a tool with env property containing a wildcard key '*' with value 'sarasa'.
+    When calling select_env with this tool's env property.
+    Then a tuple of (None, 'sarasa') should be returned for env and env_args.
+    """
     assert wax.select_env(envs, {"*": "sarasa"}) == (None, "sarasa")
 
 
-def test_env_is_selected_from_cmd(monkeypatch):
+def test_select_env_returns_correct_env_when_specified_in_command(monkeypatch):
+    """
+    Given a list of environments and a tool_envs dictionary mapping 'qa' to 'env_2'.
+    When selecting an environment by name 'qa' from command line.
+    Then a tuple containing the Env object for 'qa' and the string 'env_2' should be returned.
+    """
     tool_envs = {"dev": "env_1", "qa": "env_2"}
     assert wax.select_env(envs, tool_envs, "qa") == (envs[1], "env_2")
 
 
-def test_env_is_selected_by_prompt(monkeypatch, env_mock):
+def test_select_env_prompts_user_when_no_env_specified(monkeypatch, env_mock):
+    """
+    Given a list of environments and a tool_envs dictionary mapping 'dev' to 'env_1'.
+    When no environment is specified in command line.
+    Then user should be prompted to select an environment with a fuzzy search interface.
+    And a tuple containing the Env object for 'dev' and the string 'env_1' should be returned.
+    And this return value is based on the user's selection.
+    """
     tool_envs = {"dev": "env_1", "qa": "env_2"}
     monkeypatch.setattr(prompt, "fuzzy", env_mock)
 

@@ -14,7 +14,14 @@ from hexagon.support.tracer import Tracer
         (parse_cli_args(["docker", "dev"]), ""),
     ],
 )
-def test_build_command_from_initial_trace(initial, expected_trace):
+def test_tracer_returns_empty_string_for_initial_cli_args_without_tracing(
+    initial, expected_trace
+):
+    """
+    Given a Tracer initialized with CLI arguments (empty, 'docker', or 'docker dev').
+    When trace() and aliases_trace() are called without any tracing being done.
+    Then both methods should return an empty string.
+    """
     tracer = Tracer(initial)
     assert tracer.trace() == expected_trace
     assert tracer.aliases_trace() == expected_trace
@@ -151,9 +158,16 @@ class MyEnum(Enum):
         ),
     ],
 )
-def test_build_command_from_traced(
+def test_tracer_builds_command_string_from_traced_values(
     args, traces, has_traced, expected_trace, expected_alias
 ):
+    """
+    Given a Tracer initialized with specific CLI arguments.
+    When multiple values are traced using the tracing() method.
+    Then trace() should return a command string with full argument names.
+    And aliases_trace() should return a command string with aliased argument names.
+    And has_traced() should return whether any tracing was done without CLI args.
+    """
     tracer = Tracer(args)
     for t in traces:
         tracer.tracing(*t)
@@ -162,7 +176,14 @@ def test_build_command_from_traced(
     assert tracer.has_traced() == has_traced
 
 
-def test_trace_same_key_multiple_times():
+def test_tracer_keeps_only_last_value_when_same_key_is_traced_multiple_times():
+    """
+    Given a Tracer initialized with empty CLI arguments.
+    When the same key 'name' is traced multiple times with different values.
+    Then trace() should return a command string with only the last value.
+    And aliases_trace() should return a command string with the aliased key and only the last value.
+    And has_traced() should return True.
+    """
     tracer = Tracer(parse_cli_args([]))
     tracer.tracing("name", "John", key="--name", key_alias="-n")
     tracer.tracing("name", "Charles", key="--name", key_alias="-n")
@@ -173,7 +194,14 @@ def test_trace_same_key_multiple_times():
     assert tracer.has_traced() is True
 
 
-def test_trace_enum_value():
+def test_tracer_converts_enum_value_to_its_string_representation():
+    """
+    Given a Tracer initialized with empty CLI arguments.
+    When an enum value MyEnum.B is traced without a key.
+    Then trace() should return the enum's string value 'b'.
+    And aliases_trace() should also return the enum's string value 'b'.
+    And has_traced() should return True.
+    """
     tracer = Tracer(parse_cli_args([]))
     tracer.tracing(ref="name", value=MyEnum.B)
     assert tracer.trace() == "b"
@@ -181,7 +209,14 @@ def test_trace_enum_value():
     assert tracer.has_traced() is True
 
 
-def test_trace_enum_value_with_key():
+def test_tracer_formats_enum_value_with_key_when_key_is_provided():
+    """
+    Given a Tracer initialized with empty CLI arguments.
+    When an enum value MyEnum.A is traced with key='--name' and key_alias='-n'.
+    Then trace() should return '--name=a' with the enum's string value.
+    And aliases_trace() should return '-n=a' with the aliased key and enum's string value.
+    And has_traced() should return True.
+    """
     tracer = Tracer(parse_cli_args([]))
     tracer.tracing("name", MyEnum.A, key="--name", key_alias="-n")
     assert tracer.trace() == "--name=a"
@@ -189,7 +224,14 @@ def test_trace_enum_value_with_key():
     assert tracer.has_traced() is True
 
 
-def test_trace_boolean_values():
+def test_tracer_converts_boolean_value_to_string_representation():
+    """
+    Given a Tracer initialized with empty CLI arguments.
+    When a boolean value True is traced with ref='proceed'.
+    Then trace() should return the string 'true'.
+    And aliases_trace() should also return the string 'true'.
+    And has_traced() should return True.
+    """
     tracer = Tracer(parse_cli_args([]))
     tracer.tracing(ref="proceed", value=True)
     assert tracer.trace() == "true"

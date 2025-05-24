@@ -32,7 +32,20 @@ def _latest_version_mock(override=None):
     return Version("0.2.0")
 
 
-def test_hexagon_updates_itself(monkeypatch):
+def test_check_for_hexagon_updates_performs_update_when_newer_version_is_available(
+    monkeypatch,
+):
+    """
+    Given:
+      - Local version number is '0.1.0'.
+      - Latest version number is '0.2.0'.
+      - User confirms the update prompt.
+      - Last update check data is deleted.
+    When check_for_hexagon_updates is called.
+    Then:
+      - subprocess.check_call should be called once to perform the update.
+      - sys.exit should be called once with exit code 1.
+    """
     monkeypatch.setenv("HEXAGON_TEST_LOCAL_VERSION_OVERRIDE", "0.1.0")
     monkeypatch.setenv(
         "HEXAGON_CHANGELOG_FILE_PATH_TEST_OVERRIDE",
