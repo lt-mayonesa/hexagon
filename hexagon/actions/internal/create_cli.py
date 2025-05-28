@@ -31,74 +31,89 @@ class Args(ToolArgs):
 
 
 def main(_tool, _env, _env_args, cli_args: Args):
-    # Ask for directory name if not provided
+    ensure_directory_exists(cli_args)
+    ensure_required_inputs_provided(cli_args)
+    environments = create_environments_from_input(cli_args.environments.value)
+    config_path = create_config_file(cli_args, environments)
+    display_success_message(cli_args, config_path)
+
+
+def ensure_directory_exists(cli_args: Args) -> Path:
     if not cli_args.dir_name.value:
         cli_args.dir_name.prompt()
 
-    # Create directory
     dir_path = Path(cli_args.dir_name.value).resolve()
-    if dir_path.exists() and any(Path(dir_path).iterdir()):
-        if not prompt.confirm(
+    if should_abort_for_non_empty_directory(dir_path):
+        log.info(_("msg.actions.internal.create_cli.directory_not_empty_cancelled"))
+        return
+
+    os.makedirs(dir_path, exist_ok=True)
+    return dir_path
+
+
+def should_abort_for_non_empty_directory(dir_path: Path) -> bool:
+    if dir_path.exists() and any(dir_path.iterdir()):
+        return not prompt.confirm(
             _("action.actions.internal.create_cli.directory_not_empty").format(
                 dir_name=dir_path
             )
-        ):
-            log.info(_("msg.actions.internal.create_cli.directory_not_empty_cancelled"))
-            return
-    os.makedirs(dir_path, exist_ok=True)
+        )
+    return False
 
-    # Prompt for CLI title if not provided
+
+def ensure_required_inputs_provided(cli_args: Args) -> None:
     if not cli_args.title.value:
         cli_args.title.prompt()
 
-    # Prompt for command if not provided
     if not cli_args.command.value:
-        cli_args.command.prompt(
-            default=cli_args.dir_name.value.lower().replace(" ", "-")
-        )
+        default_command = cli_args.dir_name.value.lower().replace(" ", "-")
+        cli_args.command.prompt(default=default_command)
 
-    # Prompt for environments if not provided
     if not cli_args.environments.value:
         cli_args.environments.prompt()
 
-    # Parse environments and create aliases
-    envs = []
-    for env in cli_args.environments.value:
-        alias = _first_letter_of_each_word(env)
 
-        envs.append(Env(name=env.strip(), alias=alias.lower()))
+def create_environments_from_input(environment_names: List[str]) -> List[Env]:
+    environments = []
+    for env_name in environment_names:
+        alias = generate_alias_from_name(env_name)
+        environments.append(Env(name=env_name.strip(), alias=alias.lower()))
+    return environments
 
-    # Create app.yml content
+
+def generate_alias_from_name(name: str) -> str:
+    words = name.split("-")
+    return "".join([word[0] for word in words])
+
+
+def create_config_file(cli_args: Args, environments: List[Env]) -> str:
     config = ConfigFile(
         cli=Cli(name=cli_args.title.value, command=cli_args.command.value),
-        envs=envs,
+        envs=environments,
         tools=[],
     )
 
-    # Write app.yml file
+    dir_path = Path(cli_args.dir_name.value).resolve()
     app_yml_path = os.path.join(dir_path, "app.yml")
     write_file(
         app_yml_path,
         config.model_dump(mode="json", exclude_none=True, exclude_unset=True),
     )
 
-    # Print success message
+    return app_yml_path
+
+
+def display_success_message(cli_args: Args, config_path: str) -> None:
     log.info(
         _("msg.actions.internal.create_cli.success"),
         gap_end=1,
         gap_start=1,
     )
-    log.result(f"[b]CLI project created at: {dir_path}")
+    log.result(f"[b]CLI project created at: {Path(cli_args.dir_name.value).resolve()}")
     log.info(
         _("msg.actions.internal.create_cli.install_instructions").format(
             command=cli_args.command.value
         ),
         gap_start=1,
     )
-    log.result(f"[b]$ hexagon install {app_yml_path}")
-
-
-def _first_letter_of_each_word(env):
-    words = env.split("-")
-    alias = "".join([word[0] for word in words])
-    return alias
+    log.result(f"[b]$ hexagon install {config_path}")
