@@ -128,6 +128,12 @@ class Configuration:
                     action="hexagon.actions.internal.install_cli",
                 ),
                 ActionTool(
+                    name="create",
+                    long_name=_("msg.domain.configuration.create_cli_long_name"),
+                    type=ToolType.hexagon,
+                    action="hexagon.actions.internal.create_cli",
+                ),
+                ActionTool(
                     name="get-json-schema",
                     long_name=_("msg.domain.configuration.get_json_schema_long_name"),
                     description=_(
