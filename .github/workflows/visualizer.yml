@@ -1,0 +1,35 @@
+name: Visualizer
+
+on:
+  push:
+    branches: [ "main" ]
+  merge_group:
+
+jobs:
+  update_diagram:
+    name: Update the codebase structure diagram
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Update diagram
+        uses: githubocto/repo-visualizer@0.9.1
+        with:
+          excluded_paths: "cli,dist,out,locales,tests,tests_e2e,website"
+          output_file: codebase-structure.svg
+          should_push: false
+
+      - name: Generate PR for updates
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'ci: update repo-visualizer diagram'
+          signoff: true
+          branch: ci_update_diagram
+          delete-branch: true
+          title: 'ci: update repo-visualizer diagram'
+          add-paths: |
+            codebase-structure.svg
