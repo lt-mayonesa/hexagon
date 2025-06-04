@@ -1,4 +1,5 @@
 import os
+import re
 from pathlib import Path
 from typing import List
 
@@ -14,10 +15,12 @@ from hexagon.support.output.printer import log
 class Args(ToolArgs):
     dir_name: PositionalArg[str] = Arg(
         None,
+        prompt_default="my-team-tools",
         prompt_message=_("action.actions.internal.create_cli.directory_name"),
     )
     title: OptionalArg[str] = Arg(
         None,
+        prompt_default="My Team CLI",
         prompt_message=_("action.actions.internal.create_cli.title"),
     )
     command: OptionalArg[str] = Arg(
@@ -66,11 +69,34 @@ def ensure_required_inputs_provided(cli_args: Args) -> None:
         cli_args.title.prompt()
 
     if not cli_args.command.value:
-        default_command = cli_args.dir_name.value.lower().replace(" ", "-")
+        default_command = generate_command_from_title(cli_args.title.value)
         cli_args.command.prompt(default=default_command)
 
     if not cli_args.environments.value:
         cli_args.environments.prompt()
+
+
+def generate_command_from_title(title: str) -> str:
+    if not title:
+        return "mt"
+
+    words = title.split()
+    if words[-1].lower() == "cli":
+        words = words[:-1]
+
+    if not words:
+        return "mt"
+
+    first_letters = [word[0].lower() for word in words]
+    command = "".join(first_letters)
+
+    command = remove_non_alphanumeric_chars(command)
+
+    return command
+
+
+def remove_non_alphanumeric_chars(text: str) -> str:
+    return re.sub(r"[^a-zA-Z0-9]", "", text)
 
 
 def create_environments_from_input(environment_names: List[str]) -> List[Env]:
