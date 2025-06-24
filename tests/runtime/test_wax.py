@@ -1,7 +1,7 @@
 import pytest
 
 from hexagon.domain.env import Env
-from hexagon.domain.tool import Tool
+from hexagon.domain.tool import ActionTool
 from hexagon.runtime import wax
 from hexagon.support.input.prompt import prompt
 
@@ -34,9 +34,9 @@ def env_mock():
 
 
 tools = [
-    Tool(name="docker", alias="d", action="docker_run"),
-    Tool(name="bastion", alias="b", action="bastion"),
-    Tool(name="no_alias", action="some_action"),
+    ActionTool(name="docker", alias="d", action="docker_run"),
+    ActionTool(name="bastion", alias="b", action="bastion"),
+    ActionTool(name="no_alias", action="some_action"),
 ]
 
 envs = [Env(name="dev", alias="d"), Env(name="qa", alias="q")]
@@ -69,7 +69,7 @@ def test_select_tool_returns_correct_tool_when_specified_in_command(monkeypatch)
     When selecting a tool by the name 'docker' from command line.
     Then the Tool object with name='docker', alias='d', action='docker_run' should be returned.
     """
-    assert wax.select_tool(tools, "docker") == Tool(
+    assert wax.select_tool(tools, "docker") == ActionTool(
         name="docker", alias="d", action="docker_run"
     )
 
@@ -83,7 +83,9 @@ def test_select_tool_prompts_user_when_no_tool_specified(monkeypatch, tool_mock)
     """
     monkeypatch.setattr(prompt, "fuzzy", tool_mock)
 
-    assert wax.select_tool(tools) == Tool(name="docker", alias="d", action="docker_run")
+    assert wax.select_tool(tools) == ActionTool(
+        name="docker", alias="d", action="docker_run"
+    )
     assert tool_mock.args[0] == "action.support.wax.select_tool"
     assert tool_mock.args[1] == [
         {"value": "docker", "name": "  docker"},
