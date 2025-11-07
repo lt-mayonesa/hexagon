@@ -42,7 +42,7 @@ jobs:
           pipenv run pytest -v tests/ --junitxml=junit/unit-test-results-3.11.xml
 
       - name: Upload test results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: always()
         with:
           name: unit-test-results-3.11
@@ -62,7 +62,7 @@ jobs:
           python -m pip install wheel
           python setup.py sdist bdist_wheel
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: hexagon-${{ github.sha }}
           path: dist/*.tar.gz
@@ -122,7 +122,7 @@ jobs:
             junitparser merge junit/${{ matrix.python-version }}-parallel.xml junit/${{ matrix.python-version }}-sequential.xml junit/e2e-test-results-${{ matrix.python-version }}.xml
 
       - name: Upload test results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: always()
         with:
           name: e2e-test-results-${{ matrix.os }}-${{ matrix.python-version }}
@@ -163,7 +163,7 @@ jobs:
         run: .github/scripts/i18n/check.sh
 
       - name: upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: i18n
           path: locales/**/*.mo
