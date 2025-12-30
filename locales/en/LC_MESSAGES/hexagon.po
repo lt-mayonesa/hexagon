@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-30 11:57+0100\n"
+"POT-Creation-Date: 2025-12-30 13:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,7 +135,7 @@ msgid "msg.actions.internal.save_new_alias.added_to_file"
 msgstr "Added alias to {file}"
 
 #: hexagon/actions/internal/update_cli.py:16
-#: hexagon/runtime/update/cli/__init__.py:24
+#: hexagon/runtime/update/cli/__init__.py:21
 msgid "msg.support.update.cli.checking_for_cli_updates"
 msgstr "Checking for new CLI versions"
 
@@ -148,17 +148,17 @@ msgid "msg.actions.internal.update_cli.no_git_config"
 msgstr "{cli_name} is not in a git repository. Cannot check for updates."
 
 #: hexagon/actions/internal/update_cli.py:35
-#: hexagon/runtime/update/cli/__init__.py:30
+#: hexagon/runtime/update/cli/__init__.py:28
 msgid "msg.support.update.cli.checking_for_cli_updates_on_branch"
 msgstr "Checking for new CLI versions, on branch: [cyan]{branch}[/cyan]"
 
 #: hexagon/actions/internal/update_cli.py:41
-#: hexagon/runtime/update/cli/__init__.py:37
+#: hexagon/runtime/update/cli/__init__.py:34
 msgid "msg.support.update.cli.new_version_available"
 msgstr "New [cyan]{cli_name}[/cyan] version available"
 
 #: hexagon/actions/internal/update_cli.py:45
-#: hexagon/runtime/update/cli/__init__.py:42
+#: hexagon/runtime/update/cli/__init__.py:38
 msgid "action.support.update.cli.confirm_update"
 msgstr "Would you like to update?"
 
@@ -167,12 +167,12 @@ msgid "msg.actions.internal.update_cli.cancelled"
 msgstr "Update cancelled"
 
 #: hexagon/actions/internal/update_cli.py:50
-#, fuzzy
+#: hexagon/runtime/update/cli/__init__.py:42
 msgid "msg.support.update.cli.updating"
-msgstr "[green]✓[/green] [white]Updated to latest version[/white]"
+msgstr "Updating"
 
 #: hexagon/actions/internal/update_cli.py:53
-#: hexagon/runtime/update/cli/__init__.py:49
+#: hexagon/runtime/update/cli/__init__.py:45
 msgid "msg.support.update.cli.updated"
 msgstr "[green]✓[/green] [white]Updated to latest version[/white]"
 
@@ -186,18 +186,18 @@ msgid "msg.actions.internal.update_hexagon.already_latest"
 msgstr "Hexagon is already up to date (v{version})"
 
 #: hexagon/actions/internal/update_hexagon.py:31
-#: hexagon/runtime/update/hexagon.py:36
+#: hexagon/runtime/update/hexagon.py:31
 msgid "msg.support.update.hexagon.new_version_available"
 msgstr ""
 "New [cyan]hexagon[/cyan] version available [green]{latest_version}[/green]!"
 
 #: hexagon/actions/internal/update_hexagon.py:36
-#: hexagon/runtime/update/hexagon.py:42
+#: hexagon/runtime/update/hexagon.py:37
 msgid "msg.support.update.hexagon.fetching_changelog"
 msgstr "Fetching changelog"
 
 #: hexagon/actions/internal/update_hexagon.py:42
-#: hexagon/runtime/update/hexagon.py:50
+#: hexagon/runtime/update/hexagon.py:43
 msgid "action.support.update.hexagon.confirm_update"
 msgstr "Would you like to update?"
 
@@ -206,12 +206,12 @@ msgid "msg.actions.internal.update_hexagon.cancelled"
 msgstr "Update cancelled"
 
 #: hexagon/actions/internal/update_hexagon.py:47
-#: hexagon/runtime/update/hexagon.py:54
+#: hexagon/runtime/update/hexagon.py:47
 msgid "msg.support.update.hexagon.updating"
 msgstr "Updating"
 
 #: hexagon/actions/internal/update_hexagon.py:50
-#: hexagon/runtime/update/hexagon.py:61
+#: hexagon/runtime/update/hexagon.py:50
 msgid "msg.support.update.hexagon.updated"
 msgstr "Updated to latest version"
 
