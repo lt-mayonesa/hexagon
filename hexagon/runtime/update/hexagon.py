@@ -1,13 +1,13 @@
 import os
-import subprocess
 import sys
 
 from hexagon.runtime.singletons import options
-from hexagon.runtime.update import REPO_ORG, REPO_NAME
-from hexagon.runtime.update import version
-from hexagon.runtime.update.changelog.fetch import fetch_changelog
-from hexagon.runtime.update.changelog.parse import parse_changelog
-from hexagon.runtime.update.shared import already_checked_for_updates
+from hexagon.runtime.update.shared import (
+    already_checked_for_updates,
+    check_hexagon_version,
+    get_hexagon_changelog,
+    perform_hexagon_update,
+)
 from hexagon.runtime.update.silent_fail import silent_fail
 from hexagon.support.input.prompt import prompt
 from hexagon.support.output.printer import log
@@ -22,12 +22,7 @@ def check_for_hexagon_updates():
         return
 
     with log.status(_("msg.support.update.hexagon.checking_new_versions")):
-        current_version = version.local(
-            override=os.getenv("HEXAGON_TEST_LOCAL_VERSION_OVERRIDE", None)
-        )
-        latest_version = version.latest(
-            override=os.getenv("HEXAGON_TEST_LATEST_VERSION_OVERRIDE", None)
-        )
+        current_version, latest_version = check_hexagon_version()
 
         if current_version >= latest_version:
             return
@@ -40,9 +35,7 @@ def check_for_hexagon_updates():
 
         if bool(os.getenv("HEXAGON_UPDATE_SHOW_CHANGELOG", "1")):
             with log.status(_("msg.support.update.hexagon.fetching_changelog")):
-                changelog = parse_changelog(
-                    current_version, fetch_changelog(REPO_ORG, REPO_NAME)
-                )
+                changelog = get_hexagon_changelog(current_version)
 
             log.example(changelog, syntax="md")
 
@@ -52,11 +45,7 @@ def check_for_hexagon_updates():
             return
 
         with log.status(_("msg.support.update.hexagon.updating")):
-            subprocess.check_call(
-                f"{sys.executable} -m pip install hexagon --upgrade",
-                shell=True,
-                stdout=subprocess.DEVNULL,
-            )
+            perform_hexagon_update()
 
         log.info(_("msg.support.update.hexagon.updated"))
         log.finish()
