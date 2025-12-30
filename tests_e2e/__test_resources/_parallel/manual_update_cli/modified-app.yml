@@ -1,0 +1,11 @@
+cli:
+  name: Test
+  custom_tools_dir: .
+  command: test
+envs: []
+
+tools:
+  - name: echo
+    action: 'echo "echo 2"'
+    type: shell
+    alias: e

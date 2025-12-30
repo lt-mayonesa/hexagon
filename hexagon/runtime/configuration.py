@@ -136,6 +136,12 @@ class Configuration:
                     type=ToolType.hexagon,
                     action="hexagon.actions.internal.schema",
                 ),
+                ActionTool(
+                    name="update-hexagon",
+                    long_name=_("msg.domain.configuration.update_hexagon_long_name"),
+                    type=ToolType.hexagon,
+                    action="hexagon.actions.internal.update_hexagon",
+                ),
             ]
 
         return (
@@ -165,6 +171,12 @@ class Configuration:
                 long_name=_("msg.domain.configuration.create_tool_long_name"),
                 type=ToolType.hexagon,
                 action="hexagon.actions.internal.create_new_tool",
+            ),
+            ActionTool(
+                name="update-cli",
+                long_name=_("msg.domain.configuration.update_cli_long_name"),
+                type=ToolType.hexagon,
+                action="hexagon.actions.internal.update_cli",
             ),
         ]
 
