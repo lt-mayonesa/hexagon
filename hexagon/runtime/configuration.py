@@ -175,7 +175,9 @@ class Configuration:
                 base_tools.append(
                     ActionTool(
                         name="update-hexagon",
-                        long_name=_("msg.domain.configuration.update_hexagon_long_name"),
+                        long_name=_(
+                            "msg.domain.configuration.update_hexagon_long_name"
+                        ),
                         type=ToolType.hexagon,
                         action="hexagon.actions.internal.update_hexagon",
                     )

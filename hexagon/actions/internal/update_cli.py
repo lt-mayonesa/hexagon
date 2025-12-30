@@ -41,9 +41,7 @@ def main(tool, env, env_args, cli_args):
         _("msg.support.update.cli.new_version_available").format(cli_name=cli.name)
     )
 
-    if not prompt.confirm(
-        _("action.support.update.cli.confirm_update"), default=True
-    ):
+    if not prompt.confirm(_("action.support.update.cli.confirm_update"), default=True):
         log.info(_("msg.actions.internal.update_cli.cancelled"))
         return
 
