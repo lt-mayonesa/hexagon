@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-11 11:11+0200\n"
+"POT-Creation-Date: 2025-05-28 22:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,6 +27,40 @@ msgstr "You should probably run \"Install CLI\"."
 #: hexagon/actions/external/open_link.py:8
 msgid "msg.actions.external.open_link.result"
 msgstr "Opening URL: {url}"
+
+#: hexagon/actions/internal/create_cli.py:17
+msgid "action.actions.internal.create_cli.directory_name"
+msgstr "Enter the directory name for your CLI project:"
+
+#: hexagon/actions/internal/create_cli.py:21
+msgid "action.actions.internal.create_cli.title"
+msgstr "Enter a title for your CLI:"
+
+#: hexagon/actions/internal/create_cli.py:25
+msgid "action.actions.internal.create_cli.command"
+msgstr "Enter the command to execute your CLI:"
+
+#: hexagon/actions/internal/create_cli.py:29
+msgid "action.actions.internal.create_cli.environments"
+msgstr "Enter your environments:"
+
+#: hexagon/actions/internal/create_cli.py:46
+msgid "action.actions.internal.create_cli.directory_not_empty"
+msgstr ""
+"Directory {dir_name} is not empty. Do you want to proceed?"
+" Some files may be overwritten."
+
+#: hexagon/actions/internal/create_cli.py:50
+msgid "msg.actions.internal.create_cli.directory_not_empty_cancelled"
+msgstr "CLI project creation cancelled."
+
+#: hexagon/actions/internal/create_cli.py:90
+msgid "msg.actions.internal.create_cli.success"
+msgstr "CLI project created successfully!"
+
+#: hexagon/actions/internal/create_cli.py:96
+msgid "msg.actions.internal.create_cli.install_instructions"
+msgstr "You can now install your CLI with the following command:"
 
 #: hexagon/actions/internal/create_new_tool.py:15
 msgid "action.actions.internal.create_new_tool.choose_action"
@@ -147,24 +181,28 @@ msgid "msg.domain.configuration.install_cli_description"
 msgstr "Install a custom project CLI from a YAML file."
 
 #: hexagon/runtime/configuration.py:132
+msgid "msg.domain.configuration.create_cli_long_name"
+msgstr "Create A New CLI Project"
+
+#: hexagon/runtime/configuration.py:138
 msgid "msg.domain.configuration.get_json_schema_long_name"
 msgstr "Get JSON Schema"
 
-#: hexagon/runtime/configuration.py:134
+#: hexagon/runtime/configuration.py:140
 msgid "msg.domain.configuration.get_json_schema_description"
 msgstr ""
 "Generate JSON Schema for hexagon config file (app.yml). Which can be "
 "imported in your IDE, or used for validation."
 
-#: hexagon/runtime/configuration.py:152
+#: hexagon/runtime/configuration.py:158
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr "Save Last Command as Shell Alias"
 
-#: hexagon/runtime/configuration.py:159
+#: hexagon/runtime/configuration.py:165
 msgid "msg.domain.configuration.replay_long_name"
 msgstr "Replay Last Command"
 
-#: hexagon/runtime/configuration.py:165
+#: hexagon/runtime/configuration.py:171
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr "Create A New Tool"
 
@@ -331,100 +369,100 @@ msgstr "✗ [u][bold]{loc}[/bold] -> {message}[/u]"
 msgid "error.support.hooks.hook.unknown_type"
 msgstr "Unknown HookSubscriptionType {subscription_type}"
 
-#: hexagon/support/input/prompt/hints.py:28
+#: hexagon/support/input/prompt/hints/__init__.py:28
 msgid "msg.support.prompt.hints.confirm"
 msgstr "[ {keys} ] to confirm"
 
-#: hexagon/support/input/prompt/hints.py:29
+#: hexagon/support/input/prompt/hints/__init__.py:29
 msgid "msg.support.prompt.hints.cancel"
 msgstr "[ {keys} ] to cancel"
 
-#: hexagon/support/input/prompt/hints.py:30
+#: hexagon/support/input/prompt/hints/__init__.py:30
 msgid "msg.support.prompt.hints.skip"
 msgstr "[ {keys} ] to skip"
 
-#: hexagon/support/input/prompt/hints.py:38
+#: hexagon/support/input/prompt/hints/__init__.py:38
 msgid "msg.support.prompt.hints.autocomplete"
 msgstr "[ {keys} ] to autocomplete (if available)"
 
-#: hexagon/support/input/prompt/hints.py:47
+#: hexagon/support/input/prompt/hints/__init__.py:47
 msgid "msg.support.prompt.hints.toggle"
 msgstr "[ {keys} ] to toggle"
 
-#: hexagon/support/input/prompt/hints.py:48
+#: hexagon/support/input/prompt/hints/__init__.py:48
 msgid "msg.support.prompt.hints.toggle_move_down"
 msgstr "[ {keys} ] to toggle and move down"
 
-#: hexagon/support/input/prompt/hints.py:49
+#: hexagon/support/input/prompt/hints/__init__.py:49
 msgid "msg.support.prompt.hints.toggle_move_up"
 msgstr "[ {keys} ] to toggle and move up"
 
-#: hexagon/support/input/prompt/hints.py:50
+#: hexagon/support/input/prompt/hints/__init__.py:50
 msgid "msg.support.prompt.hints.toggle_all"
 msgstr "[ {keys} ] to toggle all"
 
-#: hexagon/support/input/prompt/hints.py:52
+#: hexagon/support/input/prompt/hints/__init__.py:52
 msgid "msg.support.prompt.hints.toggle_all_true"
 msgstr "[ {keys} ] to toggle all to true"
 
-#: hexagon/support/input/prompt/hints.py:61
+#: hexagon/support/input/prompt/hints/__init__.py:61
 msgid "msg.support.prompt.hints.move_down"
 msgstr "[ {keys} ] to move down"
 
-#: hexagon/support/input/prompt/hints.py:62
+#: hexagon/support/input/prompt/hints/__init__.py:62
 msgid "msg.support.prompt.hints.move_up"
 msgstr "[ {keys} ] to move up"
 
-#: hexagon/support/input/prompt/hints.py:69
+#: hexagon/support/input/prompt/hints/__init__.py:69
 msgid "msg.support.prompt.hints.toggle_fuzzy_search"
 msgstr "[ {keys} ] to toggle fuzzy search"
 
-#: hexagon/support/input/prompt/hints.py:79
+#: hexagon/support/input/prompt/hints/__init__.py:79
 msgid "msg.support.prompt.hints.number_decrement"
 msgstr "[ {keys} ] to decrement"
 
-#: hexagon/support/input/prompt/hints.py:82
+#: hexagon/support/input/prompt/hints/__init__.py:82
 msgid "msg.support.prompt.hints.number_increment"
 msgstr "[ {keys} ] to increment"
 
-#: hexagon/support/input/prompt/hints.py:83
+#: hexagon/support/input/prompt/hints/__init__.py:83
 msgid "msg.support.prompt.hints.number_left"
 msgstr "[ {keys} ] to select number left"
 
-#: hexagon/support/input/prompt/hints.py:84
+#: hexagon/support/input/prompt/hints/__init__.py:84
 msgid "msg.support.prompt.hints.number_right"
 msgstr "[ {keys} ] to select number right"
 
-#: hexagon/support/input/prompt/hints.py:87
+#: hexagon/support/input/prompt/hints/__init__.py:87
 msgid "msg.support.prompt.hints.toggle_negative"
 msgstr "[ {keys} ] to toggle negative"
 
-#: hexagon/support/input/prompt/hints.py:96
+#: hexagon/support/input/prompt/hints/__init__.py:96
 msgid "msg.support.prompt.hints.number_dot"
 msgstr "[ {keys} ] to select decimal part"
 
-#: hexagon/support/input/prompt/hints.py:98
+#: hexagon/support/input/prompt/hints/__init__.py:98
 msgid "msg.support.prompt.hints.alt_part_focus"
 msgstr "[ {keys} ] to alternate focused part"
 
-#: hexagon/support/input/prompt/hints.py:106
+#: hexagon/support/input/prompt/hints/__init__.py:106
 msgid "msg.support.prompt.hints.create_path_at_location"
 msgstr "[ {keys} ] to create directory at location"
 
-#: hexagon/support/input/prompt/hints.py:123
+#: hexagon/support/input/prompt/hints/__init__.py:123
 msgid "error.support.prompt.hints.no_hints_on_builder"
 msgstr "HintsBuilder should have at least one hint"
 
-#: hexagon/support/input/prompt/hints.py:126
+#: hexagon/support/input/prompt/hints/__init__.py:126
 msgid "msg.support.prompt.hints.help"
 msgstr "help:"
 
-#: hexagon/support/input/prompt/prompt.py:32
+#: hexagon/support/input/prompt/prompt.py:35
 msgid "error.support.input.prompt.prompt.invalid_argument_setup"
 msgstr ""
 "Config [b]{property}[/b] is not supported for argument [b]{argument}[/b]"
 
-#: hexagon/support/input/prompt/prompt.py:307
+#: hexagon/support/input/prompt/prompt.py:264
 msgid "msg.support.prompt.prompt.directory_created"
 msgstr "📁 created directory: {path} [green]✓[/green]"
 
