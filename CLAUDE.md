@@ -213,24 +213,36 @@ Plugins extend hexagon functionality:
 - New features should include E2E test suites
 
 **E2E Testing Best Practices:**
-- **CRITICAL**: Status/loader messages (e.g., "Checking for...", "Loading...") are NOT visible in E2E test output. Only check for actual result messages, not intermediate status indicators.
-- **Study existing patterns first**: Before writing new E2E tests, carefully examine similar existing tests to understand:
-  - What messages are actually visible vs. what gets hidden
-  - How test resources are structured (mock files, git repos, etc.)
-  - Helper functions for common setup (e.g., `_write_last_check()` for simulating previous checks)
-  - Environment variable patterns for mocking behavior
-- **Robust output matching**: Use `discard_until_first_match=True` to skip variable initialization output and focus on key messages
+- **CRITICAL: Status/loader messages are NOT visible in E2E test output**
+  - Messages like "Checking for...", "Loading...", "Updating..." are hidden by the status display
+  - Only check for actual result messages: "New version available", "already up to date", "Update cancelled", etc.
+  - This is the #1 reason E2E tests fail when first written - don't check for status messages!
+
+- **Study existing patterns FIRST**: Before writing new E2E tests, find and examine similar existing tests
+  - Look for tests that do similar operations (e.g., check existing update tests before writing new update tests)
+  - Understand what messages are actually visible vs. what gets hidden
+  - Copy helper function patterns (e.g., `_write_last_check()` for simulating previous checks, `_prepare()` for git repo setup)
+  - Understand environment variable patterns for mocking behavior
+  - Don't guess - verify what works by looking at passing tests
+
+- **Output matching techniques**:
+  - Use `discard_until_first_match=True` to skip variable initialization output
+  - Match on multiple word fragments rather than exact phrases: `["New", "version available"]` works better than exact strings
+  - Be aware of dynamic content: CLI name, version numbers, branch names get interpolated into messages
+
 - **Test resource management**:
-  - Keep mock files minimal (trim large files like CHANGELOGs to only what's needed)
-  - Use appropriate version numbers in mock files (not placeholder values like 999.0.0 unless testing specific edge cases)
-  - Remove unnecessary files (e.g., app.yml when testing bare hexagon mode)
-- **Tool visibility context**: Understand where tools are available:
-  - Initial setup tools (like `update-hexagon`): Only available when running bare `hexagon` without a config file
-  - Default tools (like `update-cli`): Available in CLI projects (with app.yml config)
-- **Always run Black**: After creating or modifying Python files, always run `black` before committing:
-  ```bash
-  pipenv run black hexagon tests tests_e2e
-  ```
+  - Keep mock files minimal - trim large files like CHANGELOGs to only essential content
+  - Use realistic version numbers in mock files (e.g., 0.61.0, not 999.0.0)
+  - Structure test resources to match what the test needs:
+    - Remove app.yml when testing bare hexagon mode (initial setup tools)
+    - Include app.yml when testing CLI project mode (default tools)
+  - Copy test resources from similar existing tests rather than creating from scratch
+
+- **Test execution context**:
+  - Understand the test framework automatically sets certain env vars
+  - Tests in `_parallel/` can run concurrently - ensure no shared state
+  - Test directory is temporary - use `spec.test_dir` to get the path
+  - The test framework may automatically set `HEXAGON_CONFIG_FILE` if app.yml exists
 
 ## Code Style
 
@@ -285,3 +297,76 @@ tools:
 ```
 
 External group files should have `tools: []` at root level.
+
+## Development Workflow Best Practices
+
+### Code Quality & Formatting
+- **CRITICAL: Always run Black before committing**: Black formatting is mandatory for ALL Python code changes, not just tests. Run it before every commit:
+  ```bash
+  pipenv run black hexagon tests tests_e2e
+  ```
+- After running black, if you already committed, amend the commit rather than creating a new one
+- Build i18n files before running E2E tests: `.github/scripts/i18n/build.sh`
+
+### Implementation Strategy
+- **Commit working code first, then refactor**: Don't try to do everything in one large commit
+  - Get the feature working
+  - Commit it
+  - Then refactor to improve code quality in a separate commit
+- **Prefer using existing files/modules over creating new ones**:
+  - When implementing new functionality, check if there's already a file where it belongs
+  - Example: Use `shared.py` for shared helper functions rather than creating a new `helpers.py`
+- **E2E tests are part of the feature, not optional**:
+  - New features should include E2E tests in the same PR
+  - Don't defer E2E tests to a follow-up PR
+
+### Understanding Architecture
+- **Study the architecture before implementing**:
+  - Understand the distinction between initial setup config vs default tools
+  - Initial setup tools: Available when running bare `hexagon` without config (e.g., `install`, `update-hexagon`)
+  - Default tools: Available when running a CLI project with app.yml (e.g., `save-alias`, `replay`, `update-cli`)
+- **Follow existing patterns**:
+  - If other similar code doesn't check for something, your new code shouldn't either
+  - Example: If other default tools don't check `if self.__config`, your new default tool shouldn't either
+- **Simplify logic**:
+  - Remove unnecessary conditional checks
+  - Trust the architecture - if you're in `__defaults`, there's always a config
+
+### Impact Analysis
+- **When adding new built-in tools, update existing E2E tests**:
+  - Tests that check tool counts will need updates
+  - Search for patterns like "4/4", "5/5" in test expectations
+  - Update both the count and the list of expected tools
+
+### Code Organization & Refactoring
+- **DRY (Don't Repeat Yourself)**:
+  - When you notice duplicate code between automatic and manual flows, extract shared helper functions
+  - Place helpers in the most appropriate existing file (e.g., `shared.py` for update-related helpers)
+- **Refactoring approach**:
+  - Implement the feature with its own logic first
+  - Once it works, identify duplication with existing code
+  - Extract shared helpers
+  - Refactor both old and new code to use the helpers
+  - Keep refactoring commits separate from feature commits
+
+### User Interaction & Feedback
+- **Ask clarifying questions early**: When requirements are ambiguous, ask questions upfront rather than making assumptions
+- **Take user feedback literally**: When user points to an existing file or pattern, use it
+- **Iterate based on feedback**: User may catch issues in multiple rounds - that's normal and expected
+  - First round: Architecture issues
+  - Second round: Logic simplification
+  - Third round: Code quality (formatting, tests)
+
+### Git & CI Workflow
+- **Before pushing**:
+  - Run black on all Python changes
+  - Run unit tests: `pytest -svv tests/`
+  - Build i18n: `.github/scripts/i18n/build.sh`
+  - Run E2E tests: `pytest -svv tests_e2e/`
+- **CI failures to watch for**:
+  - Black formatting: Always run black before committing
+  - Flake8 linting: May need to exclude generated files in `.flake8`
+  - i18n validation: Remove fuzzy markers, ensure translations are complete
+  - E2E test failures: Often related to tool count changes or output expectations
+- **Amending commits**: Use `git commit --amend --no-edit` for small fixes like formatting, then `git push --force-with-lease`
+- **Empty commits for CI re-runs**: If tests are flaky and unrelated to changes, create an empty commit to trigger CI again
