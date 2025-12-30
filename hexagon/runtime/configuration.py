@@ -152,7 +152,7 @@ class Configuration:
 
     @property
     def __defaults(self):
-        base_tools = [
+        return [
             ActionTool(
                 name="save-alias",
                 long_name=_("msg.domain.configuration.save_alias_long_name"),
@@ -172,20 +172,13 @@ class Configuration:
                 type=ToolType.hexagon,
                 action="hexagon.actions.internal.create_new_tool",
             ),
+            ActionTool(
+                name="update-cli",
+                long_name=_("msg.domain.configuration.update_cli_long_name"),
+                type=ToolType.hexagon,
+                action="hexagon.actions.internal.update_cli",
+            ),
         ]
-
-        # Add update-cli when running a CLI project (has config file)
-        if self.__config:
-            base_tools.append(
-                ActionTool(
-                    name="update-cli",
-                    long_name=_("msg.domain.configuration.update_cli_long_name"),
-                    type=ToolType.hexagon,
-                    action="hexagon.actions.internal.update_cli",
-                )
-            )
-
-        return base_tools
 
 
 def register_custom_tools_path(path: str, realtive_to: str) -> str:
