@@ -146,7 +146,7 @@ class Configuration:
 
     @property
     def __defaults(self):
-        return [
+        base_tools = [
             ActionTool(
                 name="save-alias",
                 long_name=_("msg.domain.configuration.save_alias_long_name"),
@@ -167,6 +167,32 @@ class Configuration:
                 action="hexagon.actions.internal.create_new_tool",
             ),
         ]
+
+        # Add conditional update tools based on CLI context
+        if self.__config:
+            # Add update-hexagon only when running hexagon itself
+            if self.__config.cli.name == "Hexagon":
+                base_tools.append(
+                    ActionTool(
+                        name="update-hexagon",
+                        long_name=_("msg.domain.configuration.update_hexagon_long_name"),
+                        type=ToolType.hexagon,
+                        action="hexagon.actions.internal.update_hexagon",
+                    )
+                )
+
+            # Add update-cli only when running custom CLIs
+            if self.__config.cli.name != "Hexagon":
+                base_tools.append(
+                    ActionTool(
+                        name="update-cli",
+                        long_name=_("msg.domain.configuration.update_cli_long_name"),
+                        type=ToolType.hexagon,
+                        action="hexagon.actions.internal.update_cli",
+                    )
+                )
+
+        return base_tools
 
 
 def register_custom_tools_path(path: str, realtive_to: str) -> str:
