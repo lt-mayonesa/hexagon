@@ -3,6 +3,7 @@ exclude =
     .git,
     __pycache__,
     .pytest_cache,
+    hexagon/support/output/printer/en.py,
 max-complexity = 10
 max-line-length = 88
 
