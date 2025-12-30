@@ -136,6 +136,12 @@ class Configuration:
                     type=ToolType.hexagon,
                     action="hexagon.actions.internal.schema",
                 ),
+                ActionTool(
+                    name="update-hexagon",
+                    long_name=_("msg.domain.configuration.update_hexagon_long_name"),
+                    type=ToolType.hexagon,
+                    action="hexagon.actions.internal.update_hexagon",
+                ),
             ]
 
         return (
@@ -168,31 +174,16 @@ class Configuration:
             ),
         ]
 
-        # Add conditional update tools based on CLI context
-        if self.__config:
-            # Add update-hexagon only when running hexagon itself
-            if self.__config.cli.name == "Hexagon":
-                base_tools.append(
-                    ActionTool(
-                        name="update-hexagon",
-                        long_name=_(
-                            "msg.domain.configuration.update_hexagon_long_name"
-                        ),
-                        type=ToolType.hexagon,
-                        action="hexagon.actions.internal.update_hexagon",
-                    )
+        # Add update-cli only when running custom CLIs (not hexagon itself)
+        if self.__config and self.__config.cli.name != "Hexagon":
+            base_tools.append(
+                ActionTool(
+                    name="update-cli",
+                    long_name=_("msg.domain.configuration.update_cli_long_name"),
+                    type=ToolType.hexagon,
+                    action="hexagon.actions.internal.update_cli",
                 )
-
-            # Add update-cli only when running custom CLIs
-            if self.__config.cli.name != "Hexagon":
-                base_tools.append(
-                    ActionTool(
-                        name="update-cli",
-                        long_name=_("msg.domain.configuration.update_cli_long_name"),
-                        type=ToolType.hexagon,
-                        action="hexagon.actions.internal.update_cli",
-                    )
-                )
+            )
 
         return base_tools
 

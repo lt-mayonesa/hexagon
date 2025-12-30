@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-30 13:14+0100\n"
+"POT-Creation-Date: 2025-12-30 16:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,21 +157,21 @@ msgstr "Checking for new CLI versions, on branch: [cyan]{branch}[/cyan]"
 msgid "msg.support.update.cli.new_version_available"
 msgstr "New [cyan]{cli_name}[/cyan] version available"
 
-#: hexagon/actions/internal/update_cli.py:45
+#: hexagon/actions/internal/update_cli.py:44
 #: hexagon/runtime/update/cli/__init__.py:38
 msgid "action.support.update.cli.confirm_update"
 msgstr "Would you like to update?"
 
-#: hexagon/actions/internal/update_cli.py:47
+#: hexagon/actions/internal/update_cli.py:45
 msgid "msg.actions.internal.update_cli.cancelled"
 msgstr "Update cancelled"
 
-#: hexagon/actions/internal/update_cli.py:50
+#: hexagon/actions/internal/update_cli.py:48
 #: hexagon/runtime/update/cli/__init__.py:42
 msgid "msg.support.update.cli.updating"
 msgstr "Updating"
 
-#: hexagon/actions/internal/update_cli.py:53
+#: hexagon/actions/internal/update_cli.py:51
 #: hexagon/runtime/update/cli/__init__.py:45
 msgid "msg.support.update.cli.updated"
 msgstr "[green]✓[/green] [white]Updated to latest version[/white]"
@@ -237,23 +237,23 @@ msgstr ""
 "Generate JSON Schema for hexagon config file (app.yml). Which can be "
 "imported in your IDE, or used for validation."
 
-#: hexagon/runtime/configuration.py:152
-msgid "msg.domain.configuration.save_alias_long_name"
-msgstr "Save Last Command as Shell Alias"
-
-#: hexagon/runtime/configuration.py:159
-msgid "msg.domain.configuration.replay_long_name"
-msgstr "Replay Last Command"
-
-#: hexagon/runtime/configuration.py:165
-msgid "msg.domain.configuration.create_tool_long_name"
-msgstr "Create A New Tool"
-
-#: hexagon/runtime/configuration.py:178
+#: hexagon/runtime/configuration.py:141
 msgid "msg.domain.configuration.update_hexagon_long_name"
 msgstr "Update Hexagon"
 
-#: hexagon/runtime/configuration.py:189
+#: hexagon/runtime/configuration.py:158
+msgid "msg.domain.configuration.save_alias_long_name"
+msgstr "Save Last Command as Shell Alias"
+
+#: hexagon/runtime/configuration.py:165
+msgid "msg.domain.configuration.replay_long_name"
+msgstr "Replay Last Command"
+
+#: hexagon/runtime/configuration.py:171
+msgid "msg.domain.configuration.create_tool_long_name"
+msgstr "Create A New Tool"
+
+#: hexagon/runtime/configuration.py:182
 msgid "msg.domain.configuration.update_cli_long_name"
 msgstr "Update CLI"
 

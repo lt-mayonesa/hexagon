@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-30 11:57+0100\n"
+"POT-Creation-Date: 2025-12-30 16:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,7 +126,7 @@ msgid "msg.actions.internal.save_new_alias.added_to_file"
 msgstr ""
 
 #: hexagon/actions/internal/update_cli.py:16
-#: hexagon/runtime/update/cli/__init__.py:24
+#: hexagon/runtime/update/cli/__init__.py:21
 msgid "msg.support.update.cli.checking_for_cli_updates"
 msgstr ""
 
@@ -139,30 +139,31 @@ msgid "msg.actions.internal.update_cli.no_git_config"
 msgstr ""
 
 #: hexagon/actions/internal/update_cli.py:35
-#: hexagon/runtime/update/cli/__init__.py:30
+#: hexagon/runtime/update/cli/__init__.py:28
 msgid "msg.support.update.cli.checking_for_cli_updates_on_branch"
 msgstr ""
 
 #: hexagon/actions/internal/update_cli.py:41
-#: hexagon/runtime/update/cli/__init__.py:37
+#: hexagon/runtime/update/cli/__init__.py:34
 msgid "msg.support.update.cli.new_version_available"
 msgstr ""
 
-#: hexagon/actions/internal/update_cli.py:45
-#: hexagon/runtime/update/cli/__init__.py:42
+#: hexagon/actions/internal/update_cli.py:44
+#: hexagon/runtime/update/cli/__init__.py:38
 msgid "action.support.update.cli.confirm_update"
 msgstr ""
 
-#: hexagon/actions/internal/update_cli.py:47
+#: hexagon/actions/internal/update_cli.py:45
 msgid "msg.actions.internal.update_cli.cancelled"
 msgstr ""
 
-#: hexagon/actions/internal/update_cli.py:50
+#: hexagon/actions/internal/update_cli.py:48
+#: hexagon/runtime/update/cli/__init__.py:42
 msgid "msg.support.update.cli.updating"
 msgstr ""
 
-#: hexagon/actions/internal/update_cli.py:53
-#: hexagon/runtime/update/cli/__init__.py:49
+#: hexagon/actions/internal/update_cli.py:51
+#: hexagon/runtime/update/cli/__init__.py:45
 msgid "msg.support.update.cli.updated"
 msgstr ""
 
@@ -176,17 +177,17 @@ msgid "msg.actions.internal.update_hexagon.already_latest"
 msgstr ""
 
 #: hexagon/actions/internal/update_hexagon.py:31
-#: hexagon/runtime/update/hexagon.py:36
+#: hexagon/runtime/update/hexagon.py:31
 msgid "msg.support.update.hexagon.new_version_available"
 msgstr ""
 
 #: hexagon/actions/internal/update_hexagon.py:36
-#: hexagon/runtime/update/hexagon.py:42
+#: hexagon/runtime/update/hexagon.py:37
 msgid "msg.support.update.hexagon.fetching_changelog"
 msgstr ""
 
 #: hexagon/actions/internal/update_hexagon.py:42
-#: hexagon/runtime/update/hexagon.py:50
+#: hexagon/runtime/update/hexagon.py:43
 msgid "action.support.update.hexagon.confirm_update"
 msgstr ""
 
@@ -195,12 +196,12 @@ msgid "msg.actions.internal.update_hexagon.cancelled"
 msgstr ""
 
 #: hexagon/actions/internal/update_hexagon.py:47
-#: hexagon/runtime/update/hexagon.py:54
+#: hexagon/runtime/update/hexagon.py:47
 msgid "msg.support.update.hexagon.updating"
 msgstr ""
 
 #: hexagon/actions/internal/update_hexagon.py:50
-#: hexagon/runtime/update/hexagon.py:61
+#: hexagon/runtime/update/hexagon.py:50
 msgid "msg.support.update.hexagon.updated"
 msgstr ""
 
@@ -224,23 +225,23 @@ msgstr ""
 msgid "msg.domain.configuration.get_json_schema_description"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:152
-msgid "msg.domain.configuration.save_alias_long_name"
-msgstr ""
-
-#: hexagon/runtime/configuration.py:159
-msgid "msg.domain.configuration.replay_long_name"
-msgstr ""
-
-#: hexagon/runtime/configuration.py:165
-msgid "msg.domain.configuration.create_tool_long_name"
-msgstr ""
-
-#: hexagon/runtime/configuration.py:178
+#: hexagon/runtime/configuration.py:141
 msgid "msg.domain.configuration.update_hexagon_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:189
+#: hexagon/runtime/configuration.py:158
+msgid "msg.domain.configuration.save_alias_long_name"
+msgstr ""
+
+#: hexagon/runtime/configuration.py:165
+msgid "msg.domain.configuration.replay_long_name"
+msgstr ""
+
+#: hexagon/runtime/configuration.py:171
+msgid "msg.domain.configuration.create_tool_long_name"
+msgstr ""
+
+#: hexagon/runtime/configuration.py:182
 msgid "msg.domain.configuration.update_cli_long_name"
 msgstr ""
 
