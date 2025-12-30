@@ -174,8 +174,8 @@ class Configuration:
             ),
         ]
 
-        # Add update-cli only when running custom CLIs (not hexagon itself)
-        if self.__config and self.__config.cli.name != "Hexagon":
+        # Add update-cli when running a CLI project (has config file)
+        if self.__config:
             base_tools.append(
                 ActionTool(
                     name="update-cli",
