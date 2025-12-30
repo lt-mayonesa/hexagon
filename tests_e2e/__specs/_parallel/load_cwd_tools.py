@@ -13,7 +13,7 @@ def test_dir_with_hexagon_tool_execute_extra_tool():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "5/5",
+                "6/6",
                 "Extra tool",
                 "Normal tool",
                 "Save Last Command",
@@ -42,7 +42,7 @@ def test_dir_with_hexagon_tool_execute_normal_tool():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "5/5",
+                "6/6",
                 "Extra tool",
                 "Normal tool",
                 "Save Last Command",
@@ -72,11 +72,12 @@ def test_dir_without_hexagon_tool_execute_normal_tool():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "4/4",
+                "5/5",
                 "Normal tool",
                 "Save Last Command",
                 "Replay Last Command",
                 "Create A New Tool",
+                "Update CLI",
             ],
         )
         .enter()
@@ -100,11 +101,12 @@ def test_dir_with_hexagon_tool_dont_load_if_disabled():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "4/4",
+                "5/5",
                 "Normal tool",
                 "Save Last Command",
                 "Replay Last Command",
                 "Create A New Tool",
+                "Update CLI",
             ],
         )
         .enter()

@@ -7,7 +7,7 @@ def _shared_assertions(spec: HexagonSpec):
         spec.then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "11/11",
+                "12/12",
                 "⦾ Google",
                 "ƒ Python Module Test",
                 "ƒ Python Module Env Test",
@@ -18,6 +18,7 @@ def _shared_assertions(spec: HexagonSpec):
                 "ƒ Bash Module Test",
                 "⬡ Save Last Command as Shell Alias",
                 "⬡ Replay Last Command",
+                "⬡ Create A New Tool",
             ]
         )
     )

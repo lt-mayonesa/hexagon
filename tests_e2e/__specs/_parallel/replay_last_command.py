@@ -24,11 +24,12 @@ def test_replay_last_command_by_prompt():
                 "",
                 "",
                 "Hi, which tool would you like to use today?",
-                "4/4",
+                "5/5",
                 "Python Module Test",
                 "Save Last Command",
                 "Replay Last Command",
                 "Create A New Tool",
+                "Update CLI",
             ]
         )
         .arrow_down()

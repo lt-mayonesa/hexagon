@@ -22,11 +22,12 @@ def _shared_assertions(spec: HexagonSpec):
         spec.then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "4/4",
+                "5/5",
                 "⦾ Google",
                 "⬡ Save Last Command as Shell Alias",
                 "⬡ Replay Last Command",
                 "⬡ Create A New Tool",
+                "⬡ Update CLI",
             ],
         )
         .arrow_down()
