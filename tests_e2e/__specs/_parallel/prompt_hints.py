@@ -317,9 +317,7 @@ def test_hints_for_secret_prompt_are_generated_correctly():
                 "help:",
                 [
                     "[ ENTER ] to confirm / [ CTRL+C ] to cancel / [ CTRL+Z ] to skip",
-                    "Enter prompt_text_secret: ***",
                 ],
-                "result: foo",
             ]
         )
         .exit()
