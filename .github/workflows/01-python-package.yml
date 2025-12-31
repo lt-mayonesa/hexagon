@@ -42,7 +42,7 @@ jobs:
           pipenv run pytest -v tests/ --junitxml=junit/unit-test-results-3.11.xml
 
       - name: Upload test results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: unit-test-results-3.11
@@ -62,7 +62,7 @@ jobs:
           python -m pip install wheel
           python setup.py sdist bdist_wheel
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: hexagon-${{ github.sha }}
           path: dist/*.tar.gz
@@ -126,7 +126,7 @@ jobs:
             exit $((status1 || status2))
 
       - name: Upload test results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: e2e-test-results-${{ matrix.os }}-${{ matrix.python-version }}
@@ -167,7 +167,7 @@ jobs:
         run: .github/scripts/i18n/check.sh
 
       - name: upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: i18n
           path: locales/**/*.mo
