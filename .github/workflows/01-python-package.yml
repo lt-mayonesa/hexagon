@@ -115,11 +115,15 @@ jobs:
           max_attempts: 3
           retry_on: error
           command: |
+            set +e
             echo "Running e2e tests for Python ${{ matrix.python-version }}"
             echo "COLUMNS: $COLUMNS, ROWS: $ROWS"
             pytest -n auto -v tests_e2e/__specs/_parallel --junitxml=junit/${{ matrix.python-version }}-parallel.xml
+            status1=$?
             pytest -n 1 -v tests_e2e/__specs/_sequential --junitxml=junit/${{ matrix.python-version }}-sequential.xml
+            status2=$?
             junitparser merge junit/${{ matrix.python-version }}-parallel.xml junit/${{ matrix.python-version }}-sequential.xml junit/e2e-test-results-${{ matrix.python-version }}.xml
+            exit $((status1 || status2))
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
