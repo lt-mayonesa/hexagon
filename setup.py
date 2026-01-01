@@ -45,7 +45,7 @@ setuptools.setup(
     ),
     include_package_data=True,
     install_requires=requires,
-    python_requires=">=3.9",
+    python_requires=">=3.10",
     entry_points="""
         [console_scripts]
         hexagon=hexagon.__main__:main
