@@ -10,6 +10,11 @@ tests_e2e/*/home-aliases.txt
 tests_e2e/last-output.txt
 tests_e2e/*/last_command
 
+.windsurf/
+.tool-versions
+.windsurfrules
+i18n_errors.txt
+last-output.txt
 
 # Translations
 **/**/*.mo
@@ -35,11 +40,13 @@ tests_e2e/*/last_command
 # Sensitive or high-churn files
 .idea/**/dataSources/
 .idea/**/dataSources.ids
+.idea/**/data_source_mapping.xml
 .idea/**/dataSources.local.xml
 .idea/**/sqlDataSources.xml
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+.idea/**/copilot*.xml
 
 # Gradle
 .idea/**/gradle.xml

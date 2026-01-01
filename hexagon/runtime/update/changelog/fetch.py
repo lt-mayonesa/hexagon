@@ -19,7 +19,8 @@ class LocalChangelogFile(ChangelogFile):
 
 class RemoteChangelogFile(ChangelogFile):
     def readlines(self):
-        return self.file.readlines().decode(self.file.headers.get_content_charset())
+        charset = self.file.headers.get_content_charset() or "utf-8"
+        return [line.decode(charset) for line in self.file.readlines()]
 
 
 def fetch_changelog(repo_org: str, repo_name: str):

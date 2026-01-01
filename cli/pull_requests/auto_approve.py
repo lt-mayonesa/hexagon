@@ -2,15 +2,15 @@ import subprocess
 from dataclasses import dataclass
 from typing import Any, Optional, List, Tuple
 
-from checks.check_gh_cli import check_gh_cli
-from rich.panel import Panel
-from rich.syntax import Syntax
-
 from hexagon.domain.env import Env
 from hexagon.domain.tool import ActionTool
 from hexagon.support.input.args import ToolArgs, Arg, PositionalArg
 from hexagon.support.input.prompt import prompt
 from hexagon.support.output.printer import log
+from rich.panel import Panel
+from rich.syntax import Syntax
+
+from checks.check_gh_cli import check_gh_cli
 from .diff_utils import (
     parse_diff_by_file,
     get_files_to_display,
@@ -688,7 +688,7 @@ def fetch_pr_files_with_stats(repo: str, pr_number: int) -> Optional[List[dict]]
     """
     files = get_pr_files(repo, pr_number)
     if files is None:
-        log.error(f"Failed to get PR files")
+        log.error("Failed to get PR files")
     return files
 
 
