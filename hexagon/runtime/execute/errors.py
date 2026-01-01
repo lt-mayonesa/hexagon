@@ -1,9 +1,9 @@
 import os
-import sys
 import traceback
 from pathlib import Path
 from typing import Optional
 
+import sys
 from pydantic import ValidationError
 from rich import traceback as rich_traceback
 
@@ -12,7 +12,7 @@ from hexagon.support.output.printer import Logger
 
 
 class ToolExecutionError(ListHexagonError):
-    def __init__(
+    def __init__(  # noqa: B042
         self, return_code, executed_command, executable_str, custom_tools_path
     ) -> None:
         errors = [
@@ -48,7 +48,7 @@ class ToolExecutionError(ListHexagonError):
 
 
 class ActionInputError(ListHexagonError):
-    def __init__(self, e: ValidationError, tool_name: str) -> None:
+    def __init__(self, e: ValidationError, tool_name: str) -> None:  # noqa: B042
         errors = [
             _("error.support.execute.errors.invalid_input").format(
                 count=len(e.errors()), tool=tool_name
@@ -65,7 +65,9 @@ class ActionInputError(ListHexagonError):
 
 
 class WithTracebackError(HexagonError):
-    def __init__(self, action_id: str, custom_tools_path: Optional[str] = None) -> None:
+    def __init__(  # noqa: B042
+        self, action_id: str, custom_tools_path: Optional[str] = None  # noqa: B042
+    ) -> None:  # noqa: B042
         tb, execution = self.__pretty_print_external_error(action_id, custom_tools_path)
         self.traceback = tb
         self.execution = execution

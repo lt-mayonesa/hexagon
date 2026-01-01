@@ -30,7 +30,9 @@ def load_model(model: Type, content: dict, path: str):
 
 
 class YamlValidationError(HexagonError):
-    def __init__(self, error: ValidationError, yaml_content=None, yaml_path=None):
+    def __init__(  # noqa: B042
+        self, error: ValidationError, yaml_content=None, yaml_path=None  # noqa: B042
+    ):  # noqa: B042
         self.yaml_content = yaml_content
         self.yaml_path = yaml_path
         self.errors = error.errors()

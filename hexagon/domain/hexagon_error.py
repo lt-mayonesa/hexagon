@@ -4,7 +4,9 @@ from typing import List, Callable
 class HexagonError(Exception):
     """Base class for all Hexagon errors."""
 
-    def __init__(self, error_printer: Callable, exit_status: int = 1) -> None:
+    def __init__(  # noqa: B042
+        self, error_printer: Callable, exit_status: int = 1  # noqa: B042
+    ) -> None:  # noqa: B042
         super().__init__("hexagon error")
         self.exit_status = exit_status
         self.error_printer = error_printer

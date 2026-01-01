@@ -29,7 +29,7 @@ from hexagon.typing import field_type_information, TypeInformation
 
 
 class HexagonArgumentSetupError(ListHexagonError):
-    def __init__(self, argument: str, prop: str):
+    def __init__(self, argument: str, prop: str):  # noqa: B042
         super().__init__(
             [
                 _("error.support.input.prompt.prompt.invalid_argument_setup").format(
