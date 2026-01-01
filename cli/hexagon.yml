@@ -75,3 +75,10 @@ tools:
       echo "3. enter new shell: pipenv shell --python [your version (3.11, 3.12, ...)]"
       echo "4. install dependencies: pipenv install --dev"
       echo "DONE!"
+
+  - name: dependabot-check
+    alias: dc
+    long_name: Dependabot PR Housekeeping
+    description: Auto approve or merge PRs created by dependabot or other bots
+    type: shell
+    action: pull_requests.auto_approve
