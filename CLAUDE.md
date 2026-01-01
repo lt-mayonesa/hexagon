@@ -301,10 +301,16 @@ External group files should have `tools: []` at root level.
 ## Development Workflow Best Practices
 
 ### Code Quality & Formatting
-- **CRITICAL: Always run Black before committing**: Black formatting is mandatory for ALL Python code changes, not just tests. Run it before every commit:
+- **CRITICAL: Always run Black and Flake8 before wrapping up ANY change**: Code quality checks are mandatory for ALL code changes. Run these commands on the entire project before considering work complete:
   ```bash
-  pipenv run black hexagon tests tests_e2e
+  pipenv run black .
+  pipenv run flake8 .
   ```
+- This applies to:
+  - Before committing code
+  - Before pushing to CI
+  - When wrapping up any bug fix or feature
+  - After making any Python code changes
 - After running black, if you already committed, amend the commit rather than creating a new one
 - Build i18n files before running E2E tests: `.github/scripts/i18n/build.sh`
 
@@ -374,13 +380,13 @@ External group files should have `tools: []` at root level.
 
 ### Git & CI Workflow
 - **Before pushing**:
-  - Run black on all Python changes
+  - Run code quality checks: `pipenv run black .` and `pipenv run flake8 .`
   - Run unit tests: `pytest -svv tests/`
   - Build i18n: `.github/scripts/i18n/build.sh`
   - Run E2E tests: `pytest -svv tests_e2e/`
 - **CI failures to watch for**:
-  - Black formatting: Always run black before committing
-  - Flake8 linting: May need to exclude generated files in `.flake8`
+  - Black formatting: Always run `black .` on entire project before committing
+  - Flake8 linting: Always run `flake8 .` on entire project; may need to exclude generated files in `.flake8`
   - i18n validation: Remove fuzzy markers, ensure translations are complete
   - E2E test failures: Often related to tool count changes or output expectations
 - **Amending commits**: Use `git commit --amend --no-edit` for small fixes like formatting, then `git push --force-with-lease`

@@ -10,7 +10,7 @@ def test_print_hexagon_installed_version(command):
         .run_hexagon([command], os_env_vars={"HEXAGON_THEME": "disabled"})
         .then_output_should_be(
             [
-                f"Hexagon:",
+                "Hexagon:",
             ],
             ignore_blank_lines=False,
         )
