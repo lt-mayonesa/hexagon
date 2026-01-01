@@ -357,6 +357,21 @@ External group files should have `tools: []` at root level.
   - Second round: Logic simplification
   - Third round: Code quality (formatting, tests)
 
+### Testing Best Practices Beyond E2E
+- **CRITICAL: Test overrides can hide bugs**
+  - Environment variables like `HEXAGON_CHANGELOG_FILE_PATH_TEST_OVERRIDE` bypass production code paths
+  - Always ensure unit tests cover BOTH the override path AND the production path
+  - Example: The `RemoteChangelogFile` decode bug was missed because all tests used the local file override
+  - When adding test overrides, create specific unit tests for the production code path
+- **Test all code branches**:
+  - If code has an `if/else` for test vs production, test BOTH branches
+  - Mock external dependencies (like `urlopen`) to test production paths in isolation
+  - Don't rely solely on E2E tests with overrides
+- **When adding test helpers**:
+  - Document what code path the helper bypasses
+  - Create corresponding unit tests for the bypassed path
+  - Example: If adding `SOME_API_OVERRIDE`, create unit tests that mock the real API
+
 ### Git & CI Workflow
 - **Before pushing**:
   - Run black on all Python changes
