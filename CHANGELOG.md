@@ -1,6 +1,193 @@
 # CHANGELOG
 
 
+## v0.64.0 (2026-01-01)
+
+### Chores
+
+- **deps**: Bump actions/checkout from 3 to 4
+  ([#155](https://github.com/lt-mayonesa/hexagon/pull/155),
+  [`f10270b`](https://github.com/lt-mayonesa/hexagon/commit/f10270b0abe84fd69c04ed658fa4793799d1aa39))
+
+- **deps**: Bump actions/checkout from 4 to 5
+  ([#188](https://github.com/lt-mayonesa/hexagon/pull/188),
+  [`51e4114`](https://github.com/lt-mayonesa/hexagon/commit/51e411490c666f2de8d7d2fd010ed5c6a1f43e72))
+
+- **deps**: Bump actions/checkout from 5 to 6
+  ([#210](https://github.com/lt-mayonesa/hexagon/pull/210),
+  [`894154e`](https://github.com/lt-mayonesa/hexagon/commit/894154e7b5bfb34991bfb0fff0260fdb04a3d720))
+
+- **deps**: Bump actions/download-artifact from 4 to 6
+  ([#199](https://github.com/lt-mayonesa/hexagon/pull/199),
+  [`6816ccd`](https://github.com/lt-mayonesa/hexagon/commit/6816ccda3208b35aef7a057937f65dd677391cc6))
+
+- **deps**: Bump actions/setup-node from 3 to 4
+  ([#157](https://github.com/lt-mayonesa/hexagon/pull/157),
+  [`06a3fa2`](https://github.com/lt-mayonesa/hexagon/commit/06a3fa2c3e6bdc407211008ab9f469bf0ec7037d))
+
+- **deps**: Bump actions/setup-node from 4 to 6
+  ([#204](https://github.com/lt-mayonesa/hexagon/pull/204),
+  [`2f87793`](https://github.com/lt-mayonesa/hexagon/commit/2f877930577de924bfb78712d916b1d5b9f1d117))
+
+- **deps**: Bump actions/setup-python from 5 to 6
+  ([#191](https://github.com/lt-mayonesa/hexagon/pull/191),
+  [`0ae0427`](https://github.com/lt-mayonesa/hexagon/commit/0ae04270c5878405fb8d172ebcc1cd549d80ca22))
+
+- **deps**: Bump actions/upload-artifact from 4 to 5
+  ([#205](https://github.com/lt-mayonesa/hexagon/pull/205),
+  [`f407e98`](https://github.com/lt-mayonesa/hexagon/commit/f407e98579a9fb6cb03fa29aee7a80646b63e511))
+
+- **deps**: Bump brace-expansion ([#173](https://github.com/lt-mayonesa/hexagon/pull/173),
+  [`69639eb`](https://github.com/lt-mayonesa/hexagon/commit/69639ebbaacdecb1ab198adca3a659514c45cbc7))
+
+- **deps**: Bump markdown from 3.8 to 3.9 ([#189](https://github.com/lt-mayonesa/hexagon/pull/189),
+  [`4775c0b`](https://github.com/lt-mayonesa/hexagon/commit/4775c0b1394aeb630b521ad137647946f917ed46))
+
+- **deps**: Bump on-headers ([#209](https://github.com/lt-mayonesa/hexagon/pull/209),
+  [`194e503`](https://github.com/lt-mayonesa/hexagon/commit/194e5035ee289a5a1e3ed0f2ab4102d0cb4ae575))
+
+- **deps**: Bump peaceiris/actions-gh-pages from 3 to 4
+  ([#156](https://github.com/lt-mayonesa/hexagon/pull/156),
+  [`5c59ced`](https://github.com/lt-mayonesa/hexagon/commit/5c59ced0b77c0199512eb934fad02baaca137893))
+
+- **deps**: Bump peter-evans/create-pull-request from 6 to 7
+  ([#168](https://github.com/lt-mayonesa/hexagon/pull/168),
+  [`18ba47a`](https://github.com/lt-mayonesa/hexagon/commit/18ba47adea9f1097b87450d6ca6537c83506bbb9))
+
+- **deps**: Bump pydantic from 2.11.4 to 2.11.5
+  ([#158](https://github.com/lt-mayonesa/hexagon/pull/158),
+  [`3adcf72`](https://github.com/lt-mayonesa/hexagon/commit/3adcf72f64fe6cabe44e7e662c0ad1d3cf7c0dd9))
+
+- **deps**: Bump pydantic from 2.11.5 to 2.11.7
+  ([#172](https://github.com/lt-mayonesa/hexagon/pull/172),
+  [`23b0526`](https://github.com/lt-mayonesa/hexagon/commit/23b052621e1ebecf533e2bff7d8fb5e00e152b56))
+
+- **deps**: Bump python-semantic-release/publish-action
+  ([#208](https://github.com/lt-mayonesa/hexagon/pull/208),
+  [`241bd62`](https://github.com/lt-mayonesa/hexagon/commit/241bd62ab6595190a9ea753369da477b86a6191c))
+
+- **deps**: Bump python-semantic-release/publish-action
+  ([#196](https://github.com/lt-mayonesa/hexagon/pull/196),
+  [`6109b90`](https://github.com/lt-mayonesa/hexagon/commit/6109b9084e9ebf4e6387e44b0a09709addc29f5c))
+
+- **deps**: Bump python-semantic-release/publish-action
+  ([#171](https://github.com/lt-mayonesa/hexagon/pull/171),
+  [`0a13595`](https://github.com/lt-mayonesa/hexagon/commit/0a1359519da6ae0bb4c23a5a67c10ed46158740f))
+
+- **deps**: Bump python-semantic-release/publish-action
+  ([#163](https://github.com/lt-mayonesa/hexagon/pull/163),
+  [`f9eba75`](https://github.com/lt-mayonesa/hexagon/commit/f9eba75020950e56504a4cd00c9769c94f1a53c5))
+
+- **deps**: Bump python-semantic-release/python-semantic-release
+  ([#207](https://github.com/lt-mayonesa/hexagon/pull/207),
+  [`13369ea`](https://github.com/lt-mayonesa/hexagon/commit/13369eafce44c8f1a985fa830f76318a99386eb1))
+
+- **deps**: Bump python-semantic-release/python-semantic-release
+  ([#197](https://github.com/lt-mayonesa/hexagon/pull/197),
+  [`86cc9ac`](https://github.com/lt-mayonesa/hexagon/commit/86cc9ac46abc1d8c7a845b61ff7b7c842ce438f3))
+
+- **deps**: Bump python-semantic-release/python-semantic-release
+  ([#170](https://github.com/lt-mayonesa/hexagon/pull/170),
+  [`91a6f70`](https://github.com/lt-mayonesa/hexagon/commit/91a6f7095b50c5c1139e8e74f0ea55ba00c846f9))
+
+- **deps**: Bump python-semantic-release/python-semantic-release
+  ([#162](https://github.com/lt-mayonesa/hexagon/pull/162),
+  [`3af4378`](https://github.com/lt-mayonesa/hexagon/commit/3af43782c19adefcd4b444e417e2bfc30ed70919))
+
+- **deps**: Bump typing-extensions from 4.13.2 to 4.14.0
+  ([#169](https://github.com/lt-mayonesa/hexagon/pull/169),
+  [`30871f2`](https://github.com/lt-mayonesa/hexagon/commit/30871f2569b696c1d6c1b03fb54731f97ecef8c4))
+
+- **deps-dev**: Bump black from 25.1.0 to 25.9.0
+  ([#202](https://github.com/lt-mayonesa/hexagon/pull/202),
+  [`196a787`](https://github.com/lt-mayonesa/hexagon/commit/196a7871e33aa37eb049134d1449b5bd4a5f535b))
+
+- **deps-dev**: Bump flake8 from 7.2.0 to 7.3.0
+  ([#177](https://github.com/lt-mayonesa/hexagon/pull/177),
+  [`d1e4dac`](https://github.com/lt-mayonesa/hexagon/commit/d1e4dac8edb81a78d1a47ff416592fe6d1fff114))
+
+- **deps-dev**: Bump pytest from 8.3.5 to 8.4.0
+  ([#166](https://github.com/lt-mayonesa/hexagon/pull/166),
+  [`f5b5ccb`](https://github.com/lt-mayonesa/hexagon/commit/f5b5ccb7faa6e86400aa349d172c89304f631c89))
+
+- **deps-dev**: Bump pytest-xdist from 3.6.1 to 3.7.0
+  ([#164](https://github.com/lt-mayonesa/hexagon/pull/164),
+  [`ab78277`](https://github.com/lt-mayonesa/hexagon/commit/ab78277376fb3664cecde7b1a2eab276809caf94))
+
+- **deps-dev**: Bump pytest-xdist from 3.7.0 to 3.8.0
+  ([#182](https://github.com/lt-mayonesa/hexagon/pull/182),
+  [`40ca96e`](https://github.com/lt-mayonesa/hexagon/commit/40ca96e428706375f2d200a9129ff89753c1daa0))
+
+- **e2e**: Simplify execute group spec
+  ([`b69a047`](https://github.com/lt-mayonesa/hexagon/commit/b69a0473216e088f820dbb9fad014155c62110c6))
+
+### Continuous Integration
+
+- **e2e**: Fix failing e2e builds
+  ([`28d6b23`](https://github.com/lt-mayonesa/hexagon/commit/28d6b23844b034c9d0a739af5cd937d690ac5b9a))
+
+- **release**: Remove e2e version bump
+  ([`91ed480`](https://github.com/lt-mayonesa/hexagon/commit/91ed4806bc007725cbe5e9a12aaa903a68ad4ecd))
+
+- **release**: Semantic release migration
+  ([`61a6b78`](https://github.com/lt-mayonesa/hexagon/commit/61a6b78b044d0d26d5ef6afaf8fad00a3a81b18c))
+
+- **visualizer**: Generate structure diagram
+  ([`ef432d7`](https://github.com/lt-mayonesa/hexagon/commit/ef432d745f98583319bfc3dd15466ba6041d5e72))
+
+### Documentation
+
+- Fix broken link
+  ([`36965c5`](https://github.com/lt-mayonesa/hexagon/commit/36965c5eb891e87b5f69fb038cfd2c8f70b340cd))
+
+- Update logo and guides
+  ([`7c36f28`](https://github.com/lt-mayonesa/hexagon/commit/7c36f288379cc643de6a97a2231dbf668162b7c6))
+
+- **api**: Update inconsistent output api
+  ([`620beed`](https://github.com/lt-mayonesa/hexagon/commit/620beed1b81073130f22aa634fe70745a3f4450f))
+
+- **gh-pages**: Create new docs
+  ([`7eedf51`](https://github.com/lt-mayonesa/hexagon/commit/7eedf511ded8790292b503323dfbe21db4192497))
+
+- **gh-pages**: Remove unused files
+  ([`a0d87e5`](https://github.com/lt-mayonesa/hexagon/commit/a0d87e55667dbe3a4c9be69fb1c1db2531fbb80a))
+
+- **gh-pages**: Remove unused files
+  ([`cf6e2c6`](https://github.com/lt-mayonesa/hexagon/commit/cf6e2c6baf6414c8c4490057251f0eb9f478cd13))
+
+- **install**: Use pipx for installing hexagon
+  ([`c1b7a4b`](https://github.com/lt-mayonesa/hexagon/commit/c1b7a4b5c6a1d6203f9ebcfb4e7c271e3f7f7b86))
+
+- **prompt**: How to
+  ([`b5bafab`](https://github.com/lt-mayonesa/hexagon/commit/b5bafab8e73f8965fc0f56bd1cfa337ed2153065))
+
+- **search**: Add search support
+  ([`f123537`](https://github.com/lt-mayonesa/hexagon/commit/f1235376e3501b4ac576f23a3a70086f6a2573c7))
+
+### Features
+
+- Add manual update tools for hexagon and custom CLIs
+  ([#211](https://github.com/lt-mayonesa/hexagon/pull/211),
+  [`c7a4a00`](https://github.com/lt-mayonesa/hexagon/commit/c7a4a005035c093ad1ac94ff770553adf11d7134))
+
+### Refactoring
+
+- **prompt**: Extract inquiry type detection
+  ([`599c020`](https://github.com/lt-mayonesa/hexagon/commit/599c020005ecd169679853812e109539b7e3b2f0))
+
+### Testing
+
+- **e2e**: Execute parallel & sequential specs
+  ([#159](https://github.com/lt-mayonesa/hexagon/pull/159),
+  [`c078609`](https://github.com/lt-mayonesa/hexagon/commit/c0786095162a0f20ac7a26943156fa47401e48a4))
+
+- **e2e**: Fix flaky hints test
+  ([`4257d90`](https://github.com/lt-mayonesa/hexagon/commit/4257d9055d41c48d817dedf3af6171445475210d))
+
+- **unit**: Test naming convention
+  ([`1d3e297`](https://github.com/lt-mayonesa/hexagon/commit/1d3e2971b78ac2a9f9b80b9fe670cd1656cc1232))
+
+
 ## v0.63.1 (2025-05-12)
 
 ### Bug Fixes
@@ -13,8 +200,6 @@
 - **e2e**: Reordered group tools to fix flaky test
   ([#154](https://github.com/lt-mayonesa/hexagon/pull/154),
   [`9e5e343`](https://github.com/lt-mayonesa/hexagon/commit/9e5e343390fe2dcfdc117bd2c32611fb46f363c6))
-
-ci logs where complaining about initial branch name being master
 
 
 ## v0.63.0 (2025-05-11)
@@ -32,9 +217,6 @@ ci logs where complaining about initial branch name being master
 - **cwd-tools**: Load tools defined in hexagon_tools yaml
   ([#152](https://github.com/lt-mayonesa/hexagon/pull/152),
   [`93fd728`](https://github.com/lt-mayonesa/hexagon/commit/93fd72878761bf01d4761ca7dc476400e39dfe1f))
-
-added support for loading extra tools if a file named hexagon_tools.yml exists in the current
-  working directory.
 
 ### Refactoring
 
@@ -55,39 +237,9 @@ added support for loading extra tools if a file named hexagon_tools.yml exists i
 - **deps**: Bump markdown from 3.7 to 3.8 ([#149](https://github.com/lt-mayonesa/hexagon/pull/149),
   [`2f07726`](https://github.com/lt-mayonesa/hexagon/commit/2f07726e8008c3e4b555e4c94ac7649e03f32bd6))
 
-Bumps [markdown](https://github.com/Python-Markdown/markdown) from 3.7 to 3.8. - [Release
-  notes](https://github.com/Python-Markdown/markdown/releases) -
-  [Changelog](https://github.com/Python-Markdown/markdown/blob/master/docs/changelog.md) -
-  [Commits](https://github.com/Python-Markdown/markdown/compare/3.7...3.8)
-
---- updated-dependencies: - dependency-name: markdown dependency-version: '3.8'
-
-dependency-type: direct:production
-
-update-type: version-update:semver-minor ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-
 - **deps-dev**: Bump black from 24.10.0 to 25.1.0
   ([#148](https://github.com/lt-mayonesa/hexagon/pull/148),
   [`f164e25`](https://github.com/lt-mayonesa/hexagon/commit/f164e259832b9b5fdabba0c467692131886715ff))
-
-Bumps [black](https://github.com/psf/black) from 24.10.0 to 25.1.0. - [Release
-  notes](https://github.com/psf/black/releases) -
-  [Changelog](https://github.com/psf/black/blob/main/CHANGES.md) -
-  [Commits](https://github.com/psf/black/compare/24.10.0...25.1.0)
-
---- updated-dependencies: - dependency-name: black dependency-version: 25.1.0
-
-dependency-type: direct:development
-
-update-type: version-update:semver-major ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
 
 - **format**: Apply new black version
   ([`92bc198`](https://github.com/lt-mayonesa/hexagon/commit/92bc1985a14a38dca8c87661f0d3322fbecc1d95))
@@ -108,10 +260,11 @@ Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.c
 
 ### Bug Fixes
 
+- **args**: Support argparse python 3.12 ([#146](https://github.com/lt-mayonesa/hexagon/pull/146),
+  [`03b9772`](https://github.com/lt-mayonesa/hexagon/commit/03b9772ff84e5d3adbf75cbdce1d12a0b4b2dbf1))
+
 - **parse**: Changelog on update ([#145](https://github.com/lt-mayonesa/hexagon/pull/145),
   [`d582ae4`](https://github.com/lt-mayonesa/hexagon/commit/d582ae41d69b0d3d3f5506a365935346dbd4d3ef))
-
-kiss
 
 ### Chores
 
@@ -122,223 +275,53 @@ kiss
   ([#143](https://github.com/lt-mayonesa/hexagon/pull/143),
   [`9571364`](https://github.com/lt-mayonesa/hexagon/commit/9571364216ab1c12fa02e6acc8905bf63c0ef1d2))
 
-Bumps [dorny/test-reporter](https://github.com/dorny/test-reporter) from 1 to 2. - [Release
-  notes](https://github.com/dorny/test-reporter/releases) -
-  [Changelog](https://github.com/dorny/test-reporter/blob/main/CHANGELOG.md) -
-  [Commits](https://github.com/dorny/test-reporter/compare/v1...v2)
-
---- updated-dependencies: - dependency-name: dorny/test-reporter dependency-type: direct:production
-
-update-type: version-update:semver-major ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-
 - **deps**: Bump packaging from 24.1 to 24.2
   ([#122](https://github.com/lt-mayonesa/hexagon/pull/122),
   [`1913e4c`](https://github.com/lt-mayonesa/hexagon/commit/1913e4cb72726dd0a7841f6ba6cb0fbac72a1c89))
-
-Bumps [packaging](https://github.com/pypa/packaging) from 24.1 to 24.2. - [Release
-  notes](https://github.com/pypa/packaging/releases) -
-  [Changelog](https://github.com/pypa/packaging/blob/main/CHANGELOG.rst) -
-  [Commits](https://github.com/pypa/packaging/compare/24.1...24.2)
-
---- updated-dependencies: - dependency-name: packaging dependency-type: direct:production
-
-update-type: version-update:semver-minor ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
 
 - **deps**: Bump pydantic from 2.8.2 to 2.9.2
   ([#104](https://github.com/lt-mayonesa/hexagon/pull/104),
   [`12b6411`](https://github.com/lt-mayonesa/hexagon/commit/12b64114c3ca92fbee0155c2918db1c33ab5e3da))
 
-Bumps [pydantic](https://github.com/pydantic/pydantic) from 2.8.2 to 2.9.2. - [Release
-  notes](https://github.com/pydantic/pydantic/releases) -
-  [Changelog](https://github.com/pydantic/pydantic/blob/main/HISTORY.md) -
-  [Commits](https://github.com/pydantic/pydantic/compare/v2.8.2...v2.9.2)
-
---- updated-dependencies: - dependency-name: pydantic dependency-type: direct:production
-
-update-type: version-update:semver-minor ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-
 - **deps**: Bump pydantic-settings from 2.4.0 to 2.5.2
   ([#102](https://github.com/lt-mayonesa/hexagon/pull/102),
   [`15cf47c`](https://github.com/lt-mayonesa/hexagon/commit/15cf47cf8344b254c7d9b719d571d7fd458a0aab))
-
-Bumps [pydantic-settings](https://github.com/pydantic/pydantic-settings) from 2.4.0 to 2.5.2. -
-  [Release notes](https://github.com/pydantic/pydantic-settings/releases) -
-  [Commits](https://github.com/pydantic/pydantic-settings/compare/v2.4.0...v2.5.2)
-
---- updated-dependencies: - dependency-name: pydantic-settings dependency-type: direct:production
-
-update-type: version-update:semver-minor ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
 
 - **deps**: Bump pydantic-settings from 2.5.2 to 2.8.1
   ([#141](https://github.com/lt-mayonesa/hexagon/pull/141),
   [`2731eb7`](https://github.com/lt-mayonesa/hexagon/commit/2731eb73bf206d630dfc63403d60bda24659b867))
 
-Bumps [pydantic-settings](https://github.com/pydantic/pydantic-settings) from 2.5.2 to 2.8.1. -
-  [Release notes](https://github.com/pydantic/pydantic-settings/releases) -
-  [Commits](https://github.com/pydantic/pydantic-settings/compare/v2.5.2...v2.8.1)
-
---- updated-dependencies: - dependency-name: pydantic-settings dependency-type: direct:production
-
-update-type: version-update:semver-minor ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-
 - **deps**: Bump python-semantic-release/python-semantic-release
   ([#139](https://github.com/lt-mayonesa/hexagon/pull/139),
   [`3d5f880`](https://github.com/lt-mayonesa/hexagon/commit/3d5f8804e2a1ed9ae51892942fefff12aa24fe13))
-
-Bumps
-  [python-semantic-release/python-semantic-release](https://github.com/python-semantic-release/python-semantic-release)
-  from 9.8.8 to 9.21.0. - [Release
-  notes](https://github.com/python-semantic-release/python-semantic-release/releases) -
-  [Changelog](https://github.com/python-semantic-release/python-semantic-release/blob/master/CHANGELOG.rst)
-  -
-  [Commits](https://github.com/python-semantic-release/python-semantic-release/compare/v9.8.8...v9.21.0)
-
---- updated-dependencies: - dependency-name: python-semantic-release/python-semantic-release
-  dependency-type: direct:production
-
-update-type: version-update:semver-minor ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
 
 - **deps**: Bump rich from 13.7.1 to 13.8.1
   ([#100](https://github.com/lt-mayonesa/hexagon/pull/100),
   [`62a13ad`](https://github.com/lt-mayonesa/hexagon/commit/62a13ad0aa1db85e9c59ac9891b38c1b87e4006b))
 
-Bumps [rich](https://github.com/Textualize/rich) from 13.7.1 to 13.8.1. - [Release
-  notes](https://github.com/Textualize/rich/releases) -
-  [Changelog](https://github.com/Textualize/rich/blob/master/CHANGELOG.md) -
-  [Commits](https://github.com/Textualize/rich/compare/v13.7.1...v13.8.1)
-
---- updated-dependencies: - dependency-name: rich dependency-type: direct:production
-
-update-type: version-update:semver-minor ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-
 - **deps**: Bump rich from 13.8.1 to 14.0.0
   ([#144](https://github.com/lt-mayonesa/hexagon/pull/144),
   [`2973b6c`](https://github.com/lt-mayonesa/hexagon/commit/2973b6cb5eb5c2f6b06dff202d7c542563b9a16a))
-
-Bumps [rich](https://github.com/Textualize/rich) from 13.8.1 to 14.0.0. - [Release
-  notes](https://github.com/Textualize/rich/releases) -
-  [Changelog](https://github.com/Textualize/rich/blob/master/CHANGELOG.md) -
-  [Commits](https://github.com/Textualize/rich/compare/v13.8.1...v14.0.0)
-
---- updated-dependencies: - dependency-name: rich dependency-type: direct:production
-
-update-type: version-update:semver-major ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
 
 - **deps**: Bump TrueBrain/actions-flake8 from 2.1 to 2.3
   ([#94](https://github.com/lt-mayonesa/hexagon/pull/94),
   [`3321c46`](https://github.com/lt-mayonesa/hexagon/commit/3321c463df9a528739f3a2134a97ec9998cdf19e))
 
-Bumps [TrueBrain/actions-flake8](https://github.com/truebrain/actions-flake8) from 2.1 to 2.3. -
-  [Release notes](https://github.com/truebrain/actions-flake8/releases) -
-  [Commits](https://github.com/truebrain/actions-flake8/compare/v2.1...v2.3)
-
---- updated-dependencies: - dependency-name: TrueBrain/actions-flake8 dependency-type:
-  direct:production
-
-update-type: version-update:semver-minor ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-
 - **deps**: Bump TrueBrain/actions-flake8 from 2.3 to 2.4
   ([#113](https://github.com/lt-mayonesa/hexagon/pull/113),
   [`6520f2e`](https://github.com/lt-mayonesa/hexagon/commit/6520f2e3bdfa5e9b66075069c1cebfa75d293746))
-
-Bumps [TrueBrain/actions-flake8](https://github.com/truebrain/actions-flake8) from 2.3 to 2.4. -
-  [Release notes](https://github.com/truebrain/actions-flake8/releases) -
-  [Commits](https://github.com/truebrain/actions-flake8/compare/v2.3...v2.4)
-
---- updated-dependencies: - dependency-name: TrueBrain/actions-flake8 dependency-type:
-  direct:production
-
-update-type: version-update:semver-minor ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
 
 - **deps-dev**: Bump black from 24.8.0 to 24.10.0
   ([#109](https://github.com/lt-mayonesa/hexagon/pull/109),
   [`9000f9a`](https://github.com/lt-mayonesa/hexagon/commit/9000f9a480ebaa786751d4b186ee83878eb61b96))
 
-Bumps [black](https://github.com/psf/black) from 24.8.0 to 24.10.0. - [Release
-  notes](https://github.com/psf/black/releases) -
-  [Changelog](https://github.com/psf/black/blob/main/CHANGES.md) -
-  [Commits](https://github.com/psf/black/compare/24.8.0...24.10.0)
-
---- updated-dependencies: - dependency-name: black dependency-type: direct:development
-
-update-type: version-update:semver-minor ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-
 - **deps-dev**: Bump flake8-bugbear from 24.4.26 to 24.12.12
   ([#127](https://github.com/lt-mayonesa/hexagon/pull/127),
   [`d6a9322`](https://github.com/lt-mayonesa/hexagon/commit/d6a93221f29d7ff9d2debc6426c6fb44ac1e0e33))
 
-Bumps [flake8-bugbear](https://github.com/PyCQA/flake8-bugbear) from 24.4.26 to 24.12.12. - [Release
-  notes](https://github.com/PyCQA/flake8-bugbear/releases) -
-  [Commits](https://github.com/PyCQA/flake8-bugbear/compare/24.4.26...24.12.12)
-
---- updated-dependencies: - dependency-name: flake8-bugbear dependency-type: direct:development
-
-update-type: version-update:semver-minor ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-
 - **deps-dev**: Bump pytest from 8.3.3 to 8.3.5
   ([#142](https://github.com/lt-mayonesa/hexagon/pull/142),
   [`a51c206`](https://github.com/lt-mayonesa/hexagon/commit/a51c20642d2222f1094da7198cc44a9cd103a764))
-
-Bumps [pytest](https://github.com/pytest-dev/pytest) from 8.3.3 to 8.3.5. - [Release
-  notes](https://github.com/pytest-dev/pytest/releases) -
-  [Changelog](https://github.com/pytest-dev/pytest/blob/main/CHANGELOG.rst) -
-  [Commits](https://github.com/pytest-dev/pytest/compare/8.3.3...8.3.5)
-
---- updated-dependencies: - dependency-name: pytest dependency-type: direct:development
-
-update-type: version-update:semver-patch ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
 
 ### Continuous Integration
 
@@ -357,39 +340,9 @@ Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.c
   ([#96](https://github.com/lt-mayonesa/hexagon/pull/96),
   [`c02e9d2`](https://github.com/lt-mayonesa/hexagon/commit/c02e9d2fd8ffe20823b0a7a09cc68e976283dfb0))
 
-Bumps
-  [python-semantic-release/python-semantic-release](https://github.com/python-semantic-release/python-semantic-release)
-  from 9.8.6 to 9.8.8. - [Release
-  notes](https://github.com/python-semantic-release/python-semantic-release/releases) -
-  [Changelog](https://github.com/python-semantic-release/python-semantic-release/blob/master/CHANGELOG.md)
-  -
-  [Commits](https://github.com/python-semantic-release/python-semantic-release/compare/v9.8.6...v9.8.8)
-
---- updated-dependencies: - dependency-name: python-semantic-release/python-semantic-release
-  dependency-type: direct:production
-
-update-type: version-update:semver-patch ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-
 - **deps-dev**: Bump pytest from 8.3.2 to 8.3.3
   ([#103](https://github.com/lt-mayonesa/hexagon/pull/103),
   [`3723433`](https://github.com/lt-mayonesa/hexagon/commit/37234338eac1ddd6f76472c634337a73d372fda6))
-
-Bumps [pytest](https://github.com/pytest-dev/pytest) from 8.3.2 to 8.3.3. - [Release
-  notes](https://github.com/pytest-dev/pytest/releases) -
-  [Changelog](https://github.com/pytest-dev/pytest/blob/main/CHANGELOG.rst) -
-  [Commits](https://github.com/pytest-dev/pytest/compare/8.3.2...8.3.3)
-
---- updated-dependencies: - dependency-name: pytest dependency-type: direct:development
-
-update-type: version-update:semver-patch ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
 
 ### Continuous Integration
 
@@ -422,67 +375,16 @@ Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.c
   ([#85](https://github.com/lt-mayonesa/hexagon/pull/85),
   [`fa14690`](https://github.com/lt-mayonesa/hexagon/commit/fa146902d735bddce404636871dcd33ee78abf2b))
 
-Bumps [actions/checkout](https://github.com/actions/checkout) from 3 to 4. - [Release
-  notes](https://github.com/actions/checkout/releases) -
-  [Changelog](https://github.com/actions/checkout/blob/main/CHANGELOG.md) -
-  [Commits](https://github.com/actions/checkout/compare/v3...v4)
-
---- updated-dependencies: - dependency-name: actions/checkout dependency-type: direct:production
-
-update-type: version-update:semver-major ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-
 - **deps**: Bump actions/setup-python from 4 to 5
   ([#86](https://github.com/lt-mayonesa/hexagon/pull/86),
   [`1853b6d`](https://github.com/lt-mayonesa/hexagon/commit/1853b6dd4d27f4e84409d13919736b10fb5dac2c))
 
-Bumps [actions/setup-python](https://github.com/actions/setup-python) from 4 to 5. - [Release
-  notes](https://github.com/actions/setup-python/releases) -
-  [Commits](https://github.com/actions/setup-python/compare/v4...v5)
-
---- updated-dependencies: - dependency-name: actions/setup-python dependency-type: direct:production
-
-update-type: version-update:semver-major ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-
 - **deps**: Bump markdown from 3.6 to 3.7 ([#89](https://github.com/lt-mayonesa/hexagon/pull/89),
   [`d8b0f83`](https://github.com/lt-mayonesa/hexagon/commit/d8b0f830e06de6392027207c276c0d5aaf08ea22))
-
-Bumps [markdown](https://github.com/Python-Markdown/markdown) from 3.6 to 3.7. - [Release
-  notes](https://github.com/Python-Markdown/markdown/releases) -
-  [Changelog](https://github.com/Python-Markdown/markdown/blob/master/docs/changelog.md) -
-  [Commits](https://github.com/Python-Markdown/markdown/compare/3.6...3.7)
-
---- updated-dependencies: - dependency-name: markdown dependency-type: direct:production
-
-update-type: version-update:semver-minor ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
 
 - **deps**: Bump nick-fields/retry from 2 to 3
   ([#84](https://github.com/lt-mayonesa/hexagon/pull/84),
   [`dd245aa`](https://github.com/lt-mayonesa/hexagon/commit/dd245aac8a0a5285cf8ef99a5035a4ccfa85ac5b))
-
-Bumps [nick-fields/retry](https://github.com/nick-fields/retry) from 2 to 3. - [Release
-  notes](https://github.com/nick-fields/retry/releases) -
-  [Changelog](https://github.com/nick-fields/retry/blob/master/.releaserc.js) -
-  [Commits](https://github.com/nick-fields/retry/compare/v2...v3)
-
---- updated-dependencies: - dependency-name: nick-fields/retry dependency-type: direct:production
-
-update-type: version-update:semver-major ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
 
 - **release**: Configure semantic release v9
   ([`6c95617`](https://github.com/lt-mayonesa/hexagon/commit/6c95617a795b811e5cd066ba5377c49ed1f0c40a))
@@ -551,17 +453,6 @@ Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.c
   ([#78](https://github.com/lt-mayonesa/hexagon/pull/78),
   [`32da740`](https://github.com/lt-mayonesa/hexagon/commit/32da74066a95a1bbf44787153f518cf81dcd2a3a))
 
-Bumps [black](https://github.com/psf/black) from 24.2.0 to 24.3.0. - [Release
-  notes](https://github.com/psf/black/releases) -
-  [Changelog](https://github.com/psf/black/blob/main/CHANGES.md) -
-  [Commits](https://github.com/psf/black/compare/24.2.0...24.3.0)
-
---- updated-dependencies: - dependency-name: black dependency-type: direct:development ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-
 - **dist**: Min python is 3.9 ([#79](https://github.com/lt-mayonesa/hexagon/pull/79),
   [`017ce49`](https://github.com/lt-mayonesa/hexagon/commit/017ce49c80947a4e2ee9162778ec99ad04253b03))
 
@@ -574,10 +465,6 @@ Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.c
 
 - **logger**: Add file & panel log APIs ([#80](https://github.com/lt-mayonesa/hexagon/pull/80),
   [`5e4a2db`](https://github.com/lt-mayonesa/hexagon/commit/5e4a2dbb9328d43a5921a51cc3b0ed42c6abbea6))
-
-`log.example` & `log.file` take syntax highlighting args
-
-`log.panel` lets users show a box panel
 
 ### Refactoring
 
@@ -597,8 +484,6 @@ Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.c
 - **prompt**: Allow passing callable to skip_trace
   ([`608d5dd`](https://github.com/lt-mayonesa/hexagon/commit/608d5dd99ee059bdf11528a661b501e70d186a48))
 
-fixes #76
-
 
 ## v0.56.0 (2024-02-19)
 
@@ -612,8 +497,6 @@ fixes #76
 - **replay**: Allow replaying last command executed
   ([#75](https://github.com/lt-mayonesa/hexagon/pull/75),
   [`7449404`](https://github.com/lt-mayonesa/hexagon/commit/7449404463ae7287989240b447eede6094ccd6ef))
-
-solves #72
 
 
 ## v0.55.0 (2024-02-18)
@@ -676,8 +559,6 @@ solves #72
   ([#69](https://github.com/lt-mayonesa/hexagon/pull/69),
   [`2174082`](https://github.com/lt-mayonesa/hexagon/commit/2174082a4b2e0c5b210c6d2244d9eeea2775a31e))
 
-for any boolean arg you can use keys: --[name] and --no-[name] (as well as aliases)
-
 
 ## v0.52.1 (2023-11-09)
 
@@ -713,8 +594,6 @@ for any boolean arg you can use keys: --[name] and --no-[name] (as well as alias
 - **i18n**: Default to EN even if nothing found
   ([`685bdef`](https://github.com/lt-mayonesa/hexagon/commit/685bdefd14b159d39f2a5106e5d26723e4e867ed))
 
-fixes: #64
-
 ### Chores
 
 - **e2e**: Fix typehints for hexagonspec & better logs
@@ -734,8 +613,6 @@ fixes: #64
 - **tracer**: Trace enum values correctly ([#63](https://github.com/lt-mayonesa/hexagon/pull/63),
   [`38475bb`](https://github.com/lt-mayonesa/hexagon/commit/38475bbb50bf252285e6c62eaab2768c15e974da))
 
-* fix(tracer): trace enum values correctly
-
 
 ## v0.51.1 (2023-10-29)
 
@@ -754,13 +631,9 @@ fixes: #64
 
 ### Features
 
-- **prompt**: Ctrl+p create directory if not exists
+- **prompt**: CTRL+P create directory if not exists
   ([#61](https://github.com/lt-mayonesa/hexagon/pull/61),
   [`05002ac`](https://github.com/lt-mayonesa/hexagon/commit/05002ac13c5f492004a8edc99d4a69df965c3ab5))
-
-hexagon types FilePath and DirectoryPath allow to specify nonexistent paths
-
-fixes #30
 
 ### Refactoring
 
@@ -774,17 +647,6 @@ fixes #30
 
 - **deps**: Bump urllib3 from 2.0.5 to 2.0.7 ([#58](https://github.com/lt-mayonesa/hexagon/pull/58),
   [`547da63`](https://github.com/lt-mayonesa/hexagon/commit/547da6332e6ae28d4d5a2a378bcd2af923922f96))
-
-Bumps [urllib3](https://github.com/urllib3/urllib3) from 2.0.5 to 2.0.7. - [Release
-  notes](https://github.com/urllib3/urllib3/releases) -
-  [Changelog](https://github.com/urllib3/urllib3/blob/main/CHANGES.rst) -
-  [Commits](https://github.com/urllib3/urllib3/compare/v2.0.5...2.0.7)
-
---- updated-dependencies: - dependency-name: urllib3 dependency-type: indirect ...
-
-Signed-off-by: dependabot[bot] <support@github.com>
-
-Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
 
 - **e2e**: Hexagon spec hints
   ([`8c4c53a`](https://github.com/lt-mayonesa/hexagon/commit/8c4c53aa4f015ff921adcebe02a644ba50e77c43))
@@ -813,8 +675,6 @@ Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.c
 - **deps**: Update python packages ([#54](https://github.com/lt-mayonesa/hexagon/pull/54),
   [`c66c876`](https://github.com/lt-mayonesa/hexagon/commit/c66c8765e3c00c17dc9a66af1eba16eed78fdd1e))
 
-pydantic 2 not yet supported
-
 
 ## v0.49.1 (2023-09-24)
 
@@ -834,10 +694,6 @@ pydantic 2 not yet supported
 - **plugins**: Allow to register plugins from multiple sources
   ([#52](https://github.com/lt-mayonesa/hexagon/pull/52),
   [`2c42112`](https://github.com/lt-mayonesa/hexagon/commit/2c42112cb8df4aa9d3a7436439b6375179f5a777))
-
-changed `plugins_dir` (str) to `plugins` (list[str])
-
-solves #45
 
 
 ## v0.48.4 (2023-09-20)
@@ -863,8 +719,6 @@ solves #45
 
 - **tracer**: Store Enum value ([#49](https://github.com/lt-mayonesa/hexagon/pull/49),
   [`2b283d2`](https://github.com/lt-mayonesa/hexagon/commit/2b283d2838521f2bb96239f6070b73d9d063026e))
-
-also: - python 3.11 support: dataclass dont allow mutable - drop support for python 3.7
 
 
 ## v0.48.1 (2023-09-12)
@@ -904,11 +758,6 @@ also: - python 3.11 support: dataclass dont allow mutable - drop support for pyt
 - Re-organized packages ([#44](https://github.com/lt-mayonesa/hexagon/pull/44),
   [`f90bd8e`](https://github.com/lt-mayonesa/hexagon/commit/f90bd8e8e02de987ccaf6c91003c509cd89ba873))
 
-separated between `runtime` and `support`, also `support` distinguishes between `input` and `output`
-  packages
-
-this is a breaking change, but we are in alpha so ¯\_(ツ)_/¯
-
 
 ## v0.46.2 (2023-08-06)
 
@@ -917,17 +766,10 @@ this is a breaking change, but we are in alpha so ¯\_(ツ)_/¯
 - **update**: Update current git branch
   ([`7417c4d`](https://github.com/lt-mayonesa/hexagon/commit/7417c4dc50a05caaf109696363407d78746fa90f))
 
-when checking for changes only do it against current tracked branch, and keep local in the same
-
 ### Continuous Integration
 
 - **e2e**: Retry e2e tests in case of failure
   ([`9ed2889`](https://github.com/lt-mayonesa/hexagon/commit/9ed2889da1cb04e02ec24d35934ac762f796c69e))
-
-sometimes, mostly on python 3.7, one test will fail because it times out when reading STDOUT from an
-  HexagonSpec.
-
-Not sure of the root cause so far
 
 
 ## v0.46.1 (2023-08-06)
@@ -960,8 +802,6 @@ Not sure of the root cause so far
 
 - **prompt**: Show help texts for prompts
   ([`0c4ec1f`](https://github.com/lt-mayonesa/hexagon/commit/0c4ec1f96028ae45f262c6bcb3d6728149d2d387))
-
-hints/helps can be disabled with `options.hints_disabled`
 
 
 ## v0.45.0 (2023-07-29)
@@ -1151,8 +991,6 @@ hints/helps can be disabled with `options.hints_disabled`
 - **theme**: Add no_border prompt theme
   ([`bb39265`](https://github.com/lt-mayonesa/hexagon/commit/bb39265274507eeac3c47605d41bc0b21d317de1))
 
-also simplify e2e tests
-
 
 ## v0.40.0 (2023-04-12)
 
@@ -1183,14 +1021,10 @@ also simplify e2e tests
 - **args**: Prompt for tool arguments from cli_args object
   ([`67d65ab`](https://github.com/lt-mayonesa/hexagon/commit/67d65ab9a4a20cc9b6d7438854cc480decdbbb07))
 
-other fixes
-
 ### Refactoring
 
 - **inquirer**: Hide usage behind prompt
   ([`d68d01c`](https://github.com/lt-mayonesa/hexagon/commit/d68d01c9da08343acba94ca81d170bdb3b2ba938))
-
-cleanup of tools seed and docker_registry, they will be added to their own repos
 
 - **tracer**: Store trace object instead of string
   ([`4c79362`](https://github.com/lt-mayonesa/hexagon/commit/4c793622ceea67fb6373089b536de6859daa5e9f))
@@ -1293,9 +1127,6 @@ cleanup of tools seed and docker_registry, they will be added to their own repos
 - **args**: Added support for tool args
   ([`ebd5443`](https://github.com/lt-mayonesa/hexagon/commit/ebd5443d2d732099765cd7fb869e8cc70818b85e))
 
-users define a class Args(ToolArgs) in their python actions that will automagically parse CLI input
-  args specific for this action
-
 ### Refactoring
 
 - **args**: Rename support module
@@ -1308,8 +1139,6 @@ users define a class Args(ToolArgs) in their python actions that will automagica
 
 - Updating directories structure
   ([`7174bb2`](https://github.com/lt-mayonesa/hexagon/commit/7174bb24221843ed4946bd8f32cb3d663f2eff28))
-
-new structure should be more easy to follow
 
 - **e2e**: Set terminal COLUMNS size to 200
   ([`99b431e`](https://github.com/lt-mayonesa/hexagon/commit/99b431e8408a63cd5ccbb9f2c78a65f50ae96c9f))
@@ -1343,9 +1172,6 @@ new structure should be more easy to follow
 - **cli-args**: Pass extra cli args to execution of actions
   ([`528827a`](https://github.com/lt-mayonesa/hexagon/commit/528827a3130abbbd4318846036130f9370ff55f0))
 
-- python actions receive a dict, ie: {'foo': 'bar'} - command actions receive the extra args as-is,
-  ie: --foo bar
-
 ### Refactoring
 
 - Use decorator for execute hook
@@ -1371,11 +1197,6 @@ new structure should be more easy to follow
 
 - **options**: Allow override options at yaml level
   ([`08f4258`](https://github.com/lt-mayonesa/hexagon/commit/08f425800f4b719cceb3391e59a1965c7f57c856))
-
-let users defines values in cli.options to override some hexagon configurations, ie: update checks,
-  themes, etc.
-
-fixes #2
 
 
 ## v0.31.0 (2023-03-13)
@@ -1412,517 +1233,4 @@ fixes #2
 
 ## v0.29.0 (2023-03-12)
 
-### Bug Fixes
-
-- Added packaging to dependencies ([#44](https://github.com/lt-mayonesa/hexagon/pull/44),
-  [`6b5ddec`](https://github.com/lt-mayonesa/hexagon/commit/6b5ddec86d53ca0f8d64f3f3938f959a084ae375))
-
-- Allow for tools with no alias
-  ([`eb25e89`](https://github.com/lt-mayonesa/hexagon/commit/eb25e8976581bc9f39852b93444c91b6a074210f))
-
-- Changelog in hexagon update ([#48](https://github.com/lt-mayonesa/hexagon/pull/48),
-  [`c6ab57d`](https://github.com/lt-mayonesa/hexagon/commit/c6ab57de27d3d0f8d4d441e198f273b0cd204554))
-
-- Hexagon auto-update ([#42](https://github.com/lt-mayonesa/hexagon/pull/42),
-  [`2720c6a`](https://github.com/lt-mayonesa/hexagon/commit/2720c6a1d1e1a2ecb2682244702a3b313a1a9a0d))
-
-- Print help gaps
-  ([`e130331`](https://github.com/lt-mayonesa/hexagon/commit/e130331f4e347c57e0bcb246b476063452c15911))
-
-do not add gap after description if it's the last in the list
-
-solves #32
-
-- Simplify always true cli.command
-  ([`c72de85`](https://github.com/lt-mayonesa/hexagon/commit/c72de855b7f8a0e236a9ea100d0e2662f8d90895))
-
-- **action**: Validate action is valid module identifier
-  ([#78](https://github.com/lt-mayonesa/hexagon/pull/78),
-  [`e583078`](https://github.com/lt-mayonesa/hexagon/commit/e5830787b96432c2c142f96a5850089c5958ace9))
-
-- **alias**: Source new aliases ([#64](https://github.com/lt-mayonesa/hexagon/pull/64),
-  [`c13f59b`](https://github.com/lt-mayonesa/hexagon/commit/c13f59b454e7c3df45efd3c3267eb0ed32cad1a8))
-
-when creating an OS alias source the file so the user has the alias on path
-
-- **analytics**: Register user_id and client_id
-  ([`18a621e`](https://github.com/lt-mayonesa/hexagon/commit/18a621ed1b6998644ff5bcdb59218393fc7e726f))
-
-- **analytics**: Switch user_id and client_id scope
-  ([`6718c7c`](https://github.com/lt-mayonesa/hexagon/commit/6718c7cb94c8a2693d795cfc97339bf6dd9a6678))
-
-- **create-tool**: __templates dir and custom tools path
-  ([#9](https://github.com/lt-mayonesa/hexagon/pull/9),
-  [`5ebde69`](https://github.com/lt-mayonesa/hexagon/commit/5ebde697b840e5da0ea62341ef22831ecc53a50d))
-
-- During setup configuration.custom_tools_path is handled as absolute or relative to YAML -
-  HEXAGON_CONFIG_FILE .yaml can now take any name - __templates dir takes into account *.md files -
-  e2e excluded from dist
-
-- **create-tool**: Change ordering of YAML key insert
-  ([`1ce6024`](https://github.com/lt-mayonesa/hexagon/commit/1ce6024b06f6b6cfbf0b0af8db6d6703a79efd35))
-
-- **create-tool**: Readme lost during package
-  ([#77](https://github.com/lt-mayonesa/hexagon/pull/77),
-  [`b7238cd`](https://github.com/lt-mayonesa/hexagon/commit/b7238cddbcc07c09e5e20eb10d9e5dd7f396516f))
-
-- **create-tool**: Templates directory not published
-  ([`0f1e85c`](https://github.com/lt-mayonesa/hexagon/commit/0f1e85c45969d1f1f5cd7ab9dbb0b4018f9a8243))
-
-use os.path.join on create_new_tool
-
-- **e2e**: Refactored tests, improved output assert message
-  ([#18](https://github.com/lt-mayonesa/hexagon/pull/18),
-  [`fa41c0d`](https://github.com/lt-mayonesa/hexagon/commit/fa41c0d315e1c91f84421c5c0a0fb36ac37855c3))
-
-- **execute**: Fail with custom message when action not found
-  ([`5ea46f2`](https://github.com/lt-mayonesa/hexagon/commit/5ea46f21aa69dfd5de615d67ac823034b6854ac4))
-
-- **execute**: Pass env object correctly
-  ([`86bbc68`](https://github.com/lt-mayonesa/hexagon/commit/86bbc689001339f0bfc128b25520244ed7f966ec))
-
-- **execute**: Run install_cli and other internal tools
-  ([#2](https://github.com/lt-mayonesa/hexagon/pull/2),
-  [`71cc90b`](https://github.com/lt-mayonesa/hexagon/commit/71cc90b9493332825f78163854422db5d2ec493d))
-
-- **execute**: Use subprocess shell=True ([#38](https://github.com/lt-mayonesa/hexagon/pull/38),
-  [`6d5e1e8`](https://github.com/lt-mayonesa/hexagon/commit/6d5e1e8e2e6ce62ca15acbf9d002d3ae6d0881ef))
-
-execute commands spawning an intermediate shell process (shell=True) for a more native experience.
-  Also use sh instead of bash as default shell
-
-fixes #37
-
-- **execute-again**: Show command aliases correctly
-  ([`922e554`](https://github.com/lt-mayonesa/hexagon/commit/922e5547c214f3819c9159eea174da28c3bd3856))
-
-do a recursive search of tools and envs to find the aliases applied black formatting
-
-- **help**: Help expecting dict crashes
-  ([`cf86f99`](https://github.com/lt-mayonesa/hexagon/commit/cf86f99c56e9c5a4affe426021b3230ef342d99f))
-
-- **help**: Optional alias
-  ([`3cf1f6a`](https://github.com/lt-mayonesa/hexagon/commit/3cf1f6a46276468fc7a9ae5bbb4445ff4f544d11))
-
-do not print "(alias)" in help when tool has none
-
-- **help**: Support tools with no long_name
-  ([`46c0f89`](https://github.com/lt-mayonesa/hexagon/commit/46c0f896dfb63288b3662b8d08499c6c66998b47))
-
-- **i18n**: Missing translation strings ([#76](https://github.com/lt-mayonesa/hexagon/pull/76),
-  [`97a1068`](https://github.com/lt-mayonesa/hexagon/commit/97a1068ec8c4eb771466676a84215a0b458fc84c))
-
-use str.format so all strings are translated correctly
-
-- **i18n**: Search local and system dirs
-  ([`af62986`](https://github.com/lt-mayonesa/hexagon/commit/af6298632e78c289f2bf50b855a63a93526efd89))
-
-lookup is done: 1. HEXAGON_LOCALES_DIR if present 2. local install dir (~/.local) 4. system install
-  dir (/usr/local) 6. default gettext lookup dir or fallback
-
-- **install**: Wrong action definition for tool install
-  ([`425dfd3`](https://github.com/lt-mayonesa/hexagon/commit/425dfd349da6c60361ef69839752126632c67bd7))
-
-- **install-cli**: Only store bin_path if prompted
-  ([`32dbc6c`](https://github.com/lt-mayonesa/hexagon/commit/32dbc6c0c5081b1a4db589f49e3b5fa8498c9a74))
-
-- **last-command**: Store last command whe tool executed directly
-  ([`1f6c887`](https://github.com/lt-mayonesa/hexagon/commit/1f6c8875317245b599b18063420650277d9d27b8))
-
-- **save-alias**: Bash on fresh install ([#8](https://github.com/lt-mayonesa/hexagon/pull/8),
-  [`1754d2c`](https://github.com/lt-mayonesa/hexagon/commit/1754d2c02fde3231a142bc2fa51c344eef390e37))
-
-Co-authored-by: Joaco Campero <joaquin@redb.ee>
-
-- **save-alias**: Create aliases file if does not exist
-  ([`9055055`](https://github.com/lt-mayonesa/hexagon/commit/9055055c8def45fc1b84c5b13388be50e259f86a))
-
-- **tracer**: Do not print alias for internal tools
-  ([`5d798fe`](https://github.com/lt-mayonesa/hexagon/commit/5d798fe1d49b12b36bcf74decc1765468c888422))
-
-- **wax**: Make classifier optional
-  ([`4e8ff5b`](https://github.com/lt-mayonesa/hexagon/commit/4e8ff5bce035883b49a21f062c4a543529983f69))
-
-- **wax**: Show classifier when no long_name
-  ([`bc8a485`](https://github.com/lt-mayonesa/hexagon/commit/bc8a485ced377d6ddd78ae7617a6fc1f6d2ad889))
-
-- **yaml**: Handle error for None values
-  ([`33300c6`](https://github.com/lt-mayonesa/hexagon/commit/33300c6463ab7f0accdccf0b46ed7fb96be64ac4))
-
-- **yaml**: Print YAML path
-  ([`bfc60ae`](https://github.com/lt-mayonesa/hexagon/commit/bfc60ae1b60f2664934f999176067dfe374b2015))
-
-### Chores
-
-- Added open source license
-  ([`4985837`](https://github.com/lt-mayonesa/hexagon/commit/4985837e47ccc501f7bbeb99cb59aed38283e5bd))
-
-- Fix flake8 errors
-  ([`c9e067d`](https://github.com/lt-mayonesa/hexagon/commit/c9e067d7e9f60fa648886d7b8bf99f1230f08217))
-
-- Fix strings in spanish
-  ([`1ddedf7`](https://github.com/lt-mayonesa/hexagon/commit/1ddedf777509029d8ae33107198740d57d7f5839))
-
-- Rollback to version 0.8.0
-  ([`0aa3057`](https://github.com/lt-mayonesa/hexagon/commit/0aa30578f5295e445be0ba5412b9c2334c3c0149))
-
-- Update dependencies ([#84](https://github.com/lt-mayonesa/hexagon/pull/84),
-  [`e970496`](https://github.com/lt-mayonesa/hexagon/commit/e970496618200f7ff0b2a75e107ddc7455a0547b))
-
-black was breaking in CI so dependencies needed to be updated
-
-- **ci**: Do not release on PR
-  ([`b186229`](https://github.com/lt-mayonesa/hexagon/commit/b186229a0bbec44d1f3ed7290ad1d23c8f5df896))
-
-- **ci**: Fix flake8 action
-  ([`1b8e229`](https://github.com/lt-mayonesa/hexagon/commit/1b8e229ea49c4258fcb8c23488c6a8ab92d11d29))
-
-- **ci**: Lint with github action ([#6](https://github.com/lt-mayonesa/hexagon/pull/6),
-  [`9a571aa`](https://github.com/lt-mayonesa/hexagon/commit/9a571aa6dcec2b27707494a449a14b517228c665))
-
-- **ci**: Release commit subject
-  ([`fdd833d`](https://github.com/lt-mayonesa/hexagon/commit/fdd833d1bcdbcb7003fdd2f6af15bbaf0bc1d70b))
-
-- **ci**: Sync TODOs comments with issues
-  ([`3a8020e`](https://github.com/lt-mayonesa/hexagon/commit/3a8020e98b39ffe08835552ea739b7804f02a12c))
-
-- **ci**: Use official flake8 action
-  ([`9ac7863`](https://github.com/lt-mayonesa/hexagon/commit/9ac78637ec77f8eca381513d7ac28e85b85c824b))
-
-- **ci**: Use version number in README
-  ([`3d6ea08`](https://github.com/lt-mayonesa/hexagon/commit/3d6ea0811544c895d7fc37210bb8ed939f205c77))
-
-- **create-tool**: Template tool in english
-  ([`38e996e`](https://github.com/lt-mayonesa/hexagon/commit/38e996ec7a9ffa5a38a1fd773bb1a0d4f3b78500))
-
-- **e2e**: Missing comma on run command
-  ([`bce20d1`](https://github.com/lt-mayonesa/hexagon/commit/bce20d192ab1c669d8fb281e9dea1ceb528ed562))
-
-- **i18n**: Use MANIFEST for data
-  ([`ba3e5e6`](https://github.com/lt-mayonesa/hexagon/commit/ba3e5e6c9158f77e90c47167a7e866fd40b5ae01))
-
-- **IDE**: Setup black file watcher correctly
-  ([`d2fa58c`](https://github.com/lt-mayonesa/hexagon/commit/d2fa58cb28464ac536c1e8473e0fd92896d6988d))
-
-- **package**: Pipenv use setup.py install_requires
-  ([`b8f0ec2`](https://github.com/lt-mayonesa/hexagon/commit/b8f0ec25cac4aaeef394d45dc7471e915eea3bae))
-
-### Code Style
-
-- **black**: Automate code linting with black
-  ([#10](https://github.com/lt-mayonesa/hexagon/pull/10),
-  [`5372299`](https://github.com/lt-mayonesa/hexagon/commit/53722998c9649f5bf555edcfc7d12a9a06e57c4c))
-
-### Continuous Integration
-
-- Update dependencies and workflows
-  ([`4bace03`](https://github.com/lt-mayonesa/hexagon/commit/4bace0396f573d212e332b94dc17a5504c3539a9))
-
-- **build**: Agrego action de package
-  ([`f9e8376`](https://github.com/lt-mayonesa/hexagon/commit/f9e8376e97df4c247871ec00f6b170937e95cb01))
-
-- **guidelines**: Use versions from lockfile
-  ([`794af5b`](https://github.com/lt-mayonesa/hexagon/commit/794af5b045f041b21e9d3482bd1c0c106b9e88a8))
-
-- **package**: Use Pipfile.lock for install_requires deps
-  ([#66](https://github.com/lt-mayonesa/hexagon/pull/66),
-  [`ad01850`](https://github.com/lt-mayonesa/hexagon/commit/ad0185098546eb689263752b4a1b438a65e10200))
-
-also generate a hexagon build in place for e2e tests
-
-- **publish**: Publicar en repositorio
-  ([`49217de`](https://github.com/lt-mayonesa/hexagon/commit/49217de25a01d829bcc1ffb39245c705072020ad))
-
-- **release**: Compilar correctamente tar.gz
-  ([`9f44350`](https://github.com/lt-mayonesa/hexagon/commit/9f4435059b7ae9000b707727933916f366cce6dc))
-
-- **release**: Correcciones de packaging
-  ([`c55f35c`](https://github.com/lt-mayonesa/hexagon/commit/c55f35cea1184287cb7211c0b1d39f13883c1b12))
-
-- **release**: Correr con tags
-  ([`1b076ff`](https://github.com/lt-mayonesa/hexagon/commit/1b076ff9263a2ec823cab0929e13f90005c5f7a8))
-
-- **release**: Do not pump version in package workflow
-  ([`25164d1`](https://github.com/lt-mayonesa/hexagon/commit/25164d1d2c100988e899bafda6f48ac49347ff07))
-
-- **release**: Execute release outside matrix
-  ([`45eca58`](https://github.com/lt-mayonesa/hexagon/commit/45eca58c7d0c762ca8830e02d71f7e0fb07c5ae6))
-
-- **release**: Fix indent error
-  ([`2a8269c`](https://github.com/lt-mayonesa/hexagon/commit/2a8269c4b035eccd74b3c7b814f97e311b8e3a5e))
-
-- **release**: Subir asset de release
-  ([`1165c4a`](https://github.com/lt-mayonesa/hexagon/commit/1165c4a6896ccf36ed39c755fa5bf0547b79e511))
-
-- **release**: Uso de semantic release
-  ([`421177e`](https://github.com/lt-mayonesa/hexagon/commit/421177ee6b40d40063262a8e1dbb58ae18a1911a))
-
-- **security**: Use personal access token for release
-  ([`d52be3b`](https://github.com/lt-mayonesa/hexagon/commit/d52be3b197a44601d321adb980f420d5a9f9e6e1))
-
-- **tests**: Ejecución de tests
-  ([`2219798`](https://github.com/lt-mayonesa/hexagon/commit/2219798abd9bd29783807ccd674db94aa01ce6bd))
-
-### Documentation
-
-- Adding gif example to readme
-  ([`e2b4c1b`](https://github.com/lt-mayonesa/hexagon/commit/e2b4c1ba0e082ec998a63ba497dd627022037c1b))
-
-- Basic readme content
-  ([`7a82b34`](https://github.com/lt-mayonesa/hexagon/commit/7a82b3490f2b112c9a35fad4a789de1d2341ad69))
-
-- Better resolution gif
-  ([`897eeee`](https://github.com/lt-mayonesa/hexagon/commit/897eeee4ed1472ab993a36eadd1408161d2a2317))
-
-- English, slogan, and reference to template repo
-  ([`9a9fc96`](https://github.com/lt-mayonesa/hexagon/commit/9a9fc96f42d4ea81a57bda822de7c098d31015a6))
-
-- Update README to be compatible with v0.12.0
-  ([`d25ff3d`](https://github.com/lt-mayonesa/hexagon/commit/d25ff3d59ae072125378bdbb81d2015ad8bc0eb8))
-
-- Yaml example in readme
-  ([`86c28d1`](https://github.com/lt-mayonesa/hexagon/commit/86c28d126535e3fb6cd229b623666666aa0e1bd3))
-
-- **release**: Correct regex for README version
-  ([`f9b973a`](https://github.com/lt-mayonesa/hexagon/commit/f9b973a514efc0370a32d5b95a515ed461a508c2))
-
-- **release**: Version update comment
-  ([`c6a9617`](https://github.com/lt-mayonesa/hexagon/commit/c6a9617e7943adef2095b1a768548c8692cefd67))
-
-### Features
-
-- Auto-update for clis ([#49](https://github.com/lt-mayonesa/hexagon/pull/49),
-  [`a03d3e0`](https://github.com/lt-mayonesa/hexagon/commit/a03d3e00c27a39e72298e3f5979711162ded6f1d))
-
-* feat: auto-update for clis
-
-- Define tools & envs as lists ([#26](https://github.com/lt-mayonesa/hexagon/pull/26),
-  [`4db03b4`](https://github.com/lt-mayonesa/hexagon/commit/4db03b4e279bf2c82f6c9e8af8265026ea6e25c6))
-
-- Detect and install dependencies (Python, NodeJS) for CLIs
-  ([#72](https://github.com/lt-mayonesa/hexagon/pull/72),
-  [`febdb38`](https://github.com/lt-mayonesa/hexagon/commit/febdb383e442a5e3cbc528e2c80729b72b651da4))
-
-detect and install dependencies (Python, NodeJS) for CLIs on install and update
-
-closes #71 Co-authored-by: Joaco Campero <joaquin@redb.ee>
-
-Co-authored-by: Joaquin Campero <juacocampero@gmail.com>
-
-- Handle keyboard interrupt gracefully
-  ([`a65daa2`](https://github.com/lt-mayonesa/hexagon/commit/a65daa26c3de305a2bacafe7f7a64f9295914c94))
-
-- Nested tools, for grouping and organizing ([#54](https://github.com/lt-mayonesa/hexagon/pull/54),
-  [`b5831fd`](https://github.com/lt-mayonesa/hexagon/commit/b5831fdc4f69a6765973f1f5ce1a41ea58d8218c))
-
-* feat: nested tools, for grouping and organizing
-
-- Options by env variables, local options file or defaults
-  ([#52](https://github.com/lt-mayonesa/hexagon/pull/52),
-  [`6687b94`](https://github.com/lt-mayonesa/hexagon/commit/6687b94a53723f56fb683d53ad26c1a64dd3d025))
-
-* feat: options by env variables, local options file or defaults
-
-- Plugins and hooks ([#61](https://github.com/lt-mayonesa/hexagon/pull/61),
-  [`b7f1c08`](https://github.com/lt-mayonesa/hexagon/commit/b7f1c080129c53fcf28db424a0bcca5630e4febd))
-
-* feat: plugins and hooks
-
-- Project setup
-  ([`d28bcc9`](https://github.com/lt-mayonesa/hexagon/commit/d28bcc95017ea6214523bdbd03d3b7f78dfb3fc6))
-
-- Springboot, react, nextjs seeds ([#63](https://github.com/lt-mayonesa/hexagon/pull/63),
-  [`951b3ab`](https://github.com/lt-mayonesa/hexagon/commit/951b3ab8df92a5cfccc379c0b8cee824dff16cf2))
-
-feat: springboot, react, nextjs seeds
-
-- **action**: Allow defining action as list of commands
-  ([`fcc20f1`](https://github.com/lt-mayonesa/hexagon/commit/fcc20f1f30a9ebfcbaa50d99ab3a7897d7af07ca))
-
-- **analytics**: Log and send hexagon usage events
-  ([#57](https://github.com/lt-mayonesa/hexagon/pull/57),
-  [`c096900`](https://github.com/lt-mayonesa/hexagon/commit/c0969009862e1763ac79d5f5c82d5ee110f4ec88))
-
-events sent: - session start - tool selected (prompt or args) - env selected (prompt or args) -
-  action executed - session end
-
-- **config**: Custom tools dir relative to YAML
-  ([`fe3e26b`](https://github.com/lt-mayonesa/hexagon/commit/fe3e26bd3598ece02e9fd06ae4397b14edce6947))
-
-- **config**: Only show install cli when no config
-  ([`9413f99`](https://github.com/lt-mayonesa/hexagon/commit/9413f99ffa23f562f68acddfe99c73e817e74e3e))
-
-- **custom-tool**: Allow projects to register custom tools
-  ([`1cac9ca`](https://github.com/lt-mayonesa/hexagon/commit/1cac9ca80e369f9c05c1dcc3363386d4af0d6828))
-
-hexagon will check for cli.custom_tools_dir in config YAML, if exists it will load that directory as
-  a path for python modules.
-
-- **dependencies**: Show status on deps install
-  ([#87](https://github.com/lt-mayonesa/hexagon/pull/87),
-  [`f84d00b`](https://github.com/lt-mayonesa/hexagon/commit/f84d00b855e6548ec869252075dc0c9b4289457a))
-
-- **domain**: Map YAML to pydantic BaseModel ([#24](https://github.com/lt-mayonesa/hexagon/pull/24),
-  [`727a09a`](https://github.com/lt-mayonesa/hexagon/commit/727a09a01f11c34b1225fdcab609b02b2ffbff09))
-
-- **envs**: Make tool.envs optional
-  ([`efeec06`](https://github.com/lt-mayonesa/hexagon/commit/efeec064404830ca33c6b4751f55455190c6b9e2))
-
-in tool definition envs dict is now optional
-
-- **execute**: Command actions, closes #22 ([#23](https://github.com/lt-mayonesa/hexagon/pull/23),
-  [`26a9e05`](https://github.com/lt-mayonesa/hexagon/commit/26a9e051b497354c55177398f95ef98b0b4149bb))
-
-* feat(execute): command actions, closes #22
-
-- **execute**: Display action errors nicely to user
-  ([#43](https://github.com/lt-mayonesa/hexagon/pull/43),
-  [`b8ab97f`](https://github.com/lt-mayonesa/hexagon/commit/b8ab97f377bb10fe7c5533c5bbdbbd19938a74b1))
-
-Print errors nicely when python action import fails due to dependency errors, or when fails
-  executing due to user errors in script.
-
-- **execute**: Execute action with extension
-  ([`fe622a8`](https://github.com/lt-mayonesa/hexagon/commit/fe622a8942d91eb3c2f5c9cbe88d1aac22f1ea0f))
-
-let users define an action with other scripting languages, for now only .js and .sh are supported
-
-- **groups**: Allow for inline groups in YAML
-  ([`d29a587`](https://github.com/lt-mayonesa/hexagon/commit/d29a58748dac4e2a60dc0760d526cf78ed2c1034))
-
-refactored group loading, so it is done at configuration time instead of execution time
-
-- **i18n**: Added EN and ES transltions + CI ([#73](https://github.com/lt-mayonesa/hexagon/pull/73),
-  [`7c65e74`](https://github.com/lt-mayonesa/hexagon/commit/7c65e740dd74cc7c0e0bdb2ba75587f185d327d2))
-
-- **install**: Install custom cli from YAML
-  ([`cb25d68`](https://github.com/lt-mayonesa/hexagon/commit/cb25d680fa2af6448a79e61631542dabc08991a9))
-
-- **install**: Warn commands dir not in PATH ([#86](https://github.com/lt-mayonesa/hexagon/pull/86),
-  [`9b42bd4`](https://github.com/lt-mayonesa/hexagon/commit/9b42bd4bc765112e4d799e4c4ca57c128fddbb10))
-
-- **install-cli**: Use shell scripts instead of aliases
-  ([`c3d7ed7`](https://github.com/lt-mayonesa/hexagon/commit/c3d7ed76fce7bfae2448554fdb322f777ea5d59d))
-
-- **internal-tools**: Create a new tool
-  ([`dfc13aa`](https://github.com/lt-mayonesa/hexagon/commit/dfc13aacf77ec17ba735a519dd4bfbce29047731))
-
-prompt the user for parameters and register the new tool in the YAML and create the python modules
-  if action is new
-
-- **prompt**: Sort tools by type
-  ([`ef71eae`](https://github.com/lt-mayonesa/hexagon/commit/ef71eae1e2b5bb0b7b996efa5a1c694b52f31235))
-
-- **storage**: Add get_local_config_dir() function
-  ([#79](https://github.com/lt-mayonesa/hexagon/pull/79),
-  [`ec817d2`](https://github.com/lt-mayonesa/hexagon/commit/ec817d2d4b3bfdd962c6a2dc51216e3b0b53c1ca))
-
-- **styles**: Basic support for hexagon themes
-  ([#14](https://github.com/lt-mayonesa/hexagon/pull/14),
-  [`b5dd966`](https://github.com/lt-mayonesa/hexagon/commit/b5dd966a221cab477e33adec27fb54fdfc6efefb))
-
-- **support**: Storage api, closes #17 ([#21](https://github.com/lt-mayonesa/hexagon/pull/21),
-  [`f8cc5b3`](https://github.com/lt-mayonesa/hexagon/commit/f8cc5b374df56c084c2b1cc48ba0a35c44c6a46e))
-
-* feat(support): storage api, closes #17
-
-- **updates**: Hexagon auto update ([#35](https://github.com/lt-mayonesa/hexagon/pull/35),
-  [`16b93ff`](https://github.com/lt-mayonesa/hexagon/commit/16b93ffab29aa817c22b4a9b06e6dda43cc54fc7))
-
-periodically check the latest version of hexagon and suggest for updates
-
-relates to #34
-
-- **yaml**: Show a more precise error to users
-  ([#27](https://github.com/lt-mayonesa/hexagon/pull/27),
-  [`b635964`](https://github.com/lt-mayonesa/hexagon/commit/b635964789a54006f3f3b4dc31196940487b687f))
-
-closes #20
-
-### Refactoring
-
-- Tool-env selection, follow up to #26, closes #28
-  ([#29](https://github.com/lt-mayonesa/hexagon/pull/29),
-  [`e42fa36`](https://github.com/lt-mayonesa/hexagon/commit/e42fa36064e0133825d656de0bd55bf48aade684))
-
-- **actions**: Rename 'tools' package to 'actions'
-  ([`9cf4d40`](https://github.com/lt-mayonesa/hexagon/commit/9cf4d408f712cecb1799adb5a284db89a0f801c9))
-
-- **create-tool**: Use config for yaml manipulation
-  ([`66fe025`](https://github.com/lt-mayonesa/hexagon/commit/66fe02508e58c17ca733ada414eca6cbee1df381))
-
-- **execute**: Use recommended import method
-  ([`c4de3b4`](https://github.com/lt-mayonesa/hexagon/commit/c4de3b4ca66ff6902584505c99d5b99f81124de2))
-
-- **i18n**: Use _ installed as builtin
-  ([`d1fe739`](https://github.com/lt-mayonesa/hexagon/commit/d1fe73917dacad08032d64c064ecfb0f691875a2))
-
-- **install**: Correct tool naming
-  ([`8d5c497`](https://github.com/lt-mayonesa/hexagon/commit/8d5c497526bf3bdd1294e7c83cf57294d6de545f))
-
-- **packages**: Separate cli and support modules
-  ([#19](https://github.com/lt-mayonesa/hexagon/pull/19),
-  [`2a05218`](https://github.com/lt-mayonesa/hexagon/commit/2a0521867204aebda615b72c88ab104778651cfc))
-
-- **status**: Use rich status instead of halo
-  ([`708d3e3`](https://github.com/lt-mayonesa/hexagon/commit/708d3e3d34f4896a4ff3ffc3f32a96c86acfedea))
-
-- **updates**: Re-group changelog logic ([#85](https://github.com/lt-mayonesa/hexagon/pull/85),
-  [`526d168`](https://github.com/lt-mayonesa/hexagon/commit/526d1684c30ddfb184d90f58c1b6bc7c34d3cb5d))
-
-- **updates**: Spinner decorator ([#62](https://github.com/lt-mayonesa/hexagon/pull/62),
-  [`2769517`](https://github.com/lt-mayonesa/hexagon/commit/27695178360f9b2755022de0a6c0c3f00cf6065f))
-
-decorate functions with with_spinner to display a spinner for long running processes
-
-### Testing
-
-- E2e execute tool minor fix
-  ([`66f681d`](https://github.com/lt-mayonesa/hexagon/commit/66f681da354b4c5f50408a8875bce493ce84ffd3))
-
-- Fix broken tests
-  ([`a0ed63b`](https://github.com/lt-mayonesa/hexagon/commit/a0ed63b81b4cf056b339e9948b7a90712d057fa3))
-
-- **e2e**: Add coverage for help module
-  ([`2f1f913`](https://github.com/lt-mayonesa/hexagon/commit/2f1f91313a1f97d9e8260c1b0d83e19d181f1a4d))
-
-- **e2e**: Create_new_tool, solves #11 ([#12](https://github.com/lt-mayonesa/hexagon/pull/12),
-  [`d540e14`](https://github.com/lt-mayonesa/hexagon/commit/d540e14a38efc974d1610dea18648886bf39ade1))
-
-* test(e2e): create_new_tool, solves #11
-
-- **e2e**: Dynamic line width output assertion
-  ([#46](https://github.com/lt-mayonesa/hexagon/pull/46),
-  [`c1aece1`](https://github.com/lt-mayonesa/hexagon/commit/c1aece12c313dd973d1909d10a0e28657c4115fb))
-
-* test(e2e): dynamic line width output assertion with max number of lines and line delimiter options
-
-- **e2e**: Execute_tool, python modules and node/bash scripts
-  ([#13](https://github.com/lt-mayonesa/hexagon/pull/13),
-  [`4501ba4`](https://github.com/lt-mayonesa/hexagon/commit/4501ba461a1bd0be6f2fb41fc617265330b88a7e))
-
-python tools now receive 4 arguments in their main method
-
-- **e2e**: Fix print_help test setup
-  ([`fd3b3bf`](https://github.com/lt-mayonesa/hexagon/commit/fd3b3bf7fe2d98e653765b96d05209b6d6ef52ca))
-
-- **e2e**: Fix return code assertion ([#33](https://github.com/lt-mayonesa/hexagon/pull/33),
-  [`8a9cea3`](https://github.com/lt-mayonesa/hexagon/commit/8a9cea37df9b9ff41dea737802fed7d4f7799717))
-
-- **e2e**: Improved assertion for cli output ([#7](https://github.com/lt-mayonesa/hexagon/pull/7),
-  [`e2404f1`](https://github.com/lt-mayonesa/hexagon/commit/e2404f131f8f0890a92d46cffbb00474f1ec2990))
-
-* test(e2e): improved assertion for cli output
-
-- **e2e**: New spec functions, unified config utils
-  ([`4dc6460`](https://github.com/lt-mayonesa/hexagon/commit/4dc6460b132d426882c7b47414a820a3380030df))
-
-- **execute**: Split cases in two due to terminal trimming
-  ([#45](https://github.com/lt-mayonesa/hexagon/pull/45),
-  [`0ed4ec9`](https://github.com/lt-mayonesa/hexagon/commit/0ed4ec92cc7d8dcbc0ef770b78c5c8322e11448a))
-
-- **install-cli**: Fix broken test
-  ([`de720e7`](https://github.com/lt-mayonesa/hexagon/commit/de720e76823a3644bd140cae5d3f6b360b7a9669))
-
-- **tracer**: Tests when trace empty
-  ([`ab298dd`](https://github.com/lt-mayonesa/hexagon/commit/ab298dd5aaecc59496950543565a44e8d57c1572))
+- Initial Release
