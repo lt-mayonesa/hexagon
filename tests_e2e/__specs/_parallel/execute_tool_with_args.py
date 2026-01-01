@@ -1,6 +1,5 @@
-import sys
-
 import pytest
+import sys
 
 from tests_e2e.framework.assertions import assert_file_has_contents
 from tests_e2e.framework.hexagon_spec import as_a_user
@@ -185,11 +184,7 @@ def test_show_tool_help_text_when_tool_has_args(help_arg):
         .run_hexagon(["p-m-args", help_arg])
         .then_output_should_be(
             [
-                (
-                    "usage: p-m-args [-h] [--car-brand [CAR_BRAND]] [--car-model [CAR_MODEL]] [--car-years [CAR_YEARS ...]] [name] [age] [nationality]"
-                    if sys.version_info >= (3, 9)
-                    else "usage: p-m-args [-h] [--car-brand [CAR_BRAND]] [--car-model [CAR_MODEL]] [--car-years [CAR_YEARS [CAR_YEARS ...]]] [name] [age] [nationality]"
-                ),
+                "usage: p-m-args [-h] [--car-brand [CAR_BRAND]] [--car-model [CAR_MODEL]] [--car-years [CAR_YEARS ...]] [name] [age] [nationality]",
                 "",
                 "Python Module Script With Args",
                 "",
@@ -198,16 +193,24 @@ def test_show_tool_help_text_when_tool_has_args(help_arg):
                 "  age                   the person's age, if provided must be greater than 18 (default: None)",
                 "  nationality           nationality (default: Argentinian)",
                 "",
-                "options:" if sys.version_info >= (3, 10) else "optional arguments:",
+                "options:",
                 "  -h, --help            show this help message and exit",
-                "  --car-brand [CAR_BRAND], -cb [CAR_BRAND]",
+                (
+                    "  --car-brand, -cb [CAR_BRAND]"
+                    if sys.version_info >= (3, 13)
+                    else "  --car-brand [CAR_BRAND], -cb [CAR_BRAND]"
+                ),
                 "                        the car's brand (default: Ford)",
-                "  --car-model [CAR_MODEL], -cm [CAR_MODEL]",
+                (
+                    "  --car-model, -cm [CAR_MODEL]"
+                    if sys.version_info >= (3, 13)
+                    else "  --car-model [CAR_MODEL], -cm [CAR_MODEL]"
+                ),
                 "                        the car's model (default: None)",
                 (
-                    "  --car-years [CAR_YEARS ...], -cy [CAR_YEARS ...]"
-                    if sys.version_info >= (3, 9)
-                    else "  --car-years [CAR_YEARS [CAR_YEARS ...]], -cy [CAR_YEARS [CAR_YEARS ...]]"
+                    "  --car-years, -cy [CAR_YEARS ...]"
+                    if sys.version_info >= (3, 13)
+                    else "  --car-years [CAR_YEARS ...], -cy [CAR_YEARS ...]"
                 ),
                 "                        car_years (default: None)",
                 "",
@@ -238,7 +241,7 @@ def test_show_tool_help_text_when_tool_has_no_args(help_arg):
                 "",
                 "Python Module Script With No Args",
                 "",
-                "options:" if sys.version_info >= (3, 10) else "optional arguments:",
+                "options:",
                 ["  -h, --help", "show this help message and exit"],
                 "",
                 "To support tool arguments either add a model extending",

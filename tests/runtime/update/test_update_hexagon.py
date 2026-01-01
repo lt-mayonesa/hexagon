@@ -1,8 +1,8 @@
 import os
 import subprocess
-import sys
 from unittest import mock
 
+import sys
 from packaging.version import Version
 
 from hexagon.runtime.update import version
@@ -56,9 +56,10 @@ def test_check_for_hexagon_updates_performs_update_when_newer_version_is_availab
     monkeypatch.setattr(version, "latest", _latest_version_mock)
 
     delete_user_data(HEXAGON_STORAGE_APP, HexagonStorageKeys.last_update_check.value)
-    with mock.patch.object(
-        subprocess, "check_call"
-    ) as suprocess_mock, mock.patch.object(sys, "exit") as exit_mock:
+    with (
+        mock.patch.object(subprocess, "check_call") as suprocess_mock,
+        mock.patch.object(sys, "exit") as exit_mock,
+    ):
         check_for_hexagon_updates()
         suprocess_mock.assert_called_once()
         exit_mock.assert_called_once_with(1)
