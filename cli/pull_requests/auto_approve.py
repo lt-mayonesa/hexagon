@@ -103,9 +103,10 @@ class ProcessResult:
     attention_reason: Optional[str] = None
 
 
-# ============================================================================
-# Hexagon Tool Configuration
-# ============================================================================
+def _pr_filter(pr) -> Any:
+    return pr["title"].startswith("chore(deps):") or pr["title"].startswith(
+        "chore(deps-dev):"
+    )
 
 
 class Args(ToolArgs):
@@ -152,11 +153,6 @@ def main(
     show_slack_message_for_ready_prs(repo, viewer_login)
 
 
-# ============================================================================
-# High-Level Workflow Functions
-# ============================================================================
-
-
 def fetch_dependency_prs(repo: str) -> Tuple[List[dict], str]:
     """
     Fetch all open chore(deps): PRs from a repository.
@@ -180,7 +176,7 @@ def fetch_dependency_prs(repo: str) -> Tuple[List[dict], str]:
     viewer_login = data["data"]["viewer"]["login"]
 
     # Filter for chore(deps): PRs only
-    dependency_prs = [pr for pr in all_prs if pr["title"].startswith("chore(deps):")]
+    dependency_prs = [pr for pr in all_prs if _pr_filter(pr)]
 
     return dependency_prs, viewer_login
 
@@ -297,7 +293,7 @@ def process_single_pr(repo: str, pr: dict, viewer_login: str) -> ProcessResult:
     display_pr_status(pr_number, pr_title, pr_url, status)
 
     # Skip if viewer already approved (nothing more to do)
-    if status.is_already_approved:
+    if status.is_already_approved and status.checks_passing:
         log.info("[dim]Skipping this PR - you already approved it", gap_end=1)
         return ProcessResult(
             pr_number=pr_number,
@@ -311,9 +307,9 @@ def process_single_pr(repo: str, pr: dict, viewer_login: str) -> ProcessResult:
     show_pr_diff(repo, pr_number)
 
     # Prompt user for action
-    action = prompt_user_for_action(pr_number, status)
+    actions = prompt_user_for_action(pr_number, status)
 
-    if action == "skip":
+    if "skip" in actions:
         log.info("[dim]Skipping this PR", gap_end=1)
         return ProcessResult(
             pr_number=pr_number,
@@ -325,12 +321,15 @@ def process_single_pr(repo: str, pr: dict, viewer_login: str) -> ProcessResult:
 
     # Execute the chosen action
     success = False
-    if action == "merge":
+    if "merge" in actions:
         success = handle_merge_action(repo, pr_number)
-    elif action == "auto-merge":
-        success = handle_auto_merge_action(repo, pr_number, status)
-    elif action == "rebase":
-        success = handle_rebase_action(repo, pr_number)
+
+    if not success:
+        if "auto-merge" in actions:
+            success = handle_auto_merge_action(repo, pr_number, status)
+
+        if "rebase" in actions:
+            success = handle_rebase_action(repo, pr_number)
 
     if success:
         log.info("[green]✓ Processed successfully", gap_end=1)
@@ -339,7 +338,7 @@ def process_single_pr(repo: str, pr: dict, viewer_login: str) -> ProcessResult:
         pr_number=pr_number,
         pr_title=pr_title,
         pr_url=pr_url,
-        was_approved=(action in ["merge", "auto-merge"]),
+        was_approved=("merge" in actions or "auto-merge" in actions),
         needs_attention=False,
     )
 
@@ -556,6 +555,7 @@ def prompt_user_for_action(pr_number: int, status: PRStatus) -> str:
     return prompt.select(
         message=f"What would you like to do with PR #{pr_number}?",
         choices=choices,
+        multiselect=True,
         default="merge" if status.is_ready else "auto-merge",
     )
 
