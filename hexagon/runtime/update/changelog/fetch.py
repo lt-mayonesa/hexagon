@@ -19,7 +19,7 @@ class LocalChangelogFile(ChangelogFile):
 
 class RemoteChangelogFile(ChangelogFile):
     def readlines(self):
-        charset = self.file.headers.get_content_charset() or 'utf-8'
+        charset = self.file.headers.get_content_charset() or "utf-8"
         return [line.decode(charset) for line in self.file.readlines()]
 
 
