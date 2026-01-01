@@ -1,6 +1,44 @@
 # CHANGELOG
 
 
+## v0.64.1 (2026-01-01)
+
+### Bug Fixes
+
+- **update**: Read remote changelog correctly
+  ([#219](https://github.com/lt-mayonesa/hexagon/pull/219),
+  [`149bee3`](https://github.com/lt-mayonesa/hexagon/commit/149bee30af0ec091322b8c5c3d612bedb5b05ebf))
+
+### Chores
+
+- **ai**: Init claude
+  ([`fc1072e`](https://github.com/lt-mayonesa/hexagon/commit/fc1072eb36008af05c4d16aca3d1d6f5cff016ee))
+
+- **cli**: Dependabot housekeeping tool
+  ([`2a37ba2`](https://github.com/lt-mayonesa/hexagon/commit/2a37ba2a514454b02576b1510efcb962e02d4477))
+
+- **deps**: Bump actions/download-artifact from 6 to 7
+  ([#217](https://github.com/lt-mayonesa/hexagon/pull/217),
+  [`f0271df`](https://github.com/lt-mayonesa/hexagon/commit/f0271dfaacdebbdc1a8b64d9a1dd4e50e1548989))
+
+- **deps**: Bump peter-evans/create-pull-request from 7 to 8
+  ([#216](https://github.com/lt-mayonesa/hexagon/pull/216),
+  [`36da5db`](https://github.com/lt-mayonesa/hexagon/commit/36da5db1178f604af0159d8d1e92e9856e6db0a3))
+
+- **deps**: Bump the npm_and_yarn group across 1 directory with 4 updates
+  ([#218](https://github.com/lt-mayonesa/hexagon/pull/218),
+  [`4665d42`](https://github.com/lt-mayonesa/hexagon/commit/4665d424326d6b41e3567f9d919f02025f3a9df6))
+
+- **deps-dev**: Bump pytest from 8.4.1 to 9.0.2
+  ([#213](https://github.com/lt-mayonesa/hexagon/pull/213),
+  [`97abbad`](https://github.com/lt-mayonesa/hexagon/commit/97abbadaaf9bbcaa22be794d2e7824aa10cae3d0))
+
+### Testing
+
+- **e2e**: Fix print_version
+  ([`1126557`](https://github.com/lt-mayonesa/hexagon/commit/1126557e4345bedb19265f732426ae775a845557))
+
+
 ## v0.64.0 (2026-01-01)
 
 ### Chores
