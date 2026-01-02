@@ -50,6 +50,11 @@ def test_execute_tool_group_with_no_alias_from_gui():
     reason="Flaky on Linux CI",
 )
 def test_execute_tool_from_ui_after_leaving_tool_group():
+    print(sys.version_info)
+    print(sys.platform)
+    print(sys.platform == "linux")
+    print(sys.version_info <= (3, 10))
+    print(sys.platform == "linux" and sys.version_info <= (3, 10))
     (
         as_a_user(__file__)
         .run_hexagon(os_env_vars={"HEXAGON_THEME": "no_border"})
