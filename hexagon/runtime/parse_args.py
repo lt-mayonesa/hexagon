@@ -1,7 +1,7 @@
 import argparse
-import sys
 from typing import List, get_origin
 
+import sys
 from pydantic import TypeAdapter
 from pydantic_core import PydanticUndefined
 
@@ -71,8 +71,6 @@ def init_arg_parser(
         epilog=epilog,
         formatter_class=HexagonFormatter,
     )
-    if sys.version_info < (3, 8):
-        __polyfill_extend_action(__p)
 
     for name, field in model.model_fields.items():
         if fields and name not in fields:
@@ -80,16 +78,6 @@ def init_arg_parser(
         if get_origin(field.annotation) in [PositionalArg, OptionalArg]:
             __add_parser_argument(__p, FieldReference(name, field))
     return __p
-
-
-def __polyfill_extend_action(__p):
-    class ExtendAction(argparse.Action):
-        def __call__(self, parser, namespace, values, option_string=None):
-            items = getattr(namespace, self.dest) or []
-            items.extend(values)
-            setattr(namespace, self.dest, items)
-
-    __p.register("action", "extend", ExtendAction)
 
 
 def __add_parser_argument(parser, field: FieldReference):
