@@ -6,15 +6,11 @@ from tests_e2e.framework.hexagon_spec import as_a_user
 
 
 @pytest.mark.skipif(
-    sys.platform == "linux" and sys.version_info <= (3, 12),
+    sys.platform == "linux"
+    and (sys.version_info.major == 3 and sys.version_info.minor == 12),
     reason="Flaky on Linux CI",
 )
 def test_replay_last_command_by_prompt():
-    print(sys.version_info)
-    print(sys.platform)
-    print(sys.platform == "linux")
-    print(sys.version_info <= (3, 10))
-    print(sys.platform == "linux" and sys.version_info <= (3, 10))
     spec = (
         as_a_user(__file__)
         .run_hexagon()
