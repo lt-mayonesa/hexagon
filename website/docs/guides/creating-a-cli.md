@@ -99,6 +99,57 @@ For custom Python tools, see the [Custom Tools](../advanced/custom-tools) docume
       action: ./scripts/teardown.sh
 ```
 
+## Understanding Action Execution
+
+When you specify an `action` for a tool, Hexagon intelligently resolves how to execute it:
+
+### Action Types
+
+**1. Script Files** (`.sh`, `.js` extensions)
+```yaml
+action: ./scripts/deploy.sh
+```
+Hexagon detects the file extension and uses the appropriate interpreter.
+
+**2. Python Modules**
+```yaml
+action: data_processor  # Looks for custom_tools/data_processor.py
+```
+Hexagon imports the module and calls its `main(tool, env, env_args, cli_args)` function.
+
+**3. Inline Commands**
+```yaml
+action: git status
+```
+Hexagon executes the command directly in a shell.
+
+**4. Format Strings**
+```yaml
+action: "echo Deploying to {env.name}"
+```
+Hexagon replaces `{env.name}`, `{tool.name}`, etc. with actual values.
+
+### Resolution Order
+
+Hexagon tries to resolve actions in this order:
+
+1. Check if it's a script file (has file extension)
+2. Try to import as Python module (from `custom_tools_dir` or `hexagon.actions.external`)
+3. Execute as inline shell command
+
+This means you can seamlessly mix different action types in your CLI without explicitly declaring which type each is.
+
+### When to Use Each Type
+
+| Use Case | Action Type | Example |
+|----------|-------------|---------|
+| Simple commands | Inline | `git status`, `docker ps` |
+| Deployment scripts | Script file | `./scripts/deploy.sh` |
+| Complex logic | Python module | `data_analyzer` |
+| Dynamic commands | Format string | `curl {env_args}/api/health` |
+
+See the [Action Execution](../advanced/action-execution) guide for complete details.
+
 ## Installing Your CLI
 
 Once your configuration is ready:
@@ -136,12 +187,82 @@ To share your CLI with your team:
 
 ## Best Practices
 
-- **Keep it Simple**: Start with a few essential tools and expand as needed
-- **Consistent Naming**: Use consistent naming conventions for tools and aliases
-- **Documentation**: Document each tool's purpose and usage
-- **Maintenance**: Regularly update your CLI as team workflows evolve
-- **Feedback**: Collect feedback from your team to improve the CLI
+### Start Small, Grow Incrementally
+- Begin with 3-5 essential tools
+- Add new tools based on team needs
+- Don't try to automate everything at once
+
+### Organize Thoughtfully
+- **Use groups** for related tools (e.g., database, deployment, monitoring)
+- **Add separators** between logical sections
+- **Order tools** by frequency of use
+
+### Naming Conventions
+- **Tool names**: Lowercase with hyphens (`deploy-service`, not `DeployService`)
+- **Aliases**: Short and memorable (1-3 characters)
+- **Descriptions**: Clear and concise (what the tool does)
+
+### Environment Strategy
+- Define environments early (dev, staging, prod)
+- Use consistent environment names across tools
+- Consider using environment aliases for faster access (`d`, `s`, `p`)
+
+### Script Organization
+- Keep scripts in a dedicated directory (`scripts/`, `tools/`, etc.)
+- Make scripts executable: `chmod +x scripts/*.sh`
+- Use meaningful script names
+- Add comments and documentation to scripts
+
+### Python Tool Development
+- Follow the standard `main(tool, env, env_args, cli_args)` signature
+- Use the `Args` class for argument parsing
+- Leverage `log` for consistent output
+- Handle errors gracefully
+
+### Configuration Management
+- **Version control**: Store your config in Git
+- **File naming**: Use `app.yaml` for the main config
+- **Comments**: Add comments explaining complex configurations
+- **Validation**: Use `hexagon get-json-schema` to validate your YAML
+
+### Documentation
+- Add a README explaining:
+  - How to install the CLI
+  - What tools are available
+  - How to use each tool
+  - How to add new tools
+- Document environment-specific configurations
+- Include examples of common workflows
+
+### Team Adoption
+- Include CLI installation in onboarding
+- Provide a quick reference card
+- Collect feedback regularly
+- Update based on team needs
+
+### Maintenance
+- Review and update tools quarterly
+- Remove unused tools
+- Keep scripts up to date with infrastructure changes
+- Monitor for updates to Hexagon itself
+
+## Troubleshooting
+
+Common issues and solutions:
+
+**Tool not found**: Check that the action path is correct (relative to config file)
+
+**Module import error**: Ensure `custom_tools_dir` is set correctly in your config
+
+**Script permission denied**: Make scripts executable with `chmod +x`
+
+**Environment not working**: Verify environment name matches exactly in `envs` section
+
+See the [Troubleshooting Guide](../api/troubleshooting) for more help.
 
 ## Next Steps
 
-Learn more about the different [Tool Types](tool-types) you can use in your CLI.
+- Learn about [Tool Types](tool-types) for more options
+- Explore [Custom Tools](../advanced/custom-tools) for Python development
+- Check out [Action Execution](../advanced/action-execution) to understand how Hexagon works
+- Read about [Environments](environments) for multi-environment workflows

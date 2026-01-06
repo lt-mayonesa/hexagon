@@ -22,12 +22,40 @@ Teams often struggle with knowledge sharing and standardizing workflows. Hexagon
 
 ## Key Features
 
-- **Easy Configuration**: Define your CLI using simple YAML files
-- **Multiple Tool Types**: Support for web links, shell commands, and custom functions
-- **Environment Support**: Configure different environments (dev, qa, prod, etc.)
-- **Theming**: Customize the look and feel of your CLI
-- **Plugins**: Extend functionality with plugins
-- **Internationalization**: Support for multiple languages
+### Declarative YAML Configuration
+- **Simple setup**: Define your entire CLI in a single YAML file
+- **No coding required**: Create powerful CLIs without writing code
+- **Easy to maintain**: Configuration is readable and version-controlled
+
+### Flexible Tool Types
+- **Web tools**: Open URLs and dashboards
+- **Shell tools**: Execute commands and scripts (.sh, .js)
+- **Custom Python tools**: Build sophisticated tools with full Python
+- **Function tools**: Register Python functions programmatically
+- **Tool groups**: Organize related tools together
+
+### Multi-Environment Support
+- **Environment-specific configuration**: Different settings per environment
+- **Quick environment switching**: Use environment aliases for fast access
+- **Format strings**: Dynamic command generation based on environment
+
+### Extensibility
+- **Custom tools**: Write Python modules for complex functionality
+- **Plugins**: Extend Hexagon with custom plugins
+- **Hooks**: React to lifecycle events (start, tool executed, etc.)
+- **Runtime options**: Configure behavior via YAML or environment variables
+
+### Rich Terminal Experience
+- **Theming**: Choose from default, disabled, or result-only themes
+- **Interactive prompts**: Searchable selections with suggestions
+- **Argument parsing**: Built-in support for positional and optional arguments
+- **Rich output**: Panels, syntax highlighting, and formatted results
+
+### Built-in Tools
+- **Command aliases**: Save frequently used commands
+- **Replay**: Re-run the last command
+- **Create tool wizard**: Interactive tool creation
+- **Auto-updates**: Keep Hexagon and your CLI up-to-date
 
 ## Quick Example
 
@@ -63,4 +91,21 @@ tools:
 
 ## Getting Started
 
-Ready to create your team's CLI? Check out the [Installation](getting-started/installation) guide to get started!
+Ready to create your team's CLI? Here's how to begin:
+
+1. **[Install Hexagon](getting-started/installation)** - Get Hexagon installed on your machine
+2. **[Configure Your CLI](getting-started/configuration)** - Create your first `app.yaml`
+3. **[Create a CLI](guides/creating-a-cli)** - Build your custom CLI step-by-step
+
+### Learn by Example
+
+- **[Building a Custom Tool](tutorial-extras/building-custom-tool)** - Create a GitHub repository info tool
+- **[Multi-Environment Workflow](tutorial-extras/multi-environment-workflow)** - Set up dev, staging, and production environments
+
+### Explore the Documentation
+
+- **[Tool Types Guide](guides/tool-types)** - All available tool types and when to use them
+- **[Custom Tools](advanced/custom-tools)** - Write Python tools for complex functionality
+- **[Action Execution](advanced/action-execution)** - Understand how Hexagon resolves actions
+- **[API Reference](api/cli)** - Complete API documentation
+- **[Troubleshooting](guides/troubleshooting)** - Solutions to common issues
