@@ -99,8 +99,10 @@ Ready to create your team's CLI? Here's how to begin:
 
 ### Learn by Example
 
-- **[Building a Custom Tool](tutorial-extras/building-custom-tool)** - Create a GitHub repository info tool
-- **[Multi-Environment Workflow](tutorial-extras/multi-environment-workflow)** - Set up dev, staging, and production environments
+Check out our blog for step-by-step tutorials:
+
+- **[Building a Custom Tool](/blog/building-custom-tool)** - Create a GitHub repository info tool
+- **[Multi-Environment Workflow](/blog/multi-environment-workflow)** - Set up dev, staging, and production environments
 
 ### Explore the Documentation
 

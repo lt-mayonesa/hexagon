@@ -27,14 +27,6 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'Tutorials',
-      items: [
-        'tutorial-extras/building-custom-tool',
-        'tutorial-extras/multi-environment-workflow',
-      ],
-    },
-    {
-      type: 'category',
       label: 'Guides',
       items: [
         'guides/creating-a-cli',

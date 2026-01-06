@@ -1,10 +1,15 @@
 ---
-sidebar_position: 1
+slug: building-custom-tool
+title: "Tutorial: Building a Custom Tool"
+authors: [joaco]
+tags: [tutorial, custom-tools, python]
 ---
 
 # Building a Custom Tool
 
 This tutorial walks you through building a real custom tool for Hexagon. You'll learn how to create a tool that makes API requests, handles user input, and provides rich output.
+
+<!-- truncate -->
 
 ## What We'll Build
 
@@ -469,7 +474,7 @@ def main(tool, env, env_args, cli_args: Args):
 
 Now that you've built a custom tool, explore:
 
-- [Prompting Guide](../advanced/prompting) - Advanced interactive features
-- [Custom Tools Reference](../advanced/custom-tools) - Complete API documentation
-- [Output API](../api/support/output) - Rich terminal output options
-- [Storage API](../api/support/storage) - Persisting data between runs
+- [Custom Tools Reference](/docs/advanced/custom-tools) - Complete API documentation
+- [Prompting Guide](/docs/advanced/prompting) - Advanced interactive features
+- [Output API](/docs/api/support/output) - Rich terminal output options
+- [Storage API](/docs/api/support/storage) - Persisting data between runs

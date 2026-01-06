@@ -174,8 +174,8 @@ Extend Hexagon with custom plugins that run at CLI startup.
 - [Creating a CLI](guides/creating-a-cli) - Build your first CLI
 
 **Tutorials:**
-- [Building a Custom Tool](tutorial-extras/building-custom-tool) - Create a GitHub info tool
-- [Multi-Environment Workflow](tutorial-extras/multi-environment-workflow) - Set up dev/staging/prod
+- [Building a Custom Tool](/blog/building-custom-tool) - Create a GitHub info tool
+- [Multi-Environment Workflow](/blog/multi-environment-workflow) - Set up dev/staging/prod
 
 **Reference:**
 - [Tool Types Guide](guides/tool-types) - All available tool types

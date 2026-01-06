@@ -1,10 +1,15 @@
 ---
-sidebar_position: 2
+slug: multi-environment-workflow
+title: "Tutorial: Multi-Environment Workflow"
+authors: [joaco]
+tags: [tutorial, environments, workflow]
 ---
 
 # Multi-Environment Workflow
 
 This tutorial demonstrates how to build a CLI with multiple environments for a realistic development workflow. You'll learn how to configure tools for different environments and use them effectively.
+
+<!-- truncate -->
 
 ## Scenario
 
@@ -633,7 +638,7 @@ $ myapp ssh prod
 
 ## Next Steps
 
-- [Custom Tools](../advanced/custom-tools) - Build sophisticated tools
-- [Environments Guide](../guides/environments) - Complete environment reference
-- [Action Execution](../advanced/action-execution) - Understand action resolution
-- [Troubleshooting](../guides/troubleshooting) - Fix common issues
+- [Custom Tools](/docs/advanced/custom-tools) - Build sophisticated tools
+- [Environments Guide](/docs/guides/environments) - Complete environment reference
+- [Action Execution](/docs/advanced/action-execution) - Understand action resolution
+- [Troubleshooting](/docs/guides/troubleshooting) - Fix common issues
