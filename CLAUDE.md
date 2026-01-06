@@ -83,6 +83,298 @@ npm run build
 npm run serve
 ```
 
+## Documentation Structure
+
+The Hexagon website uses Docusaurus with a manually configured sidebar structure. Understanding this structure is critical when adding or updating documentation.
+
+### Directory Structure
+
+```
+website/
+├── docs/                    # Documentation pages
+│   ├── intro.md            # Landing page for docs
+│   ├── api.md              # API reference index
+│   ├── getting-started/    # Getting started guides
+│   ├── guides/             # User guides
+│   ├── advanced/           # Advanced topics
+│   └── api/                # API reference pages
+│       ├── cli.md
+│       ├── tool.md
+│       ├── env.md
+│       ├── runtime-options.md
+│       ├── built-in-tools.md
+│       ├── actions/        # Action API reference
+│       └── support/        # Support module reference
+├── blog/                   # Blog posts (tutorials, releases)
+├── sidebars.ts             # Sidebar configuration (MUST be updated)
+└── docusaurus.config.ts    # Site configuration
+```
+
+### Documentation Categories
+
+Documentation is organized into clear categories:
+
+**Configuration APIs:**
+- Core configuration objects (CLI, Tool, Env, Runtime Options)
+- Used to configure CLIs via YAML
+
+**Built-in Features:**
+- Built-in tools (install, get-json-schema, update-hexagon, save-alias, replay, etc.)
+- Features available out-of-the-box
+
+**Action APIs:**
+- How tools execute (web actions, shell actions, action execution strategy)
+- The 3-tier resolution: scripts → modules → inline commands
+
+**Support Modules:**
+- Utilities for building CLIs (output, hooks, storage)
+- Used by custom tools and plugins
+
+**Advanced Topics:**
+- Custom tools, prompting, plugins, internationalization
+- Deep dives and extensibility
+
+### Adding New Documentation
+
+**CRITICAL: Always update `sidebars.ts` when adding new documentation pages!** Docusaurus uses manual sidebar configuration, so new pages won't appear in navigation unless explicitly added.
+
+1. **Create the documentation file** in the appropriate directory:
+   ```markdown
+   ---
+   sidebar_position: 5
+   ---
+
+   # Page Title
+
+   Content here...
+   ```
+
+2. **Update `website/sidebars.ts`** to include the new page:
+   ```typescript
+   const sidebars: SidebarsConfig = {
+     tutorialSidebar: [
+       'intro',
+       {
+         type: 'category',
+         label: 'Guides',
+         items: [
+           'guides/existing-guide',
+           'guides/new-guide',  // ADD HERE
+         ],
+       },
+     ],
+   };
+   ```
+
+3. **Verify with dev server**:
+   ```bash
+   cd website
+   npm start
+   # Check that the new page appears in navigation
+   ```
+
+### Blog Posts vs Documentation
+
+**Use blog posts for:**
+- Tutorials with step-by-step instructions
+- Release announcements
+- Feature spotlights
+- Time-sensitive content
+
+**Use documentation for:**
+- API reference
+- Configuration guides
+- Conceptual explanations
+- Reference material
+
+**Blog post frontmatter:**
+```markdown
+---
+slug: building-custom-tool
+title: "Tutorial: Building a Custom Tool"
+authors: [joaco]
+tags: [tutorial, custom-tools, python]
+---
+
+# Building a Custom Tool
+
+Introduction paragraph...
+
+<!-- truncate -->
+
+Rest of content...
+```
+
+**Documentation frontmatter:**
+```markdown
+---
+sidebar_position: 5
+---
+
+# Page Title
+```
+
+### Cross-Referencing
+
+**Within documentation:**
+```markdown
+See [Custom Tools](../advanced/custom-tools) for details.
+```
+
+**From docs to blog:**
+```markdown
+Check out our [Building a Custom Tool](/blog/building-custom-tool) tutorial.
+```
+
+**From blog to docs:**
+```markdown
+See the [Custom Tools reference](/docs/advanced/custom-tools) for the complete API.
+```
+
+### Documentation Best Practices
+
+**When updating documentation:**
+1. **Fix incorrect information first** - API accuracy is critical
+2. **Add missing documentation** - Ensure all features are documented
+3. **Organize for discoverability** - Clear categories and navigation
+4. **Cross-reference thoroughly** - Link related topics
+5. **Update all references** - When moving/renaming pages, update all links
+6. **Test with dev server** - Verify navigation and links work
+7. **Check for broken links** - Docusaurus will warn about broken internal links
+
+**Documentation workflow:**
+1. Identify gaps or errors in current documentation
+2. Plan the documentation structure (categories, pages, organization)
+3. Create or update documentation pages
+4. Update `sidebars.ts` with new pages
+5. Update cross-references (intro.md, api.md, etc.)
+6. Test with local dev server
+7. Commit changes
+
+**Writing style:**
+- Clear and concise
+- Include code examples
+- Use proper markdown formatting
+- Add "Key topics" or "What's covered" sections
+- Link to related documentation
+- Provide troubleshooting tips where relevant
+
+### Large Documentation Updates
+
+When doing comprehensive documentation updates (fixing multiple issues, adding new sections, reorganizing):
+
+**Use a phased approach:**
+
+1. **Phase A - Discovery**: Understand the current state and requirements
+   - Read existing documentation
+   - Identify errors, gaps, and inconsistencies
+   - Use Task tool with multiple code-explorer agents in parallel to understand codebase
+
+2. **Phase B - Planning**: Design the documentation structure
+   - List all issues found
+   - Ask user for scope and priorities
+   - Plan categories and organization
+   - Get user approval before proceeding
+
+3. **Phase C - Foundation Fixes**: Fix critical errors first
+   - Correct API inaccuracies (wrong function signatures, incorrect behavior)
+   - Update outdated information
+   - Remove conflicting examples
+
+4. **Phase D - API Completeness**: Add missing documentation
+   - Document all undocumented features
+   - Complete partial documentation
+   - Add missing parameters and options
+
+5. **Phase E - New Comprehensive Guides**: Create new documentation
+   - Add deep-dive explanations
+   - Create troubleshooting guides
+   - Add complete reference pages
+
+6. **Phase F - Navigation**: Update documentation structure
+   - Update intro/index pages
+   - Update sidebars.ts
+   - Update cross-references
+   - Convert tutorials to blog posts if appropriate
+
+7. **Phase G - Quality Review**: Final verification
+   - Test with local dev server
+   - Verify all links work
+   - Check navigation is clear
+   - Remove any obsolete files
+
+**Commit strategy:**
+- Commit after each major phase or after 4-7 related files
+- Let user review and commit before continuing
+- Keep commits focused on related changes
+
+**Tools and patterns:**
+- Use multiple Task tools with code-explorer agents in parallel for efficient codebase understanding
+- Use TodoWrite to track progress through phases
+- Test frequently with local dev server (`cd website && npm start`)
+
+### Production Build Verification
+
+**CRITICAL: Always run a production build before considering documentation work complete.** The production build catches issues that the dev server doesn't:
+
+1. **Run the production build:**
+   ```bash
+   cd website
+   yarn build
+   ```
+
+2. **Common build issues and fixes:**
+
+   **Broken links:**
+   - Production build fails on broken internal links (dev server only warns)
+   - Error message shows exact broken link and source page
+   - Fix: Correct the relative path or use absolute paths from `/docs/`
+   - Example: `../api/troubleshooting` should be `troubleshooting` when already in guides/
+
+   **Missing blog tags:**
+   - Blog posts can reference tags not defined in `blog/tags.yml`
+   - Production build warns but continues (should be fixed)
+   - Fix: Add new tags to `blog/tags.yml`:
+     ```yaml
+     new-tag:
+       label: Display Name
+       permalink: /tag-url
+       description: Tag description
+     ```
+
+   **Missing pages in navigation:**
+   - Pages won't appear in sidebar unless added to `sidebars.ts`
+   - No build error, but users can't discover the pages
+   - Fix: Update `sidebars.ts` with new page paths
+
+3. **Verify the production build:**
+   ```bash
+   # Serve the production build locally
+   yarn serve
+
+   # In another terminal, verify key pages
+   curl -I http://localhost:3000/hexagon/docs/intro
+   curl -I http://localhost:3000/hexagon/docs/api
+   # Should return HTTP 200
+   ```
+
+4. **Build checklist:**
+   - [ ] Production build completes without errors
+   - [ ] No broken link warnings
+   - [ ] No missing tag warnings
+   - [ ] Key pages accessible (docs, API, blog posts)
+   - [ ] Navigation includes all new pages
+   - [ ] Cross-references work correctly
+
+**When to run production build:**
+- Before committing documentation changes
+- After adding new pages
+- After updating navigation structure
+- When converting tutorials to blog posts
+- Before deploying to production
+
+**Note:** The dev server (`npm start`) is great for rapid iteration but doesn't catch all issues. Always verify with a production build.
+
 ## Architecture
 
 ### Core Components

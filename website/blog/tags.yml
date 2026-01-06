@@ -17,3 +17,23 @@ advanced:
   label: Advanced
   permalink: /advanced
   description: Advanced topics and features for power users
+
+custom-tools:
+  label: Custom Tools
+  permalink: /custom-tools
+  description: Building custom Python tools for Hexagon
+
+python:
+  label: Python
+  permalink: /python
+  description: Python-related content and development
+
+environments:
+  label: Environments
+  permalink: /environments
+  description: Multi-environment configurations and workflows
+
+workflow:
+  label: Workflow
+  permalink: /workflow
+  description: Team workflows and best practices

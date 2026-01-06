@@ -258,7 +258,7 @@ Common issues and solutions:
 
 **Environment not working**: Verify environment name matches exactly in `envs` section
 
-See the [Troubleshooting Guide](../api/troubleshooting) for more help.
+See the [Troubleshooting Guide](troubleshooting) for more help.
 
 ## Next Steps
 
