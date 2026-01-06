@@ -49,9 +49,50 @@ The `cli` section defines the basic properties of your CLI:
 | `command` | The command used to invoke your CLI | Yes |
 | `custom_tools_dir` | Directory for custom tool implementations | No |
 | `plugins` | List of plugins to use | No |
+| `options` | Runtime options (theme, update settings, etc.) | No |
 | `entrypoint.shell` | Custom shell to use for commands | No |
 | `entrypoint.pre_command` | Command to run before each tool execution | No |
 | `entrypoint.environ` | Environment variables to set | No |
+
+### Runtime Options
+
+The `options` section allows you to configure Hexagon's runtime behavior:
+
+```yaml
+cli:
+  name: My CLI
+  command: mycli
+  options:
+    theme: default                      # default, disabled, or result_only
+    update_disabled: false              # Disable hexagon update checks
+    cli_update_disabled: false          # Disable CLI update checks
+    hints_disabled: false               # Disable hint messages
+    cwd_tools_disabled: false           # Disable directory-specific tools
+    send_telemetry: false               # Enable/disable telemetry
+```
+
+See the [Runtime Options API](../api/runtime-options) for a complete list of available options.
+
+### Entrypoint Configuration
+
+The `entrypoint` section allows you to customize the execution environment:
+
+```yaml
+cli:
+  name: My CLI
+  command: mycli
+  entrypoint:
+    shell: zsh                          # Shell to use (default: sh)
+    pre_command: source ~/.env          # Command to run before each tool
+    environ:                            # Environment variables
+      NODE_ENV: production
+      API_KEY: your-api-key
+```
+
+This is useful for:
+- Loading environment-specific configurations
+- Setting up authentication
+- Initializing required environment variables
 
 ## Environment Configuration
 
@@ -94,11 +135,19 @@ Hexagon supports several tool types:
 
 ## Configuration File Location
 
-Hexagon looks for configuration files in several locations:
+Hexagon looks for your main configuration file in the following order:
 
 1. The path specified by the `HEXAGON_CONFIG_FILE` environment variable
-2. A file named `hexagon_tools.yaml` in the current directory
-3. A file named `hexagon_tools.yml` in the current directory
+2. A file named `app.yaml` in the current directory (default)
+3. A file named `app.yml` in the current directory
+
+### Current Working Directory Tools
+
+In addition to your main configuration file, Hexagon can load directory-specific tools from `hexagon_tools.yaml` or `hexagon_tools.yml` in the current working directory. These tools are added to your CLI when running from that directory.
+
+This feature is useful for project-specific tools that should only be available in certain directories. To disable this feature, set `cwd_tools_disabled: true` in your CLI options.
+
+See the [Runtime Options](../api/runtime-options) documentation for more details.
 
 ## Next Steps
 
