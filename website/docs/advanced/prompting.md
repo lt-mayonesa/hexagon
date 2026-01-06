@@ -139,10 +139,24 @@ For `List` type arguments, Hexagon displays a checkbox prompt:
 ```python
 from typing import List
 
+# List of strings
 selected_items: OptionalArg[List[str]] = Arg(
-    [], 
+    [],
     prompt_message="Select items",
     choices=["Item 1", "Item 2", "Item 3", "Item 4"]
+)
+
+# List of integers
+selected_numbers: OptionalArg[List[int]] = Arg(
+    [],
+    prompt_message="Select port numbers",
+    choices=[8000, 8080, 3000, 5000]
+)
+
+# List without predefined choices (user enters values)
+tags: OptionalArg[List[str]] = Arg(
+    [],
+    prompt_message="Enter tags (comma-separated)"
 )
 ```
 
@@ -150,18 +164,32 @@ Users can select multiple items using the space bar to toggle selections. The `c
 
 ### Path Selection
 
-For `Path` type arguments, Hexagon provides file path completion:
+Hexagon supports three path-related types with autocomplete:
 
 ```python
 from pathlib import Path
+from hexagon.support.input.args import FilePath, DirectoryPath
 
+# Generic path (files or directories)
 file_path: OptionalArg[Path] = Arg(
-    None, 
-    prompt_message="Select a file"
+    None,
+    prompt_message="Select a file or directory"
+)
+
+# File path only (validates that path is a file)
+config_file: OptionalArg[FilePath] = Arg(
+    None,
+    prompt_message="Select a configuration file"
+)
+
+# Directory path only (validates that path is a directory)
+output_dir: OptionalArg[DirectoryPath] = Arg(
+    None,
+    prompt_message="Select output directory"
 )
 ```
 
-This prompt will provide autocomplete for file paths.
+All path prompts provide autocomplete for filesystem paths. `FilePath` and `DirectoryPath` add validation to ensure the path is the correct type.
 
 ### Enum Selection
 
@@ -182,6 +210,102 @@ color: OptionalArg[Color] = Arg(
 ```
 
 Users can select one of the enum values.
+
+## Supported Argument Types
+
+Hexagon supports a wide range of argument types:
+
+| Type | Prompt Style | Example | Notes |
+|------|--------------|---------|-------|
+| `str` | Text input | `name: PositionalArg[str]` | Basic text input |
+| `int` | Numeric input | `age: OptionalArg[int]` | Validates integer input |
+| `float` | Numeric input | `height: OptionalArg[float]` | Validates float input |
+| `bool` | Yes/No prompt | `confirm: OptionalArg[bool]` | Returns True/False |
+| `List[str]` | Multi-select/text | `tags: OptionalArg[List[str]]` | Multiple strings |
+| `List[int]` | Multi-select | `ports: OptionalArg[List[int]]` | Multiple integers |
+| `Path` | Path autocomplete | `path: OptionalArg[Path]` | File or directory |
+| `FilePath` | Path autocomplete | `file: OptionalArg[FilePath]` | File only (validated) |
+| `DirectoryPath` | Path autocomplete | `dir: OptionalArg[DirectoryPath]` | Directory only (validated) |
+| `Enum` | Selection prompt | `color: OptionalArg[Color]` | Enum values as choices |
+| Custom Pydantic models | Varies | `config: OptionalArg[Config]` | Complex nested structures |
+
+## Complete Arg() Parameters Reference
+
+The `Arg()` function supports the following parameters:
+
+```python
+Arg(
+    default,                     # Required: Default value for the argument
+    *,
+    # CLI Configuration
+    alias: str = None,           # Short flag alias (e.g., "v" for --verbose)
+    description: str = None,     # Help text description
+    title: str = None,           # Title shown in help
+
+    # Prompting Configuration
+    prompt_message: str = None,  # Message shown when prompting user
+    prompt_default: Any = None,  # Default value shown in prompt (can differ from default)
+    prompt_instruction: str = None,  # Additional instructions below prompt
+    prompt_suggestions: Union[List, Callable] = None,  # Autocomplete suggestions
+    searchable: bool = False,    # Enable fuzzy search for choices
+
+    # Selection Configuration
+    choices: Union[List, Callable] = None,  # Available options for selection prompts
+)
+```
+
+### Parameter Details
+
+| Parameter | Type | Description | Works With |
+|-----------|------|-------------|------------|
+| `default` | `Any` | Default value if not provided | All types |
+| `alias` | `str` | Short flag (e.g., `-v` for `--verbose`) | OptionalArg only |
+| `description` | `str` | Help text shown in `--help` | All types |
+| `title` | `str` | Title in help output | All types |
+| `prompt_message` | `str` | Question shown to user | All types |
+| `prompt_default` | `Any` | Default in prompt (overrides `default` for display) | All types |
+| `prompt_instruction` | `str` | Additional instructions below prompt | All types |
+| `prompt_suggestions` | `List` or `Callable` | Autocomplete suggestions (NOT choices) | Text inputs |
+| `searchable` | `bool` | Enable fuzzy search filtering | Selection prompts |
+| `choices` | `List` or `Callable` | Options for selection (restricts input) | All types |
+
+### Choices vs Suggestions
+
+- **`choices`**: Restricts input to only the provided options (selection prompt)
+- **`prompt_suggestions`**: Provides autocomplete hints but allows any input (text prompt with autocomplete)
+
+```python
+# Choices: User MUST select from list
+environment: OptionalArg[str] = Arg(
+    "dev",
+    choices=["dev", "staging", "prod"]  # User cannot enter other values
+)
+
+# Suggestions: User CAN enter any value
+username: OptionalArg[str] = Arg(
+    None,
+    prompt_suggestions=["admin", "user", "guest"]  # Hints, but any value allowed
+)
+```
+
+## Accessing Argument Values
+
+When working with arguments in your `main()` function, always use the `.value` property:
+
+```python
+def main(tool, env, env_args, cli_args: Args):
+    # Correct: Use .value to get the actual value
+    name = cli_args.name.value
+
+    # Check if value exists before prompting
+    if cli_args.name.value is None:
+        cli_args.name.prompt()
+
+    # Now use the value
+    log.info(f"Hello, {cli_args.name.value}!")
+```
+
+**Why `.value`?** The argument object (`cli_args.name`) contains metadata, validation logic, and prompting methods. The `.value` property returns the actual user input.
 
 ## Using Prompts in Custom Tools
 
