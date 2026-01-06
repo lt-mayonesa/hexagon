@@ -27,6 +27,14 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Tutorials',
+      items: [
+        'tutorial-extras/building-custom-tool',
+        'tutorial-extras/multi-environment-workflow',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Guides',
       items: [
         'guides/creating-a-cli',
@@ -34,6 +42,7 @@ const sidebars: SidebarsConfig = {
         'guides/environments',
         'guides/theming',
         'guides/plugins',
+        'guides/troubleshooting',
       ],
     },
     {
@@ -42,22 +51,31 @@ const sidebars: SidebarsConfig = {
       items: [
         'advanced/custom-tools',
         'advanced/prompting',
+        'advanced/action-execution',
         'advanced/hooks',
         'advanced/internationalization',
       ],
     },
   ],
-  
+
   // API Reference sidebar
   apiSidebar: [
     'api',
     {
       type: 'category',
-      label: 'Core',
+      label: 'Configuration',
       items: [
         'api/cli',
         'api/tool',
         'api/env',
+        'api/runtime-options',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Built-in Features',
+      items: [
+        'api/built-in-tools',
       ],
     },
     {
