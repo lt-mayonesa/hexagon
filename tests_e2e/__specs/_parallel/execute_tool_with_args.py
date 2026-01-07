@@ -1,5 +1,6 @@
-import pytest
 import sys
+
+import pytest
 
 from tests_e2e.framework.assertions import assert_file_has_contents
 from tests_e2e.framework.hexagon_spec import as_a_user
@@ -184,7 +185,7 @@ def test_show_tool_help_text_when_tool_has_args(help_arg):
         .run_hexagon(["p-m-args", help_arg])
         .then_output_should_be(
             [
-                "usage: p-m-args [-h] [--car-brand [CAR_BRAND]] [--car-model [CAR_MODEL]] [--car-years [CAR_YEARS ...]] [name] [age] [nationality]",
+                "usage: p-m-args [-h] [--car-brand CAR_BRAND] [--car-model CAR_MODEL] [--car-years [CAR_YEARS ...]] [name] [age] [nationality]",
                 "",
                 "Python Module Script With Args",
                 "",
@@ -196,15 +197,15 @@ def test_show_tool_help_text_when_tool_has_args(help_arg):
                 "options:",
                 "  -h, --help            show this help message and exit",
                 (
-                    "  --car-brand, -cb [CAR_BRAND]"
+                    "  --car-brand, -cb CAR_BRAND"
                     if sys.version_info >= (3, 13)
-                    else "  --car-brand [CAR_BRAND], -cb [CAR_BRAND]"
+                    else "  --car-brand CAR_BRAND, -cb CAR_BRAND"
                 ),
                 "                        the car's brand (default: Ford)",
                 (
-                    "  --car-model, -cm [CAR_MODEL]"
+                    "  --car-model, -cm CAR_MODEL"
                     if sys.version_info >= (3, 13)
-                    else "  --car-model [CAR_MODEL], -cm [CAR_MODEL]"
+                    else "  --car-model CAR_MODEL, -cm CAR_MODEL"
                 ),
                 "                        the car's model (default: None)",
                 (

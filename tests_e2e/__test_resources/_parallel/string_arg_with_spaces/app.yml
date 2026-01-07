@@ -1,0 +1,11 @@
+cli:
+  name: test-cli
+  command: test-cli
+  custom_tools_dir: .
+
+envs: []
+
+tools:
+  - name: test-string-arg
+    type: shell
+    action: string_arg_tool
