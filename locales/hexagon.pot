@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-30 16:15+0100\n"
+"POT-Creation-Date: 2026-01-07 12:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -241,7 +241,7 @@ msgstr ""
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:182
+#: hexagon/runtime/configuration.py:177
 msgid "msg.domain.configuration.update_cli_long_name"
 msgstr ""
 
@@ -290,11 +290,11 @@ msgstr ""
 msgid "error.support.execute.errors.invalid_argument"
 msgstr ""
 
-#: hexagon/runtime/execute/errors.py:141
+#: hexagon/runtime/execute/errors.py:143
 msgid "error.support.execute.errors.python_dependency_error"
 msgstr ""
 
-#: hexagon/runtime/execute/errors.py:147
+#: hexagon/runtime/execute/errors.py:149
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr ""
 
@@ -346,11 +346,11 @@ msgstr ""
 msgid "error.support.wax.invalid_tool"
 msgstr ""
 
-#: hexagon/runtime/yaml.py:42
+#: hexagon/runtime/yaml.py:44
 msgid "error.support.yaml.invalid_yaml"
 msgstr ""
 
-#: hexagon/runtime/yaml.py:50
+#: hexagon/runtime/yaml.py:52
 msgid "error.support.yaml.error_at"
 msgstr ""
 

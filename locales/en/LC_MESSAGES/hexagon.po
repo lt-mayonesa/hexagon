@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-30 16:15+0100\n"
+"POT-Creation-Date: 2026-01-07 12:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -253,7 +253,7 @@ msgstr "Replay Last Command"
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr "Create A New Tool"
 
-#: hexagon/runtime/configuration.py:182
+#: hexagon/runtime/configuration.py:177
 msgid "msg.domain.configuration.update_cli_long_name"
 msgstr "Update CLI"
 
@@ -305,11 +305,11 @@ msgstr "There where {count} error(s) in your input for tool {tool}"
 msgid "error.support.execute.errors.invalid_argument"
 msgstr "✗ [bold]{loc}[/bold] -> {message}"
 
-#: hexagon/runtime/execute/errors.py:141
+#: hexagon/runtime/execute/errors.py:143
 msgid "error.support.execute.errors.python_dependency_error"
 msgstr "Your custom action seems to have a module dependency error"
 
-#: hexagon/runtime/execute/errors.py:147
+#: hexagon/runtime/execute/errors.py:149
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr "Execution of tool {action} failed"
 
@@ -363,11 +363,11 @@ msgstr "Hi, which tool would you like to use today?"
 msgid "error.support.wax.invalid_tool"
 msgstr "Please select a valid tool"
 
-#: hexagon/runtime/yaml.py:42
+#: hexagon/runtime/yaml.py:44
 msgid "error.support.yaml.invalid_yaml"
 msgstr "There were {errors_length} error(s) in your YAML file: {yaml_path}"
 
-#: hexagon/runtime/yaml.py:50
+#: hexagon/runtime/yaml.py:52
 msgid "error.support.yaml.error_at"
 msgstr "✗ [u][bold]{loc}[/bold] -> {message}[/u]"
 

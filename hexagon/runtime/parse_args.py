@@ -1,7 +1,7 @@
 import argparse
+import sys
 from typing import List, get_origin
 
-import sys
 from pydantic import TypeAdapter
 from pydantic_core import PydanticUndefined
 
@@ -40,6 +40,9 @@ def parse_cli_args(args=None, model=CliArgs, **kwargs):
     if __no_known_args(known_args) and __arg_any_of(extra, ["-v", "--version"]):
         return model(show_version=True, total_args=0)
 
+    if model == CliArgs:
+        known_args, extra = __fix_misattributed_env_value(known_args, args, extra)
+
     count, extra_args = __guess_optional_keys(extra)
     data = vars(known_args)
     data.update(
@@ -59,6 +62,34 @@ def __arg_any_of(args, values):
 
 def __no_known_args(known_args):
     return all(not x for x in known_args.__dict__.values())
+
+
+def __fix_misattributed_env_value(known_args, args, extra):
+    """
+    Fixes argparse incorrectly assigning values to 'env' that belong to unknown options.
+
+    When parsing ['tool', '--unknown', 'value'], argparse may consume 'value' as env
+    instead of leaving it for the unknown option. This function detects and corrects
+    that by checking if env's value immediately follows an unknown flag in the args.
+    """
+    if not (hasattr(known_args, "env") and known_args.env and extra):
+        return known_args, extra
+
+    if not any(e.startswith(ARGUMENT_KEY_PREFIX) for e in extra):
+        return known_args, extra
+
+    env_value = known_args.env
+    try:
+        env_index = args.index(env_value)
+        if env_index > 0:
+            preceding_arg = args[env_index - 1]
+            if preceding_arg.startswith(ARGUMENT_KEY_PREFIX) and preceding_arg in extra:
+                extra = extra + [env_value]
+                known_args.env = None
+    except ValueError:
+        pass
+
+    return known_args, extra
 
 
 def init_arg_parser(
@@ -104,29 +135,29 @@ def __add_parser_argument(parser, field: FieldReference):
 
 def __config_base_on_type(field):
     """
-    Return a tuple with the number of arguments and the action to be taken
-    if the field is any kind of collection, nargs should be * and the action is "extend"
-    :param field:
-    :return:
+    Determines argparse configuration based on field type.
+
+    Returns: (nargs, action, const, is_bool)
+
+    Configuration by field type:
+    - OptionalArg + collection: nargs="*", action="extend"
+    - OptionalArg + bool: nargs="?", action="store"
+    - OptionalArg + scalar: nargs=None, action="store"
+    - PositionalArg: nargs="?", action="store"
     """
     field_type, _, __ = field_type_information(field)
     constant_default = "true" if field_type.is_bool else None
-    return (
-        (
-            "*",
-            "extend",
-            constant_default,
-            field_type.is_bool,
-        )
-        if get_origin(field.annotation) == OptionalArg
-        and should_support_multiple_args(field)
-        else (
-            "?",
-            "store",
-            constant_default,
-            field_type.is_bool,
-        )
-    )
+    is_optional_arg = get_origin(field.annotation) == OptionalArg
+    is_collection = should_support_multiple_args(field)
+
+    if is_optional_arg and is_collection:
+        return "*", "extend", constant_default, field_type.is_bool
+    elif is_optional_arg and field_type.is_bool:
+        return "?", "store", constant_default, field_type.is_bool
+    elif is_optional_arg:
+        return None, "store", constant_default, field_type.is_bool
+    else:
+        return "?", "store", constant_default, field_type.is_bool
 
 
 def __guess_optional_keys(extra: List[str]):

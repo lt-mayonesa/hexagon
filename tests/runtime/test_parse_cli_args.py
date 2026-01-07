@@ -329,3 +329,81 @@ def test_parse_cli_args_handles_boolean_flags_correctly(cli_args, expected):
 
     assert actual.proceed.value is expected
     assert actual.extra_args is None
+
+
+def test_parse_cli_args_handles_string_with_spaces_using_space_separator():
+    """
+    Given command line arguments with a space-separated optional string argument containing spaces.
+    When parse_cli_args is called with ['--query', 'SELECT * FROM table'].
+    Then query.value should equal the full string 'SELECT * FROM table'.
+    """
+
+    class Args(ToolArgs):
+        query: OptionalArg[str] = None
+
+    actual = parse_cli_args(["--query", "SELECT * FROM table"], Args)
+
+    assert actual.query.value == "SELECT * FROM table"
+    assert actual.extra_args is None
+
+
+def test_parse_cli_args_handles_string_with_spaces_using_equals_separator():
+    """
+    Given command line arguments with an equals-separated optional string argument containing spaces.
+    When parse_cli_args is called with ['--query=SELECT * FROM table'].
+    Then query.value should equal the full string 'SELECT * FROM table'.
+    """
+
+    class Args(ToolArgs):
+        query: OptionalArg[str] = None
+
+    actual = parse_cli_args(["--query=SELECT * FROM table"], Args)
+
+    assert actual.query.value == "SELECT * FROM table"
+    assert actual.extra_args is None
+
+
+@pytest.mark.parametrize(
+    "cli_args,expected_query",
+    [
+        (["--query", ""], ""),
+        (["--query", "  spaced  "], "  spaced  "),
+        (["--query", "a  b  c"], "a  b  c"),
+        (
+            ["--query", "SELECT * FROM table WHERE name='O''Brien'"],
+            "SELECT * FROM table WHERE name='O''Brien'",
+        ),
+        (["--query", "line1\nline2"], "line1\nline2"),
+    ],
+)
+def test_parse_cli_args_handles_string_edge_cases(cli_args, expected_query):
+    """
+    Given command line arguments with edge case string values.
+    When parse_cli_args is called with an OptionalArg[str] parameter.
+    Then the full string value should be preserved exactly as provided.
+    """
+
+    class Args(ToolArgs):
+        query: OptionalArg[str] = None
+
+    actual = parse_cli_args(cli_args, Args)
+
+    assert actual.query.value == expected_query
+    assert actual.extra_args is None
+
+
+def test_parse_cli_args_correctly_handles_env_after_unknown_option():
+    """
+    Given command line arguments ['some-tool', '--query', 'SELECT * FROM table', 'dev'].
+    When parse_cli_args is called with CliArgs first.
+    Then tool.value should be 'some-tool'.
+    And raw_extra_args should contain ['--query', 'SELECT * FROM table', 'dev'].
+    And the 'SELECT * FROM table' value should not be incorrectly consumed as env.
+    """
+    actual = parse_cli_args(["some-tool", "--query", "SELECT * FROM table", "dev"])
+
+    assert actual.tool.value == "some-tool"
+    assert actual.env is None
+    assert "--query" in actual.raw_extra_args
+    assert "SELECT * FROM table" in actual.raw_extra_args
+    assert "dev" in actual.raw_extra_args
