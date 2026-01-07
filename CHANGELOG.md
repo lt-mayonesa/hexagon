@@ -1,6 +1,56 @@
 # CHANGELOG
 
 
+## v0.64.2 (2026-01-07)
+
+### Bug Fixes
+
+- **arg-parse**: Handle string arguments with spaces
+  ([#222](https://github.com/lt-mayonesa/hexagon/pull/222),
+  [`9891f56`](https://github.com/lt-mayonesa/hexagon/commit/9891f5698e040f60549e07affc4c8022343a4f04))
+
+### Build System
+
+- Upgrade minimum Python to 3.10, development to 3.12
+  ([`eedfdf7`](https://github.com/lt-mayonesa/hexagon/commit/eedfdf7be0c4d893ecaa4ebfdd86714c1c1c0e28))
+
+### Chores
+
+- **cli**: Allow multiple actions per PR
+  ([`0aa92aa`](https://github.com/lt-mayonesa/hexagon/commit/0aa92aae6f26b79ef19dca9868fe3ac2c0db25c4))
+
+- **deps**: Bump pydantic from 2.11.7 to 2.12.5
+  ([#214](https://github.com/lt-mayonesa/hexagon/pull/214),
+  [`d06527c`](https://github.com/lt-mayonesa/hexagon/commit/d06527c1692f5a103bc04f428937b81c6ee70efc))
+
+- **deps-dev**: Bump flake8-bugbear from 24.12.12 to 25.11.29
+  ([#212](https://github.com/lt-mayonesa/hexagon/pull/212),
+  [`b891274`](https://github.com/lt-mayonesa/hexagon/commit/b89127409c691e61252c4689ae5ba2bf04b381a1))
+
+- **lint**: Noqa on B042
+  ([`1d3e4d3`](https://github.com/lt-mayonesa/hexagon/commit/1d3e4d3f465743692e86c6564db094868d00cabf))
+
+### Documentation
+
+- Add blog entries
+  ([`25872d1`](https://github.com/lt-mayonesa/hexagon/commit/25872d1a6c5ccdfaf9e14f1aefada469d5b53a34))
+
+- Fix all critical API inaccuracies
+  ([`8812396`](https://github.com/lt-mayonesa/hexagon/commit/8812396b437c3adb9cdff2a04bc10cba6b65580d))
+
+- Fix build
+  ([`ba5c9a5`](https://github.com/lt-mayonesa/hexagon/commit/ba5c9a5ed58a6b66b9afc5b5a5305909d054fa4c))
+
+- Improve overall docs
+  ([`bb2242a`](https://github.com/lt-mayonesa/hexagon/commit/bb2242a1be3f8ab7eb44ddc320fbf0d06b91f7e8))
+
+- Update incorrect docs
+  ([`bf0cf6a`](https://github.com/lt-mayonesa/hexagon/commit/bf0cf6aeb4d1e646d135095fe034ebd863af1c51))
+
+- Update navigation menu
+  ([`78b9748`](https://github.com/lt-mayonesa/hexagon/commit/78b9748305d18c7794d9dbf92e271b6619d23c5e))
+
+
 ## v0.64.1 (2026-01-01)
 
 ### Bug Fixes
