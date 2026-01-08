@@ -73,7 +73,7 @@ def test_install_cli(request):
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
             f'HEXAGON_CONFIG_FILE={os.path.realpath(os.path.join(test_folder_path, "config.yml"))} \\\n'
-            f"hexagon $@"
+            f'hexagon "$@"'
         )  # noqa: E501
 
 
@@ -109,7 +109,7 @@ def test_install_cli_and_provide_bins_path(request):
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
             f'HEXAGON_CONFIG_FILE={os.path.realpath(os.path.join(test_folder_path, "config.yml"))} \\\n'
-            f"hexagon $@"
+            f'hexagon "$@"'
         )  # noqa: E501
 
 
@@ -141,7 +141,7 @@ def test_install_cli_pass_arguments(request):
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
             f'HEXAGON_CONFIG_FILE={os.path.realpath(os.path.join(test_folder_path, "config.yml"))} \\\n'
-            f"hexagon $@"
+            f'hexagon "$@"'
         )  # noqa: E501
 
 
@@ -169,7 +169,7 @@ def test_install_cli_change_entrypoint_shell(request):
             file.read() == "#!/bin/sh\n"
             "# file created by hexagon\n"
             f'HEXAGON_CONFIG_FILE={os.path.realpath(os.path.join(test_folder_path, "config_entrypoint_shell.yml"))} \\\n'
-            f"hexagon $@"
+            f'hexagon "$@"'
         )  # noqa: E501
 
 
@@ -197,7 +197,7 @@ def test_install_cli_change_entrypoint_pre_command(request):
             file.read() == "#!/bin/bash\n"
             "# file created by hexagon\n"
             f'HEXAGON_CONFIG_FILE={os.path.realpath(os.path.join(test_folder_path, "config_entrypoint_pre_command.yml"))} \\\n'
-            f"pipenv run hexagon $@"
+            f'pipenv run hexagon "$@"'
         )  # noqa: E501
 
 
@@ -227,7 +227,7 @@ def test_install_cli_change_entrypoint_environ(request):
             f'HEXAGON_CONFIG_FILE={os.path.realpath(os.path.join(test_folder_path, "config_entrypoint_environ.yml"))} \\\n'
             "MY_TEST_ENV_VAR=test \\\n"
             "ANOTHER_TEST_ENV_VAR=123 \\\n"
-            f"hexagon $@"
+            f'hexagon "$@"'
         )  # noqa: E501
 
 
@@ -256,7 +256,7 @@ def test_install_cli_change_entrypoint_complete(request):
             "# file created by hexagon\n"
             f'HEXAGON_CONFIG_FILE={os.path.realpath(os.path.join(test_folder_path, "config_entrypoint_complete.yml"))} \\\n'
             "ANOTHER_TEST_ENV_VAR=123 \\\n"
-            f"poetry run hexagon $@"
+            f'poetry run hexagon "$@"'
         )  # noqa: E501
 
 
