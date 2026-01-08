@@ -66,7 +66,7 @@ def main(_tool, _env, _env_args, cli_args: Args):
                         f"{key}={value} \\"
                         for key, value in cli.entrypoint.environ.items()
                     ],
-                    f"{pre_command}hexagon $@",
+                    f'{pre_command}hexagon "$@"',
                 ]
             )
         )

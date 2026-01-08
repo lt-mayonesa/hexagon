@@ -184,7 +184,7 @@ def __args_to_key_vals(extra):
         current, next_ = extra[i], extra[i + 1] if i + 1 < len(extra) else None
         if current.startswith(ARGUMENT_KEY_PREFIX):
             if "=" in current:
-                key, value = current[2:].split("=")
+                key, value = current[2:].split("=", 1)
                 result.append({key: __adapt_value_type(value)})
                 i += 1
             elif not next_ or next_.startswith(ARGUMENT_KEY_PREFIX):

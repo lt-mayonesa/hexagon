@@ -407,3 +407,44 @@ def test_parse_cli_args_correctly_handles_env_after_unknown_option():
     assert "--query" in actual.raw_extra_args
     assert "SELECT * FROM table" in actual.raw_extra_args
     assert "dev" in actual.raw_extra_args
+
+
+def test_parse_cli_args_handles_equals_in_value_with_equals_separator():
+    """
+    Given command line arguments with equals-separated value containing equals signs.
+    When parse_cli_args is called with ['--query=SELECT * FROM t WHERE x = y'].
+    Then query.value should equal the full string including the equals signs.
+    """
+
+    class Args(ToolArgs):
+        query: OptionalArg[str] = None
+
+    actual = parse_cli_args(["--query=SELECT * FROM t WHERE x = y"], Args)
+
+    assert actual.query.value == "SELECT * FROM t WHERE x = y"
+    assert actual.extra_args is None
+
+
+def test_parse_cli_args_handles_complex_sql_query_with_multiple_equals_and_quotes():
+    """
+    Given command line arguments with a complex SQL query containing multiple equals signs, quotes, and special characters.
+    When parse_cli_args is called with a real-world SQL query.
+    Then the entire query should be preserved exactly as provided.
+    """
+
+    class Args(ToolArgs):
+        query: OptionalArg[str] = None
+
+    complex_query = (
+        "SELECT COUNT(DISTINCT u.email) as active_users, "
+        "SUM(p.amount) as total_revenue, "
+        "STRING_AGG(DISTINCT u.country, ', ' ORDER BY u.country) as countries "
+        "FROM users u "
+        "JOIN purchases p ON u.id = p.user_id "
+        "WHERE u.status = 'active' AND p.amount > 100 AND p.created_at >= '2024-01-01';"
+    )
+
+    actual = parse_cli_args([f"--query={complex_query}"], Args)
+
+    assert actual.query.value == complex_query
+    assert actual.extra_args is None
