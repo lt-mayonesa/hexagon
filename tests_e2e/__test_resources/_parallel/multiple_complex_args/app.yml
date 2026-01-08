@@ -1,0 +1,12 @@
+cli:
+  name: test-cli-multiple-args
+  command: hexagon-test-multiple
+
+custom_tools_dir: .
+
+envs: []
+
+tools:
+  - name: test-multiple-args
+    type: misc
+    action: multi_arg_tool
