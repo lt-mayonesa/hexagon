@@ -1,6 +1,15 @@
 # CHANGELOG
 
 
+## v0.64.3 (2026-01-08)
+
+### Bug Fixes
+
+- **arg-parse**: Handle complex string arguments
+  ([#224](https://github.com/lt-mayonesa/hexagon/pull/224),
+  [`467042d`](https://github.com/lt-mayonesa/hexagon/commit/467042dc9912fc684ff7eeeace5aa373f66b12f3))
+
+
 ## v0.64.2 (2026-01-07)
 
 ### Bug Fixes
