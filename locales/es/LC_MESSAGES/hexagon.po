@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-10 20:50+0100\n"
+"POT-Creation-Date: 2026-01-11 00:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -220,43 +220,43 @@ msgstr "Actualizando"
 msgid "msg.support.update.hexagon.updated"
 msgstr "[green]🗸[/green] Se actualizó a la última versión"
 
-#: hexagon/runtime/configuration.py:69
+#: hexagon/runtime/configuration.py:30
 msgid "error.domain.configuration.group_tool_file_not_found"
 msgstr "No se encontró el archivo {config_file_path}"
 
-#: hexagon/runtime/configuration.py:164
+#: hexagon/runtime/configuration.py:125
 msgid "msg.domain.configuration.install_cli_long_name"
 msgstr "Instalar CLI"
 
-#: hexagon/runtime/configuration.py:165
+#: hexagon/runtime/configuration.py:126
 msgid "msg.domain.configuration.install_cli_description"
 msgstr "Instalar una CLI desde un archivo YAML de configuración."
 
-#: hexagon/runtime/configuration.py:171
+#: hexagon/runtime/configuration.py:132
 msgid "msg.domain.configuration.get_json_schema_long_name"
 msgstr "Crear una nueva herramienta"
 
-#: hexagon/runtime/configuration.py:173
+#: hexagon/runtime/configuration.py:134
 msgid "msg.domain.configuration.get_json_schema_description"
 msgstr "Instalar una CLI desde un archivo YAML de configuración."
 
-#: hexagon/runtime/configuration.py:180
+#: hexagon/runtime/configuration.py:141
 msgid "msg.domain.configuration.update_hexagon_long_name"
 msgstr "Actualizar Hexagon"
 
-#: hexagon/runtime/configuration.py:197
+#: hexagon/runtime/configuration.py:158
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr "Guardar el último comando ejecutado como shell alias"
 
-#: hexagon/runtime/configuration.py:204
+#: hexagon/runtime/configuration.py:165
 msgid "msg.domain.configuration.replay_long_name"
 msgstr "Repetir el último comando ejecutado"
 
-#: hexagon/runtime/configuration.py:210
+#: hexagon/runtime/configuration.py:171
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr "Crear una nueva herramienta"
 
-#: hexagon/runtime/configuration.py:216
+#: hexagon/runtime/configuration.py:177
 msgid "msg.domain.configuration.update_cli_long_name"
 msgstr "Actualizar CLI"
 

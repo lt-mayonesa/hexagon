@@ -46,7 +46,7 @@ class FunctionTool(Tool):
 
 
 class GroupTool(Tool):
-    tools: Union[str, List[Union[ActionTool, GroupTool]]]
+    tools: Union[str, List[Union[ActionTool, GroupTool, FunctionTool]]]
 
 
 GroupTool.model_rebuild()

@@ -10,6 +10,7 @@ from pydantic_settings import (
     InitSettingsSource,
 )
 
+from hexagon.domain.tool_display import ToolDisplayMode
 from hexagon.runtime.yaml import YamlValidationError
 
 
@@ -64,7 +65,7 @@ class Options(BaseSettings):
     hints_disabled: Optional[bool] = False
     keymap: KeymapOptions = KeymapOptions()
     cwd_tools_disabled: Optional[bool] = False
-    flat_tool_display: Optional[bool] = False
+    tool_display_mode: Optional[ToolDisplayMode] = ToolDisplayMode.tree
 
     @classmethod
     def settings_customise_sources(
