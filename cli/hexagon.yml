@@ -49,7 +49,7 @@ tools:
     type: shell
     action: |
       hex build-i18n
-      pipenv run pytest -svv tests_e2e/
+      pipenv run pytest -n auto -svv tests_e2e/
 
   - name: build
     alias: b
