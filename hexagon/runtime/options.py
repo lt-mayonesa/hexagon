@@ -93,4 +93,4 @@ def get_options(init_settings: dict) -> Options:
 
 def update_options(opt: Options) -> Options:
     _save_settings_to_source(opt)
-    return opt.copy()
+    return opt.model_copy()
