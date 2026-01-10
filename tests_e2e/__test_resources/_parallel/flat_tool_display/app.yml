@@ -2,7 +2,7 @@ cli:
   name: Test
   command: hexagon-test
   options:
-    flat_tool_display: true
+    tool_display_mode: list
 
 tools:
   - name: tool1

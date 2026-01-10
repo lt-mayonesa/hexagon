@@ -3,9 +3,9 @@ from tests_e2e.framework.hexagon_spec import as_a_user
 
 def test_flat_tool_display_shows_all_tools_in_single_list():
     """
-    Given a CLI with flat_tool_display option enabled.
+    Given a CLI with tool_display_mode set to flat.
     When hexagon is run.
-    Then all tools from groups are shown in a flat list with prefixed names.
+    Then all tools from groups are shown in a flat list with tool names first.
     """
     (
         as_a_user(__file__)
@@ -13,12 +13,13 @@ def test_flat_tool_display_shows_all_tools_in_single_list():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "10/10",
+                "11/11",  # 6 tools + separator + 4 default tools
                 "ƒ Tool 1",
                 "ƒ Tool 2",
-                "ƒ group1 / Tool 3",
-                "⦾ group1 / Tool 4",
-                "ƒ group2 / nested-group / Tool 6",
+                "ƒ Tool 3 [group1]",
+                "⦾ Tool 4 [group1]",
+                "ƒ Tool 5 [group2]",
+                "ƒ Tool 6 [group2 › nested-group]",
             ],
             discard_until_first_match=True,
         )
@@ -30,7 +31,7 @@ def test_flat_tool_display_shows_all_tools_in_single_list():
 
 def test_flat_tool_display_can_execute_nested_tool():
     """
-    Given a CLI with flat_tool_display option enabled.
+    Given a CLI with tool_display_mode set to flat.
     When a tool from a nested group is selected.
     Then the tool executes correctly.
     """
@@ -40,18 +41,19 @@ def test_flat_tool_display_can_execute_nested_tool():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "10/10",
+                "11/11",
             ]
         )
         .arrow_down()  # Move to tool2
-        .arrow_down()  # Move to group1 / tool3
-        .arrow_down()  # Move to group1 / tool4
-        .arrow_down()  # Move to group2 / tool5
-        .arrow_down()  # Move to group2 / nested-group / tool6
+        .arrow_down()  # Move to tool3 [group1]
+        .arrow_down()  # Move to tool4 [group1]
+        .arrow_down()  # Move to separator
+        .arrow_down()  # Move to tool5 [group2]
+        .arrow_down()  # Move to tool6 [group2 › nested-group]
         .enter()
         .then_output_should_be(
             [
-                "group2 / nested-group / Tool 6",
+                "Tool 6 [group2 › nested-group]",
                 "tool6",
             ],
             discard_until_first_match=True,
@@ -62,7 +64,7 @@ def test_flat_tool_display_can_execute_nested_tool():
 
 def test_flat_tool_display_can_select_tool_by_name():
     """
-    Given a CLI with flat_tool_display option enabled.
+    Given a CLI with tool_display_mode set to flat.
     When a tool is selected by name using CLI args.
     Then the tool executes without showing the menu.
     """
