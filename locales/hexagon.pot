@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-07 12:20+0100\n"
+"POT-Creation-Date: 2026-01-10 20:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -205,43 +205,43 @@ msgstr ""
 msgid "msg.support.update.hexagon.updated"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:30
+#: hexagon/runtime/configuration.py:69
 msgid "error.domain.configuration.group_tool_file_not_found"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:125
+#: hexagon/runtime/configuration.py:164
 msgid "msg.domain.configuration.install_cli_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:126
+#: hexagon/runtime/configuration.py:165
 msgid "msg.domain.configuration.install_cli_description"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:132
+#: hexagon/runtime/configuration.py:171
 msgid "msg.domain.configuration.get_json_schema_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:134
+#: hexagon/runtime/configuration.py:173
 msgid "msg.domain.configuration.get_json_schema_description"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:141
+#: hexagon/runtime/configuration.py:180
 msgid "msg.domain.configuration.update_hexagon_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:158
+#: hexagon/runtime/configuration.py:197
 msgid "msg.domain.configuration.save_alias_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:165
+#: hexagon/runtime/configuration.py:204
 msgid "msg.domain.configuration.replay_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:171
+#: hexagon/runtime/configuration.py:210
 msgid "msg.domain.configuration.create_tool_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:177
+#: hexagon/runtime/configuration.py:216
 msgid "msg.domain.configuration.update_cli_long_name"
 msgstr ""
 

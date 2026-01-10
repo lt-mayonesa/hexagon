@@ -13,8 +13,47 @@ from hexagon.domain.tool import (
     Tool,
     ToolType,
     ToolGroupConfigFile,
+    FunctionTool,
 )
 from hexagon.runtime.yaml import write_file, read_file, load_model
+
+
+def flatten_tools(tools: List[Tool], prefix: str = "") -> List[Tool]:
+    """
+    Recursively flatten a tree of tools into a single list.
+    Group tools become prefixed names like 'group tool 1 / tool 3'.
+    The original tool name is preserved in the alias if no alias exists,
+    allowing selection by original name from CLI args.
+    """
+    flattened = []
+    for tool in tools:
+        if tool.type == ToolType.group:
+            # Add group prefix to all nested tools
+            group_prefix = f"{prefix}{tool.name} / " if tool.name else prefix
+            flattened.extend(flatten_tools(tool.tools, group_prefix))
+        else:
+            # Clone the tool with prefixed name if there's a prefix
+            if prefix:
+                tool_dict = tool.model_dump()
+                original_name = tool.name
+                tool_dict["name"] = f"{prefix}{tool.name}"
+                # Keep long_name and description from original
+                if tool.long_name:
+                    tool_dict["long_name"] = f"{prefix}{tool.long_name}"
+                # Preserve alias if it exists, otherwise use original name for CLI selection
+                if not tool.alias:
+                    tool_dict["alias"] = original_name
+                # Create new tool instance with modified name
+                if isinstance(tool, ActionTool):
+                    flattened_tool = ActionTool(**tool_dict)
+                elif isinstance(tool, FunctionTool):
+                    flattened_tool = FunctionTool(**tool_dict)
+                else:
+                    flattened_tool = Tool(**tool_dict)
+                flattened.append(flattened_tool)
+            else:
+                flattened.append(tool)
+    return flattened
 
 
 class ConfigFile(BaseModel):
