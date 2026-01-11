@@ -10,10 +10,33 @@ from hexagon.domain.tool import (
 )
 from hexagon.runtime.execute.action import execute_action
 from hexagon.runtime.parse_args import parse_cli_args
+from hexagon.runtime.presentation.tool_display import prepare_tools_for_display
 from hexagon.runtime.wax import search_by_name_or_alias, select_env, select_tool
 from hexagon.support.hooks import HexagonHooks
 from hexagon.support.input.args import CliArgs
 from hexagon.support.tracer import tracer
+
+
+def _build_tools_to_trace(tool: Tool, group_ref: int):
+    """
+    Build a collection of tools to trace (group path + final tool).
+
+    Returns a list of tuples (key, name, alias) for each tool in the path.
+    """
+
+    def _trace_tuple(gr: int, t) -> tuple[str, str, str | None]:
+        return f"tool_{gr}", t.name, t.alias
+
+    if not tool.group_path:
+        return [_trace_tuple(group_ref, tool)]
+
+    group_trace = [
+        _trace_tuple(group_ref + i, group_item)
+        for i, group_item in enumerate(tool.group_path)
+    ]
+    selected_tool = [_trace_tuple(group_ref + len(tool.group_path), tool)]
+
+    return group_trace + selected_tool
 
 
 def select_and_execute_tool(
@@ -22,13 +45,15 @@ def select_and_execute_tool(
     cli_args: CliArgs,
     group_ref=0,
 ) -> List[str]:
-    tool = search_by_name_or_alias(tools, cli_args.tool and cli_args.tool.value)
-    env = search_by_name_or_alias(envs, cli_args.env and cli_args.env.value)
-    # FIXME: validate selected env: if tool has envs defined and env is None -> should fail
+    display_tools = prepare_tools_for_display(tools)
 
-    tool = select_tool(tools, tool)
+    tool = search_by_name_or_alias(display_tools, cli_args.tool and cli_args.tool.value)
+    env = search_by_name_or_alias(envs, cli_args.env and cli_args.env.value)
+
+    tool = select_tool(display_tools, tool)
     if tool.traced:
-        tracer().tracing(f"tool_{group_ref}", tool.name, value_alias=tool.alias)
+        for key, name, alias in _build_tools_to_trace(tool, group_ref):
+            tracer().tracing(key, name, value_alias=alias)
 
     env, tool_env_params = select_env(envs, tool.envs, env)
 
@@ -101,7 +126,7 @@ def _execute_group_tool(
         # so yaml validations don't show that tool.function is required
         # noinspection PyTypeChecker
         tools = tool.tools + [
-            FunctionTool(**GO_BACK_TOOL.dict(), function=go_back),
+            FunctionTool(**GO_BACK_TOOL.model_dump(), function=go_back),
         ]
 
     return select_and_execute_tool(

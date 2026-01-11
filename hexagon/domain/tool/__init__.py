@@ -1,9 +1,18 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from enum import Enum
 from typing import Callable, List, Optional, Dict, Any, Union
 
 from pydantic import BaseModel
+
+
+@dataclass
+class GroupPathItem:
+    """Represents a group in a tool's ancestry path."""
+
+    name: str
+    alias: Optional[str] = None
 
 
 class ToolType(str, Enum):
@@ -25,6 +34,7 @@ class Tool(BaseModel):
     description: Optional[str] = None
     envs: Optional[Dict[str, Any]] = None
     traced: Optional[bool] = True
+    group_path: Optional[List[GroupPathItem]] = None
 
     class Config:
         use_enum_values = True
