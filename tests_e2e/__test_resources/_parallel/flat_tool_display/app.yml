@@ -29,6 +29,13 @@ tools:
         type: web
         action: echo "tool4"
 
+      - name: tool-with-env
+        long_name: Tool With Env
+        type: shell
+        action: echo "tool-with-env"
+        envs:
+          dev: echo "dev"
+
   - name: group2
     long_name: Group 2
     type: group
