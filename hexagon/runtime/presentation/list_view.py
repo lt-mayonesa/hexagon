@@ -45,6 +45,27 @@ def _create_tool_with_group_context(
         return Tool(**tool_dict)
 
 
+def _add_group_tools(
+    tool, group_prefix: str, current_path: List[GroupPathItem], flattened: List[Tool]
+):
+    """Add all tools from a group to the flattened list with context."""
+    for child_tool in tool.tools:
+        if child_tool.type == ToolType.separator:
+            continue
+        elif child_tool.type == ToolType.group:
+            nested_tools = list_view(
+                [child_tool],
+                group_prefix,
+                is_top_level=False,
+                group_path_items=current_path,
+            )
+            flattened.extend(nested_tools)
+        else:
+            flattened.append(
+                _create_tool_with_group_context(child_tool, group_prefix, current_path)
+            )
+
+
 def list_view(
     tools: List[Tool],
     prefix: str = "",
@@ -52,19 +73,16 @@ def list_view(
     group_path_items: List[GroupPathItem] = None,
 ) -> List[Tool]:
     """
-    Transform a tree of tools into a flat list for display.
+    Transform tools for flat list display while preserving navigation structure.
 
-    The display long_name shows group context in brackets: 'Tool Three [group1]'
-    but the actual tool name and alias remain unchanged to preserve CLI commands.
+    Unlike tree view, this shows all tools (including from nested groups) in one list,
+    but keeps the group structure intact for navigation. This means:
+    - Groups are still present and navigable (e.g., 'cli group1' works)
+    - Tools show their group context in brackets: 'Tool Three [group1]'
+    - CLI commands work the same in both tree and list views
 
-    This ensures that 'cli group1 tool3' works the same in both tree and list views.
-
-    - Tool names and aliases are preserved (no changes to command structure)
-    - long_name is modified to show group context for display
-    - group_path metadata stores structured group ancestry for tracing
-    - Separators inside nested groups are filtered out
-    - Visual separators are added between top-level groups
-    - Empty groups contribute nothing to the output
+    The key difference from tree view is purely visual - all tools are shown
+    in one flat list instead of nested menus.
     """
     if group_path_items is None:
         group_path_items = []
@@ -84,20 +102,21 @@ def list_view(
             ):
                 flattened.append(Separator)
 
-            group_prefix = f"{prefix}{tool.name} › " if tool.name else prefix
+            # Add the group tool itself (for navigation)
+            if prefix:
+                flattened.append(
+                    _create_tool_with_group_context(tool, prefix, group_path_items)
+                )
+            else:
+                flattened.append(tool)
+
+            group_prefix = f"{prefix}{tool.long_name or tool.name} › "
             current_path = group_path_items + [
                 GroupPathItem(name=tool.name, alias=tool.alias)
             ]
-            group_tools = list_view(
-                tool.tools,
-                group_prefix,
-                is_top_level=False,
-                group_path_items=current_path,
-            )
-            flattened.extend(group_tools)
 
-            if group_tools:
-                previous_was_group = True
+            _add_group_tools(tool, group_prefix, current_path, flattened)
+            previous_was_group = True
         else:
             if prefix:
                 flattened.append(
