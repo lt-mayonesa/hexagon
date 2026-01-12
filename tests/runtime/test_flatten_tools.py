@@ -34,8 +34,8 @@ def test_list_view_with_single_level_group():
     """
     Given a list of tools with one group containing nested tools.
     When list_view is called.
-    Then nested tools show tool name first with group context in brackets.
-    And original names are preserved as aliases for CLI selection.
+    Then the group is included in the result for navigation.
+    And nested tools show tool name first with group context in brackets.
     And group_path contains the parent group information.
     """
     tools = [
@@ -52,24 +52,27 @@ def test_list_view_with_single_level_group():
 
     result = list_view(tools)
 
-    assert len(result) == 3
+    assert len(result) == 4  # tool1 + group1 + tool2 + tool3
     assert result[0].name == "tool1"
     assert result[0].group_path is None
-    assert result[1].name == "tool2"
-    assert result[1].long_name == "tool2 [group1]"
-    assert result[1].alias is None
-    assert result[1].group_path == [GroupPathItem(name="group1", alias=None)]
-    assert result[2].name == "tool3"
-    assert result[2].long_name == "tool3 [group1]"
+    assert result[1].name == "group1"
+    assert result[1].type == ToolType.group
+    assert result[2].name == "tool2"
+    assert result[2].long_name == "tool2 [group1]"
     assert result[2].alias is None
     assert result[2].group_path == [GroupPathItem(name="group1", alias=None)]
+    assert result[3].name == "tool3"
+    assert result[3].long_name == "tool3 [group1]"
+    assert result[3].alias is None
+    assert result[3].group_path == [GroupPathItem(name="group1", alias=None)]
 
 
 def test_list_view_with_nested_groups():
     """
     Given a list of tools with nested groups (group within a group).
     When list_view is called.
-    Then nested tools show tool name with full group path in brackets.
+    Then both groups and their tools are included.
+    And nested tools show tool name with full group path in brackets.
     And group_path contains all ancestor groups.
     """
     tools = [
@@ -93,21 +96,27 @@ def test_list_view_with_nested_groups():
 
     result = list_view(tools)
 
-    assert len(result) == 4
+    # tool1, group1, tool2, group2, tool3, tool4
+    assert len(result) == 6
     assert result[0].name == "tool1"
     assert result[0].group_path is None
-    assert result[1].name == "tool2"
-    assert result[1].long_name == "tool2 [group1]"
-    assert result[1].group_path == [GroupPathItem(name="group1", alias=None)]
-    assert result[2].name == "tool3"
-    assert result[2].long_name == "tool3 [group1 › group2]"
-    assert result[2].group_path == [
+    assert result[1].name == "group1"
+    assert result[1].type == ToolType.group
+    assert result[2].name == "tool2"
+    assert result[2].long_name == "tool2 [group1]"
+    assert result[2].group_path == [GroupPathItem(name="group1", alias=None)]
+    assert result[3].name == "group2"
+    assert result[3].long_name == "group2 [group1]"
+    assert result[3].group_path == [GroupPathItem(name="group1", alias=None)]
+    assert result[4].name == "tool3"
+    assert result[4].long_name == "tool3 [group1 › group2]"
+    assert result[4].group_path == [
         GroupPathItem(name="group1", alias=None),
         GroupPathItem(name="group2", alias=None),
     ]
-    assert result[3].name == "tool4"
-    assert result[3].long_name == "tool4 [group1 › group2]"
-    assert result[3].group_path == [
+    assert result[5].name == "tool4"
+    assert result[5].long_name == "tool4 [group1 › group2]"
+    assert result[5].group_path == [
         GroupPathItem(name="group1", alias=None),
         GroupPathItem(name="group2", alias=None),
     ]
@@ -136,9 +145,10 @@ def test_list_view_preserves_long_name():
 
     result = list_view(tools)
 
-    assert len(result) == 1
-    assert result[0].name == "tool1"
-    assert result[0].long_name == "Tool One [group1]"
+    assert len(result) == 2  # group1 + tool1
+    assert result[0].name == "group1"
+    assert result[1].name == "tool1"
+    assert result[1].long_name == "Tool One [group1]"
 
 
 def test_list_view_preserves_description():
@@ -164,17 +174,18 @@ def test_list_view_preserves_description():
 
     result = list_view(tools)
 
-    assert len(result) == 1
-    assert result[0].name == "tool1"
-    assert result[0].long_name == "tool1 [group1]"
-    assert result[0].description == "A test tool"
+    assert len(result) == 2  # group1 + tool1
+    assert result[0].name == "group1"
+    assert result[1].name == "tool1"
+    assert result[1].long_name == "tool1 [group1]"
+    assert result[1].description == "A test tool"
 
 
 def test_list_view_multiple_groups_same_level():
     """
     Given multiple groups at the same level.
     When list_view is called.
-    Then tools from each group are properly formatted.
+    Then groups and tools from each group are included.
     And a separator is added between groups.
     """
     tools = [
@@ -196,12 +207,15 @@ def test_list_view_multiple_groups_same_level():
 
     result = list_view(tools)
 
-    assert len(result) == 3
-    assert result[0].name == "tool1"
-    assert result[0].long_name == "tool1 [group1]"
-    assert result[1].type == ToolType.separator
-    assert result[2].name == "tool2"
-    assert result[2].long_name == "tool2 [group2]"
+    # group1, tool1, separator, group2, tool2
+    assert len(result) == 5
+    assert result[0].name == "group1"
+    assert result[1].name == "tool1"
+    assert result[1].long_name == "tool1 [group1]"
+    assert result[2].type == ToolType.separator
+    assert result[3].name == "group2"
+    assert result[4].name == "tool2"
+    assert result[4].long_name == "tool2 [group2]"
 
 
 def test_list_view_preserves_existing_alias():
@@ -227,10 +241,11 @@ def test_list_view_preserves_existing_alias():
 
     result = list_view(tools)
 
-    assert len(result) == 1
-    assert result[0].name == "tool1"
-    assert result[0].long_name == "tool1 [group1]"
-    assert result[0].alias == "t1"
+    assert len(result) == 2  # group1 + tool1
+    assert result[0].name == "group1"
+    assert result[1].name == "tool1"
+    assert result[1].long_name == "tool1 [group1]"
+    assert result[1].alias == "t1"
 
 
 def test_list_view_filters_separators_in_groups():
@@ -256,20 +271,23 @@ def test_list_view_filters_separators_in_groups():
 
     result = list_view(tools)
 
-    assert len(result) == 4
+    # tool1, separator, group1, tool2, tool3
+    assert len(result) == 5
     assert result[0].name == "tool1"
     assert result[1].type == ToolType.separator
-    assert result[2].name == "tool2"
-    assert result[2].long_name == "tool2 [group1]"
-    assert result[3].name == "tool3"
-    assert result[3].long_name == "tool3 [group1]"
+    assert result[2].name == "group1"
+    assert result[3].name == "tool2"
+    assert result[3].long_name == "tool2 [group1]"
+    assert result[4].name == "tool3"
+    assert result[4].long_name == "tool3 [group1]"
 
 
 def test_list_view_handles_triple_nesting():
     """
     Given a deeply nested group structure (3+ levels).
     When list_view is called.
-    Then the full group path is shown in brackets.
+    Then all groups and the tool are included.
+    And the full group path is shown in brackets for the tool.
     """
     tools = [
         GroupTool(
@@ -297,17 +315,24 @@ def test_list_view_handles_triple_nesting():
 
     result = list_view(tools)
 
-    assert len(result) == 1
-    assert result[0].name == "tool1"
-    assert result[0].long_name == "tool1 [group1 › group2 › group3]"
-    assert result[0].alias is None
+    # group1, group2, group3, tool1
+    assert len(result) == 4
+    assert result[0].name == "group1"
+    assert result[1].name == "group2"
+    assert result[1].long_name == "group2 [group1]"
+    assert result[2].name == "group3"
+    assert result[2].long_name == "group3 [group1 › group2]"
+    assert result[3].name == "tool1"
+    assert result[3].long_name == "tool1 [group1 › group2 › group3]"
+    assert result[3].alias is None
 
 
 def test_list_view_handles_empty_groups():
     """
     Given a group with no tools.
     When list_view is called.
-    Then no tools or separators are added for that group.
+    Then the empty group is still included (for consistency).
+    But it contributes no child tools.
     """
     tools = [
         ActionTool(name="tool1", type=ToolType.misc, action="echo 1"),
@@ -321,17 +346,20 @@ def test_list_view_handles_empty_groups():
 
     result = list_view(tools)
 
-    assert len(result) == 2
+    # tool1, empty-group, tool2
+    assert len(result) == 3
     assert result[0].name == "tool1"
-    assert result[1].name == "tool2"
+    assert result[1].name == "empty-group"
+    assert result[1].type == ToolType.group
+    assert result[2].name == "tool2"
 
 
 def test_list_view_handles_group_with_only_separators():
     """
     Given a group containing only separators.
     When list_view is called.
-    Then the group contributes no tools to the flattened list.
-    And no separator is added for the empty group.
+    Then the group is included but contributes no tools.
+    And separators inside groups are filtered out.
     """
     tools = [
         ActionTool(name="tool1", type=ToolType.misc, action="echo 1"),
@@ -345,9 +373,12 @@ def test_list_view_handles_group_with_only_separators():
 
     result = list_view(tools)
 
-    assert len(result) == 2
+    # tool1, separator-group, tool2
+    assert len(result) == 3
     assert result[0].name == "tool1"
-    assert result[1].name == "tool2"
+    assert result[1].name == "separator-group"
+    assert result[1].type == ToolType.group
+    assert result[2].name == "tool2"
 
 
 def test_list_view_preserves_function_tool():
@@ -376,12 +407,13 @@ def test_list_view_preserves_function_tool():
 
     result = list_view(tools)
 
-    assert len(result) == 1
-    assert result[0].name == "func-tool"
-    assert result[0].long_name == "func-tool [group1]"
-    assert isinstance(result[0], FunctionTool)
-    assert result[0].function == dummy_function
-    assert result[0].function() == "test"
+    assert len(result) == 2  # group1 + func-tool
+    assert result[0].name == "group1"
+    assert result[1].name == "func-tool"
+    assert result[1].long_name == "func-tool [group1]"
+    assert isinstance(result[1], FunctionTool)
+    assert result[1].function == dummy_function
+    assert result[1].function() == "test"
 
 
 def test_list_view_preserves_icon():
@@ -409,11 +441,13 @@ def test_list_view_preserves_icon():
 
     result = list_view(tools)
 
-    assert len(result) == 1
-    assert result[0].name == "migrate"
-    assert result[0].long_name == "migrate [database]"
-    assert result[0].icon == "⚡"
-    assert result[0].group_path == [GroupPathItem(name="database", alias=None)]
+    assert len(result) == 2  # database + migrate
+    assert result[0].name == "database"
+    assert result[0].icon == "🗄️"
+    assert result[1].name == "migrate"
+    assert result[1].long_name == "migrate [database]"
+    assert result[1].icon == "⚡"
+    assert result[1].group_path == [GroupPathItem(name="database", alias=None)]
 
 
 def test_list_view_captures_group_aliases_in_path():
@@ -440,7 +474,9 @@ def test_list_view_captures_group_aliases_in_path():
 
     result = list_view(tools)
 
-    assert len(result) == 1
-    assert result[0].name == "group-command"
-    assert result[0].alias == "gc"
-    assert result[0].group_path == [GroupPathItem(name="tool-group", alias="tg")]
+    assert len(result) == 2  # tool-group + group-command
+    assert result[0].name == "tool-group"
+    assert result[0].alias == "tg"
+    assert result[1].name == "group-command"
+    assert result[1].alias == "gc"
+    assert result[1].group_path == [GroupPathItem(name="tool-group", alias="tg")]

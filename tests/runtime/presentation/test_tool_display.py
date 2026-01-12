@@ -48,31 +48,36 @@ def test_prepare_tools_for_display_returns_flattened_list_when_display_mode_is_l
     When the tool_display_mode is set to 'list'.
     Then prepare_tools_for_display should return a flattened list view.
     And nested tools should have group context in their long_name.
+    And groups should be included for navigation.
     """
     # Set display mode to list
     monkeypatch.setattr(options, "tool_display_mode", ToolDisplayMode.list)
 
     result = tool_display.prepare_tools_for_display(sample_tools)
 
-    # Should have 4 tools: 2 top-level + 2 from group1
-    assert len(result) == 4
+    # Should have 5 tools: 2 top-level + group1 + 2 from group1
+    assert len(result) == 5
 
     # Top-level tools should be unchanged
     assert result[0].name == "top-tool-1"
     assert result[0].long_name is None  # No group context for top-level
 
+    # Group should be included
+    assert result[1].name == "group1"
+    assert result[1].type == ToolType.group
+
     # Nested tools should have group context
-    assert result[1].name == "nested-tool-1"
-    assert result[1].long_name == "nested-tool-1 [group1]"
-    assert result[1].group_path is not None
-    assert len(result[1].group_path) == 1
-    assert result[1].group_path[0].name == "group1"
+    assert result[2].name == "nested-tool-1"
+    assert result[2].long_name == "nested-tool-1 [group1]"
+    assert result[2].group_path is not None
+    assert len(result[2].group_path) == 1
+    assert result[2].group_path[0].name == "group1"
 
-    assert result[2].name == "nested-tool-2"
-    assert result[2].long_name == "nested-tool-2 [group1]"
+    assert result[3].name == "nested-tool-2"
+    assert result[3].long_name == "nested-tool-2 [group1]"
 
-    assert result[3].name == "top-tool-2"
-    assert result[3].long_name is None
+    assert result[4].name == "top-tool-2"
+    assert result[4].long_name is None
 
 
 def test_prepare_tools_for_display_preserves_tool_names_and_aliases(
@@ -89,17 +94,21 @@ def test_prepare_tools_for_display_preserves_tool_names_and_aliases(
     result = tool_display.prepare_tools_for_display(sample_tools)
 
     # Check that names and aliases are preserved
+    # Result: top-tool-1, group1, nested-tool-1, nested-tool-2, top-tool-2
     assert result[0].name == "top-tool-1"
     assert result[0].alias == "t1"
 
-    assert result[1].name == "nested-tool-1"
-    assert result[1].alias == "n1"
+    assert result[1].name == "group1"
+    assert result[1].alias is None
 
-    assert result[2].name == "nested-tool-2"
-    assert result[2].alias == "n2"
+    assert result[2].name == "nested-tool-1"
+    assert result[2].alias == "n1"
 
-    assert result[3].name == "top-tool-2"
-    assert result[3].alias == "t2"
+    assert result[3].name == "nested-tool-2"
+    assert result[3].alias == "n2"
+
+    assert result[4].name == "top-tool-2"
+    assert result[4].alias == "t2"
 
 
 def test_prepare_tools_for_display_handles_empty_tool_list():
