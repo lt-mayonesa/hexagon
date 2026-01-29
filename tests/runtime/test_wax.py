@@ -229,12 +229,14 @@ def test_flatten_tools_for_list_view_with_nested_groups():
 
     flattened, context = wax.flatten_tools_for_list_view(tools)
 
-    # Should have: ops (group), deploy, run
-    assert len(flattened) == 3
+    # Should have: ops (group), deploy, migrations (nested group), run
+    assert len(flattened) == 4
     assert flattened[0].name == "ops"
     assert flattened[1].name == "deploy"
-    assert flattened[2].name == "run"
+    assert flattened[2].name == "migrations"
+    assert flattened[3].name == "run"
 
     # Context should show full path
     assert context["deploy"] == "Operations"
+    assert context["migrations"] == "Operations"
     assert context["run"] == "Operations → Migrations"

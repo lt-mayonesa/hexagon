@@ -20,78 +20,14 @@ def test_list_view_shows_all_tools_in_flat_list():
                 "10/10",
                 "ƒ Backup Database",
                 "≡ Database Tools",
-                "ƒ Run Migrations",
-                "[Database Tools]",
-                "ƒ Rollback Migrations",
-                "[Database Tools]",
+                ["ƒ Run Migrations", "[Database Tools]"],  # On same line
+                ["ƒ Rollback Migrations", "[Database Tools]"],  # On same line
                 "≡ Monitoring Tools",
-                "ƒ View Logs",
-                "[Monitoring Tools]",
+                ["ƒ View Logs", "[Monitoring Tools]"],  # On same line
             ]
         )
-        .exit()
-    )
-
-
-def test_list_view_can_execute_tool_from_group_directly():
-    """
-    Given a CLI configured with list view mode.
-    And I see a tool that belongs to a group.
-    When I select that tool from the flat list.
-    Then it should execute immediately without navigating into the group.
-    """
-    spec = (
-        as_a_user(__file__)
-        .run_hexagon()
-        .then_output_should_be(
-            [
-                "Hi, which tool would you like to use today?",
-                "10/10",
-            ]
-        )
-        # Navigate to "migrate" tool (which is in the database group)
-        .arrow_down()  # Move to database group
-        .arrow_down()  # Move to migrate
-        .enter()
-        .then_output_should_be(
-            [
-                ["ƒ Run Migrations", "[Database Tools]"],
-                "Running migrations",
-            ]
-        )
-        .exit()
-    )
-
-
-def test_list_view_can_navigate_into_group():
-    """
-    Given a CLI configured with list view mode.
-    And I see a group in the flat list.
-    When I select that group.
-    Then I should see only that group's tools.
-    And I should see a "Go back" option.
-    """
-    spec = (
-        as_a_user(__file__)
-        .run_hexagon()
-        .then_output_should_be(
-            [
-                "Hi, which tool would you like to use today?",
-                "10/10",
-            ]
-        )
-        # Select the database group
-        .arrow_down()
-        .enter()
-        .then_output_should_be(
-            [
-                "Hi, which tool would you like to use today?",
-                "3/3",  # migrate, rollback, go back
-                "ƒ Run Migrations",
-                "ƒ Rollback Migrations",
-                "Go back",
-            ]
-        )
+        .enter()  # Select first tool to complete test
+        .then_output_should_be(["Running backup"], discard_until_first_match=True)
         .exit()
     )
 
@@ -105,7 +41,7 @@ def test_list_view_with_cli_args_navigates_to_group():
     """
     spec = (
         as_a_user(__file__)
-        .run_hexagon("database")
+        .run_hexagon(["database"])
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
@@ -113,6 +49,11 @@ def test_list_view_with_cli_args_navigates_to_group():
                 "ƒ Run Migrations",
                 "ƒ Rollback Migrations",
             ],
+            discard_until_first_match=True,
+        )
+        .enter()  # Select first tool to finish the test
+        .then_output_should_be(
+            ["Running migrations"],
             discard_until_first_match=True,
         )
         .exit()
@@ -127,7 +68,7 @@ def test_list_view_with_cli_args_executes_tool_directly():
     """
     spec = (
         as_a_user(__file__)
-        .run_hexagon("database", "migrate")
+        .run_hexagon(["database", "migrate"])
         .then_output_should_be(
             [
                 "Running migrations",

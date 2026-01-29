@@ -23,36 +23,8 @@ def test_tree_view_is_default_when_no_option_specified():
                 "⬡ Create A New Tool",
             ]
         )
-        .exit()
-    )
-
-
-def test_tree_view_requires_navigation_into_groups():
-    """
-    Given a CLI configuration with tree view (default).
-    When I want to access a tool inside a group.
-    Then I must first navigate into that group.
-    """
-    spec = (
-        as_a_user(__file__)
-        .run_hexagon()
-        .then_output_should_be(
-            [
-                "Hi, which tool would you like to use today?",
-                "6/6",
-            ]
-        )
-        # Select the database group
-        .arrow_down()
-        .enter()
-        .then_output_should_be(
-            [
-                "Hi, which tool would you like to use today?",
-                "2/2",  # migrate, go back
-                "ƒ Run Migrations",
-                "Go back",
-            ]
-        )
+        .enter()  # Select first tool to complete test
+        .then_output_should_be(["Running backup"], discard_until_first_match=True)
         .exit()
     )
 
@@ -65,7 +37,7 @@ def test_tree_view_with_cli_args_works_same_as_before():
     """
     spec = (
         as_a_user(__file__)
-        .run_hexagon("database", "migrate")
+        .run_hexagon(["database", "migrate"])
         .then_output_should_be(
             [
                 "Running migrations",

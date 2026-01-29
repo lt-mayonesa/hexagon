@@ -2,7 +2,7 @@ from typing import Union, List, Tuple
 
 from hexagon.domain.env import Env
 from hexagon.domain.hooks.wax import Selection, SelectionType
-from hexagon.domain.tool import Tool, Separator, GroupTool, ToolType
+from hexagon.domain.tool import Tool, Separator, GroupTool
 from hexagon.support.hooks import HexagonHooks
 from hexagon.support.input.prompt import prompt
 
@@ -77,15 +77,13 @@ def flatten_tools_for_list_view(
                 tool.tools, current_path
             )
 
-            # Add nested tools (but not nested groups, they're already in nested_tools)
-            for nested_tool in nested_tools:
-                if nested_tool.type != ToolType.group:
-                    flattened.append(nested_tool)
+            # Add all nested tools and groups
+            flattened.extend(nested_tools)
 
             # Merge context maps
             group_context.update(nested_context)
 
-            # Add context for nested tools
+            # Add context for direct children only
             for nested_tool in tool.tools:
                 path_str = " → ".join(current_path)
                 group_context[nested_tool.name] = path_str
