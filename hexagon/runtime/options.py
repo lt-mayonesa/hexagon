@@ -53,6 +53,7 @@ class Options(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="HEXAGON_")
 
     theme: Optional[str] = "default"
+    tool_display_mode: Optional[str] = "tree"
     update_time_between_checks: Optional[datetime.timedelta] = datetime.timedelta(
         days=1
     )

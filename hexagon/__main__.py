@@ -46,7 +46,9 @@ def main():
         else:
             check_for_cli_updates()
 
-        result = select_and_execute_tool(tools, envs, args)
+        result = select_and_execute_tool(
+            tools, envs, args, use_list_view=(options.tool_display_mode == "list")
+        )
 
         log.gap()
 

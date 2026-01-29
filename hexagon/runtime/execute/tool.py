@@ -21,12 +21,13 @@ def select_and_execute_tool(
     envs: List[Env],
     cli_args: CliArgs,
     group_ref=0,
+    use_list_view: bool = False,
 ) -> List[str]:
     tool = search_by_name_or_alias(tools, cli_args.tool and cli_args.tool.value)
     env = search_by_name_or_alias(envs, cli_args.env and cli_args.env.value)
     # FIXME: validate selected env: if tool has envs defined and env is None -> should fail
 
-    tool = select_tool(tools, tool)
+    tool = select_tool(tools, tool, use_list_view=use_list_view and group_ref == 0)
     if tool.traced:
         tracer().tracing(f"tool_{group_ref}", tool.name, value_alias=tool.alias)
 
@@ -52,6 +53,7 @@ def select_and_execute_tool(
                 )
                 else None
             ),
+            use_list_view=use_list_view,
         )
 
     if isinstance(tool, FunctionTool):
@@ -88,6 +90,7 @@ def _execute_group_tool(
     cli_args: CliArgs,
     ref,
     previous: Tuple = None,
+    use_list_view: bool = False,
 ) -> List[str]:
     tools = tool.tools
 
@@ -95,7 +98,7 @@ def _execute_group_tool(
 
         def go_back():
             tracer().remove_last()
-            select_and_execute_tool(*previous)
+            select_and_execute_tool(*previous, use_list_view=use_list_view)
 
         # FunctionTool is not set as a type GroupTool.tools
         # so yaml validations don't show that tool.function is required
@@ -111,4 +114,5 @@ def _execute_group_tool(
             ([cli_args.env.value] if cli_args.env else []) + cli_args.raw_extra_args
         ),
         group_ref=ref,
+        use_list_view=use_list_view,
     )
