@@ -185,7 +185,7 @@ Plugins extend hexagon functionality:
 ### Test Structure
 
 **Naming:**
-- File pattern: `tests/*.py` or `tests_e2e/__specs/*.py`
+- File pattern: `tests/**/*.py` or `tests_e2e/__specs/*.py`
 - Function format: `test_[function_being_tested]_[current_scenario_under_test]()`
 - Use BDD-style docstrings:
   ```python
