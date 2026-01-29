@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-07 12:20+0100\n"
+"POT-Creation-Date: 2026-01-29 13:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,7 +56,7 @@ msgstr ""
 "¿Te gustaría agregar una descripción? (va a ser mostrada junto con el nombre/"
 "comando)"
 
-#: hexagon/actions/internal/create_new_tool.py:37
+#: hexagon/actions/internal/create_new_tool.py:36
 msgid "action.actions.internal.create_new_tool.input_custom_tools_path"
 msgstr ""
 "¿Donde te gustaría que se encuentre? (puede ser un directorio relativo al "
@@ -69,10 +69,10 @@ msgstr "¿Qué nombre va a tener tu acción?"
 #: hexagon/actions/internal/create_new_tool.py:86
 msgid "msg.actions.internal.create_new_tool.custom_tools_dir_not_set"
 msgstr ""
-"[magenta]Tu CLI no tiene un directorio de herramientas "
-"(cli.custom_tools_dir).[/magenta]"
+"[magenta]Tu CLI no tiene un directorio de herramientas (cli."
+"custom_tools_dir).[/magenta]"
 
-#: hexagon/actions/internal/create_new_tool.py:95
+#: hexagon/actions/internal/create_new_tool.py:94
 msgid "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
 msgstr "relativo a este archivo"
 
@@ -236,7 +236,7 @@ msgstr "Instalar una CLI desde un archivo YAML de configuración."
 msgid "msg.domain.configuration.get_json_schema_long_name"
 msgstr "Crear una nueva herramienta"
 
-#: hexagon/runtime/configuration.py:134
+#: hexagon/runtime/configuration.py:133
 msgid "msg.domain.configuration.get_json_schema_description"
 msgstr "Instalar una CLI desde un archivo YAML de configuración."
 
@@ -318,15 +318,15 @@ msgstr "Tu acción parece tener un error de dependencias de módulos"
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr "La ejecución de {action} falló"
 
-#: hexagon/runtime/execute/tool.py:77
+#: hexagon/runtime/execute/tool.py:79
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr "Atrás"
 
-#: hexagon/runtime/execute/tool.py:79
+#: hexagon/runtime/execute/tool.py:81
 msgid "msg.support.execute.tool.go_back_description"
 msgstr "Volver al menú anterior"
 
-#: hexagon/runtime/execute/tool.py:80
+#: hexagon/runtime/execute/tool.py:82
 msgid "icon.global.go_back"
 msgstr "↩"
 
@@ -352,19 +352,19 @@ msgstr ""
 "Hubo un error de git accediendo al remote del repositorio de tu CLI, hay "
 "varias opciones y origin no está presente."
 
-#: hexagon/runtime/wax.py:57
+#: hexagon/runtime/wax.py:107
 msgid "action.support.wax.select_environment"
 msgstr "¿Para qué entorno?"
 
-#: hexagon/runtime/wax.py:62
+#: hexagon/runtime/wax.py:112
 msgid "error.support.wax.invalid_environment"
 msgstr "Por favor, selecciona un entorno valido"
 
-#: hexagon/runtime/wax.py:79
+#: hexagon/runtime/wax.py:135
 msgid "action.support.wax.select_tool"
 msgstr "Hola ¿qué herramienta te gustaría usar hoy?"
 
-#: hexagon/runtime/wax.py:82
+#: hexagon/runtime/wax.py:140
 msgid "error.support.wax.invalid_tool"
 msgstr "Por favor, selecciona una herramienta valida"
 

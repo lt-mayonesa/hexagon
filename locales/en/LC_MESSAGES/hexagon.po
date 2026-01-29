@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-07 12:20+0100\n"
+"POT-Creation-Date: 2026-01-29 13:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,7 +56,7 @@ msgstr ""
 "Would you like to add a description? (this will be displayed along side "
 "command/long_name)"
 
-#: hexagon/actions/internal/create_new_tool.py:37
+#: hexagon/actions/internal/create_new_tool.py:36
 msgid "action.actions.internal.create_new_tool.input_custom_tools_path"
 msgstr ""
 "Where would you like it to be? (can be absolute path or relative to YAML. "
@@ -70,7 +70,7 @@ msgstr "What name would you like to give your new action?"
 msgid "msg.actions.internal.create_new_tool.custom_tools_dir_not_set"
 msgstr "[magenta]Your CLI does not have a custom tools dir.[/magenta]"
 
-#: hexagon/actions/internal/create_new_tool.py:95
+#: hexagon/actions/internal/create_new_tool.py:94
 msgid "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
 msgstr "relative to this file"
 
@@ -231,7 +231,7 @@ msgstr "Install a custom project CLI from a YAML file."
 msgid "msg.domain.configuration.get_json_schema_long_name"
 msgstr "Get JSON Schema"
 
-#: hexagon/runtime/configuration.py:134
+#: hexagon/runtime/configuration.py:133
 msgid "msg.domain.configuration.get_json_schema_description"
 msgstr ""
 "Generate JSON Schema for hexagon config file (app.yml). Which can be "
@@ -313,15 +313,15 @@ msgstr "Your custom action seems to have a module dependency error"
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr "Execution of tool {action} failed"
 
-#: hexagon/runtime/execute/tool.py:77
+#: hexagon/runtime/execute/tool.py:79
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr "Go back"
 
-#: hexagon/runtime/execute/tool.py:79
+#: hexagon/runtime/execute/tool.py:81
 msgid "msg.support.execute.tool.go_back_description"
 msgstr "Go back to the previous menu"
 
-#: hexagon/runtime/execute/tool.py:80
+#: hexagon/runtime/execute/tool.py:82
 msgid "icon.global.go_back"
 msgstr "↩"
 
@@ -347,19 +347,19 @@ msgstr ""
 "Couldn't get the remote name from your cli's repository, too many choices "
 "and origin is not present"
 
-#: hexagon/runtime/wax.py:57
+#: hexagon/runtime/wax.py:107
 msgid "action.support.wax.select_environment"
 msgstr "On which environment?"
 
-#: hexagon/runtime/wax.py:62
+#: hexagon/runtime/wax.py:112
 msgid "error.support.wax.invalid_environment"
 msgstr "Please select a valid environment"
 
-#: hexagon/runtime/wax.py:79
+#: hexagon/runtime/wax.py:135
 msgid "action.support.wax.select_tool"
 msgstr "Hi, which tool would you like to use today?"
 
-#: hexagon/runtime/wax.py:82
+#: hexagon/runtime/wax.py:140
 msgid "error.support.wax.invalid_tool"
 msgstr "Please select a valid tool"
 

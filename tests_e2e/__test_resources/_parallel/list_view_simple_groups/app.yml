@@ -1,0 +1,36 @@
+cli:
+  name: Test List View
+  command: hexagon-test-list
+  options:
+    tool_display_mode: list
+
+envs: []
+
+tools:
+  - name: backup
+    type: shell
+    action: echo "Running backup"
+    long_name: Backup Database
+
+  - name: database
+    type: group
+    long_name: Database Tools
+    tools:
+      - name: migrate
+        type: shell
+        action: echo "Running migrations"
+        long_name: Run Migrations
+      
+      - name: rollback
+        type: shell
+        action: echo "Rolling back"
+        long_name: Rollback Migrations
+
+  - name: monitoring
+    type: group
+    long_name: Monitoring Tools
+    tools:
+      - name: logs
+        type: shell
+        action: echo "Showing logs"
+        long_name: View Logs

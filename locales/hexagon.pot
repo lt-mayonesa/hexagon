@@ -1,21 +1,19 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR ORGANIZATION
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-07 12:20+0100\n"
+"POT-Creation-Date: 2026-01-29 13:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
 
 #: hexagon/__main__.py:44
 msgid "msg.main.first_time_intro"
@@ -53,7 +51,7 @@ msgstr ""
 msgid "action.actions.internal.create_new_tool.input_description"
 msgstr ""
 
-#: hexagon/actions/internal/create_new_tool.py:37
+#: hexagon/actions/internal/create_new_tool.py:36
 msgid "action.actions.internal.create_new_tool.input_custom_tools_path"
 msgstr ""
 
@@ -65,7 +63,7 @@ msgstr ""
 msgid "msg.actions.internal.create_new_tool.custom_tools_dir_not_set"
 msgstr ""
 
-#: hexagon/actions/internal/create_new_tool.py:95
+#: hexagon/actions/internal/create_new_tool.py:94
 msgid "msg.actions.internal.create_new_tool.input_custom_tools_path_comment"
 msgstr ""
 
@@ -221,7 +219,7 @@ msgstr ""
 msgid "msg.domain.configuration.get_json_schema_long_name"
 msgstr ""
 
-#: hexagon/runtime/configuration.py:134
+#: hexagon/runtime/configuration.py:133
 msgid "msg.domain.configuration.get_json_schema_description"
 msgstr ""
 
@@ -298,15 +296,15 @@ msgstr ""
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr ""
 
-#: hexagon/runtime/execute/tool.py:77
+#: hexagon/runtime/execute/tool.py:79
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr ""
 
-#: hexagon/runtime/execute/tool.py:79
+#: hexagon/runtime/execute/tool.py:81
 msgid "msg.support.execute.tool.go_back_description"
 msgstr ""
 
-#: hexagon/runtime/execute/tool.py:80
+#: hexagon/runtime/execute/tool.py:82
 msgid "icon.global.go_back"
 msgstr ""
 
@@ -330,19 +328,19 @@ msgstr ""
 msgid "error.support.cli.git.failed_to_get_remote"
 msgstr ""
 
-#: hexagon/runtime/wax.py:57
+#: hexagon/runtime/wax.py:107
 msgid "action.support.wax.select_environment"
 msgstr ""
 
-#: hexagon/runtime/wax.py:62
+#: hexagon/runtime/wax.py:112
 msgid "error.support.wax.invalid_environment"
 msgstr ""
 
-#: hexagon/runtime/wax.py:79
+#: hexagon/runtime/wax.py:135
 msgid "action.support.wax.select_tool"
 msgstr ""
 
-#: hexagon/runtime/wax.py:82
+#: hexagon/runtime/wax.py:140
 msgid "error.support.wax.invalid_tool"
 msgstr ""
 
@@ -461,3 +459,4 @@ msgstr ""
 #: hexagon/support/tracer.py:103
 msgid "msg.main.tracer.or"
 msgstr ""
+

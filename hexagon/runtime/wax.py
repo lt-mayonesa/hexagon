@@ -29,12 +29,13 @@ def __choices_with_long_name(
         if Separator.name in v.name:
             return "--------------------------------------------------------------------------------"
         else:
-            gap = 60 if v.description else 0
             # Add group context if available
             name_with_context = v.long_name or v.name
             if group_context and hasattr(v, "name") and v.name in group_context:
                 context = group_context[v.name]
                 name_with_context = f"{name_with_context}  [{context}]"
+
+            gap = 60 if v.description else 0
             return f"{classifier(v) + name_with_context: <{gap}}{v.description or ''}"
 
     return [{"value": each.name, "name": build_display(each)} for each in choices]

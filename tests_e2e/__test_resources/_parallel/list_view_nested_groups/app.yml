@@ -1,0 +1,31 @@
+cli:
+  name: Test Nested List View
+  command: hexagon-test-nested
+  options:
+    tool_display_mode: list
+
+envs: []
+
+tools:
+  - name: ops
+    type: group
+    long_name: Operations
+    tools:
+      - name: deploy
+        type: shell
+        action: echo "Deploying application"
+        long_name: Deploy Application
+      
+      - name: database
+        type: group
+        long_name: Database Operations
+        tools:
+          - name: backup
+            type: shell
+            action: echo "Backing up database"
+            long_name: Backup Database
+          
+          - name: restore
+            type: shell
+            action: echo "Restoring database"
+            long_name: Restore Database
