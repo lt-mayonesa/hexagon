@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-29 13:00+0000\n"
+"POT-Creation-Date: 2026-01-30 09:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -347,19 +347,19 @@ msgstr ""
 "Couldn't get the remote name from your cli's repository, too many choices "
 "and origin is not present"
 
-#: hexagon/runtime/wax.py:107
+#: hexagon/runtime/wax.py:106
 msgid "action.support.wax.select_environment"
 msgstr "On which environment?"
 
-#: hexagon/runtime/wax.py:112
+#: hexagon/runtime/wax.py:111
 msgid "error.support.wax.invalid_environment"
 msgstr "Please select a valid environment"
 
-#: hexagon/runtime/wax.py:135
+#: hexagon/runtime/wax.py:134
 msgid "action.support.wax.select_tool"
 msgstr "Hi, which tool would you like to use today?"
 
-#: hexagon/runtime/wax.py:140
+#: hexagon/runtime/wax.py:139
 msgid "error.support.wax.invalid_tool"
 msgstr "Please select a valid tool"
 

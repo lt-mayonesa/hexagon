@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2026-01-29 13:00+0000\n"
+"POT-Creation-Date: 2026-01-30 09:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -328,19 +328,19 @@ msgstr ""
 msgid "error.support.cli.git.failed_to_get_remote"
 msgstr ""
 
-#: hexagon/runtime/wax.py:107
+#: hexagon/runtime/wax.py:106
 msgid "action.support.wax.select_environment"
 msgstr ""
 
-#: hexagon/runtime/wax.py:112
+#: hexagon/runtime/wax.py:111
 msgid "error.support.wax.invalid_environment"
 msgstr ""
 
-#: hexagon/runtime/wax.py:135
+#: hexagon/runtime/wax.py:134
 msgid "action.support.wax.select_tool"
 msgstr ""
 
-#: hexagon/runtime/wax.py:140
+#: hexagon/runtime/wax.py:139
 msgid "error.support.wax.invalid_tool"
 msgstr ""
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-29 13:00+0000\n"
+"POT-Creation-Date: 2026-01-30 09:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -352,19 +352,19 @@ msgstr ""
 "Hubo un error de git accediendo al remote del repositorio de tu CLI, hay "
 "varias opciones y origin no está presente."
 
-#: hexagon/runtime/wax.py:107
+#: hexagon/runtime/wax.py:106
 msgid "action.support.wax.select_environment"
 msgstr "¿Para qué entorno?"
 
-#: hexagon/runtime/wax.py:112
+#: hexagon/runtime/wax.py:111
 msgid "error.support.wax.invalid_environment"
 msgstr "Por favor, selecciona un entorno valido"
 
-#: hexagon/runtime/wax.py:135
+#: hexagon/runtime/wax.py:134
 msgid "action.support.wax.select_tool"
 msgstr "Hola ¿qué herramienta te gustaría usar hoy?"
 
-#: hexagon/runtime/wax.py:140
+#: hexagon/runtime/wax.py:139
 msgid "error.support.wax.invalid_tool"
 msgstr "Por favor, selecciona una herramienta valida"
 
