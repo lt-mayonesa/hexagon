@@ -40,6 +40,7 @@ def test_default_options():
         .then_output_should_be(
             [
                 "theme: result_only",
+                "tool_display_mode: tree",
                 "update_time_between_checks: 1 day, 0:00:00",
                 "send_telemetry: False",
                 "disable_dependency_scan: True",
@@ -64,6 +65,7 @@ def test_local_options():
         .then_output_should_be(
             [
                 "theme: result_only",
+                "tool_display_mode: tree",
                 "update_time_between_checks: 2 days, 0:00:00",
                 "send_telemetry: False",
                 "disable_dependency_scan: True",
