@@ -228,12 +228,12 @@
         },
         "pydantic-settings": {
             "hashes": [
-                "sha256:005538ef951e3c2a68e1c08b292b5f2e71490def8589d4221b95dab00dafcfd0",
-                "sha256:fddb9fd99a5b18da837b29710391e945b1e30c135477f484084ee513adb93809"
+                "sha256:95d875514610e8595672800a5c40b073e99e4aae467fa7c8f9c263061ea2e1fe",
+                "sha256:d67b576fff39cd086b595441bf9c75d4193ca9c0ed643b90360694d0f1240246"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.10'",
-            "version": "==2.12.0"
+            "version": "==2.13.0"
         },
         "pygments": {
             "hashes": [
