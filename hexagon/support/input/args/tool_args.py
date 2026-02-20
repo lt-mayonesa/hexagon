@@ -11,7 +11,9 @@ from hexagon.support.input.args.hexagon_args import PositionalArg, OptionalArg
 class ToolArgs(BaseModel):
     model_config = {
         # pydantic config
-        "validate_assignment": True,
+        "validate_assignment": True,  # True so model is re-validated on update: https://docs.pydantic.dev/2.0/usage/model_config/#validate-assignment
+        "validate_by_name": True,  # True so model gets initialized with field name.
+        "validate_by_alias": True,  # True so model gets initialized with field alias if provided.
         # hexagon config
         "trace_on_access": True,
         "trace_on_prompt": True,
