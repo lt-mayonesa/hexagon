@@ -1,6 +1,65 @@
 # CHANGELOG
 
 
+## v0.64.4 (2026-02-20)
+
+### Bug Fixes
+
+- **arg-parse**: Support custom aliases parsing
+  ([#243](https://github.com/lt-mayonesa/hexagon/pull/243),
+  [`9514f4b`](https://github.com/lt-mayonesa/hexagon/commit/9514f4bb3d6891562e878e4e44208e1414d86ff1))
+
+### Chores
+
+- **deps**: Bump lodash ([#230](https://github.com/lt-mayonesa/hexagon/pull/230),
+  [`346f054`](https://github.com/lt-mayonesa/hexagon/commit/346f0543b1a98bc67e418c66c2fa68ef6902b62b))
+
+- **deps**: Bump markdown from 3.10 to 3.10.1
+  ([#228](https://github.com/lt-mayonesa/hexagon/pull/228),
+  [`745a0f6`](https://github.com/lt-mayonesa/hexagon/commit/745a0f620241f9372faf9bfb9699f19f2ec79521))
+
+- **deps**: Bump markdown from 3.10.1 to 3.10.2
+  ([#237](https://github.com/lt-mayonesa/hexagon/pull/237),
+  [`05474ab`](https://github.com/lt-mayonesa/hexagon/commit/05474ab7f0739514461d7957ca6033ddfadb8ec3))
+
+- **deps**: Bump packaging from 25.0 to 26.0
+  ([#229](https://github.com/lt-mayonesa/hexagon/pull/229),
+  [`a00b069`](https://github.com/lt-mayonesa/hexagon/commit/a00b069b55cf0fc42cf0b1605e16a6a98bceeaf2))
+
+- **deps**: Bump pydantic-settings from 2.12.0 to 2.13.0
+  ([#238](https://github.com/lt-mayonesa/hexagon/pull/238),
+  [`025686d`](https://github.com/lt-mayonesa/hexagon/commit/025686d6044fabf3b68112aa376a4a0a44aeae2b))
+
+- **deps**: Bump pydantic-settings from 2.13.0 to 2.13.1
+  ([#240](https://github.com/lt-mayonesa/hexagon/pull/240),
+  [`80c1d71`](https://github.com/lt-mayonesa/hexagon/commit/80c1d71d4ef5b0e2c515bbffe0e7fbef72b0d622))
+
+- **deps**: Bump qs ([#223](https://github.com/lt-mayonesa/hexagon/pull/223),
+  [`5655e64`](https://github.com/lt-mayonesa/hexagon/commit/5655e648608561f4913b07c14733763cadc16dca))
+
+- **deps**: Bump rich from 14.2.0 to 14.3.2
+  ([#235](https://github.com/lt-mayonesa/hexagon/pull/235),
+  [`a043f23`](https://github.com/lt-mayonesa/hexagon/commit/a043f2394f5b6a3b492f24613418dc1fa543a5ed))
+
+- **deps**: Bump rich from 14.3.2 to 14.3.3
+  ([#239](https://github.com/lt-mayonesa/hexagon/pull/239),
+  [`7c7ff6f`](https://github.com/lt-mayonesa/hexagon/commit/7c7ff6f2990d299e2ea5bd6f4591c595f179c5ba))
+
+- **deps**: Bump the npm_and_yarn group across 1 directory with 3 updates
+  ([#242](https://github.com/lt-mayonesa/hexagon/pull/242),
+  [`0d087d9`](https://github.com/lt-mayonesa/hexagon/commit/0d087d913ce45a9d24415e359609770a1dc9c270))
+
+- **deps**: Bump undici ([#226](https://github.com/lt-mayonesa/hexagon/pull/226),
+  [`fb5fe6c`](https://github.com/lt-mayonesa/hexagon/commit/fb5fe6c0bb04c2db2a446d4b2f222af0e43a9450))
+
+- **deps**: Bump webpack ([#236](https://github.com/lt-mayonesa/hexagon/pull/236),
+  [`5b11779`](https://github.com/lt-mayonesa/hexagon/commit/5b117796bc4477229f9abf66303d4fe957a04f92))
+
+- **deps-dev**: Bump black from 25.12.0 to 26.1.0
+  ([#227](https://github.com/lt-mayonesa/hexagon/pull/227),
+  [`0a4a714`](https://github.com/lt-mayonesa/hexagon/commit/0a4a7145c797db7d78fd32eb136a258510ce8412))
+
+
 ## v0.64.3 (2026-01-08)
 
 ### Bug Fixes
