@@ -54,9 +54,7 @@ class YamlValidationError(HexagonError):
                 )
             )
             if self.yaml_content and yaml:
-                (start, line_number, end) = self.__lines_of_error(
-                    loc_, self.yaml_content
-                )
+                start, line_number, end = self.__lines_of_error(loc_, self.yaml_content)
                 logger.example(
                     "\n".join(self.actual_yaml_file.splitlines()[start:end]),
                     syntax="yaml",
