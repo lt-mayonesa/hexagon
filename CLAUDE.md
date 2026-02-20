@@ -549,6 +549,49 @@ Plugins extend hexagon functionality:
   - Translations are in `locales/` directory
   - The `_` function is available as a builtin throughout the codebase
 
+### Pythonic Coding Patterns
+
+**Prefer functional and declarative approaches:**
+
+- **Early returns** for simple cases before complex logic
+- **List comprehensions** over manual list building with append
+- **Helper functions** to extract repeated patterns
+- **Descriptive variable names** for intermediate results
+
+**Example - Building collections:**
+```python
+# ❌ Non-Pythonic: Manual list building
+def build_items(data):
+    items = []
+    if data.group:
+        for i, item in enumerate(data.group):
+            items.append((f"key_{i}", item.name, item.alias))
+        items.append((f"key_{len(data.group)}", data.name, data.alias))
+    else:
+        items.append((f"key_0", data.name, data.alias))
+    return items
+
+# ✅ Pythonic: Early return + list comprehension + helper
+def build_items(data):
+    def item_tuple(index: int, item) -> tuple[str, str, str | None]:
+        return f"key_{index}", item.name, item.alias
+    
+    if not data.group:
+        return [item_tuple(0, data)]
+    
+    group_items = [item_tuple(i, item) for i, item in enumerate(data.group)]
+    selected_item = [item_tuple(len(data.group), data)]
+    
+    return group_items + selected_item
+```
+
+**Key principles:**
+- Extract repeated tuple construction into a helper function
+- Handle simple case first with early return
+- Use list comprehensions for iteration and building
+- Use descriptive names (group_items, selected_item) instead of generic names
+- Concatenate lists with `+` rather than extending mutable lists
+
 ## Key Environment Variables
 
 - `HEXAGON_CONFIG_FILE`: Path to YAML config (default: `app.yaml`)
