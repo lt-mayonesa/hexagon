@@ -1,0 +1,20 @@
+cli:
+  name: Test Tree View Default
+  command: hexagon-test-tree
+
+envs: []
+
+tools:
+  - name: backup
+    type: shell
+    action: echo "Running backup"
+    long_name: Backup Database
+
+  - name: database
+    type: group
+    long_name: Database Tools
+    tools:
+      - name: migrate
+        type: shell
+        action: echo "Running migrations"
+        long_name: Run Migrations
