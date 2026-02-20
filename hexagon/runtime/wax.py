@@ -49,7 +49,7 @@ def select_env(available_envs: List[Env], tool_envs: dict = None, selected: str 
     if "*" in tool_envs:
         return None, tool_envs["*"]
 
-    (env, prompted) = (
+    env, prompted = (
         (selected, False)
         if selected
         else (

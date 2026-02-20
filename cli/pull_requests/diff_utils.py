@@ -8,7 +8,6 @@ should be skipped (lock files, large generated files, etc.).
 
 from typing import Dict, List, Tuple
 
-
 # Lock file patterns to skip when displaying diffs
 LOCK_FILE_PATTERNS = [
     "poetry.lock",
