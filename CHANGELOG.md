@@ -1,6 +1,32 @@
 # CHANGELOG
 
 
+## v0.64.5 (2026-02-28)
+
+### Bug Fixes
+
+- Bump Node.js to 20 in deploy-docs workflow
+  ([#247](https://github.com/lt-mayonesa/hexagon/pull/247),
+  [`7766cdd`](https://github.com/lt-mayonesa/hexagon/commit/7766cdd88fc535742988a7d77717c3753da19efa))
+
+- Update Node.js version to 20 in deploy-docs workflow
+  ([#247](https://github.com/lt-mayonesa/hexagon/pull/247),
+  [`7766cdd`](https://github.com/lt-mayonesa/hexagon/commit/7766cdd88fc535742988a7d77717c3753da19efa))
+
+### Chores
+
+- **deps**: Bump actions/download-artifact from 7 to 8
+  ([#246](https://github.com/lt-mayonesa/hexagon/pull/246),
+  [`43fa548`](https://github.com/lt-mayonesa/hexagon/commit/43fa5488062396ad1ce44817c9d3d27f67663bf1))
+
+- **deps**: Bump actions/upload-artifact from 6 to 7
+  ([#245](https://github.com/lt-mayonesa/hexagon/pull/245),
+  [`dafec12`](https://github.com/lt-mayonesa/hexagon/commit/dafec123cf0e78c0594c35e3b6de50cd132e4698))
+
+- **deps**: Bump ajv ([#244](https://github.com/lt-mayonesa/hexagon/pull/244),
+  [`c57a02f`](https://github.com/lt-mayonesa/hexagon/commit/c57a02f4b8843c0b28be5b2d3bd5408192bba1b4))
+
+
 ## v0.64.4 (2026-02-20)
 
 ### Bug Fixes
