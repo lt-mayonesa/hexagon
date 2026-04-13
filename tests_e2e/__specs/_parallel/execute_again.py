@@ -155,3 +155,31 @@ def test_enum_values_are_printed_not_names():
         )
         .exit()
     )
+
+
+def test_flat_tool_display_execute_again_rendered_properly():
+    (
+        as_a_user(__file__)
+        .run_hexagon(
+            os_env_vars={
+                "HEXAGON_THEME": "no_border",
+                "HEXAGON_TOOL_DISPLAY_MODE": "list",
+            }
+        )
+        # select command-no-alias tool
+        .arrow_down()
+        .arrow_down()
+        .arrow_down()
+        .enter()
+        .then_output_should_be(["group-command-first"], discard_until_first_match=True)
+        .then_output_should_be(
+            [
+                "To run this tool again do:",
+                "hexagon-test tool-group group-command-first",
+                "or:",
+                "hexagon-test tg gcf",
+            ],
+            discard_until_first_match=True,
+        )
+        .exit()
+    )

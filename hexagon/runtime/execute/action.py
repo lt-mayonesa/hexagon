@@ -237,7 +237,7 @@ def __load_module(module: str):
 
 def __call_subprocess(command: str, env: Optional[Env], tool: ActionTool):
     env_vars = os.environ.copy()
-    env_vars[ENVVAR_EXECUTION_TOOL] = tool.model_dump_json()
+    env_vars[ENVVAR_EXECUTION_TOOL] = tool.model_dump_json(exclude={"group_path"})
     if env:
         env_vars[ENVVAR_EXECUTION_ENV] = env.model_dump_json()
     return (

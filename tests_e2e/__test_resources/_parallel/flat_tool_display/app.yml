@@ -1,0 +1,57 @@
+cli:
+  name: Test
+  command: hexagon-test
+  options:
+    tool_display_mode: list
+
+tools:
+  - name: tool1
+    long_name: Tool 1
+    type: shell
+    action: echo "tool1"
+
+  - name: tool2
+    long_name: Tool 2
+    type: shell
+    action: echo "tool2"
+
+  - name: group1
+    long_name: Group 1
+    type: group
+    tools:
+      - name: tool3
+        long_name: Tool 3
+        type: shell
+        action: echo "tool3"
+
+      - name: tool4
+        long_name: Tool 4
+        type: web
+        action: echo "tool4"
+
+      - name: tool-with-env
+        long_name: Tool With Env
+        type: shell
+        action: echo "tool-with-env"
+        envs:
+          dev: echo "dev"
+
+  - name: group2
+    long_name: Group 2
+    type: group
+    tools:
+      - name: tool5
+        long_name: Tool 5
+        type: shell
+        action: echo "tool5"
+
+      - name: nested-group
+        long_name: Nested Group
+        type: group
+        tools:
+          - name: tool6
+            long_name: Tool 6
+            type: shell
+            action: echo "tool6"
+
+envs: []
