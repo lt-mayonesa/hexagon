@@ -149,7 +149,7 @@ def __parse_tool_args(cli_args, env, tool, tool_action_module):
 
 def __args_with_optional_env(cli_args: CliArgs, env: Optional[Env]):
     return (
-        [cli_args.env.value] if not env and cli_args.env else []
+        [cli_args.env.value] if not env and cli_args.env.value else []
     ) + cli_args.raw_extra_args
 
 

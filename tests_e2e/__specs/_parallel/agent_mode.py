@@ -16,18 +16,28 @@ _AGENT_ENV = {"HEXAGON_AGENT_MODE": "true"}
 # ---------------------------------------------------------------------------
 
 
-def test_agent_mode_blocks_tool_selection_prompt():
+def test_agent_mode_blocks_tool_selection_and_lists_available_tools():
     """
     Given HEXAGON_AGENT_MODE=true.
     When hexagon is invoked without specifying a tool.
-    Then it exits with status 1 indicating the prompt cannot be satisfied
-    via CLI arguments (tool selection has no ToolArgs equivalent yet).
+    Then it exits with status 1 naming the 'tool' argument and listing
+    the available tool names as possible values.
     """
     (
         as_a_user(__file__)
         .run_hexagon([], os_env_vars=_AGENT_ENV)
         .then_output_should_be(
-            [["Agent mode is active", "cannot be provided via CLI arguments"]],
+            [
+                [
+                    "Agent mode is active",
+                    "'tool'",
+                    "requires a value but prompt is disabled",
+                ]
+            ],
+            discard_until_first_match=True,
+        )
+        .then_output_should_be(
+            [["Possible values:", "greet", "pick-color"]],
             discard_until_first_match=True,
         )
         .exit(status=1)

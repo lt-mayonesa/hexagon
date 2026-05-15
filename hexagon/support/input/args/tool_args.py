@@ -3,9 +3,12 @@ from typing import Optional, Dict, Union, List, Callable, get_origin
 
 from pydantic import BaseModel
 
-from hexagon.support.input.args import HexagonArg
 from hexagon.support.input.args.field_reference import FieldReference
-from hexagon.support.input.args.hexagon_args import PositionalArg, OptionalArg
+from hexagon.support.input.args.hexagon_args import (
+    HexagonArg,
+    PositionalArg,
+    OptionalArg,
+)
 
 
 class ToolArgs(BaseModel):
@@ -42,9 +45,8 @@ class ToolArgs(BaseModel):
                 )
         super().__init__(**data)
         self.__fields_initialized__ = set(self.model_fields_set)
-        # for each self.model_field that is not a HexagonArg, convert it to a HexagonArg
         for k, v in self.model_fields.items():
-            if k in ["show_help", "extra_args", "raw_extra_args"]:
+            if get_origin(v.annotation) not in (PositionalArg, OptionalArg):
                 continue
             value_ = self.__getattribute__(k, just_get=True)
             if not isinstance(value_, HexagonArg):
@@ -87,6 +89,9 @@ class ToolArgs(BaseModel):
             self.__fields_initialized__.add(key)
 
     def trace(self, field: Union[FieldReference, str], retrace=False):
+        if not self.model_config["trace_on_access"]:
+            return
+
         if not self.__tracer__:
             raise ValueError("Tracer not initialized. Did _with_tracer() get called?")
 
@@ -99,9 +104,6 @@ class ToolArgs(BaseModel):
             raise ValueError(
                 f"field [{field}] not found, must be a field name or a FieldReference instance"
             )
-
-        if not self.model_config["trace_on_access"]:
-            return
 
         value_ = self.__getattribute__(model_field.name, just_get=True)
 
