@@ -3,6 +3,28 @@ from typing import List, Optional
 from hexagon.domain.hexagon_error import HexagonError
 
 
+class AgentModeImpossibleError(HexagonError):
+    """
+    Raised when a prompt that has no CLI argument equivalent is triggered
+    while agent mode is active.
+
+    Unlike :class:`AgentModeBlockedError`, this cannot be resolved by
+    providing additional CLI arguments — the prompt is embedded in the
+    tool's internal logic.  The tool itself must be updated to avoid
+    interactive prompts when running in agent mode.
+    """
+
+    def __init__(self, prompt_message: str) -> None:
+        self.prompt_message = prompt_message
+        super().__init__(self._error_printer)
+
+    def _error_printer(self, logger) -> None:
+        logger.error(
+            f"Agent mode is active: '{self.prompt_message}' "
+            "cannot be provided via CLI arguments."
+        )
+
+
 class AgentModeBlockedError(HexagonError):
     """
     Raised when a prompt is triggered while agent mode is active.

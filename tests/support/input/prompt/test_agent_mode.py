@@ -4,11 +4,11 @@ from unittest.mock import patch
 
 import pytest
 
-from hexagon.support.input.prompt.agent_mode import (
-    _extract_choices_values,
-    possible_values_for_field,
+from hexagon.support.input.prompt.agent_mode import possible_values_for_field
+from hexagon.support.input.prompt.errors import (
+    AgentModeBlockedError,
+    AgentModeImpossibleError,
 )
-from hexagon.support.input.prompt.errors import AgentModeBlockedError
 from hexagon.support.input.prompt.inquiry_type import InquiryType
 
 
@@ -100,53 +100,28 @@ def test_agent_mode_blocked_error_prints_only_name_when_no_hints():
 
 
 # ---------------------------------------------------------------------------
-# _extract_choices_values
+# AgentModeImpossibleError
 # ---------------------------------------------------------------------------
 
 
-def test_extract_choices_values_handles_dict_choices():
+def test_agent_mode_impossible_error_prints_prompt_message():
     """
-    Given a list of dict choices with 'value' keys.
-    When _extract_choices_values is called.
-    Then it returns a list of the 'value' strings.
+    Given an AgentModeImpossibleError.
+    When _error_printer is called.
+    Then the prompt message is included in the error output.
     """
-    choices = [{"value": "alpha", "name": "Alpha"}, {"value": "beta", "name": "Beta"}]
-    result = _extract_choices_values(choices)
-    assert result == ["alpha", "beta"]
+    errors_printed = []
 
+    class _FakeLogger:
+        def error(self, msg):
+            errors_printed.append(msg)
 
-def test_extract_choices_values_filters_separator_entries():
-    """
-    Given a list of dict choices that includes a __separator entry.
-    When _extract_choices_values is called.
-    Then separator entries are excluded from the result.
-    """
-    choices = [
-        {"value": "tool-a", "name": "Tool A"},
-        {"value": "__separator", "name": "---"},
-        {"value": "tool-b", "name": "Tool B"},
-    ]
-    result = _extract_choices_values(choices)
-    assert result == ["tool-a", "tool-b"]
+    err = AgentModeImpossibleError("Would you like to update?")
+    err.print_error(_FakeLogger())
 
-
-def test_extract_choices_values_handles_plain_string_choices():
-    """
-    Given a list of plain string choices.
-    When _extract_choices_values is called.
-    Then it returns the strings as-is.
-    """
-    result = _extract_choices_values(["x", "y", "z"])
-    assert result == ["x", "y", "z"]
-
-
-def test_extract_choices_values_returns_none_for_empty_list():
-    """
-    Given an empty choices list.
-    When _extract_choices_values is called.
-    Then None is returned.
-    """
-    assert _extract_choices_values([]) is None
+    assert len(errors_printed) == 1
+    assert "Would you like to update?" in errors_printed[0]
+    assert "cannot be provided via CLI arguments" in errors_printed[0]
 
 
 # ---------------------------------------------------------------------------
@@ -369,12 +344,11 @@ def test_query_field_raises_agent_mode_blocked_error_for_boolean_field():
 # ---------------------------------------------------------------------------
 
 
-def test_prompt_fuzzy_raises_agent_mode_blocked_error_with_choices():
+def test_prompt_fuzzy_raises_agent_mode_impossible_error():
     """
     Given agent_mode is True.
-    When prompt.fuzzy is called directly (as wax.py does for tool/env selection).
-    Then AgentModeBlockedError is raised with the message as name and
-    the choice values as possible_values.
+    When prompt.fuzzy is called directly (bypassing ToolArgs).
+    Then AgentModeImpossibleError is raised with the prompt message.
     """
     from hexagon.support.input.prompt.prompt import Prompt
 
@@ -383,7 +357,7 @@ def test_prompt_fuzzy_raises_agent_mode_blocked_error_with_choices():
     with patch("hexagon.support.input.prompt.agent_mode.options") as mock_opts:
         mock_opts.agent_mode = True
 
-        with pytest.raises(AgentModeBlockedError) as exc_info:
+        with pytest.raises(AgentModeImpossibleError) as exc_info:
             p.fuzzy(
                 message="Hi, which tool would you like to use today?",
                 choices=[
@@ -392,17 +366,14 @@ def test_prompt_fuzzy_raises_agent_mode_blocked_error_with_choices():
                 ],
             )
 
-    err = exc_info.value
-    assert "which tool" in err.name
-    assert "deploy" in err.possible_values
-    assert "test" in err.possible_values
+    assert "which tool" in exc_info.value.prompt_message
 
 
-def test_prompt_text_raises_agent_mode_blocked_error():
+def test_prompt_text_raises_agent_mode_impossible_error():
     """
     Given agent_mode is True.
-    When prompt.text is called directly.
-    Then AgentModeBlockedError is raised.
+    When prompt.text is called directly (bypassing ToolArgs).
+    Then AgentModeImpossibleError is raised with the prompt message.
     """
     from hexagon.support.input.prompt.prompt import Prompt
 
@@ -411,20 +382,18 @@ def test_prompt_text_raises_agent_mode_blocked_error():
     with patch("hexagon.support.input.prompt.agent_mode.options") as mock_opts:
         mock_opts.agent_mode = True
 
-        with pytest.raises(AgentModeBlockedError) as exc_info:
+        with pytest.raises(AgentModeImpossibleError) as exc_info:
             p.text(message="Enter name:")
 
-    assert "Enter name:" in exc_info.value.name
+    assert "Enter name:" in exc_info.value.prompt_message
 
 
-def test_prompt_confirm_raises_agent_mode_blocked_error_with_positional_message():
+def test_prompt_confirm_raises_agent_mode_impossible_error_with_positional_message():
     """
     Given agent_mode is True.
     When prompt.confirm is called with the message as a positional argument
-    and a boolean default (the pattern used by internal tools like
-    hexagon/runtime/update/hexagon.py).
-    Then AgentModeBlockedError is raised with the message as name and
-    possible_values=['true', 'false'].
+    (the pattern used by internal tools like hexagon/runtime/update/hexagon.py).
+    Then AgentModeImpossibleError is raised naming the prompt message.
     """
     from hexagon.support.input.prompt.prompt import Prompt
 
@@ -433,12 +402,10 @@ def test_prompt_confirm_raises_agent_mode_blocked_error_with_positional_message(
     with patch("hexagon.support.input.prompt.agent_mode.options") as mock_opts:
         mock_opts.agent_mode = True
 
-        with pytest.raises(AgentModeBlockedError) as exc_info:
+        with pytest.raises(AgentModeImpossibleError) as exc_info:
             p.confirm("Would you like to update?", default=True)
 
-    err = exc_info.value
-    assert "Would you like to update?" in err.name
-    assert err.possible_values == ["true", "false"]
+    assert "Would you like to update?" in exc_info.value.prompt_message
 
 
 def test_prompt_does_not_raise_when_agent_mode_is_false():

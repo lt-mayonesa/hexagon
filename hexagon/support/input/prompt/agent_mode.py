@@ -2,7 +2,7 @@ import functools
 from typing import Any, Dict, List, Optional, Tuple
 
 from hexagon.runtime.singletons import options
-from hexagon.support.input.prompt.errors import AgentModeBlockedError
+from hexagon.support.input.prompt.errors import AgentModeImpossibleError
 from hexagon.support.input.prompt.inquiry_type import InquiryType
 
 _BOOL_POSSIBLE_VALUES = ["true", "false"]
@@ -15,26 +15,6 @@ _SCALAR_TYPE_NAMES: Dict[InquiryType, str] = {
     InquiryType.STRING_LIST: "list of str",
     InquiryType.STRING: "str",
 }
-
-
-def _extract_choices_values(choices) -> Optional[List[str]]:
-    """Normalise a choice list (dict / enum / plain) into a flat list of strings.
-
-    Separator entries (name == ``__separator``) are filtered out because they
-    are not selectable values.
-    """
-    values = []
-    for c in choices:
-        if isinstance(c, dict):
-            val = c.get("value", "")
-            if str(val) == "__separator":
-                continue
-            values.append(str(val))
-        elif hasattr(c, "value") and not callable(c.value):
-            values.append(str(c.value))
-        else:
-            values.append(str(c))
-    return values or None
 
 
 def _choice_values_for_inquiry(
@@ -94,38 +74,25 @@ def _prompt_name_from_call(args: tuple, kwargs: dict) -> str:
     )
 
 
-def _possible_values_from_call(choices: list, default: Any) -> Optional[List[str]]:
-    """Derive possible values from a raw Prompt method call's kwargs.
-
-    Falls back to ``['true', 'false']`` for boolean confirm prompts that carry
-    no explicit choices list.
-    """
-    if choices:
-        return _extract_choices_values(choices)
-    if isinstance(default, bool):
-        return _BOOL_POSSIBLE_VALUES
-    return None
-
-
 def agent_mode_blocked(func):
-    """Wrap a Prompt primitive so it raises :class:`AgentModeBlockedError`
+    """Wrap a Prompt primitive so it raises :class:`AgentModeImpossibleError`
     immediately when agent mode is active.
 
-    This is the fallback guard for direct callers of the Prompt primitives
-    (e.g. ``wax.py`` tool/env selection, internal update confirmations).
-    Richer, field-aware errors are raised earlier in
-    ``Prompt.query_field`` for ``ToolArgs`` prompt flows.
+    Used for callers of the Prompt primitives that have no corresponding CLI
+    argument (e.g. internal update confirmations).  These prompts cannot be
+    satisfied by providing additional CLI flags — the calling code must be
+    updated to support agent mode.
+
+    Richer, field-aware :class:`AgentModeBlockedError` errors are raised
+    earlier in ``Prompt.query_field`` for ``ToolArgs`` prompt flows, where
+    the agent *can* fix the problem by supplying the missing argument.
     """
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         if options.agent_mode:
-            raise AgentModeBlockedError(
-                name=_prompt_name_from_call(args, kwargs),
-                possible_values=_possible_values_from_call(
-                    kwargs.get("choices", []),
-                    kwargs.get("default"),
-                ),
+            raise AgentModeImpossibleError(
+                prompt_message=_prompt_name_from_call(args, kwargs),
             )
         return func(*args, **kwargs)
 

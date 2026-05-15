@@ -16,21 +16,18 @@ _AGENT_ENV = {"HEXAGON_AGENT_MODE": "true"}
 # ---------------------------------------------------------------------------
 
 
-def test_agent_mode_blocks_tool_selection_and_lists_available_tools():
+def test_agent_mode_blocks_tool_selection_prompt():
     """
     Given HEXAGON_AGENT_MODE=true.
     When hexagon is invoked without specifying a tool.
-    Then it exits with status 1 and reports the available tool names.
+    Then it exits with status 1 indicating the prompt cannot be satisfied
+    via CLI arguments (tool selection has no ToolArgs equivalent yet).
     """
     (
         as_a_user(__file__)
         .run_hexagon([], os_env_vars=_AGENT_ENV)
         .then_output_should_be(
-            [["Agent mode is active", "requires a value but prompt is disabled"]],
-            discard_until_first_match=True,
-        )
-        .then_output_should_be(
-            [["Possible values:", "greet", "pick-color"]],
+            [["Agent mode is active", "cannot be provided via CLI arguments"]],
             discard_until_first_match=True,
         )
         .exit(status=1)
@@ -144,14 +141,14 @@ def test_agent_mode_blocks_field_with_runtime_choices_and_reports_them():
 # ---------------------------------------------------------------------------
 
 
-def test_agent_mode_blocks_direct_prompt_confirm_and_reports_possible_values():
+def test_agent_mode_raises_impossible_error_for_direct_prompt_call():
     """
     Given HEXAGON_AGENT_MODE=true and a tool that calls prompt.confirm()
     directly (not through ToolArgs), mirroring internal tools like
     hexagon/runtime/update/hexagon.py.
     When the tool reaches the confirm call.
-    Then it exits with status 1, names the prompt message, and surfaces
-    'true, false' as possible values.
+    Then it exits with status 1 reporting the prompt message and stating
+    it cannot be provided via CLI arguments.
     """
     (
         as_a_user(__file__)
@@ -161,13 +158,9 @@ def test_agent_mode_blocks_direct_prompt_confirm_and_reports_possible_values():
                 [
                     "Agent mode is active",
                     "Do you want to continue?",
-                    "requires a value but prompt is disabled",
+                    "cannot be provided via CLI arguments",
                 ]
             ],
-            discard_until_first_match=True,
-        )
-        .then_output_should_be(
-            [["Possible values:", "true", "false"]],
             discard_until_first_match=True,
         )
         .exit(status=1)
