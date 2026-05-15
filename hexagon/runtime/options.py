@@ -64,6 +64,7 @@ class Options(BaseSettings):
     hints_disabled: Optional[bool] = False
     keymap: KeymapOptions = KeymapOptions()
     cwd_tools_disabled: Optional[bool] = False
+    agent_mode: Optional[bool] = False
 
     @classmethod
     def settings_customise_sources(
