@@ -17,6 +17,11 @@ from hexagon.domain.hexagon_error import ListHexagonError
 from hexagon.runtime.singletons import options
 from hexagon.support.input.args import HexagonArg
 from hexagon.support.input.args.field_reference import FieldReference
+from hexagon.support.input.prompt.agent_mode import (
+    agent_mode_blocked,
+    possible_values_for_field,
+)
+from hexagon.support.input.prompt.errors import AgentModeBlockedError
 from hexagon.support.input.prompt.for_all_methods import for_all_methods
 from hexagon.support.input.prompt.hints import HintsBuilder
 from hexagon.support.input.prompt.inquiry_type import (
@@ -107,6 +112,7 @@ def set_default(invocation_extras, field_reference: FieldReference):
     return {}
 
 
+@for_all_methods(agent_mode_blocked, exclude=["query_field"])
 @for_all_methods(log.status_aware, exclude=["query_field"])
 class Prompt:
     def query_field(self, field_reference: FieldReference, model_class, **kwargs):
@@ -133,6 +139,16 @@ class Prompt:
             field_type=field_type,
             extras=extras,
         )
+
+        if options.agent_mode:
+            possible_values, expected_type = possible_values_for_field(
+                inquiry_type, extras, field_type
+            )
+            raise AgentModeBlockedError(
+                name=field_reference.name,
+                possible_values=possible_values,
+                expected_type=expected_type,
+            )
 
         setups = {
             InquiryType.ENUM_LIST: setup_enum_list,

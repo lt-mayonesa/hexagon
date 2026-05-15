@@ -611,9 +611,6 @@ External group files should have `tools: []` at root level.
   - Get the feature working
   - Commit it
   - Then refactor to improve code quality in a separate commit
-- **Prefer using existing files/modules over creating new ones**:
-  - When implementing new functionality, check if there's already a file where it belongs
-  - Example: Use `shared.py` for shared helper functions rather than creating a new `helpers.py`
 - **E2E tests are part of the feature, not optional**:
   - New features should include E2E tests in the same PR
   - Don't defer E2E tests to a follow-up PR

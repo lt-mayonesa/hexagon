@@ -1,0 +1,37 @@
+cli:
+  name: Agent Test
+  command: agent-test
+  custom_tools_dir: .
+
+envs: []
+
+tools:
+  - name: greet
+    action: tool_greet
+    type: shell
+    alias: g
+    long_name: Greet a person
+
+  - name: pick-color
+    action: tool_pick_color
+    type: shell
+    alias: pc
+    long_name: Pick a colour from a list
+
+  - name: greet-direct
+    action: tool_greet_direct
+    type: shell
+    alias: gd
+    long_name: Greet without prompting
+
+  - name: pick-option
+    action: tool_pick_option
+    type: shell
+    alias: po
+    long_name: Pick an option loaded at runtime
+
+  - name: direct-prompt
+    action: tool_direct_prompt
+    type: shell
+    alias: dp
+    long_name: Tool that calls prompt directly
