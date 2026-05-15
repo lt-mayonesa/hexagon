@@ -11,7 +11,6 @@ from hexagon.support.input.prompt.errors import (
 )
 from hexagon.support.input.prompt.inquiry_type import InquiryType
 
-
 # ---------------------------------------------------------------------------
 # Fixtures & shared helpers
 # ---------------------------------------------------------------------------
