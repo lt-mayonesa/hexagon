@@ -12,11 +12,6 @@ from hexagon.support.input.prompt.errors import (
 from hexagon.support.input.prompt.inquiry_type import InquiryType
 
 
-# ---------------------------------------------------------------------------
-# Fixtures & shared helpers
-# ---------------------------------------------------------------------------
-
-
 class _MockTypeInformation:
     """Minimal stand-in for hexagon.typing.TypeInformation."""
 
@@ -35,11 +30,6 @@ class _Size(Enum):
     SMALL = auto()
     MEDIUM = auto()
     LARGE = auto()
-
-
-# ---------------------------------------------------------------------------
-# AgentModeBlockedError
-# ---------------------------------------------------------------------------
 
 
 def test_agent_mode_blocked_error_prints_name_with_possible_values():
@@ -99,11 +89,6 @@ def test_agent_mode_blocked_error_prints_only_name_when_no_hints():
     assert "lonely_field" in errors_printed[0]
 
 
-# ---------------------------------------------------------------------------
-# AgentModeImpossibleError
-# ---------------------------------------------------------------------------
-
-
 def test_agent_mode_impossible_error_prints_prompt_message():
     """
     Given an AgentModeImpossibleError.
@@ -122,11 +107,6 @@ def test_agent_mode_impossible_error_prints_prompt_message():
     assert len(errors_printed) == 1
     assert "Would you like to update?" in errors_printed[0]
     assert "cannot be provided via CLI arguments" in errors_printed[0]
-
-
-# ---------------------------------------------------------------------------
-# possible_values_for_field — possible_values branch
-# ---------------------------------------------------------------------------
 
 
 def test_possible_values_returns_enum_names_for_enum_inquiry():
@@ -233,11 +213,6 @@ def test_possible_values_returns_glob_hint_for_path_searchable_with_glob():
     assert "*.yaml" in et
 
 
-# ---------------------------------------------------------------------------
-# possible_values_for_field — expected_type branch
-# ---------------------------------------------------------------------------
-
-
 @pytest.mark.parametrize(
     "inquiry_type, expected",
     [
@@ -259,11 +234,6 @@ def test_possible_values_returns_expected_type_for_scalar_types(inquiry_type, ex
     pv, et = possible_values_for_field(inquiry_type, {}, ft)
     assert pv is None
     assert et == expected
-
-
-# ---------------------------------------------------------------------------
-# Prompt.query_field — agent mode guard
-# ---------------------------------------------------------------------------
 
 
 def test_query_field_raises_agent_mode_blocked_error_when_agent_mode_is_active():
@@ -350,11 +320,6 @@ def test_query_field_raises_agent_mode_blocked_error_for_boolean_field():
     err = exc_info.value
     assert err.name == "proceed"
     assert err.possible_values == ["true", "false"]
-
-
-# ---------------------------------------------------------------------------
-# Prompt low-level methods — agent mode guard (decorator path)
-# ---------------------------------------------------------------------------
 
 
 def test_prompt_fuzzy_raises_agent_mode_impossible_error():
