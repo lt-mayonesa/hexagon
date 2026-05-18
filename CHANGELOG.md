@@ -1,6 +1,15 @@
 # CHANGELOG
 
 
+## v0.65.1 (2026-05-18)
+
+### Bug Fixes
+
+- Enhance tool and environment selection logic
+  ([#269](https://github.com/lt-mayonesa/hexagon/pull/269),
+  [`c0ba3f7`](https://github.com/lt-mayonesa/hexagon/commit/c0ba3f72051b729a6fbcde06d613f47d6d559c9c))
+
+
 ## v0.65.0 (2026-05-18)
 
 ### Chores
