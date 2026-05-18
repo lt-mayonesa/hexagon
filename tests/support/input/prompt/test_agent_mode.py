@@ -162,6 +162,21 @@ def test_possible_values_returns_choices_for_string_searchable():
     assert et is None
 
 
+def test_possible_values_calls_callable_choices_with_empty_input():
+    """
+    Given a STRING_SEARCHABLE inquiry type whose choices are provided as a
+    callable (dynamic choices loaded at prompt time, e.g. from an external API).
+    When possible_values_for_field is called.
+    Then the callable is invoked with an empty string (no current input) and
+    the returned values are used as possible_values so the agent knows its options.
+    """
+    ft = _MockTypeInformation(str)
+    extras = {"choices": lambda _: ["svc-a", "svc-b"]}
+    pv, et = possible_values_for_field(InquiryType.STRING_SEARCHABLE, extras, ft)
+    assert pv == ["svc-a", "svc-b"]
+    assert et is None
+
+
 def test_possible_values_coerces_dict_choice_values_to_str_for_string_searchable():
     """
     Given a STRING_SEARCHABLE inquiry type with dict choices containing non-string values.

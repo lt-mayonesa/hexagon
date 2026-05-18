@@ -32,7 +32,10 @@ def _choice_values_for_inquiry(
         InquiryType.STRING_LIST_SEARCHABLE,
     ):
         raw = extras.get("choices", [])
-        return [str(c["value"]) if isinstance(c, dict) else str(c) for c in raw] or None
+        resolved = raw("") if callable(raw) else raw
+        return [
+            str(c["value"]) if isinstance(c, dict) else str(c) for c in resolved
+        ] or None
     if inquiry_type == InquiryType.PATH_SEARCHABLE:
         choices = extras.get("choices")
         return [str(c) for c in choices] if choices else None
