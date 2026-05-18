@@ -1,6 +1,15 @@
 # CHANGELOG
 
 
+## v0.65.2 (2026-05-18)
+
+### Bug Fixes
+
+- **agent-mode**: Support lambda choices in prompts
+  ([#272](https://github.com/lt-mayonesa/hexagon/pull/272),
+  [`d00b449`](https://github.com/lt-mayonesa/hexagon/commit/d00b4490ed9674c6183e178a2307a4bb207f5cb0))
+
+
 ## v0.65.1 (2026-05-18)
 
 ### Bug Fixes
