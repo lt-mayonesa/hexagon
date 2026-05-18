@@ -1,6 +1,75 @@
 # CHANGELOG
 
 
+## v0.65.0 (2026-05-18)
+
+### Chores
+
+- **deps**: Bump dorny/test-reporter from 2 to 3
+  ([#253](https://github.com/lt-mayonesa/hexagon/pull/253),
+  [`6489142`](https://github.com/lt-mayonesa/hexagon/commit/6489142b498efc95c4a73e60e0b280cf0eca6e71))
+
+- **deps**: Bump marocchino/sticky-pull-request-comment from 2 to 3
+  ([#251](https://github.com/lt-mayonesa/hexagon/pull/251),
+  [`7b0a675`](https://github.com/lt-mayonesa/hexagon/commit/7b0a6750f9f7414420ecbae745907681fbcb426a))
+
+- **deps**: Bump nick-fields/retry from 3 to 4
+  ([#252](https://github.com/lt-mayonesa/hexagon/pull/252),
+  [`2e8aedf`](https://github.com/lt-mayonesa/hexagon/commit/2e8aedf3f9967287fcbff10d5a4daf7a063558e8))
+
+- **deps**: Bump packaging from 26.0 to 26.2
+  ([#258](https://github.com/lt-mayonesa/hexagon/pull/258),
+  [`f035632`](https://github.com/lt-mayonesa/hexagon/commit/f03563285238659ebac59444f997ffa553a9febe))
+
+- **deps**: Bump pydantic from 2.12.5 to 2.13.3
+  ([#263](https://github.com/lt-mayonesa/hexagon/pull/263),
+  [`5d39280`](https://github.com/lt-mayonesa/hexagon/commit/5d392800714a1c4975cb7188e8ffc5cf05afa603))
+
+- **deps**: Bump pydantic-settings from 2.13.1 to 2.14.0
+  ([#262](https://github.com/lt-mayonesa/hexagon/pull/262),
+  [`c42d9b3`](https://github.com/lt-mayonesa/hexagon/commit/c42d9b336506f318e8d850e7153167c43a001500))
+
+- **deps**: Bump python-dotenv in the pip group across 1 directory
+  ([#264](https://github.com/lt-mayonesa/hexagon/pull/264),
+  [`38c8dca`](https://github.com/lt-mayonesa/hexagon/commit/38c8dca1b40e3e644d2eecef11a0e5c4a5ed9d09))
+
+- **deps**: Bump rich from 14.3.3 to 15.0.0
+  ([#256](https://github.com/lt-mayonesa/hexagon/pull/256),
+  [`da8dad6`](https://github.com/lt-mayonesa/hexagon/commit/da8dad6d7f82750983d9f0dcc2b0f301a8004a93))
+
+- **deps**: Bump the npm_and_yarn group across 1 directory with 2 updates
+  ([#248](https://github.com/lt-mayonesa/hexagon/pull/248),
+  [`248eb48`](https://github.com/lt-mayonesa/hexagon/commit/248eb48d0672b61c0ed21fe2beb0e262a7e7e3e1))
+
+- **deps**: Bump the npm_and_yarn group across 1 directory with 6 updates
+  ([#259](https://github.com/lt-mayonesa/hexagon/pull/259),
+  [`0d9756f`](https://github.com/lt-mayonesa/hexagon/commit/0d9756fe353e285ab646cd97c56df8cd4601b41f))
+
+- **deps-dev**: Bump black in the pip group across 1 directory
+  ([#250](https://github.com/lt-mayonesa/hexagon/pull/250),
+  [`1a2d2ff`](https://github.com/lt-mayonesa/hexagon/commit/1a2d2ff16b9cca15c8f04d9b7c81f582159a1d53))
+
+- **deps-dev**: Bump pytest from 9.0.2 to 9.0.3
+  ([#254](https://github.com/lt-mayonesa/hexagon/pull/254),
+  [`d8f8f2e`](https://github.com/lt-mayonesa/hexagon/commit/d8f8f2eaa01c1af843d7a5291c456407707d3cf6))
+
+- **deps-dev**: Update setuptools requirement from >=42 to >=82.0.1
+  ([#255](https://github.com/lt-mayonesa/hexagon/pull/255),
+  [`cee1dc9`](https://github.com/lt-mayonesa/hexagon/commit/cee1dc9e1a7ac34d745b4d679ce3fc03e080e77d))
+
+### Continuous Integration
+
+- **package**: Fallback to github token in release workflow
+  ([#271](https://github.com/lt-mayonesa/hexagon/pull/271),
+  [`9cf7fae`](https://github.com/lt-mayonesa/hexagon/commit/9cf7faee37b6ab81c7d178913b263b736782ac86))
+
+### Features
+
+- Add agent mode functionality to handle prompts
+  ([#268](https://github.com/lt-mayonesa/hexagon/pull/268),
+  [`e7a54d3`](https://github.com/lt-mayonesa/hexagon/commit/e7a54d379dadce3139492d4e713e6af7357b174b))
+
+
 ## v0.64.5 (2026-02-28)
 
 ### Bug Fixes
