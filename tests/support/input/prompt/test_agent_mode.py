@@ -1,7 +1,8 @@
-import pytest
 from enum import Enum, auto
 from pathlib import Path
 from unittest.mock import patch
+
+import pytest
 
 from hexagon.support.input.prompt.agent_mode import possible_values_for_field
 from hexagon.support.input.prompt.errors import (
