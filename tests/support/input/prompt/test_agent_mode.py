@@ -1,8 +1,7 @@
+import pytest
 from enum import Enum, auto
 from pathlib import Path
 from unittest.mock import patch
-
-import pytest
 
 from hexagon.support.input.prompt.agent_mode import possible_values_for_field
 from hexagon.support.input.prompt.errors import (
@@ -10,6 +9,7 @@ from hexagon.support.input.prompt.errors import (
     AgentModeImpossibleError,
 )
 from hexagon.support.input.prompt.inquiry_type import InquiryType
+
 
 # ---------------------------------------------------------------------------
 # Fixtures & shared helpers
@@ -178,6 +178,19 @@ def test_possible_values_returns_choices_for_string_searchable():
     extras = {"choices": ["opt-1", "opt-2"]}
     pv, et = possible_values_for_field(InquiryType.STRING_SEARCHABLE, extras, ft)
     assert pv == ["opt-1", "opt-2"]
+    assert et is None
+
+
+def test_possible_values_coerces_dict_choice_values_to_str_for_string_searchable():
+    """
+    Given a STRING_SEARCHABLE inquiry type with dict choices containing non-string values.
+    When possible_values_for_field is called.
+    Then each choice value is coerced to str so error formatting is always safe.
+    """
+    ft = _MockTypeInformation(str)
+    extras = {"choices": [{"value": 1, "name": "One"}, {"value": 2, "name": "Two"}]}
+    pv, et = possible_values_for_field(InquiryType.STRING_SEARCHABLE, extras, ft)
+    assert pv == ["1", "2"]
     assert et is None
 
 

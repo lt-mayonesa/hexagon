@@ -23,8 +23,6 @@ def _display_choices(
     items: List[Union[Tool, Env]], classifier=lambda _: ""
 ) -> List[dict]:
     def build_name(v: Union[Tool, Env]) -> str:
-        if Separator.name in v.name:
-            return "-" * 80
         gap = 60 if v.description else 0
         return f"{classifier(v) + (v.long_name or v.name): <{gap}}{v.description or ''}"
 
@@ -35,12 +33,29 @@ def _display_choices(
     ]
 
 
+def _ensure_prompt(cli_args: CliArgs) -> None:
+    """Lazily initialize a Prompt on cli_args when one has not been set.
+
+    ``__main__.py`` always calls ``_with_prompt()`` before
+    ``select_and_execute_tool``, so this guard is a no-op in the normal flow.
+    It exists for callers like ``replay.py`` that invoke
+    ``select_and_execute_tool`` directly with a raw ``parse_cli_args()`` result.
+    If the replayed tool no longer exists the selection falls through to an
+    interactive prompt, which requires a ``Prompt`` instance.
+    """
+    if not cli_args.__prompt__:
+        from hexagon.support.input.prompt import Prompt
+
+        cli_args._with_prompt(Prompt())
+
+
 def select_and_execute_tool(
     tools: List[Tool],
     envs: List[Env],
     cli_args: CliArgs,
     group_ref=0,
 ) -> List[str]:
+    _ensure_prompt(cli_args)
     found_tool_name = search_by_name_or_alias(
         tools, cli_args.tool and cli_args.tool.value
     )
