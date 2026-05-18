@@ -11,32 +11,32 @@ from tests_e2e.framework.hexagon_spec import as_a_user
 _AGENT_ENV = {"HEXAGON_AGENT_MODE": "true"}
 
 
-# ---------------------------------------------------------------------------
-# Tool-selection prompt blocked
-# ---------------------------------------------------------------------------
-
-
-def test_agent_mode_blocks_tool_selection_prompt():
+def test_agent_mode_blocks_tool_selection_and_lists_available_tools():
     """
     Given HEXAGON_AGENT_MODE=true.
     When hexagon is invoked without specifying a tool.
-    Then it exits with status 1 indicating the prompt cannot be satisfied
-    via CLI arguments (tool selection has no ToolArgs equivalent yet).
+    Then it exits with status 1 naming the 'tool' argument and listing
+    the available tool names as possible values.
     """
     (
         as_a_user(__file__)
         .run_hexagon([], os_env_vars=_AGENT_ENV)
         .then_output_should_be(
-            [["Agent mode is active", "cannot be provided via CLI arguments"]],
+            [
+                [
+                    "Agent mode is active",
+                    "'tool'",
+                    "requires a value but prompt is disabled",
+                ]
+            ],
+            discard_until_first_match=True,
+        )
+        .then_output_should_be(
+            [["Possible values:", "greet", "pick-color"]],
             discard_until_first_match=True,
         )
         .exit(status=1)
     )
-
-
-# ---------------------------------------------------------------------------
-# Field-level prompt blocked (string field → expected_type)
-# ---------------------------------------------------------------------------
 
 
 def test_agent_mode_blocks_string_field_prompt_and_reports_expected_type():
@@ -66,11 +66,6 @@ def test_agent_mode_blocks_string_field_prompt_and_reports_expected_type():
     )
 
 
-# ---------------------------------------------------------------------------
-# Field-level prompt blocked (enum field → possible_values)
-# ---------------------------------------------------------------------------
-
-
 def test_agent_mode_blocks_enum_field_prompt_and_reports_possible_values():
     """
     Given HEXAGON_AGENT_MODE=true and the 'pick-color' tool is selected.
@@ -96,16 +91,6 @@ def test_agent_mode_blocks_enum_field_prompt_and_reports_possible_values():
         )
         .exit(status=1)
     )
-
-
-# ---------------------------------------------------------------------------
-# Full args provided — agent mode does NOT block
-# ---------------------------------------------------------------------------
-
-
-# ---------------------------------------------------------------------------
-# Field-level prompt blocked (runtime choices → possible_values)
-# ---------------------------------------------------------------------------
 
 
 def test_agent_mode_blocks_field_with_runtime_choices_and_reports_them():
@@ -136,11 +121,6 @@ def test_agent_mode_blocks_field_with_runtime_choices_and_reports_them():
     )
 
 
-# ---------------------------------------------------------------------------
-# Direct prompt call blocked (not through ToolArgs)
-# ---------------------------------------------------------------------------
-
-
 def test_agent_mode_raises_impossible_error_for_direct_prompt_call():
     """
     Given HEXAGON_AGENT_MODE=true and a tool that calls prompt.confirm()
@@ -165,11 +145,6 @@ def test_agent_mode_raises_impossible_error_for_direct_prompt_call():
         )
         .exit(status=1)
     )
-
-
-# ---------------------------------------------------------------------------
-# Agent mode does not block when no prompts are needed
-# ---------------------------------------------------------------------------
 
 
 def test_agent_mode_does_not_block_when_no_prompts_are_needed():

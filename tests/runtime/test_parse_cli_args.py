@@ -11,8 +11,8 @@ def test_parse_cli_args_returns_none_values_when_no_args_passed():
     Then the returned object should have tool=None, env=None, and extra_args=None.
     """
     actual = parse_cli_args([])
-    assert actual.tool is None
-    assert actual.env is None
+    assert actual.tool.value is None
+    assert actual.env.value is None
     assert actual.extra_args is None
 
 
@@ -34,7 +34,7 @@ def test_parse_cli_args_sets_tool_value_when_only_tool_passed(args, expected):
     """
     actual = parse_cli_args(args)
     assert actual.tool.value == expected
-    assert actual.env is None
+    assert actual.env.value is None
     assert actual.extra_args is None
 
 
@@ -84,7 +84,7 @@ def test_parse_cli_args_parses_named_arguments_with_equal_sign():
         ]
     )
     assert actual.tool.value == "some-tool"
-    assert actual.env is None
+    assert actual.env.value is None
     assert actual.extra_args == {
         "age": 31,
         "country": "Argentina",
@@ -236,8 +236,8 @@ def test_parse_cli_args_sets_show_help_flag_when_help_option_provided(args):
     """
     actual = parse_cli_args(args)
     assert actual.show_help is True
-    assert actual.tool is None
-    assert actual.env is None
+    assert actual.tool.value is None
+    assert actual.env.value is None
 
 
 @pytest.mark.parametrize(
@@ -258,8 +258,8 @@ def test_parse_cli_args_sets_show_version_flag_when_version_option_provided(args
     actual = parse_cli_args(args)
     assert actual.show_help is False
     assert actual.show_version is True
-    assert actual.tool is None
-    assert actual.env is None
+    assert actual.tool.value is None
+    assert actual.env.value is None
 
 
 bool_input_keys = [
@@ -403,7 +403,7 @@ def test_parse_cli_args_correctly_handles_env_after_unknown_option():
     actual = parse_cli_args(["some-tool", "--query", "SELECT * FROM table", "dev"])
 
     assert actual.tool.value == "some-tool"
-    assert actual.env is None
+    assert actual.env.value is None
     assert "--query" in actual.raw_extra_args
     assert "SELECT * FROM table" in actual.raw_extra_args
     assert "dev" in actual.raw_extra_args

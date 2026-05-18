@@ -17,6 +17,7 @@ def main():
         from hexagon.runtime.help import print_help
         from hexagon.support.hooks import HexagonHooks
         from hexagon.runtime.parse_args import parse_cli_args
+        from hexagon.support.input.prompt import Prompt
         from hexagon.support.tracer import init_tracer
         from hexagon.runtime.version import print_version
 
@@ -32,6 +33,7 @@ def main():
 
         collect_plugins(configuration.project_path, cli.plugins)
         tracer = init_tracer(args)
+        args._with_prompt(Prompt())._with_tracer(tracer)
 
         HexagonHooks.start.run()
         log.start(f"[bold]{cli.name}")
