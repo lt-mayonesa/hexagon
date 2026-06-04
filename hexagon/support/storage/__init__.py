@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 from enum import Enum
 from pathlib import Path
@@ -65,10 +66,17 @@ def _get_storage_dir_path():
     return _config_storage_path
 
 
+def _sanitize_storage_key(value: str) -> str:
+    return re.sub(r"\s+", "-", value)
+
+
 def _resolve_storage_path(app: str, key: str, base_dir=None) -> (str, str):
     base_dir = base_dir if base_dir else _get_storage_dir_path()
     key_split = key.split(".")
-    return os.path.join(base_dir, app, *key_split[:-1]), *key_split[-1:]
+    return (
+        os.path.join(base_dir, _sanitize_storage_key(app), *key_split[:-1]),
+        *key_split[-1:],
+    )
 
 
 def _storage_value_type_by_data_type(data: InputDataType):
