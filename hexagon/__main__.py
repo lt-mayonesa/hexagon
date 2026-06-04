@@ -23,6 +23,10 @@ def main():
 
         log.load_theme(options.theme)
 
+        from hexagon.support.storage.migration import migrate_storage_to_command_key
+
+        migrate_storage_to_command_key(cli)
+
         args = parse_cli_args()
 
         if args.show_help:

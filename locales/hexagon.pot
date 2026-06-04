@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-07 12:20+0100\n"
+"POT-Creation-Date: 2026-06-04 15:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: hexagon/__main__.py:44
+#: hexagon/__main__.py:51
 msgid "msg.main.first_time_intro"
 msgstr ""
 
-#: hexagon/__main__.py:44
+#: hexagon/__main__.py:51
 msgid "msg.main.first_time_tool"
 msgstr ""
 
@@ -298,15 +298,23 @@ msgstr ""
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr ""
 
-#: hexagon/runtime/execute/tool.py:77
+#: hexagon/runtime/execute/tool.py:68
+msgid "action.support.wax.select_tool"
+msgstr ""
+
+#: hexagon/runtime/execute/tool.py:133
+msgid "action.support.wax.select_environment"
+msgstr ""
+
+#: hexagon/runtime/execute/tool.py:144
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr ""
 
-#: hexagon/runtime/execute/tool.py:79
+#: hexagon/runtime/execute/tool.py:146
 msgid "msg.support.execute.tool.go_back_description"
 msgstr ""
 
-#: hexagon/runtime/execute/tool.py:80
+#: hexagon/runtime/execute/tool.py:147
 msgid "icon.global.go_back"
 msgstr ""
 
@@ -328,22 +336,6 @@ msgstr ""
 
 #: hexagon/runtime/update/cli/git.py:32
 msgid "error.support.cli.git.failed_to_get_remote"
-msgstr ""
-
-#: hexagon/runtime/wax.py:57
-msgid "action.support.wax.select_environment"
-msgstr ""
-
-#: hexagon/runtime/wax.py:62
-msgid "error.support.wax.invalid_environment"
-msgstr ""
-
-#: hexagon/runtime/wax.py:79
-msgid "action.support.wax.select_tool"
-msgstr ""
-
-#: hexagon/runtime/wax.py:82
-msgid "error.support.wax.invalid_tool"
 msgstr ""
 
 #: hexagon/runtime/yaml.py:44
@@ -446,12 +438,20 @@ msgstr ""
 msgid "msg.support.prompt.hints.help"
 msgstr ""
 
-#: hexagon/support/input/prompt/prompt.py:35
+#: hexagon/support/input/prompt/prompt.py:40
 msgid "error.support.input.prompt.prompt.invalid_argument_setup"
 msgstr ""
 
-#: hexagon/support/input/prompt/prompt.py:264
+#: hexagon/support/input/prompt/prompt.py:280
 msgid "msg.support.prompt.prompt.directory_created"
+msgstr ""
+
+#: hexagon/support/storage/migration.py:41
+msgid "msg.support.storage.migration.conflict"
+msgstr ""
+
+#: hexagon/support/storage/migration.py:44
+msgid "msg.support.storage.migration.conflict_title"
 msgstr ""
 
 #: hexagon/support/tracer.py:97

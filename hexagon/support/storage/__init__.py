@@ -108,11 +108,7 @@ def _get_app(app: str = None):
     return (
         app
         if app
-        else (
-            cli.name.lower()
-            if cli and configuration.has_config
-            else HEXAGON_STORAGE_APP
-        )
+        else (cli.command if cli and configuration.has_config else HEXAGON_STORAGE_APP)
     )
 
 

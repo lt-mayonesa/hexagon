@@ -244,16 +244,16 @@ def test_store_user_data_uses_hexagon_as_default_app_when_not_specified():
 
 
 @patch("hexagon.runtime.configuration.Configuration.has_config", True)
-def test_store_user_data_uses_configured_app_name_when_available():
+def test_store_user_data_uses_cli_command_as_app_key_when_available():
     """
-    Given the CLI has a configured name 'test-app' and Configuration.has_config is True.
+    Given the CLI has a configured command 'test-app' and Configuration.has_config is True.
     When storing string 'data' with key='data' and no app parameter.
     Then the data should be saved to the file '[storage_path]/test-app/data.txt'.
     And the file content should match the input string.
     """
     from hexagon.runtime.singletons import cli
 
-    cli.name = "test-app"
+    cli.command = "test-app"
 
     store_user_data(key, "data")
 
