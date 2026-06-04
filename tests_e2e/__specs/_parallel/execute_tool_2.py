@@ -155,7 +155,9 @@ def test_execute_command():
         .exit()
     )
     assert_file_has_contents(
-        spec.test_dir, ".config/hexagon-test/last-command.txt", "hexagon-test generic-command"
+        spec.test_dir,
+        ".config/hexagon-test/last-command.txt",
+        "hexagon-test generic-command",
     )
 
 
@@ -167,7 +169,9 @@ def test_execute_complex_command():
         .exit()
     )
     assert_file_has_contents(
-        spec.test_dir, ".config/hexagon-test/last-command.txt", "hexagon-test complex-command"
+        spec.test_dir,
+        ".config/hexagon-test/last-command.txt",
+        "hexagon-test complex-command",
     )
 
 
