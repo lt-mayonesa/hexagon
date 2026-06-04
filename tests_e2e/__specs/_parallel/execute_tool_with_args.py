@@ -24,7 +24,7 @@ def test_execute_python_tool_with_one_positional_arguments():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test p-m-args John",
     )
 
@@ -47,7 +47,7 @@ def test_execute_python_tool_with_several_positional_arguments():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test p-m-args John 31 French",
     )
 
@@ -70,7 +70,7 @@ def test_should_only_trace_passed_arguments_and_not_defaults():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test p-m-args John 31 Argentinian --car-brand=Ford",
     )
 
@@ -93,7 +93,7 @@ def test_should_argument_should_be_traced_once():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test access-multiple-times John",
     )
 
@@ -122,7 +122,7 @@ def test_only_optional_arguments(args):
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test only-optionals --name=John --age=31 --country=Argentina --likes=sand --likes=beach",
     )
 
@@ -167,7 +167,7 @@ def test_optional_arguments_as_list():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test p-m-args John --car-years=1997 --car-years=1998",
     )
 

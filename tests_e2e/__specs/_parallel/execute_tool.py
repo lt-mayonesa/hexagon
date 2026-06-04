@@ -40,7 +40,7 @@ def test_execute_python_module_by_gui():
         .exit()
     )
     assert_file_has_contents(
-        spec.test_dir, ".config/test/last-command.txt", "hexagon-test python-module"
+        spec.test_dir, ".config/hexagon-test/last-command.txt", "hexagon-test python-module"
     )
 
 
@@ -83,7 +83,7 @@ def test_execute_python_module_with_env_by_gui():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test python-module-env dev",
     )
 
@@ -114,7 +114,7 @@ def test_execute_python_module_with_env_asterisk_by_gui():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test python-module-env-all",
     )
 
@@ -127,7 +127,7 @@ def test_execute_python_module_by_argument():
         .exit()
     )
     assert_file_has_contents(
-        spec.test_dir, ".config/test/last-command.txt", "hexagon-test python-module"
+        spec.test_dir, ".config/hexagon-test/last-command.txt", "hexagon-test python-module"
     )
 
 
@@ -139,7 +139,7 @@ def test_execute_python_module_by_alias():
         .exit()
     )
     assert_file_has_contents(
-        spec.test_dir, ".config/test/last-command.txt", "hexagon-test python-module"
+        spec.test_dir, ".config/hexagon-test/last-command.txt", "hexagon-test python-module"
     )
 
 
@@ -163,7 +163,7 @@ def test_execute_python_module_with_env_and_arguments():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test python-module-env dev",
     )
 
@@ -185,7 +185,7 @@ def test_execute_python_module_with_other_env():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test python-module-env qa",
     )
 
@@ -209,7 +209,7 @@ def test_execute_node_script_module_by_gui():
         .exit()
     )
     assert_file_has_contents(
-        spec.test_dir, ".config/test/last-command.txt", "hexagon-test node-module"
+        spec.test_dir, ".config/hexagon-test/last-command.txt", "hexagon-test node-module"
     )
 
 
@@ -221,7 +221,7 @@ def test_execute_node_script_module_by_argument():
         .exit()
     )
     assert_file_has_contents(
-        spec.test_dir, ".config/test/last-command.txt", "hexagon-test node-module"
+        spec.test_dir, ".config/hexagon-test/last-command.txt", "hexagon-test node-module"
     )
 
 
@@ -246,7 +246,7 @@ def test_execute_node_script_module_with_env_and_arguments():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test node-module-env dev",
     )
 
@@ -270,7 +270,7 @@ def test_execute_node_script_module_with_other_env():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test node-module-env qa",
     )
 
@@ -300,7 +300,7 @@ def test_execute_single_file_python_module_by_gui():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test single-file-python-module",
     )
 
@@ -321,5 +321,5 @@ def test_execute_bash_script_module_by_argument():
         .exit()
     )
     assert_file_has_contents(
-        spec.test_dir, ".config/test/last-command.txt", "hexagon-test bash-module"
+        spec.test_dir, ".config/hexagon-test/last-command.txt", "hexagon-test bash-module"
     )

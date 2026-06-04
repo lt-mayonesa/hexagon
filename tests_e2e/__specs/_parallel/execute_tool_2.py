@@ -155,7 +155,7 @@ def test_execute_command():
         .exit()
     )
     assert_file_has_contents(
-        spec.test_dir, ".config/test/last-command.txt", "hexagon-test generic-command"
+        spec.test_dir, ".config/hexagon-test/last-command.txt", "hexagon-test generic-command"
     )
 
 
@@ -167,7 +167,7 @@ def test_execute_complex_command():
         .exit()
     )
     assert_file_has_contents(
-        spec.test_dir, ".config/test/last-command.txt", "hexagon-test complex-command"
+        spec.test_dir, ".config/hexagon-test/last-command.txt", "hexagon-test complex-command"
     )
 
 
@@ -180,7 +180,7 @@ def test_execute_complex_command_with_dots():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test complex-command-with-dots",
     )
 
@@ -200,7 +200,7 @@ def test_execute_multiline_command():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test generic-multiline-command",
     )
 
@@ -220,7 +220,7 @@ def test_execute_multiline_command_with_input_as_list():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test multiline-command-as-list",
     )
 
@@ -288,7 +288,7 @@ def test_execute_inline_command_with_path():
     )
     assert_file_has_contents(
         spec.test_dir,
-        ".config/test/last-command.txt",
+        ".config/hexagon-test/last-command.txt",
         "hexagon-test inline-command-with-PATH",
     )
 
