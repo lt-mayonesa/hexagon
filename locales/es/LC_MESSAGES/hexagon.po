@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-07 12:20+0100\n"
+"POT-Creation-Date: 2026-06-04 15:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: hexagon/__main__.py:44
+#: hexagon/__main__.py:51
 msgid "msg.main.first_time_intro"
 msgstr "Esta parece ser tu primera vez ejecutando hexagon."
 
-#: hexagon/__main__.py:44
+#: hexagon/__main__.py:51
 msgid "msg.main.first_time_tool"
 msgstr "Probablemente deberías ejecutar \"Instalar CLI\""
 
@@ -318,15 +318,23 @@ msgstr "Tu acción parece tener un error de dependencias de módulos"
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr "La ejecución de {action} falló"
 
-#: hexagon/runtime/execute/tool.py:77
+#: hexagon/runtime/execute/tool.py:68
+msgid "action.support.wax.select_tool"
+msgstr "Hola ¿qué herramienta te gustaría usar hoy?"
+
+#: hexagon/runtime/execute/tool.py:133
+msgid "action.support.wax.select_environment"
+msgstr "¿Para qué entorno?"
+
+#: hexagon/runtime/execute/tool.py:144
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr "Atrás"
 
-#: hexagon/runtime/execute/tool.py:79
+#: hexagon/runtime/execute/tool.py:146
 msgid "msg.support.execute.tool.go_back_description"
 msgstr "Volver al menú anterior"
 
-#: hexagon/runtime/execute/tool.py:80
+#: hexagon/runtime/execute/tool.py:147
 msgid "icon.global.go_back"
 msgstr "↩"
 
@@ -351,22 +359,6 @@ msgid "error.support.cli.git.failed_to_get_remote"
 msgstr ""
 "Hubo un error de git accediendo al remote del repositorio de tu CLI, hay "
 "varias opciones y origin no está presente."
-
-#: hexagon/runtime/wax.py:57
-msgid "action.support.wax.select_environment"
-msgstr "¿Para qué entorno?"
-
-#: hexagon/runtime/wax.py:62
-msgid "error.support.wax.invalid_environment"
-msgstr "Por favor, selecciona un entorno valido"
-
-#: hexagon/runtime/wax.py:79
-msgid "action.support.wax.select_tool"
-msgstr "Hola ¿qué herramienta te gustaría usar hoy?"
-
-#: hexagon/runtime/wax.py:82
-msgid "error.support.wax.invalid_tool"
-msgstr "Por favor, selecciona una herramienta valida"
 
 #: hexagon/runtime/yaml.py:44
 msgid "error.support.yaml.invalid_yaml"
@@ -468,13 +460,24 @@ msgstr "No se configuró HintsBuilder correctamente."
 msgid "msg.support.prompt.hints.help"
 msgstr "ayuda:"
 
-#: hexagon/support/input/prompt/prompt.py:35
+#: hexagon/support/input/prompt/prompt.py:40
 msgid "error.support.input.prompt.prompt.invalid_argument_setup"
 msgstr "Configuración {property} no es válida para argumento {argument}"
 
-#: hexagon/support/input/prompt/prompt.py:264
+#: hexagon/support/input/prompt/prompt.py:280
 msgid "msg.support.prompt.prompt.directory_created"
 msgstr "📁 directorio creado: {path} [green]✓[/green]"
+
+#: hexagon/support/storage/migration.py:41
+msgid "msg.support.storage.migration.conflict"
+msgstr ""
+"Existen tanto [b]{old_dir}[/b] como [b]{new_dir}[/b].\n"
+"Hexagon no puede migrar automáticamente el almacenamiento de tu CLI.\n"
+"Por favor contacta al mantenedor de tu CLI para obtener ayuda."
+
+#: hexagon/support/storage/migration.py:44
+msgid "msg.support.storage.migration.conflict_title"
+msgstr "Conflicto en migración de almacenamiento"
 
 #: hexagon/support/tracer.py:97
 msgid "msg.main.tracer.run_again"

@@ -6,7 +6,7 @@ from tests_e2e.framework.hexagon_spec import as_a_user
 def test_register_all_hooks_correctly():
     spec = as_a_user(__file__).run_hexagon(["echo", "dev"]).exit()
 
-    storage_path = os.path.join(spec.test_dir, ".config", "test")
+    storage_path = os.path.join(spec.test_dir, ".config", "hexagon-test")
 
     with open(os.path.join(storage_path, "hook_start.txt"), "r") as file:
         assert file.read() == "1"

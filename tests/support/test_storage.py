@@ -10,6 +10,8 @@ import hexagon
 from hexagon.support.storage import (
     store_user_data,
     load_user_data,
+    delete_user_data,
+    _sanitize_storage_key,
 )
 
 storage_path = os.path.realpath(os.path.join(os.path.dirname(__file__), ".storage"))
@@ -243,17 +245,77 @@ def test_store_user_data_uses_hexagon_as_default_app_when_not_specified():
         assert file.read() == "data"
 
 
-@patch("hexagon.runtime.configuration.Configuration.has_config", True)
-def test_store_user_data_uses_configured_app_name_when_available():
+def test_sanitize_storage_key_replaces_spaces_with_hyphens():
     """
-    Given the CLI has a configured name 'test-app' and Configuration.has_config is True.
+    Given app key strings that may contain whitespace.
+    When _sanitize_storage_key is called.
+    Then all whitespace runs should be replaced with a single hyphen.
+    """
+    assert _sanitize_storage_key("my app") == "my-app"
+    assert (
+        _sanitize_storage_key("ws-planning & manual picking cli")
+        == "ws-planning-&-manual-picking-cli"
+    )
+    assert _sanitize_storage_key("multiple   spaces") == "multiple-spaces"
+    assert _sanitize_storage_key("already-clean") == "already-clean"
+    assert _sanitize_storage_key("pmp") == "pmp"
+
+
+def test_store_user_data_sanitizes_app_key_with_spaces():
+    """
+    Given an explicit app key containing spaces.
+    When storing data with that app key.
+    Then the data should be saved under the sanitized (spaces-as-hyphens) directory.
+    And no directory with spaces in the name should be created.
+    """
+    store_user_data(key, "data", app="my app")
+
+    assert not os.path.exists(os.path.join(storage_path, "my app"))
+    with open(os.path.join(storage_path, "my-app", key) + ".txt") as file:
+        assert file.read() == "data"
+
+
+def test_load_user_data_sanitizes_app_key_with_spaces():
+    """
+    Given data stored under a sanitized app key 'my-app'.
+    When loading with the unsanitized key 'my app' (spaces).
+    Then the data should be found and returned correctly.
+    """
+    file_path = os.path.join(storage_path, "my-app", key) + ".txt"
+    Path(os.path.dirname(file_path)).mkdir(exist_ok=True, parents=True)
+    with open(file_path, "w") as f:
+        f.write("data")
+
+    assert load_user_data(key, app="my app") == "data"
+
+
+def test_delete_user_data_sanitizes_app_key_with_spaces():
+    """
+    Given data stored under a sanitized app key 'my-app'.
+    When deleting with the unsanitized key 'my app' (spaces).
+    Then the file should be removed.
+    """
+    file_path = os.path.join(storage_path, "my-app", key) + ".txt"
+    Path(os.path.dirname(file_path)).mkdir(exist_ok=True, parents=True)
+    with open(file_path, "w") as f:
+        f.write("data")
+
+    delete_user_data("my app", key)
+
+    assert not os.path.exists(file_path)
+
+
+@patch("hexagon.runtime.configuration.Configuration.has_config", True)
+def test_store_user_data_uses_cli_command_as_app_key_when_available():
+    """
+    Given the CLI has a configured command 'test-app' and Configuration.has_config is True.
     When storing string 'data' with key='data' and no app parameter.
     Then the data should be saved to the file '[storage_path]/test-app/data.txt'.
     And the file content should match the input string.
     """
     from hexagon.runtime.singletons import cli
 
-    cli.name = "test-app"
+    cli.command = "test-app"
 
     store_user_data(key, "data")
 
