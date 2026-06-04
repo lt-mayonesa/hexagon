@@ -5,7 +5,7 @@ from os.path import dirname
 import setuptools
 
 # this updates automatically https://python-semantic-release.readthedocs.io/en/latest/index.html
-__version__ = "0.65.2"
+__version__ = "0.65.3"
 
 
 def __markers(config: dict):

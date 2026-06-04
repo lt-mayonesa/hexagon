@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.65.3 (2026-06-04)
+
+### Bug Fixes
+
+- **storage**: Use cleaner storage path ([#274](https://github.com/lt-mayonesa/hexagon/pull/274),
+  [`79ca878`](https://github.com/lt-mayonesa/hexagon/commit/79ca87845c28474d8e5b65ead7e06372c5560e62))
+
+
 ## v0.65.2 (2026-05-18)
 
 ### Bug Fixes
