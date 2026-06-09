@@ -1,34 +1,6 @@
-"""
-E2E tests for list-view mode (view_mode: list).
-
-The test resource at __test_resources/_parallel/execute_tool_list_view/app.yml
-has view_mode: list in cli.options and contains:
-  - root-tool         (alias: rt,  long_name: A Root Tool)
-  - root-tool-no-alias (long_name: A Root Tool Without Alias)
-  - group             (alias: g,   long_name: A Group)  ->  group.yml
-      child-tool      (alias: ct,  long_name: Child Tool)
-      child-tool-2    (long_name: Child Tool 2)
-      sub-group       (alias: sg,  long_name: Sub Group)  ->  nested-tool (alias: nt, long_name: Nested Tool)
-  - tool-with-env     (alias: twe, long_name: A Tool With Env)  [envs: dev, qa]
-plus the default hexagon tools (save-alias, replay, create-tool, update-cli).
-
-NOTE on E2E test patterns for the interactive fuzzy prompt:
-  - ESC via `.esc()` does NOT reliably terminate the fuzzy prompt over a pipe
-    stdin.  Every interactive test that needs to verify the prompt display must
-    also select a tool (via `.enter()` or `.input("search\n")`) so the process
-    exits cleanly.
-  - Choice names are built from `long_name or name`, so assertions reference
-    long_names (e.g. "A Root Tool", "Child Tool | A Group").
-"""
-
 import os
 
 from tests_e2e.framework.hexagon_spec import as_a_user
-
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
 
 
 def _alias_file_path(spec):
@@ -38,11 +10,6 @@ def _alias_file_path(spec):
 def _write_alias_file(spec):
     with open(_alias_file_path(spec), "w") as f:
         f.write("previous line\n")
-
-
-# ---------------------------------------------------------------------------
-# Core behaviour
-# ---------------------------------------------------------------------------
 
 
 def test_list_view_shows_all_tools_in_single_prompt():
@@ -144,11 +111,6 @@ def test_list_view_builtin_tools_appear_in_flat_list():
     )
 
 
-# ---------------------------------------------------------------------------
-# Breadcrumb display
-# ---------------------------------------------------------------------------
-
-
 def test_list_view_breadcrumb_rtl_is_default():
     """
     Given view_mode: list with no explicit view_mode_direction.
@@ -238,11 +200,6 @@ def test_list_view_root_tool_has_no_breadcrumb():
     )
 
 
-# ---------------------------------------------------------------------------
-# Argument / CLI resolution (tree-style unchanged in list mode)
-# ---------------------------------------------------------------------------
-
-
 def test_list_view_args_resolve_root_tool():
     """
     Given view_mode: list and a root-level tool name as an argument.
@@ -316,11 +273,6 @@ def test_list_view_env_selection_by_arg_works():
         .then_output_should_be(["dev output"])
         .exit()
     )
-
-
-# ---------------------------------------------------------------------------
-# Tracer / Execute-again
-# ---------------------------------------------------------------------------
 
 
 def test_list_view_trace_root_tool_with_alias():
@@ -448,11 +400,6 @@ def test_list_view_no_trace_when_all_args_provided():
     )
 
 
-# ---------------------------------------------------------------------------
-# Replay
-# ---------------------------------------------------------------------------
-
-
 def test_list_view_replay_root_tool_by_name():
     """
     Given view_mode: list and a root tool was previously run interactively.
@@ -533,11 +480,6 @@ def test_list_view_replay_root_tool_by_prompt():
     )
 
 
-# ---------------------------------------------------------------------------
-# Save alias
-# ---------------------------------------------------------------------------
-
-
 def test_list_view_save_alias_for_root_tool():
     """
     Given view_mode: list and a root tool was previously run.
@@ -601,11 +543,6 @@ def test_list_view_save_alias_for_group_tool():
     with open(_alias_file_path(spec), "r") as f:
         content = f.read()
     assert 'alias my-group-alias="hexagon-test group child-tool"' in content
-
-
-# ---------------------------------------------------------------------------
-# Configuration / env var
-# ---------------------------------------------------------------------------
 
 
 def test_list_view_activated_via_env_var():

@@ -1,12 +1,3 @@
-"""
-Unit tests for hexagon/runtime/execute/list_view.py.
-
-These tests cover:
-- flatten_tools  : recursive flattening of the tool tree
-- format_breadcrumb : display string generation for all directions / separators
-- build_list_choices : InquirerPy-compatible choice list construction
-"""
-
 from hexagon.domain.tool import ActionTool, FunctionTool, GroupTool, Separator, ToolType
 from hexagon.runtime.execute.list_view import (
     FlatTool,
@@ -14,10 +5,6 @@ from hexagon.runtime.execute.list_view import (
     flatten_tools,
     format_breadcrumb,
 )
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
 
 
 def _action(
@@ -45,11 +32,6 @@ def _group(name, tools, *, alias=None, long_name=None):
 
 def _function(name):
     return FunctionTool(name=name, type=ToolType.misc, function=lambda: None)
-
-
-# ---------------------------------------------------------------------------
-# flatten_tools
-# ---------------------------------------------------------------------------
 
 
 def test_flatten_tools_returns_empty_for_empty_list():
@@ -182,11 +164,6 @@ def test_flatten_tools_handles_mixed_root_and_nested():
     assert paths == [[], ["g1"], ["g1"], [], ["g2", "sub"]]
 
 
-# ---------------------------------------------------------------------------
-# format_breadcrumb
-# ---------------------------------------------------------------------------
-
-
 def _flat(tool, *groups):
     """Build a FlatTool with the given ancestor groups."""
     return FlatTool(
@@ -305,11 +282,6 @@ def test_format_breadcrumb_uses_long_name_when_available():
     result = format_breadcrumb(ft, "rtl", " | ")
 
     assert result == "Tool Long Name | Group Long Name"
-
-
-# ---------------------------------------------------------------------------
-# build_list_choices
-# ---------------------------------------------------------------------------
 
 
 def test_build_list_choices_value_is_unique_across_groups():
