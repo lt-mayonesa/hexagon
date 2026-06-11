@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.65.4 (2026-06-11)
+
+### Bug Fixes
+
+- **prompt**: Support list view for tools ([#275](https://github.com/lt-mayonesa/hexagon/pull/275),
+  [`bd154a9`](https://github.com/lt-mayonesa/hexagon/commit/bd154a935b35a28afbbfa51a11715e671f65b2d1))
+
+
 ## v0.65.3 (2026-06-04)
 
 ### Bug Fixes
