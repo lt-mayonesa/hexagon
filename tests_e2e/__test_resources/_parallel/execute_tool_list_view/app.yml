@@ -1,0 +1,41 @@
+cli:
+  name: Test
+  command: hexagon-test
+  custom_tools_dir: .
+  options:
+    view_mode: list
+
+envs:
+  - name: dev
+    alias: d
+    long_name: dev
+  - name: qa
+    alias: q
+    long_name: qa
+
+tools:
+  - name: root-tool
+    long_name: A Root Tool
+    alias: rt
+    type: shell
+    action: echo "root tool output"
+
+  - name: root-tool-no-alias
+    long_name: A Root Tool Without Alias
+    type: shell
+    action: echo "root tool no alias output"
+
+  - name: group
+    long_name: A Group
+    alias: g
+    type: group
+    tools: group.yml
+
+  - name: tool-with-env
+    long_name: A Tool With Env
+    alias: twe
+    type: shell
+    action: echo "{env_args}"
+    envs:
+      dev: dev output
+      qa: qa output

@@ -49,6 +49,34 @@ def _ensure_prompt(cli_args: CliArgs) -> None:
         cli_args._with_prompt(Prompt())
 
 
+def _execute_leaf_tool(
+    tool: Tool,
+    envs: List[Env],
+    cli_args: CliArgs,
+    group_ref: int,
+) -> List[str]:
+    """Resolve the environment and run *tool*'s action.
+
+    Extracted so that both the tree-mode path and the list-view path share
+    identical env-resolution, hook-firing, and action-execution logic.
+    """
+    env, tool_env_params = _resolve_env(envs, tool.envs, cli_args)
+
+    if env:
+        tracer().tracing(f"env_{group_ref}", env.name, value_alias=env.alias)
+
+    HexagonHooks.before_tool_executed.run(
+        ToolExecutionParameters(
+            tool=tool,
+            parameters=tool_env_params,
+            env=env,
+            arguments=cli_args.extra_args,
+        )
+    )
+
+    return execute_action(tool, tool_env_params, env, cli_args)
+
+
 def select_and_execute_tool(
     tools: List[Tool],
     envs: List[Env],
@@ -62,6 +90,15 @@ def select_and_execute_tool(
     tool_was_prompted = not found_tool_name
 
     if not found_tool_name:
+        from hexagon.runtime.singletons import options
+
+        if options.view_mode == "list" and group_ref == 0:
+            from hexagon.runtime.execute.list_view import select_and_execute_list_view
+
+            return select_and_execute_list_view(
+                tools, envs, cli_args, _execute_leaf_tool
+            )
+
         found_tool_name = cli_args.tool.prompt(
             choices=_display_choices(tools, classifier=_tool_classifier),
             searchable=True,
@@ -92,21 +129,7 @@ def select_and_execute_tool(
     if isinstance(tool, FunctionTool):
         return tool.function()
 
-    env, tool_env_params = _resolve_env(envs, tool.envs, cli_args)
-
-    if env:
-        tracer().tracing(f"env_{group_ref}", env.name, value_alias=env.alias)
-
-    HexagonHooks.before_tool_executed.run(
-        ToolExecutionParameters(
-            tool=tool,
-            parameters=tool_env_params,
-            env=env,
-            arguments=cli_args.extra_args,
-        )
-    )
-
-    return execute_action(tool, tool_env_params, env, cli_args)
+    return _execute_leaf_tool(tool, envs, cli_args, group_ref)
 
 
 def _resolve_env(

@@ -65,6 +65,9 @@ class Options(BaseSettings):
     keymap: KeymapOptions = KeymapOptions()
     cwd_tools_disabled: Optional[bool] = False
     agent_mode: Optional[bool] = False
+    view_mode: Optional[str] = "tree"
+    view_mode_direction: Optional[str] = "rtl"
+    view_mode_separator: Optional[str] = " | "
 
     @classmethod
     def settings_customise_sources(

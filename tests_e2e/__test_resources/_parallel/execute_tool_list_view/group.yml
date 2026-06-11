@@ -1,0 +1,22 @@
+tools:
+  - name: child-tool
+    long_name: Child Tool
+    alias: ct
+    type: shell
+    action: echo "child tool output"
+
+  - name: child-tool-2
+    long_name: Child Tool 2
+    type: shell
+    action: echo "child tool 2 output"
+
+  - name: sub-group
+    long_name: Sub Group
+    alias: sg
+    type: group
+    tools:
+      - name: nested-tool
+        long_name: Nested Tool
+        alias: nt
+        type: shell
+        action: echo "nested tool output"
