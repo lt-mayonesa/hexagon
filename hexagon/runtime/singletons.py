@@ -9,7 +9,7 @@ configuration = Configuration()
 cli, tools, envs = configuration.init_config(
     os.getenv(CONFIG_FILE_ENV_VARIABLE_NAME, "app.yaml")
 )
-options = get_options(cli.options or {})
+options = get_options(cli.options or {}, configuration.project_path)
 
 _cwd_tools = collect_cwd_tools(options)
 if _cwd_tools:

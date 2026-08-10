@@ -8,12 +8,13 @@ def test_default_locale_is_english():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "6/6",
+                "7/7",
                 "⦾ Google",
                 "ƒ Python i18n Test",
                 "⬡ Save Last Command as Shell Alias",
                 "⬡ Replay Last Command",
                 "⬡ Create A New Tool",
+                "⬡ Update CLI",
             ]
         )
         .arrow_down()
@@ -35,12 +36,13 @@ def test_unknown_language_fallbacks_to_english():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "6/6",
+                "7/7",
                 "⦾ Google",
                 "ƒ Python i18n Test",
                 "⬡ Save Last Command as Shell Alias",
                 "⬡ Replay Last Command",
                 "⬡ Create A New Tool",
+                "⬡ Update CLI",
             ]
         )
         .arrow_down()
@@ -62,12 +64,13 @@ def test_not_found_locales_fallbacks_to_english():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "6/6",
+                "7/7",
                 "⦾ Google",
                 "ƒ Python i18n Test",
                 "⬡ Save Last Command as Shell Alias",
                 "⬡ Replay Last Command",
                 "⬡ Create A New Tool",
+                "⬡ Update CLI",
             ]
         )
         .arrow_down()
@@ -89,12 +92,13 @@ def test_locale_is_set_to_english():
         .then_output_should_be(
             [
                 "Hi, which tool would you like to use today?",
-                "6/6",
+                "7/7",
                 "⦾ Google",
                 "ƒ Python i18n Test",
                 "⬡ Save Last Command as Shell Alias",
                 "⬡ Replay Last Command",
                 "⬡ Create A New Tool",
+                "⬡ Update CLI",
             ]
         )
         .arrow_down()
@@ -116,12 +120,13 @@ def test_locale_is_set_to_spanish():
         .then_output_should_be(
             [
                 "Hola ¿qué herramienta te gustaría usar hoy?",
-                "6/6",
+                "7/7",
                 "⦾ Google",
                 "ƒ Python i18n Test",
                 "⬡ Guardar el último comando ejecutado como shell alias",
                 "⬡ Repetir el último comando ejecutado",
                 "⬡ Crear una nueva herramienta",
+                "⬡ Actualizar CLI",
             ]
         )
         .arrow_down()

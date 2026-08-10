@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-04 15:16+0200\n"
+"POT-Creation-Date: 2026-06-12 11:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: hexagon/__main__.py:51
+#: hexagon/__main__.py:50
 msgid "msg.main.first_time_intro"
 msgstr ""
 
-#: hexagon/__main__.py:51
+#: hexagon/__main__.py:50
 msgid "msg.main.first_time_tool"
 msgstr ""
 
@@ -87,6 +87,48 @@ msgstr ""
 
 #: hexagon/actions/internal/install_cli.py:88
 msgid "msg.actions.internal.install_cli.not_in_path"
+msgstr ""
+
+#: hexagon/actions/internal/manage_cli_options.py:19
+msgid "action.actions.internal.manage_cli_options.choose_action"
+msgstr ""
+
+#: hexagon/actions/internal/manage_cli_options.py:25
+msgid "action.actions.internal.manage_cli_options.input_key"
+msgstr ""
+
+#: hexagon/actions/internal/manage_cli_options.py:31
+#: hexagon/actions/internal/manage_cli_options.py:79
+msgid "action.actions.internal.manage_cli_options.input_value"
+msgstr ""
+
+#: hexagon/actions/internal/manage_cli_options.py:60
+#: hexagon/actions/internal/manage_cli_options.py:103
+msgid "msg.actions.internal.manage_cli_options.no_options_file"
+msgstr ""
+
+#: hexagon/actions/internal/manage_cli_options.py:64
+msgid "msg.actions.internal.manage_cli_options.listing_options"
+msgstr ""
+
+#: hexagon/actions/internal/manage_cli_options.py:86
+msgid "msg.actions.internal.manage_cli_options.file_created"
+msgstr ""
+
+#: hexagon/actions/internal/manage_cli_options.py:95
+msgid "msg.actions.internal.manage_cli_options.option_set"
+msgstr ""
+
+#: hexagon/actions/internal/manage_cli_options.py:108
+msgid "msg.actions.internal.manage_cli_options.no_options_set"
+msgstr ""
+
+#: hexagon/actions/internal/manage_cli_options.py:121
+msgid "msg.actions.internal.manage_cli_options.option_unset"
+msgstr ""
+
+#: hexagon/actions/internal/manage_cli_options.py:125
+msgid "msg.actions.internal.manage_cli_options.option_not_found"
 msgstr ""
 
 #: hexagon/actions/internal/replay.py:17
@@ -245,6 +287,10 @@ msgstr ""
 msgid "msg.domain.configuration.update_cli_long_name"
 msgstr ""
 
+#: hexagon/runtime/configuration.py:183
+msgid "msg.domain.configuration.manage_cli_options_long_name"
+msgstr ""
+
 #: hexagon/runtime/dependencies/node.py:21
 #: hexagon/runtime/dependencies/python.py:16
 msgid "msg.support.dependencies.installing_dependencies"
@@ -298,23 +344,23 @@ msgstr ""
 msgid "error.support.execute.errors.execute_tool_failed"
 msgstr ""
 
-#: hexagon/runtime/execute/tool.py:68
+#: hexagon/runtime/execute/list_view.py:130 hexagon/runtime/execute/tool.py:105
 msgid "action.support.wax.select_tool"
 msgstr ""
 
-#: hexagon/runtime/execute/tool.py:133
+#: hexagon/runtime/execute/tool.py:156
 msgid "action.support.wax.select_environment"
 msgstr ""
 
-#: hexagon/runtime/execute/tool.py:144
+#: hexagon/runtime/execute/tool.py:167
 msgid "msg.support.execute.tool.go_back_long_name"
 msgstr ""
 
-#: hexagon/runtime/execute/tool.py:146
+#: hexagon/runtime/execute/tool.py:169
 msgid "msg.support.execute.tool.go_back_description"
 msgstr ""
 
-#: hexagon/runtime/execute/tool.py:147
+#: hexagon/runtime/execute/tool.py:170
 msgid "icon.global.go_back"
 msgstr ""
 
