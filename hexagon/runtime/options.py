@@ -1,4 +1,5 @@
 import datetime
+import os
 from typing import Optional, Type
 
 from pydantic import ValidationError
@@ -11,6 +12,8 @@ from pydantic_settings import (
 )
 
 from hexagon.runtime.yaml import YamlValidationError
+
+CLI_OPTIONS_FILE_NAME = "cli_options.yml"
 
 
 def _save_settings_to_source(options):
@@ -45,6 +48,16 @@ class UserDataSettingsSource(InitSettingsSource):
         super().__init__(settings_cls, local_options)
 
 
+class CliOptionsFileSettingsSource(InitSettingsSource):
+    """Loads options from a cli_options.yml file next to the project's app.yaml."""
+
+    def __init__(self, settings_cls: type[BaseSettings], options_file_path: str):
+        from hexagon.runtime.yaml import read_file
+
+        content = read_file(options_file_path) or {}
+        super().__init__(settings_cls, dict(content))
+
+
 class KeymapOptions(BaseSettings):
     create_dir: str = "c-p"
 
@@ -69,6 +82,9 @@ class Options(BaseSettings):
     view_mode_direction: Optional[str] = "rtl"
     view_mode_separator: Optional[str] = " | "
 
+    # Set by get_options() before instantiation so settings_customise_sources can read it
+    _cli_options_file_path: str = None
+
     @classmethod
     def settings_customise_sources(
         cls,
@@ -78,15 +94,19 @@ class Options(BaseSettings):
         dotenv_settings: PydanticBaseSettingsSource,
         file_secret_settings: PydanticBaseSettingsSource,
     ):
-        return (
-            init_settings,
-            env_settings,
-            UserDataSettingsSource(settings_cls),
-            file_secret_settings,
-        )
+        sources = [env_settings]
+        if cls._cli_options_file_path and os.path.isfile(cls._cli_options_file_path):
+            sources.append(
+                CliOptionsFileSettingsSource(settings_cls, cls._cli_options_file_path)
+            )
+        sources += [init_settings, UserDataSettingsSource(settings_cls)]
+        return tuple(sources)
 
 
-def get_options(init_settings: dict) -> Options:
+def get_options(init_settings: dict, project_path: Optional[str] = None) -> Options:
+    Options._cli_options_file_path = (
+        os.path.join(project_path, CLI_OPTIONS_FILE_NAME) if project_path else None
+    )
     try:
         return Options(**init_settings)
     except ValidationError as errors:

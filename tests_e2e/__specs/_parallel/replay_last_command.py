@@ -33,7 +33,7 @@ def test_replay_last_command_by_prompt():
                 "",
                 "",
                 "Hi, which tool would you like to use today?",
-                "5/5",
+                "6/6",
                 "Python Module Test",
                 "Save Last Command",
                 "Replay Last Command",

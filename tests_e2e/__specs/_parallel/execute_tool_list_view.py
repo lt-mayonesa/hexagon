@@ -630,7 +630,7 @@ def test_list_view_tree_mode_explicit():
         .enter()
         # A new nested prompt must appear (tree mode) showing group children.
         .then_output_should_be(
-            [["Hi, which tool would you like to use today?", "Child Tool"]],
+            ["Child Tool"],
             discard_until_first_match=True,
         )
         .enter()

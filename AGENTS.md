@@ -505,6 +505,9 @@ Plugins extend hexagon functionality:
 - New features should include E2E test suites
 
 **E2E Testing Best Practices:**
+- **CRITICAL: testing the fuzzy prompting is not possible, this is done manually**
+- **CRITICAL: some e2e tests are flaky in a local environment**
+  - If finding the root cause is not easy, skip them. User will check later
 - **CRITICAL: Status/loader messages are NOT visible in E2E test output**
   - Messages like "Checking for...", "Loading...", "Updating..." are hidden by the status display
   - Only check for actual result messages: "New version available", "already up to date", "Update cancelled", etc.

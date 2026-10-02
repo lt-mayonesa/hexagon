@@ -178,6 +178,12 @@ class Configuration:
                 type=ToolType.hexagon,
                 action="hexagon.actions.internal.update_cli",
             ),
+            ActionTool(
+                name="manage-cli-options",
+                long_name=_("msg.domain.configuration.manage_cli_options_long_name"),
+                type=ToolType.hexagon,
+                action="hexagon.actions.internal.manage_cli_options",
+            ),
         ]
 
 
